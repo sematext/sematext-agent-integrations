@@ -1,0 +1,162 @@
+type: jmx
+# any node can become driver
+
+observation:
+  - name: sparkDriverDiskSpaceUsed
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.BlockManager.disk.diskSpaceUsed_MB
+
+    metric:
+      - name: driver.disk.used.mb
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: driver.disk.used
+        source: func:LongMultiplyWithConstant(driver.disk.used.mb,1048576)
+        type: long_gauge
+        label: driver disk used
+        unit: bytes
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverMaxMem
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.BlockManager.memory.maxMem_MB
+
+    metric:
+      - name: driver.memory.total.mb
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: driver.memory.total
+        source: func:LongMultiplyWithConstant(driver.memory.total.mb,1048576)
+        type: long_gauge
+        label: driver memory max
+        unit: bytes
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverMemUsed
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.BlockManager.memory.memUsed_MB
+
+    metric:
+      - name: driver.memory.used.mb
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: driver.memory.used
+        source: func:LongMultiplyWithConstant(driver.memory.used.mb,1048576)
+        type: long_gauge
+        label: driver memory used
+        unit: bytes
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverRemainingMem
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.BlockManager.memory.remainingMem_MB
+
+    metric:
+      - name: driver.memory.free.mb
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: driver.memory.free
+        source: func:LongMultiplyWithConstant(driver.memory.free.mb,1048576)
+        type: long_gauge
+        label: driver memory free
+        unit: bytes
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverActiveJobs
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.DAGScheduler.job.activeJobs
+
+    metric:
+      - name: jobs.active
+        source: Value
+        type: long_gauge
+        label: active driver jobs
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverAllJobs
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.DAGScheduler.job.allJobs
+
+    metric:
+      - name: jobs
+        source: Value
+        type: long_gauge
+        label: all driver jobs
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverFailedStages
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.DAGScheduler.stage.failedStages
+
+    metric:
+      - name: stages.failed
+        source: Value
+        type: long_gauge
+        label: failed driver stages
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverRunningStages
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.DAGScheduler.stage.runningStages
+
+    metric:
+      - name: stages.running
+        source: Value
+        type: long_gauge
+        label: running driver stages
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkDriverWaitingStages
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.driver.DAGScheduler.stage.waitingStages
+
+    metric:
+      - name: stages.waiting
+        source: Value
+        type: long_gauge
+        label: waiting driver stages
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+

@@ -1,0 +1,17 @@
+type: jmx
+
+observation:
+  - name: kafka-producer-topic-messages
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerTopicMetrics,name=MessagesPerSec,topic=${topic}
+
+    metric:
+      - name: producer.old.topic.messages
+        source: Count
+        type: counter
+        label: producer topic messages
+
+    tag:
+      - name: kafka.producer.topic
+        value: ${topic}
+

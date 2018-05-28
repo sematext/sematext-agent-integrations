@@ -1,0 +1,207 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-jobtracker
+
+observation:
+#  all
+  - name: jobtracker_metrics
+    metricNamespace: hadoop
+    objectName: Hadoop:service=JobTracker,name=JobTrackerMetrics
+
+    metric:
+      - name: jt.heartbeats
+        source: heartbeats
+        type: counter
+        label: jobtracker heartbeats
+
+      - name: jt.maps.running
+        source: running_maps
+        type: long_gauge
+        label: running maps
+
+      - name: jt.reduces.running
+        source: running_reduces
+        type: long_gauge
+        label: running reduces
+
+      - name: jt.maps.waiting
+        source: waiting_maps
+        type: long_gauge
+        label: waiting maps
+
+      - name: jt.reduces.waiting
+        source: waiting_reduces
+        type: long_gauge
+        label: waiting reduces
+
+      - name: jt.maps.blacklisted
+        source: blacklisted_maps
+        type: counter
+        label: blacklisted maps
+
+      - name: jt.reduces.blacklisted
+        source: blacklisted_reduces
+        type: counter
+        label: blacklisted reduces
+
+      - name: jt.reduces.trackers
+        source: trackers
+        type: counter
+        label: trackers
+
+      - name: jt.reduces.trackers.blacklisted
+        source: trackers_blacklisted
+        type: counter
+        label: blacklisted trackers
+
+      - name: jt.reduces.trackers.decommissioned
+        source: trackers_decommissioned
+        type: counter
+        label: decommissioned trackers
+
+      - name: jt.reduces.trackers.graylisted
+        source: trackers_graylisted
+        type: counter
+        label: graylisted trackers
+
+      - name: jt.slots.reduce
+        source: reduce_slots
+        type: long_gauge
+        label: reduce slots
+
+      - name: jt.slots.map
+        source: map_slots
+        type: long_gauge
+        label: map slots
+
+      - name: jt.slots.map.occupied
+        source: occupied_map_slots
+        type: long_gauge
+        label: occupied map slots
+
+      - name: jt.slots.reduce.occupied
+        source: occupied_reduce_slots
+        type: long_gauge
+        label: occupied reduce slots
+
+
+  - name: jobtracker_queue_metrics
+    metricNamespace: hadoop
+    objectName: Hadoop:service=JobTracker,name=QueueMetrics,q=${queue}
+
+    metric:
+      - name: jt.jobs.completed
+        source: jobs_completed
+        type: counter
+        label: jobs completed
+
+      - name: jt.jobs.failed
+        source: jobs_failed
+        type: counter
+        label: jobs failed
+
+      - name: jt.jobs.killed
+        source: jobs_killed
+        type: counter
+        label: jobs killled
+
+      - name: jt.jobs.preparing
+        source: jobs_preparing
+        type: long_gauge
+        label: jobs preparing
+
+      - name: jt.jobs.running
+        source: jobs_running
+        type: long_gauge
+        label: jobs running
+
+      - name: jt.jobs.submitted
+        source: jobs_submitted
+        type: counter
+        label: jobs submitted
+
+      - name: jt.maps.completed
+        source: maps_completed
+        type: counter
+        label: maps completed
+
+      - name: jt.maps.failed
+        source: maps_failed
+        type: counter
+        label: maps failed
+
+      - name: jt.maps.killed
+        source: maps_killed
+        type: counter
+        label: maps killled
+
+      - name: jt.maps.launched
+        source: maps_launched
+        type: counter
+        label: maps launched
+
+      - name: jt.reduces.completed
+        source: reduces_completed
+        type: counter
+        label: reduces completed
+
+      - name: jt.reduces.failed
+        source: reduces_failed
+        type: counter
+        label: reduces failed
+
+      - name: jt.reduces.killed
+        source: reduces_killed
+        type: counter
+        label: reduces killled
+
+      - name: jt.reduces.launched
+        source: reduces_launched
+        type: counter
+        label: reduces launched
+
+      - name: jt.maps.slots
+        source: reserved_map_slots
+        type: long_gauge
+        label: map slots
+
+      - name: jt.reduces.slots
+        source: reserved_reduce_slots
+        type: long_gauge
+        label: reduce slots
+
+      - name: jt.waiting.maps
+        source: waiting_maps
+        type: long_gauge
+        label: waiting maps
+
+      - name: jt.waiting.reduces
+        source: waiting_reduces
+        type: long_gauge
+        label: waiting reduces
+
+      - name: jt.running.0
+        source: running_0
+        type: long_gauge
+        label: running 0
+
+      - name: jt.running.60
+        source: running_60
+        type: long_gauge
+        label: running 60
+
+      - name: jt.running.300
+        source: running_300
+        type: long_gauge
+        label: running 300
+
+      - name: jt.running.1440
+        source: running_1440
+        type: long_gauge
+        label: running 1440
+
+    tag:
+      - name: hadoop.jt.queue
+        value: ${queue}
+

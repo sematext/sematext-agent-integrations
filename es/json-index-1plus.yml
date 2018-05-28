@@ -1,0 +1,266 @@
+type: json
+data:
+  # use the same URL as other index-related collector configs which enables caching of response data and
+  # reduced overhead SPM JSON-based monitor has on the system
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get?level=shards&format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  async: true
+  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
+  jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+require:
+  - className: com.sematext.spm.client.es.IsDataNodeCheck
+    values: true
+
+observation:
+  - name: indexStats_docs_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].docs
+
+    # although these metrics are defined as gauges, which would imply correct aggregation function is AVG, in this case
+    # we want value of all shards of some index to be added to each other (while aggregating by the agent) - the reason is
+    # that we are looking to get total number of docs some index has on local node (we don't care about average number of
+    # docs per shard for some index on local node)
+
+    metric:
+      - name: index.docs.primaries
+        source: count
+        type: long_gauge
+        agentAggregation: SUM
+        label: docs count (prim)
+        description: docs count on primary shards
+
+      - name: index.docs.deleted.primaries
+        source: deleted
+        type: long_gauge
+        agentAggregation: SUM
+        label: docs deleted (prim)
+        description: docs deleted on primary shards
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: indexStats_docs_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].docs
+
+    metric:
+      - name: index.docs.totals
+        source: count
+        type: long_gauge
+        agentAggregation: SUM
+        label: docs count (all)
+        description: docs count on all (primary and replica) shards
+
+      - name: index.docs.deleted.total
+        source: deleted
+        type: long_gauge
+        agentAggregation: SUM
+        label: docs deleted (all)
+        description: docs deleted on all (primary and replica) shards
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: indexStats_store_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].store
+
+    metric:
+      - name: index.files.size.primaries
+        source: size_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: size on disk (prim)
+        description: size on the disk of primary shards
+        unit: bytes
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: indexStats_store_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].store
+
+    metric:
+      - name: index.files.size.total
+        source: size_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: size on disk (all)
+        description: size on the disk of all (primary and replica) shards
+        unit: bytes
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: indexStats_indexing_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].indexing
+
+    metric:
+      - name: indexing.docs.added.primaries
+        source: index_total
+        type: counter
+        agentAggregation: SUM
+        label: indexed docs (prim)
+        description: docs indexed on primary shards
+
+      - name: indexing.docs.deleted.primaries
+        source: delete_total
+        type: counter
+        agentAggregation: SUM
+        label: deleted docs (prim)
+        description: docs deleted on primary shards
+
+      - name: indexing.time.added.primaries
+        source: index_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: indexing time (prim)
+        description: time spent indexing on primary shards
+        unit: ms
+
+      - name: indexing.time.deleted.primaries
+        source: delete_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: deleting time (prim)
+        description: time spent deleting on primary shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: indexStats_indexing_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].indexing
+
+    metric:
+      - name: indexing.docs.added.total
+        source: index_total
+        type: counter
+        agentAggregation: SUM
+        label: indexed docs (all)
+        description: docs indexed on all (primary and replica) shards
+
+      - name: indexing.docs.deleted.total
+        source: delete_total
+        type: counter
+        agentAggregation: SUM
+        label: deleted docs (all)
+        description: docs deleted on all (primary and replica) shards
+
+      - name: indexing.time.added.total
+        source: index_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: indexing time (all)
+        description: time spent indexing on all (primary and replica) shards
+        unit: ms
+
+      - name: indexing.time.deleted.total
+        source: delete_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: deleting time (all)
+        description: time spent deleting on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

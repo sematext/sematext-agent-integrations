@@ -1,0 +1,358 @@
+type: jmx
+
+observation:
+  - name: hbase-master-am
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=Master,sub=AssignmentManger
+
+    metric:
+      - name: master.rit.oldest
+        source: ritOldestAge
+        type: long_gauge
+        label: oldest regions in transition
+        description: Timestamp of the oldest Region In Transition
+        unit: ms
+
+      - name: master.rit.duration
+        source: jmx_eval:RitDuration_num_ops*RitDuration_mean
+        type: double_counter
+        label: total duration regions in transition
+        description: Total durations in milliseconds for all Regions in Transition
+        unit: ms
+
+      - name: master.rit.count
+        source: ritCount
+        type: long_gauge
+        label: regions in transition
+        description: Current number of Regions In Transition
+
+      - name: master.rit.count.overthreshold
+        source: ritCountOverThreshold
+        type: long_gauge
+        label: regions in transition long time
+        description: Current number of Regions In Transition over threshold time
+
+      - name: master.assigns.bulk
+        source: BulkAssign_num_ops
+        type: counter
+        label: bulk assigns
+        description: Number of bulk assign operations
+
+      - name: master.assigns.bulk.time.min
+        source: BulkAssign_min
+        type: long_gauge
+        label: bulk assign min time
+        description: Min time for bulk assign operation
+        unit: ms
+
+      - name: master.assigns.bulk.time.max
+        source: BulkAssign_max
+        type: long_gauge
+        label: bulk assign max time
+        description: Max time for bulk assign operation
+        unit: ms
+
+      - name: master.assigns
+        source: Assign_num_ops
+        type: counter
+        label: master assigns
+        description: Number of assign operations
+
+      - name: master.assigns.time.min
+        source: Assign_min
+        type: long_gauge
+        label: assign min time
+        description: Min time for assign operation
+        unit: ms
+
+      - name: master.assigns.time.max
+        source: Assign_max
+        type: long_gauge
+        label: assign max time
+        description: Max time for assign operation
+        unit: ms
+
+      - name: master.assigns.bulk.time
+        source: jmx_eval:BulkAssign_mean*BulkAssign_num_ops
+        type: double_counter
+        label: bulk assigns time
+        description: Time for bulk assign operations
+        unit: ms
+
+      - name: master.assigns.time
+        source: jmx_eval:Assign_mean*Assign_num_ops
+        type: double_counter
+        label: assigns time
+        description: Time for assign operations
+        unit: ms
+
+
+  - name: hbase-master-b
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=Master,sub=Balancer
+
+    metric:
+      - name: master.balancer.ops
+        source: BalancerCluster_num_ops
+        type: counter
+        label: balancer ops
+        description: Balancer invocations
+
+      - name: master.balancer.time.min
+        source: BalancerCluster_min
+        type: long_gauge
+        label: balance min time
+        description: Min time for balance operation
+        unit: ms
+
+      - name: master.balancer.time.max
+        source: BalancerCluster_max
+        type: long_gauge
+        label: balance max time
+        description: Max time for balance operation
+        unit: ms
+
+      - name: master.balancer.misc.invocations
+        source: miscInvocationCount
+        type: counter
+        label: balancer misc invocations
+        description: Balancer misc invocations
+
+      - name: master.balancer.time
+        source: jmx_eval:BalancerCluster_mean*BalancerCluster_num_ops
+        type: counter
+        label: balances time
+        description: Time for balance operations
+        unit: ms
+
+
+  - name: hbase-master-fs
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=Master,sub=FileSystem
+
+    metric:
+      - name: master.hlog.splits
+        source: HlogSplitTime_num_ops
+        type: counter
+        label: wal splits
+        description: Number of WAL files splits
+
+      - name: master.hlog.split.time.min
+        source: HlogSplitTime_min
+        type: long_gauge
+        label: wal split min time
+        description: Min time it takes to finish WAL.splitLog()
+        unit: ms
+
+      - name: master.hlog.split.time.max
+        source: HlogSplitTime_max
+        type: long_gauge
+        label: wal split max time
+        description: Max time it takes to finish WAL.splitLog()
+        unit: ms
+
+      - name: master.hlog.meta.splits
+        source: MetaHlogSplitTime_num_ops
+        type: counter
+        label: meta wal splits
+        description: Meta WAL files splits
+
+      - name: master.hlog.meta.split.time.min
+        source: MetaHlogSplitTime_min
+        type: long_gauge
+        label: meta wal split min time
+        description: Min time it takes to finish splitMetaLog()
+        unit: ms
+
+      - name: master.hlog.meta.split.time.max
+        source: MetaHlogSplitTime_max
+        type: long_gauge
+        label: meta wal split max time
+        description: Max time it takes to finish splitMetaLog()
+        unit: ms
+
+      - name: master.hlog.meta.split.size.min
+        source: MetaHlogSplitSize_min
+        type: long_gauge
+        label: meta wal split min size
+        description: Min size of hbase:meta WAL files being split
+        unit: bytes
+
+      - name: master.hlog.meta.split.size.max
+        source: MetaHlogSplitSize_max
+        type: long_gauge
+        label: meta wal split max size
+        description: Max size of hbase:meta WAL files being split
+        unit: bytes
+
+      - name: master.hlog.split.size.min
+        source: HlogSplitSize_min
+        type: long_gauge
+        label: wal split min size
+        description: Min size of WAL files being split
+        unit: bytes
+
+      - name: master.hlog.split.size.max
+        source: HlogSplitSize_max
+        type: long_gauge
+        label: wal split max size
+        description: Max size of WAL files being split
+        unit: bytes
+
+      - name: master.hlog.meta.splits.size
+        source: jmx_eval:MetaHlogSplitSize_mean*MetaHlogSplitSize_num_ops
+        type: counter
+        label: meta wal splits size
+        description: Size of hbase:meta WAL files being split
+        unit: bytes
+
+      - name: master.hlog.meta.splits.time
+        source: jmx_eval:MetaHlogSplitTime_mean*MetaHlogSplitTime_num_ops
+        type: counter
+        label: meta wal splits time
+        description: Time it takes to finish splitMetaLog()
+        unit: ms
+
+      - name: master.hlog.splits.time
+        source: jmx_eval:HlogSplitTime_mean*HlogSplitTime_num_ops
+        type: counter
+        label: wal splits time
+        description: Time it takes to finish WAL.splitLog()
+        unit: ms
+
+      - name: master.hlog.splits.size
+        source: jmx_eval:HlogSplitSize_mean*HlogSplitSize_num_ops
+        type: counter
+        label: wal splits size
+        description: Size of WAL files being split
+        unit: bytes
+
+
+  - name: hbase-master-ser
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=Master,sub=Server
+
+    metric:
+      - name: master.plan.splits
+        source: splitPlanCount
+        type: long_gauge
+        label: plan splits
+        description: Number of Region Split Plans executed
+
+      - name: master.plan.merges
+        source: mergePlanCount
+        type: long_gauge
+        label: plan merges
+        description: Number of Region Merge Plans executed
+
+      - name: master.servers.region
+        source: numRegionServers
+        type: long_gauge
+        label: region servers
+        description: Number of RegionServers
+
+      - name: master.servers.region.dead
+        source: numDeadRegionServers
+        type: long_gauge
+        label: dead region servers
+        description: Number of dead RegionServers
+
+      - name: master.requests
+        source: clusterRequests
+        type: counter
+        label: requests
+        description: Number of cluster requests
+
+      - name: master.load
+        source: averageLoad
+        type: double_gauge
+        label: average load
+        description: Average Load
+
+
+  - name: hbase-master-sn
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=Master,sub=Snapshots
+
+    metric:
+      - name: master.snapshots.restores
+        source: SnapshotRestoreTime_num_ops
+        type: counter
+        label: snapshots restores
+        description: Number of restoreSnapshot() calls
+
+      - name: master.snapshots.restore.time.min
+        source: SnapshotRestoreTime_min
+        type: long_gauge
+        label: snapshot restore min time
+        description: Min time it takes to finish restoreSnapshot() call
+        unit: ms
+
+      - name: master.snapshots.restore.time.max
+        source: SnapshotRestoreTime_max
+        type: long_gauge
+        label: snapshot restore max time
+        description: Max time it takes to finish restoreSnapshot() call
+        unit: ms
+
+      - name: master.snapshots.clones
+        source: SnapshotCloneTime_num_ops
+        type: counter
+        label: snapshots clones
+        description: Number of cloneSnapshot() calls
+
+      - name: master.snapshots.clone.time.min
+        source: SnapshotCloneTime_min
+        type: long_gauge
+        label: snapshots clone min time
+        description: Min time it takes to finish cloneSnapshot() call
+        unit: ms
+
+      - name: master.snapshots.clone.time.max
+        source: SnapshotCloneTime_max
+        type: long_gauge
+        label: snapshots clone max time
+        description: Max time it takes to finish cloneSnapshot() call
+        unit: ms
+
+      - name: master.snapshots
+        source: SnapshotTime_num_ops
+        type: counter
+        label: snapshots
+        description: Number of snapshot() calls
+
+      - name: master.snapshot.time.min
+        source: SnapshotTime_min
+        type: long_gauge
+        label: snapshot min time
+        description: Max time it takes to finish snapshot() call
+        unit: ms
+
+      - name: master.snapshot.time.max
+        source: SnapshotTime_max
+        type: long_gauge
+        label: snapshot max time
+        description: Max time it takes to finish snapshot() call
+        unit: ms
+
+      - name: master.snapshots.restores.time
+        source: jmx_eval:SnapshotRestoreTime_mean*SnapshotRestoreTime_num_ops
+        type: double_counter
+        label: snapshots restores time
+        description: Time it takes to finish restoreSnapshot() calls
+        unit: ms
+
+      - name: master.snapshots.clones.time
+        source: jmx_eval:SnapshotCloneTime_mean*SnapshotCloneTime_num_ops
+        type: double_counter
+        label: snapshots clones time
+        description: Time it takes to finish cloneSnapshot() calls
+        unit: ms
+
+      - name: master.snapshots.time
+        source: jmx_eval:SnapshotTime_mean*SnapshotTime_num_ops
+        type: double_counter
+        label: snapshots time
+        description: Time it takes to finish snapshot() calls
+        unit: ms
+

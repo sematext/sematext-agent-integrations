@@ -1,0 +1,88 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-consumer-fetch
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=consumer-fetch-manager-metrics,client-id=${clientId}
+
+    metric:
+      - name: consumer.bytes.rate
+        source: bytes-consumed-rate
+        type: double_gauge
+        label: bytes consumed rate
+        description: The average number of bytes consumed per second
+        unit: bytes/sec
+
+      - name: consumer.records.rate
+        source: records-consumed-rate
+        type: double_gauge
+        label: records consumed rate
+        description: The average number of records consumed per second
+        unit: rec/sec
+
+      - name: consumer.records.lag.max
+        source: records-lag-max
+        type: double_gauge
+        label: consumer records max lag
+        description: The maximum lag in terms of number of records for any partition
+
+      - name: consumer.requests.records.avg
+        source: records-per-request-avg
+        type: double_gauge
+        label: consumer records per request
+        description: The average number of records per request
+        unit: rec/req
+
+      - name: consumer.fetch.rate
+        source: fetch-rate
+        type: double_gauge
+        label: consumer fetch rate
+        description: The number of fetch requests per second
+        unit: fetches/sec
+
+      - name: consumer.fetch.size
+        source: fetch-size-avg
+        type: double_gauge
+        label: consumer fetch avg size
+        description: The average number of bytes fetched per request
+        unit: bytes
+
+      - name: consumer.fetch.size.max
+        source: fetch-size-max
+        type: double_gauge
+        label: consumer fetch max size
+        description: The maximum number of bytes fetched per request
+        unit: bytes
+
+      - name: consumer.fetch.latency
+        source: fetch-latency-avg
+        type: double_gauge
+        label: consumer fetch latency
+        description: The average time taken for a fetch request
+        unit: ms
+
+      - name: consumer.fetch.latency.max
+        source: fetch-latency-max
+        type: double_gauge
+        label: consumer fetch max latency
+        description: The maximum time taken for a fetch request
+        unit: ms
+
+      - name: consumer.throttle.time
+        source: fetch-throttle-time-avg
+        type: double_gauge
+        label: consumer throttle time
+        description: The avarage throttle time in ms
+        unit: ms
+
+      - name: consumer.throttle.time.max
+        source: fetch-throttle-time-max
+        type: double_gauge
+        label: consumer throttle max time
+        description: The max throttle time in ms
+        unit: ms
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+

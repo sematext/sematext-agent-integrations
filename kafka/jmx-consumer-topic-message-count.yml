@@ -1,0 +1,20 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-topic-message
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=ConsumerTopicMetrics,name=MessagesPerSec,clientId=${clientIdString},topic=${topic}
+
+    metric:
+      - name: consumer.old.topic.messages
+        source: Count
+        type: counter
+        label: consumer topic messages
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+

@@ -1,0 +1,35 @@
+type: jmx
+
+observation:
+  - name: kafka-producer-sends-failed
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerStats,name=FailedSendsPerSec,*
+
+    metric:
+      - name: producer.old.sends.failed
+        source: Count
+        type: counter
+        label: producer sends failed
+
+
+  - name: kafka-producer-resends
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerStats,name=ResendsPerSec,*
+
+    metric:
+      - name: producer.old.resends
+        source: Count
+        type: counter
+        label: producer resends
+
+
+  - name: kafka-producer-errors-serialization
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerStats,name=SerializationErrorsPerSec,*
+
+    metric:
+      - name: producer.errors.serialization
+        source: Count
+        type: counter
+        label: producer serialization errors
+

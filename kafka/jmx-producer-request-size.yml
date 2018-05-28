@@ -1,0 +1,32 @@
+type: jmx
+
+observation:
+  - name: kafka-producer-request-size
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerRequestMetrics,name=ProducerRequestSize,brokerHost=${host},brokerPort=${port}
+
+    metric:
+      - name: producer.old.requests.mean.size
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: producer.old.requests
+        source: Count
+        type: counter
+        send: false
+        label: producer requests
+
+      - name: producer.old.requests.size
+        source: func:DoubleMultiply(producer.old.requests, producer.old.requests.mean.size)
+        type: double_counter
+        label: producer request size
+        unit: bytes
+
+    tag:
+      - name: kafka.producer.broker.host
+        value: ${host}
+
+      - name: kafka.producer.broker.port
+        value: ${port}
+

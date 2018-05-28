@@ -1,0 +1,80 @@
+type: jmx
+
+observation:
+  - name: zk_cluster_node
+    metricNamespace: zk
+    objectName: org.apache.ZooKeeperService:name0=ReplicatedServer_id${replicated_server_id},name1=replica.${replica_id},name2=${replica_role}
+
+    metric:
+      - name: requests.session.revalidation
+        source: PendingRevalidationCount
+        type: gauge
+        label: pending revalidation sessions
+        description: Count of pending revalidations
+
+      - name: request.latency.avg
+        source: AvgRequestLatency
+        type: long_gauge
+        label: avg req latency
+        description: Avg request latency
+        unit: ms
+
+      - name: request.latency.max
+        source: MaxRequestLatency
+        type: long_gauge
+        label: max req latency
+        description: Max request latency
+        unit: ms
+
+      - name: request.latency.min
+        source: MinRequestLatency
+        type: long_gauge
+        label: min req latency
+        description: Min request latency
+        unit: ms
+
+      - name: connections.alive
+        source: NumAliveConnections
+        type: long_gauge
+        label: alive connections
+        description: Total number of alive client connections to this server
+
+      - name: connections.perhost
+        source: MaxClientCnxnsPerHost
+        type: long_gauge
+        label: max client conns per host
+        description: Maximum number of connections allowed from particular host
+
+      - name: requests.outstanding
+        source: OutstandingRequests
+        type: long_gauge
+        label: outstanding requests
+        description: Outstanding requests in the queue yet to be processed
+
+      - name: data.packets.sent
+        source: PacketsSent
+        type: long_gauge
+        label: packets sent
+        description: Total number of packets sent
+
+      - name: data.packets.received
+        source: PacketsReceived
+        type: long_gauge
+        label: packets received
+        description: Total number of packets received
+
+# we have to reset stats after we collect data, we don't want to collect data since ZK was started
+    func:
+      - name: resetStatistics
+        type: void
+
+    tag:
+      - name: zk.replica.serverId
+        value: ${replicated_server_id}
+
+      - name: zk.standalone.port.replica
+        value: ${replica_id}
+
+      - name: zk.replica.role
+        value: ${replica_role}
+

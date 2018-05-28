@@ -1,0 +1,31 @@
+type: jmx
+
+observation:
+  - name: kafka-producer-request-time
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerRequestMetrics,name=ProducerRequestRateAndTimeMs,brokerHost=${host},brokerPort=${port}
+
+    metric:
+      - name: producer.old.requests.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: producer.old.requests
+        source: Count
+        type: counter
+        label: producer requests
+
+      - name: producer.old.requests.time
+        source: func:DoubleMultiply(producer.old.requests, producer.old.requests.mean.time)
+        type: double_counter
+        label: producer request time
+        unit: ms
+
+    tag:
+      - name: kafka.producer.broker.host
+        value: ${host}
+
+      - name: kafka.producer.broker.port
+        value: ${port}
+

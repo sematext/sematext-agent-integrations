@@ -1,0 +1,50 @@
+type: jmx
+
+observation:
+  - name: kafka-broker-log-cleaner
+    metricNamespace: kafka
+    objectName: kafka.log:type=LogCleaner,name=max-buffer-utilization-percent
+
+    metric:
+      - name: broker.log.cleaner.clean.buffer.utilization
+        source: Value
+        type: long_gauge
+        label: broker log cleaner buffer utilization
+        unit: "%"
+
+
+  - name: kafka-broker-log-cleaner-recopy
+    metricNamespace: kafka
+    objectName: kafka.log:type=LogCleaner,name=cleaner-recopy-percent
+
+    metric:
+      - name: broker.log.cleaner.recopy.percentage
+        source: Value
+        type: long_gauge
+        label: broker log cleaner recopy
+        unit: "%"
+
+
+  - name: kafka-broker-log-cleaner-max-time
+    metricNamespace: kafka
+    objectName: kafka.log:type=LogCleaner,name=max-clean-time-secs
+
+    metric:
+      - name: broker.log.cleaner.clean.time
+        source: Value
+        type: long_gauge
+        label: broker log cleaner max time
+        unit: ms
+
+
+  - name: kafka-broker-log-cleaner-max-dirty
+    metricNamespace: kafka
+    objectName: kafka.log:type=LogCleanerManager,name=max-dirty-percent
+
+    metric:
+      - name: broker.log.cleaner.dirty.percentage
+        source: Value
+        type: long_gauge
+        label: broker log cleaner dirty
+        unit: "%"
+

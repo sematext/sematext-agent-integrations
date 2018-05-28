@@ -1,0 +1,40 @@
+type: json
+data:
+  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process?format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+observation:
+  - name: jvmThreadPoolStats
+    metricNamespace: jvm
+    path: $.nodes.${nodeId}.jvm.threads
+
+    metric:
+      - name: threads
+        source: count
+        type: gauge
+        label: thread count
+        description: current jvm thread count
+
+      - name: threads.peak
+        source: peak_count
+        type: gauge
+        label: peak thread count
+        description: peak jvm thread count
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

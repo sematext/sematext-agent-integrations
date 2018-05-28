@@ -1,0 +1,35 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-fetcher-request-throttle
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=FetchRequestAndResponseMetrics,name=FetchRequestThrottleRateAndTimeMs,clientId=${clientIdString},brokerHost=${broker_host},brokerPort=${broker_port}
+
+    metric:
+      - name: consumer.old.requests.throttle.mean.time
+        source: Mean
+        type: double_gauge
+        label: consumer throttle mean time
+        unit: ms
+
+      - name: consumer.old.requests.throttles
+        source: Count
+        type: counter
+        label: consumer throtles
+
+      - name: consumer.old.requests.throttle.time
+        source: func:DoubleMultiply(consumer.old.requests.throttles, consumer.old.requests.throttle.mean.time)
+        type: double_counter
+        label: consumer throttles time
+        unit: ms
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+      - name: kafka.consumer.client.broker.host
+        value: ${broker_host}
+
+      - name: kafka.consumer.client.broker.port
+        value: ${broker_port}
+

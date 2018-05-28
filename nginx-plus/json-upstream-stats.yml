@@ -1,0 +1,207 @@
+type: json
+data:
+  url: 
+  server: ${SPM_MONITOR_NGINX_PLUS_STATUS_URL}
+  basicHttpAuthUsername: ${SPM_MONITOR_NGINX_PLUS_USER}
+  basicHttpAuthPassword: ${SPM_MONITOR_NGINX_PLUS_PASSWORD}
+
+observation:
+  - name: peers
+    metricNamespace: nginxp
+    path: $.upstreams.${upstream}.peers[?(@.server=${serverHostPort})]
+
+    metric:
+      - name: backup
+        source: backup
+        type: text
+        send: false
+
+      - name: upstream.server.backup
+        source: func:BoolToInt(backup)
+        type: gauge
+        label: status backup
+        description: A value indicating whether the server is a backup server
+
+      - name: upstream.server.weight
+        source: weight
+        type: gauge
+        label: server weight
+        description: Weight of the server
+
+      - name: upstream.server.state
+        source: state
+        type: text
+        send: false
+
+      - name: upstream.state.up
+        source: func:StringEquals(upstream.server.state,up)
+        type: counter
+        label: state up
+        description: Server is up
+
+      - name: upstream.state.down
+        source: func:StringEquals(upstream.server.state,down)
+        type: counter
+        label: state down
+        description: Server is down
+
+      - name: upstream.state.unavailable
+        source: func:StringEquals(upstream.server.state,unavail)
+        type: counter
+        label: state unavailable
+        description: Server is unavailable
+
+      - name: upstream.state.unhealthy
+        source: func:StringEquals(upstream.server.state,unhealthy)
+        type: counter
+        label: state unhealthy
+        description: Server is unhealthy
+
+      - name: upstream.traffic.rx.bytes
+        source: received
+        type: counter
+        label: received data
+        description: The number of bytes sent to this server.
+        unit: bytes
+
+      - name: upstream.traffic.tx.bytes
+        source: sent
+        type: counter
+        label: sent data
+        description: The number of bytes received from this server.
+        unit: bytes
+
+      - name: upstream.checks.fail
+        source: fails
+        type: counter
+        label: upstream check fails
+        description: The number of unsuccessful attempts to communicate with the server
+
+      - name: upstream.checks.unavailable
+        source: unavail
+        type: counter
+        label: upstream check unavailable
+        description: How many times the server became unavailable for client requests (state “unavail”) due to the number of unsuccessful attempts reaching the max_fails threshold
+
+      - name: upstream.downtime
+        source: downtime
+        type: counter
+        label: downtime
+        description: Total time the server was in the unavail/checking/unhealthy states
+        unit: ms
+
+      - name: upstream.downstart
+        source: downstart
+        type: gauge
+        label: downstart
+        description: The time (in milliseconds since Epoch) when the server became unavail/checking/unhealthy
+        unit: ms
+
+      - name: upstream.responses
+        source: responses.total
+        type: counter
+        label: total responses
+        description: The total number of responses obtained from this server
+
+      - name: upstream.responses.1xx
+        source: responses.1xx
+        type: counter
+        label: 1xx responses
+        description: The number of responses with status codes 1xx
+
+      - name: upstream.responses.2xx
+        source: responses.2xx
+        type: counter
+        label: 2xx responses
+        description: The number of responses with status codes 2xx
+
+      - name: upstream.responses.3xx
+        source: responses.3xx
+        type: counter
+        label: 3xx responses
+        description: The number of responses with status codes 3xx
+
+      - name: upstream.responses.4xx
+        source: responses.4xx
+        type: counter
+        label: 4xx responses
+        description: The number of responses with status codes 4xx
+
+      - name: upstream.responses.5xx
+        source: responses.5xx
+        type: counter
+        label: 5xx responses
+        description: The number of responses with status codes 5xx
+
+      - name: passed
+        source: health_checks.last_passed
+        type: text
+        send: false
+
+      - name: upstream.health.checks
+        source: health_checks.checks
+        type: counter
+        label: upstream health checks
+        description: The total number of health check requests made
+
+      - name: upstream.health.fails
+        source: health_checks.fails
+        type: counter
+        label: upstream health fails
+        description: The number of failed health checks
+
+      - name: upstream.health.unhealthy
+        source: health_checks.unhealthy
+        type: gauge
+        label: upstream unhealthy count
+        description: How many times the server became unhealthy (state unhealthy)
+
+      - name: upstream.health.passed
+        source: func:BoolToInt(passed)
+        type: gauge
+        label: upstream health last passed
+        description: Value indicating if the last health check request was successful and passed tests
+
+      - name: upstream.connections.active
+        source: active
+        type: gauge
+        label: active connections
+        description: The current number of active connections
+
+    tag:
+      - name: nginxp.group
+        value: ${upstream}
+
+      - name: nginxp.server
+        value: ${serverHostPort}
+
+
+  - name: upstream
+    metricNamespace: nginxp
+    path: $.upstreams.${upstream}
+
+    metric:
+      - name: upstream.connections.keepalive
+        source: keepalive
+        type: gauge
+        label: keepalive connections
+        description: The current number of idle keepalive connections
+
+      - name: upstream.connections.zombies
+        source: zombies
+        type: gauge
+        label: zombie connections
+        description: The current number of servers removed from the group but still processing active client requests
+
+      - name: upstream.zone
+        source: zone
+        type: text
+        send: false
+
+    tag:
+      - name: nginxp.group
+        value: ${upstream}
+
+      - name: nginxp.server.zone
+        value: eval:${upstream.zone}
+

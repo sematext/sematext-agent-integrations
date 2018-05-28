@@ -1,0 +1,161 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ STATUS;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: innoDbDataTrafficStatsStatus
+    metricNamespace: mysql
+
+    metric:
+      - name: innodb.data.fsyncs
+        source: Innodb_data_fsyncs
+        type: counter
+        label: innodb data fsyncs
+        description: "Innodb_data_fsyncs: The number of fsync() operations"
+
+      - name: innodb.data.fsyncs.pending
+        source: Innodb_data_pending_fsyncs
+        type: long_gauge
+        label: innodb data pending fsyncs
+        description: "Innodb_data_pending_fsyncs: The current number of pending fsync() operations"
+
+      - name: innodb.data.reads.pending
+        source: Innodb_data_pending_reads
+        type: long_gauge
+        label: innodb data pending reads
+        description: "Innodb_data_pending_reads: The current number of pending reads"
+
+      - name: innodb.data.writes.pending
+        source: Innodb_data_pending_writes
+        type: long_gauge
+        label: innodb data pending writes
+        description: "Innodb_data_pending_writes: The current number of pending writes"
+
+      - name: innodb.data.read
+        source: Innodb_data_read
+        type: counter
+        label: innodb data read
+        description: "Innodb_data_read: The amount of data read"
+        unit: bytes
+
+      - name: innodb.data.reads
+        source: Innodb_data_reads
+        type: counter
+        label: innodb data reads
+        description: "Innodb_data_reads: The number of data reads"
+
+      - name: innodb.data.writes
+        source: Innodb_data_writes
+        type: counter
+        label: innodb data writes
+        description: "Innodb_data_writes: The number of data writes"
+
+      - name: innodb.data.written
+        source: Innodb_data_written
+        type: counter
+        label: innodb data written
+        description: "Innodb_data_written: The amount of data written in bytes"
+        unit: bytes
+
+      - name: innodb.pages.written.dblwr
+        source: Innodb_dblwr_pages_written
+        type: counter
+        label: innodb dblwr pages written
+        description: "Innodb_dblwr_pages_written: The number of pages that have been written for doublewrite operations"
+
+      - name: innodb.pages.writes.dblwr
+        source: Innodb_dblwr_writes
+        type: counter
+        label: innodb dblwr writes
+        description: "Innodb_dblwr_writes: The number of doublewrite operations that have been performed"
+
+      - name: innodb.pages.size
+        source: Innodb_page_size
+        type: long_gauge
+        label: innodb page size
+        description: "Innodb_page_size: The compiled-in InnoDB page size (default 16KB)"
+        unit: bytes
+
+      - name: innodb.pages.created
+        source: Innodb_pages_created
+        type: counter
+        label: innodb pages created
+        description: "Innodb_pages_created: The number of pages created"
+
+      - name: innodb.pages.read
+        source: Innodb_pages_read
+        type: counter
+        label: innodb pages read
+        description: "Innodb_pages_read: The number of pages read"
+
+      - name: innodb.pages.written
+        source: Innodb_pages_written
+        type: counter
+        label: innodb pages written
+        description: "Innodb_pages_written: The number of pages written"
+
+      - name: innodb.lock.waiting
+        source: Innodb_row_lock_current_waits
+        type: long_gauge
+        label: innodb row lock current waits
+        description: "Innodb_row_lock_current_waits: The number of row locks currently being waited for"
+
+      - name: innodb.lock.acquiring.time
+        source: Innodb_row_lock_time
+        type: counter
+        label: innodb row lock time
+        description: "Innodb_row_lock_time: The total time spent in acquiring row locks"
+        unit: ms
+
+      - name: innodb.lock.acquiring.time.avg
+        source: Innodb_row_lock_time_avg
+        type: double_gauge
+        label: innodb row lock time avg
+        description: "Innodb_row_lock_time_avg: The average time to acquire a row lock"
+        unit: ms
+
+      - name: innodb.lock.acquiring.time.max
+        source: Innodb_row_lock_time_max
+        type: long_gauge
+        label: innodb row lock time max
+        description: "Innodb_row_lock_time_max: The maximum time to acquire a row lock"
+        unit: ms
+
+      - name: innodb.lock.waits
+        source: Innodb_row_lock_waits
+        type: counter
+        label: innodb row lock waits
+        description: "Innodb_row_lock_waits: The number of times a row lock had to be waited for"
+
+      - name: innodb.rows.deleted
+        source: Innodb_rows_deleted
+        type: counter
+        label: innodb rows deleted
+        description: "Innodb_rows_deleted: The number of rows deleted from InnoDB tables"
+
+      - name: innodb.rows.inserted
+        source: Innodb_rows_inserted
+        type: counter
+        label: innodb rows inserted
+        description: "Innodb_rows_inserted: The number of rows inserted into InnoDB tables"
+
+      - name: innodb.rows.read
+        source: Innodb_rows_read
+        type: counter
+        label: innodb rows read
+        description: "Innodb_rows_read: The number of rows read from InnoDB tables"
+
+      - name: innodb.rows.updated
+        source: Innodb_rows_updated
+        type: counter
+        label: innodb rows updated
+        description: "Innodb_rows_updated: The number of rows updated in InnoDB tables"
+

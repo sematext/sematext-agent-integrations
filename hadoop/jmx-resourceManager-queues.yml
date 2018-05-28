@@ -1,0 +1,124 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-resourcemanager
+
+observation:
+  - name: resourcemanager_queue_metrics
+    metricNamespace: hadoop
+    objectName: Hadoop:service=ResourceManager,name=QueueMetrics,q0=${q0},q1=${q1}
+
+    metric:
+      - name: rm.apps.active
+        source: ActiveApplications
+        type: long_gauge
+        label: active applications
+
+      - name: rm.users.active
+        source: ActiveUsers
+        type: long_gauge
+        label: active users
+
+      - name: rm.agg.containers.alloc
+        source: AggregateContainersAllocated
+        type: counter
+        label: agg containers allocated
+
+      - name: rm.containers.released
+        source: AggregateContainersReleased
+        type: counter
+        label: containers released
+
+      - name: rm.containers.alloc
+        source: AllocatedContainers
+        type: long_gauge
+        label: containers allocated
+
+      - name: rm.memory.alloc.mb
+        source: AllocatedMB
+        type: long_gauge
+        label: allocated MB
+        unit: MB
+
+      - name: rm.apps.completed
+        source: AppsCompleted
+        type: counter
+        label: applications completed
+
+      - name: rm.apps.failed
+        source: AppsFailed
+        type: counter
+        label: applications failed
+
+      - name: rm.apps.killed
+        source: AppsKilled
+        type: counter
+        label: applications killed
+
+      - name: rm.apps.pending
+        source: AppsPending
+        type: long_gauge
+        label: applications pending
+
+      - name: rm.apps.running
+        source: AppsRunning
+        type: long_gauge
+        label: applications running
+
+      - name: rm.apps.submitted
+        source: AppsSubmitted
+        type: counter
+        label: applications submitted
+
+      - name: rm.memory.available.mb
+        source: AvailableMB
+        type: long_gauge
+        label: available MB
+        unit: MB
+
+      - name: rm.containers.pending
+        source: PendingContainers
+        type: long_gauge
+        label: containers pending
+
+      - name: rm.memory.pending.mb
+        source: PendingMB
+        type: long_gauge
+        label: pending MB
+        unit: MB
+
+      - name: rm.containers.reserved
+        source: ReservedContainers
+        type: long_gauge
+        label: containers reserved
+
+      - name: rm.memory.reserved.mb
+        source: ReservedMB
+        type: long_gauge
+        label: reserved MB
+        unit: MB
+
+      - name: rm.running.0
+        source: running_0
+        type: long_gauge
+        label: running 0
+
+      - name: rm.running.60
+        source: running_60
+        type: long_gauge
+        label: running 60
+
+      - name: rm.running.300
+        source: running_300
+        type: long_gauge
+        label: running 300
+
+      - name: rm.running.1440
+        source: running_1440
+        type: long_gauge
+        label: running 1440
+
+    tag:
+      - name: hadoop.rm.queue
+        value: func:ConcatUsingString(.,q0,q1)
+

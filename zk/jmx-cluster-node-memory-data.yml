@@ -1,0 +1,50 @@
+type: jmx
+
+observation:
+  - name: zk_cluster_node_InMemoryDataTree
+    metricNamespace: zk
+    objectName: org.apache.ZooKeeperService:name0=ReplicatedServer_id${replicated_server_id},name1=replica.${replica_id},name2=${replica_role},name3=InMemoryDataTree
+
+    metric:
+      - name: data.nodes
+        source: NodeCount
+        type: long_gauge
+        label: znodes
+        description: Number of znodes in the data tree
+
+      - name: connections.watch
+        source: WatchCount
+        type: long_gauge
+        label: watch count
+        description: Number of watches set
+
+      - name: data.ephemerals
+        source: eval:${countEphemerals}
+        type: long_gauge
+        label: ephemeral nodes
+        description: Number of ephemeral nodes in the data tree
+
+      - name: data.size.approximate
+        source: eval:${approximateDataSize}
+        type: long_gauge
+        label: approximate data size
+        description: Data tree size in bytes.The size includes the znode path and its value
+        unit: bytes
+
+    func:
+      - name: countEphemerals
+        type: long_gauge
+
+      - name: approximateDataSize
+        type: long_gauge
+
+    tag:
+      - name: zk.replica.serverId
+        value: ${replicated_server_id}
+
+      - name: zk.standalone.port.replica
+        value: ${replica_id}
+
+      - name: zk.replica.role
+        value: ${replica_role}
+

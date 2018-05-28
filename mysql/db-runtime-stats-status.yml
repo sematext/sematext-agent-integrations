@@ -1,0 +1,195 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ STATUS;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: runtimeStatusStats
+    metricNamespace: mysql
+
+    metric:
+      - name: connections.aborted
+        source: Aborted_clients
+        type: counter
+        label: aborted clients
+        description: "Aborted_clients: The number of connections that were aborted because the client died without closing the connection properly"
+
+      - name: connections.failed
+        source: Aborted_connects
+        type: counter
+        label: aborted connects
+        description: "Aborted_connects: The number of failed attempts to connect to the MySQL server"
+
+      - name: connections.concurrent.max
+        source: Max_used_connections
+        type: long_gauge
+        label: max used connections
+        description: "Max_used_connections: The maximum number of connections that have been in use simultaneously since the server started"
+
+      - name: traffic.rx.bytes
+        source: Bytes_received
+        type: counter
+        label: bytes received
+        description: "Bytes_received: The number of bytes received from all clients"
+        unit: bytes
+
+      - name: traffic.tx.bytes
+        source: Bytes_sent
+        type: counter
+        label: bytes sent
+        description: "Bytes_sent: The number of bytes sent to all clients"
+        unit: bytes
+
+      - name: tables.tmp.disk
+        source: Created_tmp_disk_tables
+        type: counter
+        label: created tmp disk tables
+        description: "Created_tmp_disk_tables: The number of internal on-disk temporary tables created by the server while executing statements. If an internal temporary table is created initially as an in-memory table but becomes too large, MySQL automatically converts it to an on-disk table"
+
+      - name: files.tmp.created
+        source: Created_tmp_files
+        type: counter
+        label: created tmp files
+        description: "Created_tmp_files: How many temporary files mysqld has created"
+
+      - name: tables.tmp
+        source: Created_tmp_tables
+        type: counter
+        label: created tmp tables
+        description: "Created_tmp_tables: The number of internal temporary tables created by the server while executing statements"
+
+      - name: files.open
+        source: Open_files
+        type: long_gauge
+        label: open files
+        description: "Open_files: The number of files that are open. This count includes regular files opened by the server"
+
+      - name: files.streams
+        source: Open_streams
+        type: long_gauge
+        label: open streams
+        description: "Open_streams: The number of streams that are open (used mainly for logging)"
+
+      - name: tables.definition.open
+        source: Open_table_definitions
+        type: long_gauge
+        label: open table definitions
+        description: "Open_table_definitions: The number of cached .frm files"
+
+      - name: tables.open
+        source: Open_tables
+        type: long_gauge
+        label: open tables
+        description: "Open_tables: The number of tables that are open"
+
+      - name: files.my_open
+        source: Opened_files
+        type: counter
+        label: opened files
+        description: "Opened_files: The number of files that have been opened with my_open()"
+
+      - name: tables.definition.opened
+        source: Opened_table_definitions
+        type: counter
+        label: opened table definitions
+        description: "Opened_table_definitions: The number of .frm files that have been cached"
+
+      - name: tables.opened
+        source: Opened_tables
+        type: counter
+        label: opened tables
+        description: "Opened_tables: The number of tables that have been opened. If Opened_tables is big, your table_open_cache value is probably too small"
+
+      - name: tables.locks.immediate
+        source: Table_locks_immediate
+        type: counter
+        label: table locks immediate
+        description: "Table_locks_immediate: The number of times that a request for a table lock could be granted immediately"
+
+      - name: tables.locks.waited
+        source: Table_locks_waited
+        type: counter
+        label: table locks waited
+        description: "Table_locks_waited: The number of times that a request for a table lock could not be granted immediately and a wait was needed. If this is high and you have performance problems, you should first optimize your queries, and then either split your table or tables or use replication"
+
+      - name: queries.insert.delayed.errors
+        source: Delayed_errors
+        type: counter
+        label: delayed errors
+        description: "Delayed_errors: The number of rows written with INSERT DELAYED for which some error occurred (probably duplicate key)"
+
+      - name: queries.insert.delayed.threads
+        source: Delayed_insert_threads
+        type: long_gauge
+        label: delayed insert threads
+        description: "Delayed_insert_threads: The number of INSERT DELAYED handler threads in use"
+
+      - name: queries.insert.delayed.writes
+        source: Delayed_writes
+        type: counter
+        label: delayed writes
+        description: "Delayed_writes: The number of INSERT DELAYED rows written"
+
+      - name: queries.insert.delayed.queued
+        source: Not_flushed_delayed_rows
+        type: long_gauge
+        label: not flushed delayed rows
+        description: "Not_flushed_delayed_rows: The number of rows waiting to be written in INSERT DELAYED queues"
+
+      - name: uptime
+        source: Uptime
+        type: long_gauge
+        label: uptime
+        description: "Uptime: The number of seconds that the server has been up"
+        unit: sec
+
+      - name: uptime.sinceflush
+        source: Uptime_since_flush_status
+        type: long_gauge
+        label: uptime since flush
+        description: "Uptime_since_flush_status: The number of seconds since the most recent FLUSH STATUS statement"
+        unit: sec
+
+      - name: tables.flushes
+        source: Flush_commands
+        type: counter
+        label: flush commands
+        description: "Flush_commands: The number of times the server flushes tables, whether because a user executed a FLUSH TABLES statement or due to internal server operation"
+
+      - name: queries.prepared.stmts
+        source: Prepared_stmt_count
+        type: long_gauge
+        label: prepared stmt count
+        description: "Prepared_stmt_count: The current number of prepared statements. (The maximum number of statements is given by the max_prepared_stmt_count system variable)"
+
+      - name: queries
+        source: Queries
+        type: counter
+        label: queries
+        description: "Queries: The number of statements executed by the server. This variable includes statements executed within stored programs, unlike the Questions variable. It does not count COM_PING or COM_STATISTICS commands. This variable was added in MySQL 5.0.76"
+
+      - name: queries.client
+        source: Questions
+        type: counter
+        label: questions
+        description: "Questions: The number of statements executed by the server. As of MySQL 5.0.72, this includes only statements sent to the server by clients and no longer includes statements executed within stored programs, unlike the Queries variable. This variable does not count COM_PING, COM_STATISTICS, COM_STMT_PREPARE, COM_STMT_CLOSE, or COM_STMT_RESET commands"
+
+      - name: threads.slowlaunch
+        source: Slow_launch_threads
+        type: counter
+        label: slow launch threads
+        description: "Slow_launch_threads: The number of threads that have taken more than slow_launch_time seconds to create"
+
+      - name: queries.slow
+        source: Slow_queries
+        type: counter
+        label: slow queries
+        description: "Slow_queries: The number of queries that have taken more than long_query_time seconds. This counter increments regardless of whether the slow query log is enabled"
+

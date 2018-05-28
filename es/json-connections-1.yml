@@ -1,0 +1,166 @@
+type: json
+data:
+  url: /_nodes/_local/stats/indices,network,transport,http,thread_pool,jvm,process?format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1
+
+observation:
+  - name: connections_http
+    metricNamespace: es
+    path: $.nodes.${nodeId}.http
+
+    metric:
+      - name: connection.http.current.open
+        source: current_open
+        type: long_gauge
+        label: open HTTP conns
+        description: open HTTP conns (current_open)
+
+      - name: connection.http.total.opened
+        source: total_opened
+        type: long_gauge
+        label: total opened HTTP conns
+        description: total opened HTTP conns (total_opened)
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: connections_transport
+    metricNamespace: es
+    path: $.nodes.${nodeId}.transport
+
+    metric:
+      - name: connection.tcp.server.open
+        source: server_open
+        type: long_gauge
+        label: open TCP conns
+        description: open TCP conns (server_open)
+
+      - name: transport.rx.packets
+        source: rx_count
+        type: counter
+        label: network received packets
+        description: network received packets count (rx_count)
+
+      - name: transport.rx.bytes
+        source: rx_size_in_bytes
+        type: counter
+        label: network received size
+        description: network received size (rx_size)
+        unit: bytes
+
+      - name: transport.tx.packets
+        source: tx_count
+        type: counter
+        label: network transmitted packets
+        description: network transmitted packets count (tx_count)
+
+      - name: transport.tx.bytes
+        source: tx_size_in_bytes
+        type: counter
+        label: network transmitted size
+        description: network transmitted size (tx_size)
+        unit: bytes
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: connections_tcp
+    metricNamespace: es
+    path: $.nodes.${nodeId}.network.tcp
+
+    metric:
+      - name: connection.tcp.active.opens
+        source: active_opens
+        type: counter
+        label: active conn openings
+        description: active conn openings (active_opens)
+
+      - name: connection.tcp.passive.opens
+        source: passive_opens
+        type: counter
+        label: passive conn openings
+        description: passive conn openings (passive_opens)
+
+      - name: connection.tcp.current.estab
+        source: curr_estab
+        type: long_gauge
+        label: open sockets
+        description: open sockets (current_estab)
+
+      - name: connection.in.segs
+        source: in_segs
+        type: counter
+        label: inbound segments (in_segs)
+        description: inbound segments (in_segs)
+
+      - name: connection.out.segs
+        source: out_segs
+        type: counter
+        label: outbound segments (out_segs)
+        description: outbound segments (out_segs)
+
+      - name: connection.retrans.segs
+        source: retrans_segs
+        type: counter
+        label: retransmitted segments (retrans_segs)
+        description: retransmitted segments (retrans_segs)
+
+      - name: connection.tcp.estab.resets
+        source: estab_resets
+        type: counter
+        label: socket resets (estab_resets)
+        description: socket resets (estab_resets)
+
+      - name: connection.tcp.attempt.fails
+        source: attempt_fails
+        type: counter
+        label: failed socket open (attempt_fails)
+        description: failed socket open (attempt_fails)
+
+      - name: connection.in.errors
+        source: in_errs
+        type: counter
+        label: connection errors
+        description: connection errors
+
+      - name: connection.tcp.out.rsts
+        source: out_rsts
+        type: counter
+        label: socket resets sent (out_rsts)
+        description: socket resets sent (out_rsts)
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

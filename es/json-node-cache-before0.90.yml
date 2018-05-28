@@ -1,0 +1,54 @@
+type: json
+data:
+  url: /_nodes/_local/stats?format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 0-0.20
+
+observation:
+  - name: cacheStats_nodeCache_field
+    metricNamespace: es
+    path: $.nodes.${nodeId}.indices.cache
+
+    metric:
+      - name: cache.field.evicted
+        source: field_evictions
+        type: counter
+        label: field cache evictions
+        description: Field cache evictions
+
+      - name: cache.field.size
+        source: field_size_in_bytes
+        type: long_gauge
+        label: field cache size
+        description: Field cache size
+        unit: bytes
+
+      - name: cache.filter.evicted
+        source: filter_evictions
+        type: counter
+        label: filter cache evictions
+        description: Filter cache evictions
+
+      - name: cache.filter.size
+        source: filter_size_in_bytes
+        type: long_gauge
+        label: filter cache size
+        description: Filter cache size
+        unit: bytes
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

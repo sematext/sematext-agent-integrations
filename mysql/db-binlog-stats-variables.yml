@@ -1,0 +1,37 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ VARIABLES;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: binlogStatsVariables
+    metricNamespace: mysql
+
+    metric:
+      - name: binlog.cache.size
+        source: binlog_cache_size
+        type: long_gauge
+        label: binlog cache size
+        description: "binlog_cache_size: The size of the cache to hold the SQL statements for the binary log during a transaction. A binary log cache is allocated for each client if the server supports any transactional storage engines and if the server has the binary log enabled (--log-bin option). If you often use large, multiple-statement transactions, you can increase this cache size to get better performance"
+        unit: bytes
+
+      - name: binlog.stmt.cache.size
+        source: binlog_stmt_cache_size
+        type: long_gauge
+        label: binlog stmt cache size
+        description: "binlog_stmt_cache_size: Beginning with MySQL 5.5.9, this variable determines the size of the cache for the binary log to hold nontransactional statements issued during a transaction. In MySQL 5.5.3 and later, separate binary log transaction and statement caches are allocated for each client if the server supports any transactional storage engines and if the server has the binary log enabled (--log-bin option). If you often use large nontransactional statements during transactions, you can increase this cache size to get more performance"
+
+      - name: binlog.size.max
+        source: max_binlog_size
+        type: long_gauge
+        label: binlog max size
+        description: "max_binlog_size: If a write to the binary log causes the current log file size to exceed the value of this variable, the server rotates the binary logs (closes the current file and opens the next one). The minimum value is 4096 bytes. The maximum and default value is 1GB."
+        unit: bytes
+

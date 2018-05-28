@@ -1,0 +1,58 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-connector-kafka-commit
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=ZookeeperConsumerConnector,name=KafkaCommitsPerSec,clientId=${clientIdString}
+
+    metric:
+      - name: consumer.old.commits.kafka
+        source: Count
+        type: counter
+        label: consumer kafka commits
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+
+  - name: kafka-consumer-connector-zookeeper-commit
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=ZookeeperConsumerConnector,name=ZooKeeperCommitsPerSec,clientId=${clientIdString}
+
+    metric:
+      - name: consumer.old.commits.zookeeper
+        source: Count
+        type: counter
+        label: consumer zk commits
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+
+  - name: kafka-consumer-connector-rebalances
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=ZookeeperConsumerConnector,name=RebalanceRateAndTime,clientId=${clientIdString}
+
+    metric:
+      - name: consumer.old.rebalances.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: consumer.old.rebalances
+        source: Count
+        type: counter
+        label: consumer rebalances count
+
+      - name: consumer.old.rebalances.time
+        source: func:DoubleMultiply(consumer.old.rebalances, consumer.old.rebalances.mean.time)
+        type: double_counter
+        label: consumer rebalances time
+        unit: ms
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+

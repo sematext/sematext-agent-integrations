@@ -1,0 +1,60 @@
+type: jmx
+
+observation:
+  - name: thread.executor.tomcat
+    metricNamespace: tomcat
+    objectName: Catalina:type=Executor,name=${executor_name}
+
+    metric:
+      - name: executors.active
+        source: activeCount
+        type: long_gauge
+        label: executor active threads
+        description: Number of threads currently processing a task
+
+      - name: executors.tasks.completed
+        source: completedTaskCount
+        type: counter
+        label: executor completed tasks
+        description: Number of tasks completed by the executor
+
+      - name: executors.core
+        source: corePoolSize
+        type: long_gauge
+        label: executor core thread pool size
+        description: Core size of the thread pool
+
+      - name: executors.queue.size.max
+        source: maxQueueSize
+        type: long_gauge
+        label: executor max queue size
+        description: Maximum number of tasks for the pending task queue
+
+      - name: executors.max
+        source: maxThreads
+        type: long_gauge
+        label: max executor threads
+        description: Maximum number of allocated threads
+
+      - name: executors.spare.min
+        source: minSpareThreads
+        type: long_gauge
+        label: min spare executor threads
+        description: Minimum number of allocated threads
+
+      - name: executors.pool
+        source: poolSize
+        type: long_gauge
+        label: executor threads pool size
+        description: Number of threads in the pool
+
+      - name: executors.queue.size
+        source: queueSize
+        type: long_gauge
+        label: executor queue
+        description: Number of tasks waiting to be processed
+
+    tag:
+      - name: tomcat.executor
+        value: ${executor_name}
+

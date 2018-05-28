@@ -1,0 +1,71 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-producer-node
+    metricNamespace: kafka
+    objectName: kafka.producer:type=producer-node-metrics,client-id=${clientId},node-id=${nodeId}
+
+    metric:
+      - name: producer.node.requests.rate
+        source: request-rate
+        type: double_gauge
+        label: producer node requests rate
+        description: The average number of requests sent per second.
+        unit: req/sec
+
+      - name: producer.requests.size
+        source: request-size-avg
+        type: double_gauge
+        label: producer request size
+        description: The average size of all requests in the window.
+        unit: bytes
+
+      - name: producer.node.in.bytes.rate
+        source: incoming-byte-rate
+        type: double_gauge
+        label: producer node in bytes rate
+        description: Bytes/second read off socket
+        unit: bytes
+
+      - name: producer.requests.size.max
+        source: request-size-max
+        type: double_gauge
+        label: producer request max size
+        description: The maximum size of any request sent in the window.
+        unit: bytes
+
+      - name: producer.node.out.bytes.rate
+        source: outgoing-byte-rate
+        type: double_gauge
+        label: producer node out bytes rate
+        description: The average number of outgoing bytes sent per second to servers.
+        unit: bytes
+
+      - name: producer.node.requests.latency.max
+        source: request-latency-max
+        type: double_gauge
+        label: producer node request max latency
+        description: The maximum request latency
+        unit: ms
+
+      - name: producer.node.requests.latency
+        source: request-latency-avg
+        type: double_gauge
+        label: producer node request latency
+        description: The average request latency
+        unit: ms
+
+      - name: producer.node.responses.rate
+        source: response-rate
+        type: double_gauge
+        label: producer node responses rate
+        description: The average number of responses received per second.
+        unit: res/sec
+
+    tag:
+      - name: kafka.clients.producer.client
+        value: ${clientId}
+
+      - name: kafka.clients.producer.node
+        value: ${nodeId}
+

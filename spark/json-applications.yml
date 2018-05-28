@@ -1,0 +1,27 @@
+type: json
+data:
+  url: /api/v1/applications
+  server: ${SPARK_API_HOST}:${SPARK_API_PORT}
+
+observation:
+  - name: apps
+    metricNamespace: spark
+    path: $.[?(@.id=${appId} && @.name=${appName})]
+#  TODO:
+# - BoolToInt
+# - syntax
+# 
+
+    metric:
+      - name: applications.uncompleted
+        source: json:/api/v1/applications/${appId} $.?(@.id=appId).attempts.[:1].completed
+        type: long_gauge
+        label: uncompleted apps
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+      - name: spark.app.id
+        value: ${appId}
+

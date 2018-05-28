@@ -1,0 +1,111 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 1-6
+
+observation:
+  - name: searcher_solrOld
+    metricNamespace: solr
+    objectName: solr/${core}:type=searcher,*
+
+    metric:
+      - name: index.docs.max
+        source: maxDoc
+        type: long_gauge
+        label: index max doc
+        description: max doc in the index
+        unit: docs
+
+      - name: index.docs
+        source: numDocs
+        type: long_gauge
+        label: index num docs
+        description: number of docs in the index
+        unit: docs
+
+      - source: reader
+        type: text
+        send: false
+
+      - name: index.segments
+        source: func:com.sematext.spm.client.solr.CalculateSegmentsCount(reader)
+        type: long_gauge
+        label: index segments
+        description: index segments count
+
+      - source: readerDir
+        type: text
+        send: false
+
+      - name: index.files
+        source: func:com.sematext.spm.client.solr.CalculateCoreNumFiles(readerDir,true)
+        type: long_gauge
+        label: index num of files
+        description: number of files in solr index
+
+      - name: index.files.size
+        source: func:DirSize(readerDir)
+        type: long_gauge
+        label: index size on the disk
+        description: size of solr index on the disk
+        unit: bytes
+
+      - source: searcherName
+        type: text
+        send: false
+
+    tag:
+      - name: solr.collection
+        value: jmx:solr/${core}:type=core,id=${core} collection|jmx:solr/${core}:type=core,id=${core} coreName|jmx:solr/${core}:type=core coreName
+        # | operator in expressions means N clauses will be evaluated, until one that doesn't return null is found (and that value is
+        # considered as resolved; if all clauses return null, final resolved value will be null;
+        # in this case, we first look for "collection" attribute since it is available in solr 5+ versions; if it is not present,
+        # this is one of pre-5 solr versions, so as a value of "collection" tag we use value of attribute "coreName" 
+
+      - name: solr.shard
+        value: jmx:solr/${core}:type=core,id=${core} shard
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaName
+
+      - name: solr.core
+        value: ${core}
+
+
+  - name: searcher_solrOld_warmup
+    metricNamespace: solr
+    objectName: solr/${core}:type=searcher,*
+
+    metric:
+      - source: searcherName
+        type: text
+        send: false
+
+      - source: warmupTime
+        type: long_gauge
+        send: false
+
+      - name: warmup.time
+        source: func:com.sematext.spm.client.solr.CalculateWarmupTime(warmupTime,searcherName)
+        type: counter
+        stateful: true
+        label: warmup time
+        description: warmup time
+        unit: ms
+
+    tag:
+      - name: solr.collection
+        value: jmx:solr/${core}:type=core,id=${core} collection|jmx:solr/${core}:type=core,id=${core} coreName|jmx:solr/${core}:type=core coreName
+
+      - name: solr.shard
+        value: jmx:solr/${core}:type=core,id=${core} shard
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaName
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.warmup.type
+        value: searcher
+

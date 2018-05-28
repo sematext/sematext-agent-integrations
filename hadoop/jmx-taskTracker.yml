@@ -1,0 +1,47 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-tasktracker
+
+observation:
+#  all
+  - name: tasktracker_metrics
+    metricNamespace: hadoop
+    objectName: Hadoop:service=TaskTracker,name=TaskTrackerMetrics
+
+    metric:
+      - name: tt.maps.slots
+        source: mapTaskSlots
+        type: long_gauge
+        label: map task slots
+
+      - name: tt.maps.running
+        source: maps_running
+        type: long_gauge
+        label: maps running
+
+      - name: tt.reduces.slots
+        source: reduceTaskSlots
+        type: long_gauge
+        label: reduce task slots
+
+      - name: tt.reduces.running
+        source: reduces_running
+        type: long_gauge
+        label: reduces running
+
+      - name: tt.tasks.completed
+        source: tasks_completed
+        type: counter
+        label: tasks completed
+
+      - name: tt.tasks.failed.ping
+        source: tasks_failed_ping
+        type: counter
+        label: tasks failed ping
+
+      - name: tt.tasks.failed.timeout
+        source: tasks_failed_timeout
+        type: counter
+        label: tasks failed timeout
+

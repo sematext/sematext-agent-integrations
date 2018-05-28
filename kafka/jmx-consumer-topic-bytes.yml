@@ -1,0 +1,21 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-topic-bytes
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=ConsumerTopicMetrics,name=BytesPerSec,clientId=${clientIdString},topic=${topic}
+
+    metric:
+      - name: consumer.old.topic.bytes
+        source: Count
+        type: counter
+        label: consumer topic
+        unit: bytes
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+

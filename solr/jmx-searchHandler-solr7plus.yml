@@ -1,0 +1,252 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 7-*
+
+observation:
+  - name: searchhandler1_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=QUERY,scope=${searchHandler},name=totalTime
+
+    metric:
+      - source: Count
+        type: counter
+        send: false
+
+      - name: requests.time
+        source: eval:${Count} / 1000000
+        type: counter
+        label: request time
+        description: request time
+        unit: ms
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.search.handler
+        value: ${searchHandler}
+
+
+  - name: searchhandler2_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=QUERY,scope=${searchHandler},name=requests
+
+    metric:
+      - name: requests
+        source: Count
+        type: counter
+        label: req.count
+        description: request count
+        unit: req
+
+      # in this case we use "outer" function which just extracts value for metric "requests.time" from any of observations
+      # defined before current observation in this file (the only such observation here being "searchhandler1_solr7_cloud")
+      - name: totalTime
+        source: outer:requests.time
+        type: long_gauge
+        send: false
+
+      - name: requests.latency.avg
+        source: func:DoubleDivide(totalTime,requests)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg. request latency
+        description: avg. request latency
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.search.handler
+        value: ${searchHandler}
+
+
+  - name: searchhandler3_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=QUERY,scope=${searchHandler},name=errors
+
+    metric:
+      - name: requests.error.count
+        source: Count
+        type: counter
+        label: request error count
+        description: request error count
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.search.handler
+        value: ${searchHandler}
+
+    ignore:
+      - name: collection
+        value: sample_collection_for_ignore
+
+
+  - name: searchhandler4_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=QUERY,scope=${searchHandler},name=timeouts
+
+    metric:
+      - name: requests.timeout.count
+        source: Count
+        type: counter
+        label: request timeout count
+        description: request timeout count
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.search.handler
+        value: ${searchHandler}
+
+    ignore:
+      - name: collection
+        value: sample_collection_for_ignore
+
+
+#  "classic" Solr setup uses different bean names
+  - name: searchhandler1_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=QUERY,scope=${searchHandler},name=totalTime
+
+    metric:
+      - source: Count
+        type: counter
+        send: false
+
+      - name: requests.time
+        source: eval:${Count} / 1000000
+        type: counter
+        label: request time
+        description: request time
+        unit: ms
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: ${searchHandler}
+
+  - name: searchhandler2_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=QUERY,scope=${searchHandler},name=requests
+
+    metric:
+      - name: requests
+        source: Count
+        type: counter
+        label: req.count
+        description: request count
+        unit: req
+
+      - name: totalTime
+        source: outer:requests.time
+        type: long_gauge
+        send: false
+
+      - name: requests.latency.avg
+        source: func:DoubleDivide(totalTime,requests)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg. request latency
+        description: avg. request latency
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: ${searchHandler}
+
+
+  - name: searchhandler3_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=QUERY,scope=${searchHandler},name=errors
+
+    metric:
+      - name: requests.error.count
+        source: Count
+        type: counter
+        label: request error count
+        description: request error count
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: ${searchHandler}
+
+
+  - name: searchhandler4_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=QUERY,scope=${searchHandler},name=timeouts
+
+    metric:
+      - name: requests.timeout.count
+        source: Count
+        type: counter
+        label: request timeout count
+        description: request timeout count
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: ${searchHandler}

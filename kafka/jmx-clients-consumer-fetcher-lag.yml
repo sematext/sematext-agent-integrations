@@ -1,0 +1,65 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-consumer-fetcher-max-lag
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=consumer-fetch-manager-metrics,client-id=${clientId}
+
+    metric:
+      - name: consumer.fetcher.max.lag
+        source: ${topic}-${partition}.records-lag-max
+        type: double_gauge
+        label: consumer fetcher max lag
+        description: Max lag in messages per topic partition
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+
+      - name: kafka.consumer.client.topic.partition
+        value: ${partition}
+
+  - name: kafka-clients-consumer-fetcher-avg-lag
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=consumer-fetch-manager-metrics,client-id=${clientId}
+
+    metric:
+      - name: consumer.fetcher.avg.lag
+        source: ${topic}-${partition}.records-lag-avg
+        type: double_gauge
+        label: consumer fetcher avg lag
+        description: Average lag in messages per topic partition
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+
+      - name: kafka.consumer.client.topic.partition
+        value: ${partition}
+
+  - name: kafka-clients-consumer-fetcher-lag
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=consumer-fetch-manager-metrics,client-id=${clientId}
+
+    metric:
+      - name: consumer.fetcher.lag
+        source: ${topic}-${partition}.records-lag
+        type: double_gauge
+        label: consumer fetcher lag
+        description: Lag in messages per topic partition
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+
+      - name: kafka.consumer.client.topic.partition
+        value: ${partition}

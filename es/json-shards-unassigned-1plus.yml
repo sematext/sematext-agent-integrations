@@ -1,0 +1,35 @@
+type: json
+data:
+  url: /_cluster/health?level=indices&format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  async: false
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+require:
+  - className: com.sematext.spm.client.es.IsDataNodeCheck
+    values: true
+
+observation:
+  # unassigned shards are related to particular index (and cluster), they have no relation to any node
+  - name: shardStats_unassigned
+    metricNamespace: es
+    path: $.indices.${indexName}
+
+    metric:
+      - name: cluster.shards.unassigned
+        source: unassigned_shards
+        type: long_gauge
+        label: unassigned shards
+        description: Number of unassigned shards
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.index
+        value: ${indexName}
+

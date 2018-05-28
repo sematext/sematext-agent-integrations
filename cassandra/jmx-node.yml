@@ -1,0 +1,480 @@
+type: jmx
+
+observation:
+# Following metrics are applicable for all version of Cassandra
+  - name: writeRequestsCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=Latency
+
+    metric:
+      - name: write.requests
+        source: Count
+        type: counter
+        label: write requests
+        description: The number of write requests
+
+
+  - name: writeRequestsTotalLatency
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Write,name=TotalLatency
+
+    metric:
+      - name: write.requests.latency.time
+        source: Count
+        type: counter
+        label: write latency total
+        unit: ms
+
+      # writeRequests value is extracted from write.requests defined above, using `outer` function
+      - name: writeRequests
+        source: outer:write.requests
+        type: long_gauge
+        send: false
+
+      - name: write.latency.avg
+        source: func:DoubleDivide(write.requests.latency.time,writeRequests)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg write latency
+        unit: ms
+
+
+  - name: readRequestsCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=Latency
+
+    metric:
+      - name: read.requests
+        source: Count
+        type: counter
+        label: read requests
+        description: The number of read requests
+
+
+  - name: readRequestsTotalLatency
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ClientRequest,scope=Read,name=TotalLatency
+
+    metric:
+      - name: read.requests.latency.time
+        source: Count
+        type: counter
+        label: read latency total
+        unit: ms
+
+      # readRequests value is extracted from read.requests defined above, using `outer` function
+      - name: readRequests
+        source: outer:read.requests
+        type: long_gauge
+        send: false
+
+      - name: read.latency.avg
+        source: func:DoubleDivide(read.requests.latency.time,readRequests)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg read latency
+        unit: ms
+
+
+  - name: pendingReadRepair
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=request,scope=ReadRepairStage,name=PendingTasks
+
+    metric:
+      - name: read.repair.pending
+        source: Value
+        type: long_gauge
+        label: read repairs pending
+        description: The number of read repair operations that are queued and waiting for system resources in order to run
+
+
+  - name: pendingCompactions
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Compaction,name=PendingTasks
+
+    metric:
+      - name: compaction.pending
+        source: Value
+        type: long_gauge
+        label: compactions pending
+        description: The number of compactions that are queued and waiting for system resources in order to run
+
+
+  - name: totalBytesCompacted
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Compaction,name=BytesCompacted
+
+    metric:
+      - name: compaction.bytes
+        source: Count
+        type: counter
+        label: bytes compacted
+        description: Total number of bytes compacted since server [re]start
+        unit: bytes
+
+
+  - name: totalCompactionsCompleted
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Compaction,name=TotalCompactionsCompleted
+
+    metric:
+      - name: compaction.completed
+        source: Count
+        type: counter
+        label: compactions completed
+        description: Number of compaction tasks completed
+
+
+  - name: keyCacheRequests
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Cache,scope=KeyCache,name=Requests
+
+    metric:
+      - name: cache.key.requests
+        source: Count
+        type: counter
+        label: key cache requests
+        description: The number of key cache requests
+
+
+  - name: keyCacheHits
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Cache,scope=KeyCache,name=Hits
+
+    metric:
+      - name: cache.key.hits
+        source: Count
+        type: counter
+        label: key cache hits
+        description: The number of key cache hits. This will avoid possible disk seeks when finding a partition in an SSTable
+
+
+  - name: rowCacheRequests
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Cache,scope=RowCache,name=Requests
+
+    metric:
+      - name: cache.row.requests
+        source: Count
+        type: counter
+        label: row cache requests
+        description: The number of row cache requests
+
+
+  - name: rowCacheHits
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Cache,scope=RowCache,name=Hits
+
+    metric:
+      - name: cache.row.hits
+        source: Count
+        type: counter
+        label: row cache hits
+        description: The number of row cache hits
+
+
+# Following metrics are applicable only for 1.x version of Cassandra
+  - name: pendingReplicationsOnWrite_1_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.request:type=ReplicateOnWriteStage
+
+    metric:
+      - name: write.replications.pending
+        source: PendingTasks
+        type: long_gauge
+        label: repl. on write pending
+        description: When an insert or update to a row is written, the affected row is replicated to all other nodes that manage a replica for that row
+
+
+# Following metrics are applicable for pre 3.x versions of Cassandra
+  - name: pendingReplicationsOnWrite_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.request:type=CounterMutationStage
+
+    metric:
+      - name: write.replications.pending
+        source: PendingTasks
+        type: long_gauge
+        label: repl. on write pending
+        description: When an insert or update to a row is written, the affected row is replicated to all other nodes that manage a replica for that row
+
+
+  - name: pendingFlushes_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=FlushWriter
+
+    metric:
+      - name: write.flushes.pending
+        source: PendingTasks
+        type: long_gauge
+        label: write flushes pending
+        description: Number of Flush Writer(writes memtables to disk) tasks pending
+
+
+  - name: pendingWrites_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.request:type=MutationStage
+
+    metric:
+      - name: write.pending
+        source: PendingTasks
+        type: long_gauge
+        label: write requests pending
+        description: The number of write requests that have arrived into the cluster but are waiting to be handled
+
+
+  - name: pendingPostFlushes_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=MemtablePostFlusher
+
+    metric:
+      - name: write.postflushes.pending
+        source: PendingTasks
+        type: long_gauge
+        label: write post flushes pending
+        description: Number of Post Flush(cleans up commit log after memtable is written to disk) tasks pending
+
+
+  - name: pendingReads_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.request:type=ReadStage
+
+    metric:
+      - name: read.requests.pending
+        source: PendingTasks
+        type: long_gauge
+        label: read requests pending
+        description: The number of read requests that have arrived into the cluster but are waiting to be handled
+
+
+  - name: pendingManualRepairs_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=AntiEntropyStage
+
+    metric:
+      - name: cluster.tasks.repair.pending
+        source: PendingTasks
+        type: long_gauge
+        label: repair tasks pending
+        description: Repair tasks pending, such as handling the merkle tree transfer after the validation compaction
+
+
+  - name: pendingGossip_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=GossipStage
+
+    metric:
+      - name: cluster.tasks.gossip.pending
+        source: PendingTasks
+        type: long_gauge
+        label: gossip tasks pending
+        description: Number of gossip messages and acknowledgments queued and waiting to be sent or received
+
+
+  - name: pendingHintedHandoff_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=HintedHandoff
+
+    metric:
+      - name: cluster.tasks.handoff.pending
+        source: PendingTasks
+        type: long_gauge
+        label: hints handoff pending
+        description: Number of hints that are queued and waiting to be delivered after a failed node is back online again
+
+
+  - name: pendingInternalResponses_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=InternalResponseStage
+
+    metric:
+      - name: cluster.tasks.response.internal.pending
+        source: PendingTasks
+        type: long_gauge
+        label: internal responses pending
+        description: Number of pending tasks from internal tasks, such as nodes joining and leaving the cluster
+
+
+  - name: pendingMigrations_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=MigrationStage
+
+    metric:
+      - name: cluster.tasks.migration.pending
+        source: PendingTasks
+        type: long_gauge
+        label: migrations pending
+        description: Number of pending tasks from system methods that modified the schema
+
+
+  - name: pendingMisc_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.internal:type=MiscStage
+
+    metric:
+      - name: cluster.tasks.misc.pending
+        source: PendingTasks
+        type: long_gauge
+        label: misc tasks pending
+        description: Number of pending tasks from infrequently run operations, such as taking a snapshot or processing the notification of a completed replication
+
+
+  - name: pendingRequestResponse_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.request:type=RequestResponseStage
+
+    metric:
+      - name: cluster.tasks.response.pending
+        source: PendingTasks
+        type: long_gauge
+        label: cluster responses pending
+        description: Number of pending callbacks to execute after a task on a remote node completes
+
+# Following metrics are applicable for 3.x version of Cassandra
+  - name: pendingFlushes_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=MemtableFlushWriter,name=PendingTasks
+
+    metric:
+      - name: write.flushes.pending
+        source: Value
+        type: long_gauge
+        label: write flushes pending
+        description: Number of Flush Writer(writes memtables to disk) tasks pending
+
+
+  - name: pendingWrites_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=request,scope=MutationStage,name=PendingTasks
+
+    metric:
+      - name: write.pending
+        source: Value
+        type: long_gauge
+        label: write requests pending
+        description: The number of write requests that have arrived into the cluster but are waiting to be handled
+
+
+  - name: pendingPostFlushes_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=MemtablePostFlush,name=PendingTasks
+
+    metric:
+      - name: write.postflushes.pending
+        source: Value
+        type: long_gauge
+        label: write post flushes pending
+        description: Number of Post Flush(cleans up commit log after memtable is written to disk) tasks pending
+
+
+  - name: pendingReplicationsOnWrite_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=request,scope=CounterMutationStage,name=PendingTasks
+
+    metric:
+      - name: write.replications.pending
+        source: Value
+        type: long_gauge
+        label: repl. on write pending
+        description: When an insert or update to a row is written, the affected row is replicated to all other nodes that manage a replica for that row
+
+
+  - name: pendingReads_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=request,scope=ReadStage,name=PendingTasks
+
+    metric:
+     - name: read.requests.pending
+       source: Value
+       type: long_gauge
+       label: read requests pending
+       description: The number of read requests that have arrived into the cluster but are waiting to be handled
+
+
+  - name: pendingManualRepairs_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=AntiEntropyStage,name=PendingTasks
+
+    metric:
+      - name: cluster.tasks.repair.pending
+        source: Value
+        type: long_gauge
+        label: repair tasks pending
+        description: Repair tasks pending, such as handling the merkle tree transfer after the validation compaction
+
+
+  - name: pendingGossip_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=GossipStage,name=PendingTasks
+
+    metric:
+      - name: cluster.tasks.gossip.pending
+        source: Value
+        type: long_gauge
+        label: gossip tasks pending
+        description: Number of gossip messages and acknowledgments queued and waiting to be sent or received
+
+
+  - name: pendingHintedHandoff_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=HintsDispatcher,name=PendingTasks
+
+    metric:
+      - name: cluster.tasks.handoff.pending
+        source: Value
+        type: long_gauge
+        label: hints handoff pending
+        description: Number of hints that are queued and waiting to be delivered after a failed node is back online again
+
+
+  - name: pendingInternalResponses_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=InternalResponseStage,name=PendingTasks
+
+    metric:
+      - name: cluster.tasks.response.internal.pending
+        source: Value
+        type: long_gauge
+        label: internal responses pending
+        description: Number of pending tasks from internal tasks, such as nodes joining and leaving the cluster
+
+
+  - name: pendingMigrations_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=MigrationStage,name=PendingTasks
+
+    metric:
+      - name: cluster.tasks.migration.pending
+        source: Value
+        type: long_gauge
+        label: migrations pending
+        description: Number of pending tasks from system methods that modified the schema
+
+
+  - name: pendingMisc_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=internal,scope=MiscStage,name=PendingTasks
+
+    metric:
+      - name: cluster.tasks.misc.pending
+        source: Value
+        type: long_gauge
+        label: misc tasks pending
+        description: Number of pending tasks from infrequently run operations, such as taking a snapshot or processing the notification of a completed replication
+
+
+  - name: pendingRequestResponse_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ThreadPools,path=request,scope=RequestResponseStage,name=PendingTasks
+
+    metric:
+      - name: cluster.tasks.response.pending
+        source: Value
+        type: long_gauge
+        label: cluster responses pending
+        description: Number of pending callbacks to execute after a task on a remote node completes
+
+
+

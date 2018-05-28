@@ -1,0 +1,422 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-datanode
+
+observation:
+#  1.0.* variant
+  - name: datanode_1.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=DataNode,name=DataNode
+
+    metric:
+      - name: dn.io.read
+        source: bytes_read
+        type: counter
+        label: data node bytes read
+
+      - name: dn.io.write
+        source: bytes_written
+        type: counter
+        label: data node bytes written
+
+      - name: dn.io.read.local
+        source: reads_from_local_client
+        type: counter
+        label: data node reads from local client
+
+      - name: dn.io.read.remote
+        source: reads_from_remote_client
+        type: counter
+        label: data node reads from remote client
+
+      - name: dn.io.write.local
+        source: writes_from_local_client
+        type: counter
+        label: data node writes from local client
+
+      - name: dn.io.write.remote
+        source: writes_from_remote_client
+        type: counter
+        label: data node writes from remote client
+
+      - name: dn.io.write.heartbeats.time
+        source: heartBeats_avg_time
+        type: double_gauge
+        label: data node heartbeats avg time
+        unit: ms
+
+      - name: dn.io.write.heartbeats
+        source: heartBeats_num_ops
+        type: counter
+        label: data node heartbeats ops
+
+      - name: dn.blocks.op.checksum.time
+        source: blockChecksumOp_avg_time
+        type: double_gauge
+        label: block checksum op avg time
+        unit: ms
+
+      - name: dn.blocks.op.checksum
+        source: blockChecksumOp_num_ops
+        type: counter
+        label: block checksum num ops
+
+      - name: dn.blocks.op.reports.time
+        source: blockReports_avg_time
+        type: double_gauge
+        label: block report op avg time
+        unit: ms
+
+      - name: dn.blocks.op.reports
+        source: blockReports_num_ops
+        type: counter
+        label: block report ops
+
+      - name: dn.blocks.op.copies.time
+        source: copyBlockOp_avg_time
+        type: double_gauge
+        label: copy block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.copies
+        source: copyBlockOp_num_ops
+        type: counter
+        label: copy block ops
+
+      - name: dn.blocks.op.reads.time
+        source: readBlockOp_avg_time
+        type: double_gauge
+        label: read block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.reads
+        source: readBlockOp_num_ops
+        type: counter
+        label: read block ops
+
+      - name: dn.blocks.op.replaces.time
+        source: replaceBlockOp_avg_time
+        type: double_gauge
+        label: replace block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.replaces
+        source: replaceBlockOp_num_ops
+        type: counter
+        label: replace block ops
+
+      - name: dn.blocks.op.writes.time
+        source: writeBlockOp_avg_time
+        type: double_gauge
+        label: write block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.writes
+        source: writeBlockOp_num_ops
+        type: counter
+        label: write block ops
+
+      - name: dn.blocks.read
+        source: blocks_read
+        type: counter
+        label: blocks read
+
+      - name: dn.blocks.removed
+        source: blocks_removed
+        type: counter
+        label: blocks removed
+
+      - name: dn.blocks.replicated
+        source: blocks_replicated
+        type: counter
+        label: blocks replicated
+
+      - name: dn.blocks.verified
+        source: blocks_verified
+        type: counter
+        label: blocks verified
+
+      - name: dn.blocks.write
+        source: blocks_written
+        type: counter
+        label: blocks written
+
+#  0.20.* variant
+
+  - name: datanode_2.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=DataNode,name=DataNodeActivity*
+
+    metric:
+      - name: dn.io.read
+        source: BytesRead
+        type: counter
+        label: data node bytes read
+
+      - name: dn.io.write
+        source: BytesWritten
+        type: counter
+        label: data node bytes written
+
+      - name: dn.io.read.local
+        source: ReadsFromLocalClient
+        type: counter
+        label: data node reads from local client
+
+      - name: dn.io.read.remote
+        source: ReadsFromRemoteClient
+        type: counter
+        label: data node reads from remote client
+
+      - name: dn.io.write.local
+        source: WritesFromLocalClient
+        type: counter
+        label: data node writes from local client
+
+      - name: dn.io.write.remote
+        source: WritesFromRemoteClient
+        type: counter
+        label: data node writes from remote client
+
+      - name: dn.io.write.heartbeats.time
+        source: HeartbeatsAvgTime
+        type: double_gauge
+        label: data node heartbeats avg time
+        unit: ms
+
+      - name: dn.io.write.heartbeats
+        source: HeartbeatsNumOps
+        type: counter
+        label: data node heartbeats ops
+
+      - name: dn.blocks.op.checksum.time
+        source: BlockChecksumOpAvgTime
+        type: double_gauge
+        label: block checksum op avg time
+        unit: ms
+
+      - name: dn.blocks.op.checksum
+        source: BlockChecksumOpNumOps
+        type: counter
+        label: block checksum num ops
+
+      - name: dn.blocks.op.reports.time
+        source: BlockReportsAvgTime
+        type: double_gauge
+        label: block report op avg time
+        unit: ms
+
+      - name: dn.blocks.op.reports
+        source: BlockReportsNumOps
+        type: counter
+        label: block report ops
+
+      - name: dn.blocks.op.copies.time
+        source: CopyBlockOpAvgTime
+        type: double_gauge
+        label: copy block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.copies
+        source: CopyBlockOpNumOps
+        type: counter
+        label: copy block ops
+
+      - name: dn.blocks.op.reads.time
+        source: ReadBlockOpAvgTime
+        type: double_gauge
+        label: read block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.reads
+        source: ReadBlockOpNumOps
+        type: counter
+        label: read block ops
+
+      - name: dn.blocks.op.replaces.time
+        source: ReplaceBlockOpAvgTime
+        type: double_gauge
+        label: replace block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.replaces
+        source: ReplaceBlockOpNumOps
+        type: counter
+        label: replace block ops
+
+      - name: dn.blocks.op.writes.time
+        source: WriteBlockOpAvgTime
+        type: double_gauge
+        label: write block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.writes
+        source: WriteBlockOpNumOps
+        type: counter
+        label: write block ops
+
+      - name: dn.blocks.read
+        source: BlocksRead
+        type: counter
+        label: blocks read
+
+      - name: dn.blocks.removed
+        source: BlocksRemoved
+        type: counter
+        label: blocks removed
+
+      - name: dn.blocks.replicated
+        source: BlocksReplicated
+        type: counter
+        label: blocks replicated
+
+      - name: dn.blocks.verified
+        source: BlocksVerified
+        type: counter
+        label: blocks verified
+
+      - name: dn.blocks.write
+        source: BlocksWritten
+        type: counter
+        label: blocks written
+
+#  0.21.*/0.22.* variant
+
+  - name: datanode_v0.2x
+    metricNamespace: hadoop
+    objectName: hadoop:service=DataNode,name=DataNodeActivity*
+
+    metric:
+      - name: dn.io.read
+        source: bytes_read
+        type: counter
+        label: data node bytes read
+
+      - name: dn.io.write
+        source: bytes_written
+        type: counter
+        label: data node bytes written
+
+      - name: dn.io.read.local
+        source: reads_from_local_client
+        type: counter
+        label: data node reads from local client
+
+      - name: dn.io.read.remote
+        source: reads_from_remote_client
+        type: counter
+        label: data node reads from remote client
+
+      - name: dn.io.write.local
+        source: writes_from_local_client
+        type: counter
+        label: data node writes from local client
+
+      - name: dn.io.write.remote
+        source: writes_from_remote_client
+        type: counter
+        label: data node writes from remote client
+
+      - name: dn.io.write.heartbeats.time
+        source: heartBeatsAvgTime
+        type: double_gauge
+        label: data node heartbeats avg time
+        unit: ms
+
+      - name: dn.io.write.heartbeats
+        source: heartBeatsNumOps
+        type: counter
+        label: data node heartbeats ops
+
+      - name: dn.blocks.op.checksum.time
+        source: BlockChecksumOpAvgTime
+        type: double_gauge
+        label: block checksum op avg time
+        unit: ms
+
+      - name: dn.blocks.op.checksum
+        source: BlockChecksumOpNumOps
+        type: counter
+        label: block checksum num ops
+
+      - name: dn.blocks.op.reports.time
+        source: BlockReportsAvgTime
+        type: double_gauge
+        label: block report op avg time
+        unit: ms
+
+      - name: dn.blocks.op.reports
+        source: BlockReportsNumOps
+        type: counter
+        label: block report ops
+
+      - name: dn.blocks.op.copies.time
+        source: copyBlockOpAvgTime
+        type: double_gauge
+        label: copy block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.copies
+        source: copyBlockOpNumOps
+        type: counter
+        label: copy block ops
+
+      - name: dn.blocks.op.reads.time
+        source: readBlockOpAvgTime
+        type: double_gauge
+        label: read block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.reads
+        source: readBlockOpNumOps
+        type: counter
+        label: read block ops
+
+      - name: dn.blocks.op.replaces.time
+        source: replaceBlockOpAvgTime
+        type: double_gauge
+        label: replace block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.replaces
+        source: replaceBlockOpNumOps
+        type: counter
+        label: replace block ops
+
+      - name: dn.blocks.op.writes.time
+        source: writeBlockOpAvgTime
+        type: double_gauge
+        label: write block op avg time
+        unit: ms
+
+      - name: dn.blocks.op.writes
+        source: writeBlockOpNumOps
+        type: counter
+        label: write block ops
+
+      - name: dn.blocks.read
+        source: blocks_read
+        type: counter
+        label: blocks read
+
+      - name: dn.blocks.removed
+        source: blocks_removed
+        type: counter
+        label: blocks removed
+
+      - name: dn.blocks.replicated
+        source: blocks_replicated
+        type: counter
+        label: blocks replicated
+
+      - name: dn.blocks.verified
+        source: blocks_verified
+        type: counter
+        label: blocks verified
+
+      - name: dn.blocks.write
+        source: blocks_written
+        type: counter
+        label: blocks written
+

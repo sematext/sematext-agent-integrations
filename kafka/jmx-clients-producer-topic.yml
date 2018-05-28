@@ -1,0 +1,49 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-producer-topic
+    metricNamespace: kafka
+    objectName: kafka.producer:type=producer-topic-metrics,client-id=${clientId},topic=${topic}
+
+    metric:
+      - name: producer.topic.records.retry.rate
+        source: record-retry-rate
+        type: double_gauge
+        label: producer records retries rate
+        description: The average per-second number of retried record sends
+        unit: retries/sec
+
+      - name: producer.topic.compression.rate
+        source: compression-rate
+        type: double_gauge
+        label: producer topic compression rate
+        description: The average compression rate of records.
+
+      - name: producer.topic.bytes.rate
+        source: byte-rate
+        type: double_gauge
+        label: producer topic bytes rate
+        description: The average rate of bytes.
+        unit: bytes/sec
+
+      - name: producer.topic.records.send.rate
+        source: record-send-rate
+        type: double_gauge
+        label: producer records sends rate
+        description: The average number of records sent per second.
+        unit: sends/sec
+
+      - name: producer.topic.records.error.rate
+        source: record-error-rate
+        type: double_gauge
+        label: producer records errors rate
+        description: The average per-second number of record sends that resulted in errors
+        unit: errors/sec
+
+    tag:
+      - name: kafka.clients.producer.client
+        value: ${clientId}
+
+      - name: kafka.clients.producer.topic
+        value: ${topic}
+

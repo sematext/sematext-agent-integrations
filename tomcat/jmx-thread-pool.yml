@@ -1,0 +1,54 @@
+type: jmx
+
+observation:
+  - name: thread.pool.tomcat
+    metricNamespace: tomcat
+    objectName: Catalina:type=ThreadPool,name="http-${host_port}"
+
+    metric:
+      - name: threads.busy
+        source: currentThreadsBusy
+        type: long_gauge
+        label: current busy threads
+        description: Thread pool usage. Current worker threads busy count
+
+      - name: threads
+        source: currentThreadCount
+        type: long_gauge
+        label: current threads
+        description: Thread pool usage. Current worker threads count
+
+      - name: threads.max
+        source: maxThreads
+        type: long_gauge
+        label: max threads
+        description: Additional threads will be created up to the configured maximum
+
+      - name: threads.pollers
+        source: pollerThreadCount
+        type: long_gauge
+        label: poller thread count
+        description: The number of threads used to poll kept alive connections
+
+      - name: threads.acceptors
+        source: acceptorThreadCount
+        type: long_gauge
+        label: acceptor threads
+        description: The number of threads to be used to accept connections
+
+      - name: connections.max
+        source: maxConnections
+        type: long_gauge
+        label: max connections
+        description: The maximum number of connections that the server will accept and process at any given time
+
+      - name: connections
+        source: connectionCount
+        type: long_gauge
+        label: connections
+        description: The current count of connections handled by this endpoint
+
+    tag:
+      - name: tomcat.connector.port
+        value: func:SplitAndExtract(host_port,-,1)
+

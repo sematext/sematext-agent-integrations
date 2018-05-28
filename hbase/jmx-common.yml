@@ -1,0 +1,459 @@
+type: jmx
+
+observation:
+  - name: hbase-common-ipc
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=${component},sub=IPC
+
+    metric:
+      - name: ipc.lifo.mode.switches
+        source: numLifoModeSwitches
+        type: counter
+        label: lifo mode switches
+        description: Total number of calls in general queue which were served from the tail of the queue
+
+      - name: ipc.general.dropped.calls
+        source: numGeneralCallsDropped
+        type: counter
+        label: general dropped calls
+        description: Total number of calls in general queue which were dropped by CoDel RPC executor
+
+      - name: ipc.authentication.fallbacks
+        source: authenticationFallbacks
+        type: counter
+        label: insecure auth fallbacks
+        description: Number of fallbacks to insecure authentication
+
+      - name: ipc.exceptions
+        source: exceptions
+        type: counter
+        label: ipc request exceptions
+        description: Exceptions caused by requests
+
+      - name: ipc.exceptions.failed.sanity.check
+        source: exceptions.FailedSanityCheckException
+        type: counter
+        label: sanity check exceptions
+        description: Number of requests that resulted in FailedSanityCheckException
+
+      - name: ipc.exceptions.region.too.busy
+        source: exceptions.RegionTooBusyException
+        type: counter
+        label: region busy exceptions
+        description: Number of requests that resulted in RegionTooBusyException
+
+      - name: ipc.exceptions.scanner.reset
+        source: exceptions.ScannerResetException
+        type: counter
+        label: scanner reset exceptions
+        description: Number of requests that resulted in ScannerResetException
+
+      - name: ipc.exceptions.call.queue.too.big
+        source: exceptions.callQueueTooBig
+        type: counter
+        label: full queue exceptions
+        description: Call queue is full
+
+      - name: ipc.exceptions.not.serving.region
+        source: exceptions.NotServingRegionException
+        type: counter
+        label: not serving region exceptions
+        description: Number of requests that resulted in NotServingRegionException
+
+      - name: ipc.exceptions.out.of.order.scanner.next
+        source: exceptions.OutOfOrderScannerNextException
+        type: counter
+        label: order scanner next exceptions
+        description: Number of requests that resulted in OutOfOrderScannerNextException
+
+      - name: ipc.exceptions.unknown.scanner
+        source: exceptions.UnknownScannerException
+        type: counter
+        label: unknown scanner exceptions
+        description: Number of requests that resulted in UnknownScannerException
+
+      - name: ipc.exceptions.multi.response.too.large
+        source: exceptions.multiResponseTooLarge
+        type: counter
+        label: large response exceptions
+        description: A response to a multi request was too large and the rest of the requests will have to be retried
+
+      - name: ipc.exceptions.region.moved
+        source: exceptions.RegionMovedException
+        type: counter
+        label: region moved exceptions
+        description: Number of requests that resulted in RegionMovedException
+
+      - name: ipc.requests
+        source: RequestSize_num_ops
+        type: counter
+        label: ipc requests
+        description: Number of requests
+
+      - name: ipc.request.size.min
+        source: RequestSize_min
+        type: long_gauge
+        label: ipc request min size
+        description: Min Request size
+        unit: bytes
+
+      - name: ipc.request.size.max
+        source: RequestSize_max
+        type: long_gauge
+        label: ipc request max size
+        description: Max Request size
+        unit: bytes
+
+      - name: ipc.requests.size
+        source: jmx_eval:RequestSize_num_ops*RequestSize_mean
+        type: counter
+        label: ipc requests size
+        description: Requests size
+        unit: bytes
+
+      - name: ipc.responses
+        source: ResponseSize_num_ops
+        type: counter
+        label: ipc responses
+        description: Number of responses
+
+      - name: ipc.response.size.min
+        source: ResponseSize_min
+        type: long_gauge
+        label: ipc response min size
+        description: Min Response size
+        unit: bytes
+
+      - name: ipc.response.size.max
+        source: ResponseSize_max
+        type: long_gauge
+        label: ipc response max size
+        description: Max Response size
+        unit: bytes
+
+      - name: ipc.responses.size
+        source: jmx_eval:ResponseSize_num_ops*ResponseSize_mean
+        type: counter
+        label: ipc responses size
+        description: Responses size
+        unit: bytes
+
+      - name: ipc.total.calls
+        source: TotalCallTime_num_ops
+        type: counter
+        label: ipc total calls
+        description: Total calls
+
+      - name: ipc.total.call.time.min
+        source: TotalCallTime_min
+        type: long_gauge
+        label: ipc total call min time
+        description: Total call min time including both queued and processing time
+        unit: ms
+
+      - name: ipc.total.call.time.max
+        source: TotalCallTime_max
+        type: long_gauge
+        label: ipc total call max time
+        description: Total call max time including both queued and processing time
+        unit: ms
+
+      - name: ipc.total.calls.time
+        source: jmx_eval:TotalCallTime_mean*TotalCallTime_num_ops
+        type: counter
+        label: ipc total calls time
+        description: Total calls time including both queued and processing time
+        unit: ms
+
+      - name: ipc.queue.bytes
+        source: queueSize
+        type: long_gauge
+        label: ipc queue size
+        description: Number of bytes in the call queues; request has been read and parsed and is waiting to run or is currently being executed
+        unit: bytes
+
+      - name: ipc.queue.size
+        source: numCallsInGeneralQueue
+        type: long_gauge
+        label: ipc general queue calls
+        description: Number of calls in the general call queue; parsed requests waiting in scheduler to be executed
+
+      - name: ipc.queue.replication.size
+        source: numCallsInReplicationQueue
+        type: long_gauge
+        label: ipc replication queue calls
+        description: Number of calls in the replication call queue waiting to be run
+
+      - name: ipc.queue.priority.size
+        source: numCallsInPriorityQueue
+        type: long_gauge
+        label: ipc priority queue calls
+        description: Number of calls in the priority call queue waiting to be run
+
+      - name: ipc.connections.open
+        source: numOpenConnections
+        type: long_gauge
+        label: ipc open connections
+        description: Number of open connections
+
+      - name: ipc.handlers.active
+        source: numActiveHandler
+        type: long_gauge
+        label: ipc active handlers
+        description: Total number of active rpc handlers
+
+      - name: ipc.queue.calls
+        source: QueueCallTime_num_ops
+        type: counter
+        label: ipc queue calls
+        description: Queue Calls
+
+      - name: ipc.queue.call.time.min
+        source: QueueCallTime_min
+        type: long_gauge
+        label: ipc queue call min time
+        description: Queue Call Min Time
+        unit: ms
+
+      - name: ipc.queue.call.time.max
+        source: QueueCallTime_max
+        type: long_gauge
+        label: ipc queue call max time
+        description: Queue Call Max Time
+        unit: ms
+
+      - name: ipc.authentication.failures
+        source: authenticationFailures
+        type: counter
+        label: ipc authentication failures
+        description: Number of authentication failures
+
+      - name: ipc.authorization.failures
+        source: authorizationFailures
+        type: counter
+        label: ipc authorization failures
+        description: Number of authorization failures
+
+      - name: ipc.authentication.successes
+        source: authenticationSuccesses
+        type: counter
+        label: ipc authentication successes
+        description: Number of authentication successes
+
+      - name: ipc.authorization.successes
+        source: authorizationSuccesses
+        type: counter
+        label: ipc authorization successes
+        description: Number of authorization successes
+
+      - name: ipc.process.calls
+        source: ProcessCallTime_num_ops
+        type: counter
+        label: ipc processing calls
+        description: Processing calls
+
+      - name: ipc.process.call.time.min
+        source: ProcessCallTime_min
+        type: long_gauge
+        label: ipc processing call min time
+        description: Processing call min time
+        unit: ms
+
+      - name: ipc.process.call.time.max
+        source: ProcessCallTime_max
+        type: long_gauge
+        label: ipc processing call max time
+        description: Processing call max time
+        unit: ms
+
+      - name: ipc.bytes.sent
+        source: sentBytes
+        type: counter
+        label: ipc sent bytes
+        description: Number of bytes sent
+        unit: bytes
+
+      - name: ipc.bytes.received
+        source: receivedBytes
+        type: counter
+        label: ipc received bytes
+        description: Number of bytes received
+        unit: bytes
+
+      - name: ipc.process.calls.time
+        source: jmx_eval:ProcessCallTime_mean*ProcessCallTime_num_ops
+        type: counter
+        label: ipc processing calls time
+        description: Processing call time
+        unit: ms
+
+      - name: ipc.queue.calls.time
+        source: jmx_eval:QueueCallTime_mean*QueueCallTime_num_ops
+        type: counter
+        label: ipc queue calls time
+        description: Queue Call Time
+        unit: ms
+
+    tag:
+      - name: hbase.component
+        value: ${component}
+
+  - name: hbase-common-jvm
+    metricNamespace: jvm
+    objectName: Hadoop:service=HBase,name=JvmMetrics
+
+    metric:
+      - name: threads.new
+        source: ThreadsNew
+        type: long_gauge
+        label: new threads
+        description: Current number of NEW threads
+
+      - name: threads.runnable
+        source: ThreadsRunnable
+        type: long_gauge
+        label: runnable threads
+        description: Current number of RUNNABLE threads
+
+      - name: threads.blocked
+        source: ThreadsBlocked
+        type: long_gauge
+        label: blocked threads
+        description: Current number of BLOCKED threads
+
+      - name: threads.waiting
+        source: ThreadsWaiting
+        type: long_gauge
+        label: waiting threads
+        description: Current number of WAITING threads
+
+      - name: threads.waiting.timed
+        source: ThreadsTimedWaiting
+        type: long_gauge
+        label: timed waiting threads
+        description: Current number of TIMED_WAITING threads
+
+      - name: threads.terminated
+        source: ThreadsTerminated
+        type: long_gauge
+        label: terminated threads
+        description: Current number of TERMINATED threads
+
+      - name: log.fatal
+        source: LogFatal
+        type: counter
+        label: fatal logs
+        description: Total number of FATAL logs
+
+      - name: log.error
+        source: LogError
+        type: counter
+        label: error logs
+        description: Total number of ERROR logs
+
+      - name: log.warn
+        source: LogWarn
+        type: counter
+        label: warn logs
+        description: Total number of WARN logs
+
+      - name: log.info
+        source: LogInfo
+        type: counter
+        label: info logs
+        description: Total number of INFO logs
+
+      - name: nonheap.used
+        source: jmx_eval:MemNonHeapUsedM*const:1048576
+        type: gauge
+        label: non-heap memory used
+        description: Current non-heap memory used
+        unit: bytes
+
+      - name: nonheap.committed
+        source: jmx_eval:MemNonHeapCommittedM*const:1048576
+        type: gauge
+        label: non-heap memory committed
+        description: Current non-heap memory committed
+        unit: bytes
+
+      - name: nonheap.size.max
+        source: jmx_eval:MemNonHeapMaxM*const:1048576
+        type: gauge
+        label: max non-heap memory
+        description: Max non-heap memory size
+        unit: bytes
+
+      - name: heap.used
+        source: jmx_eval:MemHeapUsedM*const:1048576
+        type: gauge
+        label: heap memory
+        description: Current heap memory used
+        unit: bytes
+
+      - name: heap.committed
+        source: jmx_eval:MemHeapCommittedM*const:1048576
+        type: gauge
+        label: heap memory commited
+        description: Current heap memory committed
+        unit: bytes
+
+      - name: heap.size.max
+        source: jmx_eval:MemHeapMaxM*const:1048576
+        type: gauge
+        label: max heap memory
+        description: Max heap memory size
+        unit: bytes
+
+      - name: memory.size.max
+        source: jmx_eval:MemMaxM*const:1048576
+        type: gauge
+        label: max memory size
+        description: Max memory size
+        unit: bytes
+
+
+  - name: hbase-common-ugi
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=UgiMetrics
+
+    metric:
+      - name: ugi.login.success
+        source: LoginSuccessNumOps
+        type: counter
+        label: successful logins
+        description: Successful kerberos logins
+
+      - name: ugi.login.failure
+        source: LoginFailureNumOps
+        type: counter
+        label: failed logins
+        description: Failed kerberos logins
+
+      - name: ugi.groups.gets
+        source: GetGroupsNumOps
+        type: counter
+        label: group resolutions
+        description: Total number of group resolutions
+
+      - name: ugi.login.failure.time
+        source: jmx_eval:LoginFailureNumOps*LoginFailureAvgTime
+        type: counter
+        label: failed logins latency
+        description: Failed kerberos logins latency
+        unit: ms
+
+      - name: ugi.login.success.time
+        source: jmx_eval:LoginSuccessNumOps*LoginSuccessAvgTime
+        type: counter
+        label: successful logins latency
+        description: Successful kerberos logins latency
+        unit: ms
+
+      - name: ugi.groups.gets.time
+        source: jmx_eval:GetGroupsNumOps*GetGroupsAvgTime
+        type: counter
+        label: group resolutions time
+        description: Time for group resolution
+        unit: ms
+

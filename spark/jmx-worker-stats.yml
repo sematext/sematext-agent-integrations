@@ -1,0 +1,72 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: spark-worker
+
+observation:
+  - name: sparkWorkerExecutors
+    metricNamespace: spark
+    objectName: metrics:name=worker.executors
+
+    metric:
+      - name: executors
+        source: Value
+        type: long_gauge
+        label: worker executors
+
+
+  - name: sparkWorkerCoresUsed
+    metricNamespace: spark
+    objectName: metrics:name=worker.coresUsed
+
+    metric:
+      - name: cores.used
+        source: Value
+        type: long_gauge
+        label: worker cores used
+
+
+  - name: sparkWorkerCoresFree
+    metricNamespace: spark
+    objectName: metrics:name=worker.coresFree
+
+    metric:
+      - name: cores.free
+        source: Value
+        type: long_gauge
+        label: worker cores free
+
+
+  - name: sparkWorkerMemUsed
+    metricNamespace: spark
+    objectName: metrics:name=worker.memUsed_MB
+
+    metric:
+      - name: memUsed
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: worker.memory.used
+        source: func:LongMultiplyWithConstant(memUsed,1048576)
+        type: long_gauge
+        label: worker used memory
+        unit: bytes
+
+
+  - name: sparkWorkerMemFree
+    metricNamespace: spark
+    objectName: metrics:name=worker.memFree_MB
+
+    metric:
+      - name: memFree
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: worker.memory.free
+        source: func:LongMultiplyWithConstant(memFree,1048576)
+        type: long_gauge
+        label: worker free memory
+        unit: bytes
+

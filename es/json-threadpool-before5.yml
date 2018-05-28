@@ -1,0 +1,1006 @@
+type: json
+data:
+  url: /_cat/thread_pool?format=json&h=nodeId,host,bulk.type,bulk.active,bulk.size,bulk.queue,bulk.queueSize,bulk.rejected,bulk.largest,bulk.completed,bulk.min,bulk.max,bulk.keepAlive,flush.type,flush.active,flush.size,flush.queue,flush.queueSize,flush.rejected,flush.largest,flush.completed,flush.min,flush.max,flush.keepAlive,generic.type,generic.active,generic.size,generic.queue,generic.queueSize,generic.rejected,generic.largest,generic.completed,generic.min,generic.max,generic.keepAlive,get.type,get.active,get.size,get.queue,get.queueSize,get.rejected,get.largest,get.completed,get.min,get.max,get.keepAlive,index.type,index.active,index.size,index.queue,index.queueSize,index.rejected,index.largest,index.completed,index.min,index.max,index.keepAlive,management.type,management.active,management.size,management.queue,management.queueSize,management.rejected,management.largest,management.completed,management.min,management.max,management.keepAlive,merge.type,merge.active,merge.size,merge.queue,merge.queueSize,merge.rejected,merge.largest,merge.completed,merge.min,merge.max,merge.keepAlive,optimize.type,optimize.active,optimize.size,optimize.queue,optimize.queueSize,optimize.rejected,optimize.largest,optimize.completed,optimize.min,optimize.max,optimize.keepAlive,percolate.type,percolate.active,percolate.size,percolate.queue,percolate.queueSize,percolate.rejected,percolate.largest,percolate.completed,percolate.min,percolate.max,percolate.keepAlive,refresh.type,refresh.active,refresh.size,refresh.queue,refresh.queueSize,refresh.rejected,refresh.largest,refresh.completed,refresh.min,refresh.max,refresh.keepAlive,search.type,search.active,search.size,search.queue,search.queueSize,search.rejected,search.largest,search.completed,search.min,search.max,search.keepAlive,snapshot.type,snapshot.active,snapshot.size,snapshot.queue,snapshot.queueSize,snapshot.rejected,snapshot.largest,snapshot.completed,snapshot.min,snapshot.max,snapshot.keepAlive,suggest.type,suggest.active,suggest.size,suggest.queue,suggest.queueSize,suggest.rejected,suggest.largest,suggest.completed,suggest.min,suggest.max,suggest.keepAlive,warmer.type,warmer.active,warmer.size,warmer.queue,warmer.queueSize,warmer.rejected,warmer.largest,warmer.completed,warmer.min,warmer.max,warmer.keepAlive
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-2
+
+observation:
+  - name: threadPoolStats_bulk
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: bulk.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: bulk.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: bulk.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: bulk.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: bulk.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: bulk.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: bulk.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: bulk.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: bulk.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: bulk
+
+    accept:
+      - name: nodeId
+        # thread_pool response contains nodeId value which has only first 4 chars of node ID. For that reason filtering logic
+        # has to use substring_*_* function for comparison of real node ID with nodeId as returned by this stats endpoint
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_flush
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: flush.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: flush.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: flush.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: flush.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: flush.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: flush.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: flush.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: flush.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: flush.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: flush
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_generic
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: generic.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: generic.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: generic.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: generic.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: generic.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: generic.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: generic.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: generic.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: generic.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: generic
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_get
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: get.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: get.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: get.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: get.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: get.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: get.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: get.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: get.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: get.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: get
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_index
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: index.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: index.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: index.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: index.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: index.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: index.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: index.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: index.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: index.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: index
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_management
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: management.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: management.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: management.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: management.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: management.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: management.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: management.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: management.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: management.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: management
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_merge
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: merge.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: merge.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: merge.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: merge.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: merge.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: merge.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: merge.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: merge.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: merge.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: merge
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_optimize
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: optimize.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: optimize.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: optimize.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: optimize.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: optimize.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: optimize.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: optimize.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: optimize.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: optimize.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: optimize
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_percolate
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: percolate.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: percolate.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: percolate.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: percolate.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: percolate.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: percolate.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: percolate.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: percolate.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: percolate.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: percolate
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_refresh
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: refresh.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: refresh.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: refresh.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: refresh.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: refresh.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: refresh.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: refresh.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: refresh.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: refresh.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: refresh
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_search
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: search.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: search.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: search.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: search.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: search.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: search.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: search.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: search.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: search.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: search
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_snapshot
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: snapshot.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: snapshot.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: snapshot.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: snapshot.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: snapshot.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: snapshot.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: snapshot.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: snapshot.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: snapshot.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: snapshot
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_suggest
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: suggest.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: suggest.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: suggest.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: suggest.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: suggest.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: suggest.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: suggest.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: suggest.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: suggest.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: suggest
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+
+
+  - name: threadPoolStats_warmer
+    metricNamespace: es
+    path: $.[?(@.nodeId=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: warmer.active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: warmer.size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: warmer.queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: warmer.queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: warmer.rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: warmer.largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: warmer.completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: warmer.min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: warmer.max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.thread.pool
+        value: warmer
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:substring_0_4(pathTags:localNodeId)
+

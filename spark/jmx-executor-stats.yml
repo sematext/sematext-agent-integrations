@@ -1,0 +1,219 @@
+type: jmx
+# any node can become executor
+
+observation:
+  - name: sparkExecutorFileLargeReads
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.file.largeRead_ops
+
+    metric:
+      - name: executor.file.reads.large
+        source: Value
+        type: long_gauge
+        label: executor large file reads
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorFileReadBytes
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.file.read_bytes
+
+    metric:
+      - name: executor.file.reads.bytes
+        source: Value
+        type: long_gauge
+        label: executor file reads bytes
+        unit: bytes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorFileReads
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.file.read_ops
+
+    metric:
+      - name: executor.file.reads
+        source: Value
+        type: long_gauge
+        label: executor file reads
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorFileWriteBytes
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.file.write_bytes
+
+    metric:
+      - name: executor.file.writes.bytes
+        source: Value
+        type: long_gauge
+        label: executor file writes bytes
+        unit: bytes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorFileWrites
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.file.write_ops
+
+    metric:
+      - name: executor.file.writes
+        source: Value
+        type: long_gauge
+        label: executor file writes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorHdfsLargeReads
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.hdfs.largeRead_ops
+
+    metric:
+      - name: executor.hdfs.reads.large
+        source: Value
+        type: long_gauge
+        label: executor large hdfs reads
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorHdfsReadBytes
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.hdfs.read_bytes
+
+    metric:
+      - name: executor.hdfs.reads.bytes
+        source: Value
+        type: long_gauge
+        label: executor hdfs reads bytes
+        unit: bytes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorHdfsReads
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.hdfs.read_ops
+
+    metric:
+      - name: executor.hdfs.reads
+        source: Value
+        type: long_gauge
+        label: executor hdfs reads
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorHdfsWriteBytes
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.hdfs.write_bytes
+
+    metric:
+      - name: executor.hdfs.writes.bytes
+        source: Value
+        type: long_gauge
+        label: executor hdfs writes bytes
+        unit: bytes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorHdfsWrites
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.filesystem.hdfs.write_ops
+
+    metric:
+      - name: executor.hdfs.writes
+        source: Value
+        type: long_gauge
+        label: executor hdfs writes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorActiveTasks
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.threadpool.activeTasks
+
+    metric:
+      - name: executor.tasks.active
+        source: Value
+        type: long_gauge
+        label: executor active tasks
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorCompleteTasks
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.threadpool.completeTasks
+
+    metric:
+      - name: executor.tasks.completed
+        source: Value
+        type: long_gauge
+        label: executor completed tasks
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorCurrentPool
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.threadpool.currentPool_size
+
+    metric:
+      - name: executor.used.pool.size
+        source: Value
+        type: long_gauge
+        label: executor used pool size
+        unit: bytes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+
+
+  - name: sparkExecutorMaxPool
+    metricNamespace: spark
+    objectName: metrics:name=${executorId}.threadpool.maxPool_size
+
+    metric:
+      - name: executor.max.pool.size
+        source: Value
+        type: long_gauge
+        label: executor max pool size
+        unit: bytes
+
+    tag:
+      - name: spark.executor.id
+        value: ${executorId}
+

@@ -1,0 +1,99 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-consumer-coordinator
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=consumer-coordinator-metrics,client-id=${clientId}
+
+    metric:
+      - name: consumer.partitions.assigned
+        source: assigned-partitions
+        type: double_gauge
+        label: consumer assigned partitions
+        description: The number of partitions currently assigned to consumer
+
+      - name: consumer.coordinator.commit.rate
+        source: commit-rate
+        type: double_gauge
+        label: consumer commits rate
+        unit: commits/sec
+
+      - name: consumer.coordinator.commit.latency
+        source: commit-latency-avg
+        type: double_gauge
+        label: consumer commit latency
+        unit: ms
+
+      - name: consumer.coordinator.commit.latency.max
+        source: commit-latency-max
+        type: double_gauge
+        label: consumer commit max latency
+        unit: ms
+
+      - name: consumer.coordinator.join.rate
+        source: join-rate
+        type: double_gauge
+        label: consumer join rate
+        description: The number of group joins per second
+        unit: joins/sec
+
+      - name: consumer.coordinator.join.time
+        source: join-time-avg
+        type: double_gauge
+        label: consumer join time
+        description: The average time taken for a group rejoin
+        unit: ms
+
+      - name: consumer.coordinator.join.time.max
+        source: join-time-max
+        type: double_gauge
+        label: consumer join max time
+        description: The max time taken for a group rejoin
+        unit: ms
+
+      - name: consumer.coordinator.sync.rate
+        source: sync-rate
+        type: double_gauge
+        label: consumer syncs rate
+        description: The number of group syncs per second
+        unit: syncs/sec
+
+      - name: consumer.coordinator.sync.time
+        source: sync-time-avg
+        type: double_gauge
+        label: consumer sync time
+        description: The average time taken for a group sync
+        unit: ms
+
+      - name: consumer.coordinator.sync.time.max
+        source: sync-time-max
+        type: double_gauge
+        label: consumer sync max time
+        description: The max time taken for a group sync
+        unit: ms
+
+      - name: consumer.coordinator.heartbeat.rate
+        source: heartbeat-rate
+        type: double_gauge
+        label: consumer heartbeats rate
+        description: The number of hearthbeats per second
+        unit: beats/sec
+
+      - name: consumer.coordinator.heartbeat.time
+        source: heartbeat-response-time-max
+        type: double_gauge
+        label: consumer heartbeat response max time
+        description: The max time taken to receive a response to a heartbeat request
+        unit: ms
+
+      - name: consumer.coordinator.heartbeat.last
+        source: last-heartbeat-seconds-ago
+        type: double_gauge
+        label: consumer last heartbeat
+        description: The number of seconds since the last controller heartbeat
+        unit: sec
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+

@@ -1,0 +1,115 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ STATUS;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: innoDbBufferPoolStatsStatus
+    metricNamespace: mysql
+
+    metric:
+      - name: innodb.buffer.pages.data
+        source: Innodb_buffer_pool_pages_data
+        type: long_gauge
+        label: innodb buffer pool pages data
+        description: "Innodb_buffer_pool_pages_data: The number of pages in the InnoDB buffer pool containing data. The number includes both dirty and clean pages"
+
+      - name: innodb.buffer.bytes.data
+        source: Innodb_buffer_pool_bytes_data
+        type: long_gauge
+        label: innodb buffer pool bytes data
+        description: "Innodb_buffer_pool_bytes_data: The total number of bytes in the InnoDB buffer pool containing data. The number includes both dirty and clean pages"
+        unit: bytes
+
+      - name: innodb.buffer.pages.dirty
+        source: Innodb_buffer_pool_pages_dirty
+        type: long_gauge
+        label: innodb buffer pool pages dirty
+        description: "Innodb_buffer_pool_pages_dirty: The current number of dirty pages in the InnoDB buffer pool"
+
+      - name: innodb.buffer.bytes.dirty
+        source: Innodb_buffer_pool_bytes_dirty
+        type: long_gauge
+        label: innodb buffer pool bytes dirty
+        description: "Innodb_buffer_pool_bytes_dirty: The total current number of bytes held in dirty pages in the InnoDB buffer pool"
+        unit: bytes
+
+      - name: innodb.buffer.pages.flushed
+        source: Innodb_buffer_pool_pages_flushed
+        type: counter
+        label: innodb buffer pool pages flushed
+        description: "Innodb_buffer_pool_pages_flushed: The number of requests to flush pages from the InnoDB buffer pool"
+
+      - name: innodb.buffer.pages.free
+        source: Innodb_buffer_pool_pages_free
+        type: long_gauge
+        label: innodb buffer pool pages free
+        description: "Innodb_buffer_pool_pages_free: The number of free pages in the InnoDB buffer pool"
+
+      - name: innodb.buffer.pages.misc
+        source: Innodb_buffer_pool_pages_misc
+        type: long_gauge
+        label: innodb buffer pool pages misc
+        description: "Innodb_buffer_pool_pages_misc: The number of pages in the InnoDB buffer pool that are busy because they have been allocated for administrative overhead, such as row locks or the adaptive hash index"
+
+      - name: innodb.buffer.pages
+        source: Innodb_buffer_pool_pages_total
+        type: long_gauge
+        label: innodb buffer pool pages total
+        description: "Innodb_buffer_pool_pages_total: The total size of the InnoDB buffer pool, in pages"
+
+      - name: innodb.buffer.read.ahead.rnd
+        source: Innodb_buffer_pool_read_ahead_rnd
+        type: counter
+        label: innodb buffer pool read ahead rnd
+        description: "Innodb_buffer_pool_read_ahead_rnd: The number of “random” read-aheads initiated by InnoDB. This happens when a query scans a large portion of a table but in random order"
+
+      - name: innodb.buffer.read.ahead.seq
+        source: Innodb_buffer_pool_read_ahead_seq
+        type: counter
+        label: innodb buffer pool read ahead seq
+        description: "Innodb_buffer_pool_read_ahead_seq: The number of sequential read-aheads initiated by InnoDB. This happens when InnoDB does a sequential full table scan"
+
+      - name: innodb.buffer.read.ahead
+        source: Innodb_buffer_pool_read_ahead
+        type: counter
+        label: innodb buffer pool read ahead
+        description: "Innodb_buffer_pool_read_ahead: The number of pages read into the InnoDB buffer pool by the read-ahead background thread. This variable was added in MySQL 5.1.41"
+
+      - name: innodb.buffer.read.ahead.evicted
+        source: Innodb_buffer_pool_read_ahead_evicted
+        type: counter
+        label: innodb buffer pool read ahead evicted
+        description: "Innodb_buffer_pool_read_ahead_evicted: The number of pages read into the InnoDB buffer pool by the read-ahead background thread that were subsequently evicted without having been accessed by queries. This variable was added in MySQL 5.1.41"
+
+      - name: innodb.buffer.read.requests
+        source: Innodb_buffer_pool_read_requests
+        type: counter
+        label: innodb buffer pool read requests
+        description: "Innodb_buffer_pool_read_requests: The number of logical read requests"
+
+      - name: innodb.buffer.reads
+        source: Innodb_buffer_pool_reads
+        type: counter
+        label: innodb buffer pool reads
+        description: "Innodb_buffer_pool_reads: The number of logical reads that InnoDB could not satisfy from the buffer pool, and had to read directly from the disk"
+
+      - name: innodb.buffer.wait.free
+        source: Innodb_buffer_pool_wait_free
+        type: counter
+        label: innodb buffer pool wait free
+        description: "Innodb_buffer_pool_wait_free: Normally, writes to the InnoDB buffer pool happen in the background. However, if it is necessary to read or create a page and no clean pages are available, it is also necessary to wait for pages to be flushed first. This counter counts instances of these waits. If the buffer pool size has been set properly, this value should be small."
+
+      - name: innodb.buffer.write.requests
+        source: Innodb_buffer_pool_write_requests
+        type: counter
+        label: innodb buffer pool write requests
+        description: "Innodb_buffer_pool_write_requests: The number writes done to the InnoDB buffer pool"
+

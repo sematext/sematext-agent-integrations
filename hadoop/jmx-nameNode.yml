@@ -1,0 +1,341 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-namenode
+
+observation:
+#  1.0.* variant
+  - name: namenode_fs_metrics_v1.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NameNode,name=FSNamesystemMetrics
+
+    metric:
+      - name: nn.blocks
+        source: BlocksTotal
+        type: long_gauge
+        label: blocks total
+
+      - name: nn.blocks.corrupt
+        source: CorruptBlocks
+        type: long_gauge
+        label: corrupt blocks
+
+      - name: nn.blocks.excess
+        source: ExcessBlocks
+        type: long_gauge
+        label: excess blocks
+
+      - name: nn.blocks.missing
+        source: MissingBlocks
+        type: long_gauge
+        label: missing blocks
+
+      - name: nn.blocks.pending.deletion
+        source: PendingDeletionBlocks
+        type: long_gauge
+        label: blocks pending deletion
+
+      - name: nn.blocks.pending.replication
+        source: PendingReplicationBlocks
+        type: long_gauge
+        label: blocks pending replication
+
+      - name: nn.blocks.scheduled.replication
+        source: ScheduledReplicationBlocks
+        type: long_gauge
+        label: scheduled replication blocks
+
+      - name: nn.blocks.underreplicated
+        source: UnderReplicatedBlocks
+        type: long_gauge
+        label: under replicated blocks
+
+#  0.20.* variant and 2.x
+
+  - name: namenode_fs_metrics_v2.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NameNode,name=FSNamesystem
+
+    metric:
+      - name: nn.blocks
+        source: BlocksTotal
+        type: long_gauge
+        label: blocks total
+
+      - name: nn.blocks.corrupt
+        source: CorruptBlocks
+        type: long_gauge
+        label: corrupt blocks
+
+      - name: nn.blocks.excess
+        source: ExcessBlocks
+        type: long_gauge
+        label: excess blocks
+
+      - name: nn.blocks.missing
+        source: MissingBlocks
+        type: long_gauge
+        label: missing blocks
+
+      - name: nn.blocks.pending.deletion
+        source: PendingDeletionBlocks
+        type: long_gauge
+        label: blocks pending deletion
+
+      - name: nn.blocks.pending.replication
+        source: PendingReplicationBlocks
+        type: long_gauge
+        label: blocks pending replication
+
+      - name: nn.blocks.scheduled.replication
+        source: ScheduledReplicationBlocks
+        type: long_gauge
+        label: scheduled replication blocks
+
+      - name: nn.blocks.underreplicated
+        source: UnderReplicatedBlocks
+        type: long_gauge
+        label: under replicated blocks
+
+#  0.21.*/0.22.* variant - NOTE: looks like such bean doesn't exist in 0.21/0.22
+
+  - name: namenode_fs_metrics_v0.2x
+    metricNamespace: hadoop
+    objectName: hadoop:service=NameNode,name=FSNamesystem
+
+    metric:
+      - name: nn.blocks
+        source: BlocksTotal
+        type: long_gauge
+        label: blocks total
+
+      - name: nn.blocks.corrupt
+        source: CorruptBlocks
+        type: long_gauge
+        label: corrupt blocks
+
+      - name: nn.blocks.excess
+        source: ExcessBlocks
+        type: long_gauge
+        label: excess blocks
+
+      - name: nn.blocks.missing
+        source: MissingBlocks
+        type: long_gauge
+        label: missing blocks
+
+      - name: nn.blocks.pending.deletion
+        source: PendingDeletionBlocks
+        type: long_gauge
+        label: blocks pending deletion
+
+      - name: nn.blocks.pending.replication
+        source: PendingReplicationBlocks
+        type: long_gauge
+        label: blocks pending replication
+
+      - name: nn.blocks.scheduled.replication
+        source: ScheduledReplicationBlocks
+        type: long_gauge
+        label: scheduled replication blocks
+
+      - name: nn.blocks.underreplicated
+        source: UnderReplicatedBlocks
+        type: long_gauge
+        label: under replicated blocks
+
+#  0.20, 1.0, 2.0 variants
+
+  - name: namenode_fs_state_v1.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NameNode,name=FSNamesystemState
+
+    metric:
+      - name: nn.capacity.remaining
+        source: CapacityRemaining
+        type: long_gauge
+        label: capacity remaining
+
+      - name: nn.capacity
+        source: CapacityTotal
+        type: long_gauge
+        label: capacity total
+
+      - name: nn.capacity.used
+        source: CapacityUsed
+        type: long_gauge
+        label: capacity used
+
+      - name: nn.files
+        source: FilesTotal
+        type: long_gauge
+        label: total files
+
+#  0.21.*/0.22.* variant
+
+  - name: namenode_fs_state_v0.2x
+    metricNamespace: hadoop
+    objectName: hadoop:service=NameNode,name=FSNamesystemState
+
+    metric:
+      - name: nn.capacity.remaining
+        source: CapacityRemaining
+        type: long_gauge
+        label: capacity remaining
+
+      - name: nn.capacity
+        source: CapacityTotal
+        type: long_gauge
+        label: capacity total
+
+      - name: nn.capacity.used
+        source: CapacityUsed
+        type: long_gauge
+        label: capacity used
+
+      - name: nn.files
+        source: FilesTotal
+        type: long_gauge
+        label: total files
+
+#  1.0.* variant
+
+  - name: namenode_v1.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NameNode,name=NameNode
+
+    metric:
+      - name: nn.files.ops.create
+        source: CreateFileOps
+        type: counter
+        label: create file ops
+
+      - name: nn.files.ops.listing
+        source: GetListingOps
+        type: counter
+        label: get listing ops
+
+      - name: nn.files.ops.delete
+        source: DeleteFileOps
+        type: counter
+        label: delete file ops
+
+      - name: nn.files.ops.info
+        source: FileInfoOps
+        type: counter
+        label: file info ops
+
+      - name: nn.files.created
+        source: FilesCreated
+        type: counter
+        label: created files
+
+      - name: nn.files.appended
+        source: FilesAppended
+        type: counter
+        label: appended files
+
+      - name: nn.files.renamed
+        source: FilesRenamed
+        type: counter
+        label: renamed files
+
+      - name: nn.files.deleted
+        source: FilesDeleted
+        type: counter
+        label: deleted files
+
+#  0.20.* variant
+
+  - name: namenode_v2.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NameNode,name=NameNodeActivity
+
+    metric:
+      - name: nn.files.ops.create
+        source: CreateFileOps
+        type: counter
+        label: create file ops
+
+      - name: nn.files.ops.listing
+        source: GetListingOps
+        type: counter
+        label: get listing ops
+
+      - name: nn.files.ops.delete
+        source: DeleteFileOps
+        type: counter
+        label: delete file ops
+
+      - name: nn.files.ops.info
+        source: FileInfoOps
+        type: counter
+        label: file info ops
+
+      - name: nn.files.created
+        source: FilesCreated
+        type: counter
+        label: created files
+
+      - name: nn.files.appended
+        source: FilesAppended
+        type: counter
+        label: appended files
+
+      - name: nn.files.renamed
+        source: FilesRenamed
+        type: counter
+        label: renamed files
+
+      - name: nn.files.deleted
+        source: FilesDeleted
+        type: counter
+        label: deleted files
+
+#  0.21.*/0.22.* variant
+
+  - name: namenode_v0.2x
+    metricNamespace: hadoop
+    objectName: hadoop:service=NameNode,name=NameNodeActivity
+
+    metric:
+      - name: nn.files.ops.create
+        source: CreateFileOps
+        type: counter
+        label: create file ops
+
+      - name: nn.files.ops.listing
+        source: GetListingOps
+        type: counter
+        label: get listing ops
+
+      - name: nn.files.ops.delete
+        source: DeleteFileOps
+        type: counter
+        label: delete file ops
+
+      - name: nn.files.ops.info
+        source: FileInfoOps
+        type: counter
+        label: file info ops
+
+      - name: nn.files.created
+        source: FilesCreated
+        type: counter
+        label: created files
+
+      - name: nn.files.appended
+        source: FilesAppended
+        type: counter
+        label: appended files
+
+      - name: nn.files.renamed
+        source: FilesRenamed
+        type: counter
+        label: renamed files
+
+      - name: nn.files.deleted
+        source: FilesDeleted
+        type: counter
+        label: deleted files
+

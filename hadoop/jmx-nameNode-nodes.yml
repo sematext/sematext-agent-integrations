@@ -1,0 +1,96 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-namenode
+
+observation:
+#  0.20, 1.0, 2.0 variants
+  - name: namenode_info_v2.x
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NameNode,name=NameNodeInfo
+
+    metric:
+      - name: nodes.live
+        source: LiveNodes
+        type: text
+        send: false
+
+      - name: nn.nodes.live
+        source: func:com.sematext.spm.client.hadoop.CalculateNumNodes(nodes.live)
+        type: long_gauge
+        label: live nodes
+
+      - name: nodes.dead
+        source: DeadNodes
+        type: text
+        send: false
+
+      - name: nn.nodes.dead
+        source: func:com.sematext.spm.client.hadoop.CalculateNumNodes(nodes.dead)
+        type: long_gauge
+        label: dead nodes
+
+      - name: nodes.decom
+        source: DecomNodes
+        type: text
+        send: false
+
+      - name: nn.nodes.decom
+        source: func:com.sematext.spm.client.hadoop.CalculateNumNodes(nodes.decom)
+        type: long_gauge
+        label: decom nodes
+
+#  0.21.*/0.22.* - should exist, but seems like it doesn't
+
+  - name: namenode_info_v0.2x
+    metricNamespace: hadoop
+    objectName: hadoop:service=NameNode,name=NameNodeInfo
+
+    metric:
+      - name: nodes.live
+        source: LiveNodes
+        type: text
+        send: false
+
+      - name: nn.nodes.live
+        source: func:com.sematext.spm.client.hadoop.CalculateNumNodes(nodes.live)
+        type: long_gauge
+        label: live nodes
+
+      - name: nodes.dead
+        source: DeadNodes
+        type: text
+        send: false
+
+      - name: nn.nodes.dead
+        source: func:com.sematext.spm.client.hadoop.CalculateNumNodes(nodes.dead)
+        type: long_gauge
+        label: dead nodes
+
+      - name: nodes.decom
+        source: DecomNodes
+        type: text
+        send: false
+
+      - name: nn.nodes.decom
+        source: func:com.sematext.spm.client.hadoop.CalculateNumNodes(nodes.decom)
+        type: long_gauge
+        label: decom nodes
+
+#  backup bean from which some stats can be extracted for 0.21/0.22
+
+  - name: namdenode_fsname_system_state
+    metricNamespace: hadoop
+    objectName: hadoop:service=NameNode,name=FSNamesystemState
+
+    metric:
+      - name: nn.nodes.dead
+        source: NumDeadDataNodes
+        type: long_gauge
+        label: dead nodes
+
+      - name: nn.nodes.live
+        source: NumLiveDataNodes
+        type: long_gauge
+        label: live nodes
+

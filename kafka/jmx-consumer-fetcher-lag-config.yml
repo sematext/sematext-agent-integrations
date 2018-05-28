@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-lag
+    metricNamespace: kafka
+    objectName: kafka.server:type=FetcherLagMetrics,name=ConsumerLag,clientId=${clientId},topic=${topic},partition=${partition}
+
+    metric:
+      - name: consumer.fetcher.lag
+        source: Value
+        type: double_gauge
+        label: consumer fetcher lag
+        description: Lag in messages per topic partition
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+
+      - name: kafka.consumer.client.topic.partition
+        value: ${partition}

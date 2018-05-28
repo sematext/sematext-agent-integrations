@@ -1,0 +1,170 @@
+type: json
+data:
+  url: 
+  server: ${SPM_MONITOR_NGINX_PLUS_STATUS_URL}
+  basicHttpAuthUsername: ${SPM_MONITOR_NGINX_PLUS_USER}
+  basicHttpAuthPassword: ${SPM_MONITOR_NGINX_PLUS_PASSWORD}
+
+observation:
+  - name: cache
+    metricNamespace: nginxp
+    path: $.caches.${cacheType}
+
+    metric:
+      - name: cache.size
+        source: size
+        type: long_gauge
+        label: cache size
+        description: The current size of the cache
+
+      - name: cache.size.max
+        source: max_size
+        type: long_gauge
+        label: max cache size
+        description: The limit on the maximum size of the cache specified in the configuration
+
+      - name: cold
+        source: cold
+        type: text
+        send: false
+
+      - name: cache.cold
+        source: func:BoolToInt(cold)
+        type: gauge
+        label: cold state
+        description: The number of time cache in cold state
+
+      - name: cache.hits.responses
+        source: hit.responses
+        type: counter
+        label: responses hits
+        description: The number of responses read from the cache
+
+      - name: cache.hits.bytes
+        source: hit.bytes
+        type: counter
+        label: responses hits size
+        description: The number of bytes read from the cache
+        unit: bytes
+
+      - name: cache.stale.responses
+        source: stale.responses
+        type: counter
+        label: stale responses
+        description: The number of stale responses read from the cache
+
+      - name: cache.stale.bytes
+        source: stale.bytes
+        type: counter
+        label: stale responses size
+        description: The number of stale bytes read from the cache
+        unit: bytes
+
+      - name: cache.updating.responses
+        source: updating.responses
+        type: counter
+        label: updating responses
+        description: The number of updating responses read from the cache
+
+      - name: cache.updating.bytes
+        source: updating.bytes
+        type: counter
+        label: updating responses size
+        description: The number of updating bytes read from the cache
+        unit: bytes
+
+      - name: cache.revalidated.responses
+        source: updating.responses
+        type: counter
+        label: revalidated responses
+        description: The number of revalidated responses read from the cache
+
+      - name: cache.revalidated.bytes
+        source: updating.bytes
+        type: counter
+        label: revalidated responses size
+        description: The number of revalidated bytes read from the cache
+        unit: bytes
+
+      - name: cache.miss.responses
+        source: miss.responses
+        type: counter
+        label: cache missed responses
+        description: The number of responses not taken from the cache
+
+      - name: cache.miss.bytes
+        source: miss.bytes
+        type: counter
+        label: miss responses size
+        description: The number of bytes read from the proxied server
+        unit: bytes
+
+      - name: cache.miss.responses.written
+        source: miss.responses_written
+        type: counter
+        label: miss responses written
+        description: The number of miss responses written to the cache
+
+      - name: cache.miss.bytes.written
+        source: miss.bytes_written
+        type: counter
+        label: miss written size
+        description: The number of miss bytes written to the cache
+        unit: bytes
+
+      - name: cache.expired.responses
+        source: expired.responses
+        type: counter
+        label: expired responses
+        description: The number of expired responses not taken from the cache
+
+      - name: cache.expired.bytes
+        source: expired.bytes
+        type: counter
+        label: expired responses size
+        description: The number of expired bytes written to the cache
+        unit: bytes
+
+      - name: cache.expired.responses.written
+        source: expired.responses_written
+        type: counter
+        label: expired responses written
+        description: The number of expired responses written to the cache
+
+      - name: cache.expired.bytes.written
+        source: expired.bytes_written
+        type: counter
+        label: expired responses written size
+        description: The number of expired bytes written to the cache
+        unit: bytes
+
+      - name: cache.bypass.responses
+        source: bypass.responses
+        type: counter
+        label: bypass responses
+        description: The number of bypass responses not taken from the cache
+
+      - name: cache.bypass.bytes
+        source: bypass.bytes
+        type: counter
+        label: bypass responses size
+        description: The number of bypass bytes written to the cache
+        unit: bytes
+
+      - name: cache.bypass.responses.written
+        source: bypass.responses_written
+        type: counter
+        label: bypass responses written
+        description: The number of bypass responses written to the cache
+
+      - name: cache.bypass.bytes.written
+        source: bypass.bytes_written
+        type: counter
+        label: bypass responses written size
+        description: The number of bypass bytes written to the cache
+        unit: bytes
+
+    tag:
+      - name: nginxp.cache
+        value: ${cacheType}
+

@@ -1,0 +1,166 @@
+type: json
+data:
+  # use the same URL as other index-related collector configs which enables caching of response data and
+  # reduced overhead SPM JSON-based monitor has on the system
+  url: /_stats?indexing=true&store=true&search=true&merge=true&refresh=true&flush=true&level=shards&format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  async: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 0
+
+observation:
+  - name: refreshFlushStats_refresh_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].refresh
+
+    metric:
+      - name: indexing.refreshes.primaries
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: refresh count (prim)
+        description: refresh count on primary shards
+
+      - name: indexing.refreshes.time.primaries
+        source: total_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: refresh time (prim)
+        description: refresh time on primary shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: refreshFlushStats_refresh_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].refresh
+
+    metric:
+      - name: indexing.refreshes.total
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: refresh count (all)
+        description: refresh count on all (primary and replica) shards
+
+      - name: indexing.refreshes.time.total
+        source: total_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: refresh time (all)
+        description: refresh time on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: refreshFlushStats_flush_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].flush
+
+    metric:
+      - name: indexing.flushes.primaries
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: flush count (prim)
+        description: flush count on primary shards
+
+      - name: indexing.flushes.time.primaries
+        source: total_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: flush time (prim)
+        description: flush time on primary shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: refreshFlushStats_flush_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].flush
+
+    metric:
+      - name: indexing.flushes.total
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: flush count (all)
+        description: flush count on all (primary and replica) shards
+
+      - name: indexing.flushes.time.total
+        source: total_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: flush time (all)
+        description: flush time on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

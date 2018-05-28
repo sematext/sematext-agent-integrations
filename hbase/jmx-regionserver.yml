@@ -1,0 +1,1040 @@
+type: jmx
+
+observation:
+  - name: hbase-rs-ser
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Server
+
+    metric:
+      - name: rs.compacted.in.size
+        source: compactedInputBytes
+        type: counter
+        label: compacted in size
+        description: Total number of bytes that is read for compaction both major and minor
+        unit: bytes
+
+      - name: rs.major.compacted.out.bytes
+        source: majorCompactedOutputBytes
+        type: counter
+        label: major compacted out size
+
+      - name: rs.flushed.memostore.size
+        source: flushedMemstoreBytes
+        type: counter
+        label: flushed memstore size
+        description: Total number of bytes of cells in memstore from flush
+        unit: bytes
+
+      - name: rs.compacted.out.size
+        source: compactedOutputBytes
+        type: counter
+        label: compacted out size
+        description: Total number of bytes that is output from compaction major only
+        unit: bytes
+
+      - name: rs.split.requests
+        source: splitRequestCount
+        type: counter
+        label: splits requests
+        description: Number of splits requested
+
+      - name: rs.flushed.out.size
+        source: flushedOutputBytes
+        type: counter
+        label: flushed out size
+        description: Total number of bytes written from flush
+        unit: bytes
+
+      - name: rs.cache.block.failed.insertions
+        source: blockCacheFailedInsertionCount
+        type: counter
+        label: cache failed insertions
+        description: Number of times that a block cache insertion failed. Usually due to size restrictions
+
+      - name: rs.cache.block.hits.rate
+        source: blockCacheCountHitPercent
+        type: double_gauge
+        label: cache hits rate
+        description: Percent of block cache requests that are hits
+
+      - name: rs.cache.block.hits.rate
+        source: blockCountHitPercent
+        type: double_gauge
+        label: cache hits rate
+        description: Percent of block cache requests that are hits
+
+      - name: rs.cache.block.primary.evictions
+        source: blockCacheEvictionCountPrimary
+        type: counter
+        label: cache primary evictions
+        description: Count of the number of blocks evicted from primary replica in the block cache
+
+      - name: rs.cache.block.primary.misses
+        source: blockCacheMissCountPrimary
+        type: counter
+        label: cache primary misses
+        description: Number of requests for a block of primary replica that missed the block cache
+
+      - name: rs.cache.block.primary.hits
+        source: blockCacheHitCountPrimary
+        type: counter
+        label: cache primary hits
+        description: Count of hit on primary replica in the block cache
+
+      - name: rs.large.compaction.queue
+        source: largeCompactionQueueLength
+        type: gauge
+        label: large compaction queue
+        description: Length of the queue for compactions with input size larger than throttle threshold (2.5GB by default)
+
+      - name: rs.small.compactions.queue
+        source: smallCompactionQueueLength
+        type: gauge
+        label: small compactions queue
+        description: Length of the queue for compactions
+
+      - name: rs.splits.queue
+        source: splitQueueLength
+        type: gauge
+        label: splits queue
+        description: Length of the queue for splits
+
+      - name: rs.files.local.rate.secondary.regions
+        source: percentFilesLocalSecondaryRegions
+        type: double_gauge
+        label: secondary regions local files rate
+        description: The percent of HFiles used by secondary regions that are stored on the local hdfs data node
+
+      - name: rs.rpc.mutate.requests
+        source: rpcMutateRequestCount
+        type: counter
+        label: rpc mutation requests
+        description: Number of rpc mutation requests this RegionServer has answered
+
+      - name: rs.rpc.multi.requests
+        source: rpcMultiRequestCount
+        type: counter
+        label: rpc multi requests
+        description: Number of rpc multi requests this RegionServer has answered
+
+      - name: rs.rpc.scan.requests
+        source: rpcScanRequestCount
+        type: counter
+        label: rpc scan requests
+        description: Number of rpc scan requests this RegionServer has answered
+
+      - name: rs.rpc.get.requests
+        source: rpcGetRequestCount
+        type: counter
+        label: rpc get requests
+        description: Number of rpc get requests this RegionServer has answered
+
+      - name: rs.region.size.avg
+        source: averageRegionSize
+        type: gauge
+        label: avg rs region size
+        description: Average region size over the RegionServer including memstore and storefile sizes
+        unit: bytes
+
+      - name: rs.reference.files
+        source: numReferenceFiles
+        type: gauge
+        label: reference files
+        description: Number of reference file on this RegionServer
+
+      - name: rs.blocked.requests
+        source: blockedRequestCount
+        type: counter
+        label: blocked requests
+        description: The number of blocked requests because of memstore size is larger than blockingMemStoreSize
+
+      - name: rs.cache.block.trailer.hits
+        source: blockCacheTrailerHitCount
+        type: counter
+        label: cache trailer hits
+        description: Block cache trailer hits
+
+      - name: rs.cache.block.delete.family.bloom.hits
+        source: blockCacheDeleteFamilyBloomHitCount
+        type: counter
+        label: cache delete family bloom hits
+        description: Block cache delete family bloom hits
+
+      - name: rs.cache.block.general.bloom.meta.hits
+        source: blockCacheGeneralBloomMetaHitCount
+        type: counter
+        label: cache general bloom meta hits
+        description: Block cache general bloom meta hits
+
+      - name: rs.cache.block.file.info.hits
+        source: blockCacheFileInfoHitCount
+        type: counter
+        label: cache file info hits
+        description: Block cache file info hits
+
+      - name: rs.cache.block.intermediate.index.hits
+        source: blockCacheIntermediateIndexHitCount
+        type: counter
+        label: cache intermediate index hits
+        description: Block cache intermediate index hits
+
+      - name: rs.cache.block.root.index.hits
+        source: blockCacheRootIndexHitCount
+        type: counter
+        label: cache root index hits
+        description: Block cache root index hits
+
+      - name: rs.cache.block.meta.hits
+        source: blockCacheMetaHitCount
+        type: counter
+        label: cache meta hits
+        description: Block cache meta hits
+
+      - name: rs.cache.block.bloom.chunk.hits
+        source: blockCacheBloomChunkHitCount
+        type: counter
+        label: cache bloom chunk hits
+        description: Block cache bloom chunk hits count
+
+      - name: rs.cache.block.leaf.index.hits
+        source: blockCacheLeafIndexHitCount
+        type: counter
+        label: cache leaf index hits
+        description: Block cache leaf index hits
+
+      - name: rs.cache.block.data.hits
+        source: blockCacheDataHitCount
+        type: counter
+        label: cache data hits
+        description: Block cache data hits
+
+      - name: rs.cache.block.trailer.misses
+        source: blockCacheTrailerMissCount
+        type: counter
+        label: cache trailer misses
+        description: Block cache trailer misses
+
+      - name: rs.cache.block.delete.family.bloom.misses
+        source: blockCacheDeleteFamilyBloomMissCount
+        type: counter
+        label: cache delete family bloom misses
+        description: Block cache delete family bloom misses
+
+      - name: rs.cache.block.general.bloom.meta.misses
+        source: blockCacheGeneralBloomMetaMissCount
+        type: counter
+        label: cache general bloom meta misses
+        description: Block cache general bloom meta misses
+
+      - name: rs.cache.block.file.info.misses
+        source: blockCacheFileInfoMissCount
+        type: counter
+        label: cache file info misses
+        description: Block cache file info misses
+
+      - name: rs.cache.block.intermediate.index.misses
+        source: blockCacheIntermediateIndexMissCount
+        type: counter
+        label: cache intermediate index misses
+        description: Block cache intermediate index misses
+
+      - name: rs.cache.block.root.index.misses
+        source: blockCacheRootIndexMissCount
+        type: counter
+        label: cache root index misses
+        description: Block cache root index misses
+
+      - name: rs.cache.block.meta.misses
+        source: blockCacheMetaMissCount
+        type: counter
+        label: cache meta misses
+        description: Block cache meta misses
+
+      - name: rs.cache.block.bloom.chunk.misses
+        source: blockCacheBloomChunkMissCount
+        type: counter
+        label: cache bloom chunk misses
+        description: Block cache bloom chunk misses count
+
+      - name: rs.cache.block.leaf.index.misses
+        source: blockCacheLeafIndexMissCount
+        type: counter
+        label: cache leaf index misses
+        description: Block cache leaf index misses
+
+      - name: rs.cache.block.data.misses
+        source: blockCacheDataMissCount
+        type: counter
+        label: cache data misses
+        description: Block cache data misses
+
+      - name: rs.success.splits
+        source: splitSuccessCount
+        type: counter
+        label: success splits
+        description: Number of successfully executed splits
+
+      - name: rs.regions
+        source: regionCount
+        type: long_gauge
+        label: rs regions
+        description: Number of regions
+
+      - name: rs.stores
+        source: storeCount
+        type: long_gauge
+        label: rs stores
+        description: Number of Stores
+
+      - name: rs.files.hlog
+        source: hlogFileCount
+        type: long_gauge
+        label: hlog files
+        description: Number of WAL Files
+
+      - name: rs.files.hlog.size
+        source: hlogFileSize
+        type: long_gauge
+        label: hlog files size
+        description: Size of all WAL Files
+        unit: bytes
+
+      - name: rs.stores.files
+        source: storeFileCount
+        type: long_gauge
+        label: stores files
+        description: Number of Store Files
+
+      - name: rs.memstore.size
+        source: memStoreSize
+        type: long_gauge
+        label: memstore size
+        description: Size of the memstore
+        unit: bytes
+
+      - name: rs.stores.files.size
+        source: storeFileSize
+        type: long_gauge
+        label: stores files size
+        description: Size of storefiles being served
+        unit: bytes
+
+      - name: rs.total.requests
+        source: totalRequestCount
+        type: counter
+        label: total requests
+        description: Total number of requests this RegionServer has answered; increments the count once for EVERY access whether an admin operation
+
+      - name: rs.requests.read
+        source: readRequestCount
+        type: counter
+        label: rs read requests
+        description: Number of read requests with non-empty Results that this RegionServer has answered
+
+      - name: rs.requests.write
+        source: writeRequestCount
+        type: counter
+        label: rs write requests
+        description: Number of mutation requests this RegionServer has answered
+
+      - name: rs.ops.mutates.failed
+        source: checkMutateFailedCount
+        type: counter
+        label: failed mutates
+        description: Number of Check and Mutate calls that failed the checks
+
+      - name: rs.ops.mutates.passed
+        source: checkMutatePassedCount
+        type: counter
+        label: passed mutates
+        description: Number of Check and Mutate calls that passed the checks
+
+      - name: rs.stores.index.size
+        source: storeFileIndexSize
+        type: long_gauge
+        label: store files indexes size
+        description: Size of indexes in storefiles on disk
+        unit: bytes
+
+      - name: rs.static.index.size
+        source: staticIndexSize
+        type: long_gauge
+        label: static indices size
+        description: Uncompressed size of the static indices
+        unit: bytes
+
+      - name: rs.static.bloom.size
+        source: staticBloomSize
+        type: long_gauge
+        label: static bloom filters size
+        description: Uncompressed size of the static bloom filters
+        unit: bytes
+
+      - name: rs.ops.mutates.nowal
+        source: mutationsWithoutWALCount
+        type: counter
+        label: mutations without wal
+        description: Number of mutations that have been sent by clients with the write ahead logging turned off
+
+      - name: rs.ops.mutates.nowal.size
+        source: mutationsWithoutWALSize
+        type: counter
+        label: mutations size without wal
+        description: Size of data that has been sent by clients with the write ahead logging turned off
+        unit: bytes
+
+      - name: rs.files.local.rate
+        source: percentFilesLocal
+        type: long_gauge
+        label: local files rate
+        description: The percent of HFiles that are stored on the local hdfs data node
+
+      - name: rs.compaction.queue
+        source: compactionQueueLength
+        type: long_gauge
+        label: compaction queue
+        description: Length of the queue for compactions
+
+      - name: rs.flush.queue
+        source: flushQueueLength
+        type: long_gauge
+        label: flush queue
+        description: Length of the queue for region flushes
+
+      - name: rs.cache.block.free.size
+        source: blockCacheFreeSize
+        type: long_gauge
+        label: rs cache free size
+        unit: bytes
+
+      - name: rs.cache.block.count
+        source: blockCacheCount
+        type: long_gauge
+        label: cache blocks
+        description: Number of block in the block cache
+
+      - name: rs.cache.block.size
+        source: blockCacheSize
+        type: long_gauge
+        label: rs cache size
+        description: Size of the block cache
+        unit: bytes
+
+      - name: rs.cache.block.hits
+        source: blockCacheHitCount
+        type: counter
+        label: rs cache hits
+        description: Count of the hit on the block cache
+
+      - name: rs.cache.block.misses
+        source: blockCacheMissCount
+        type: counter
+        label: rs cache misses
+        description: Number of requests for a block that missed the block cache
+
+      - name: rs.cache.block.evictions
+        source: blockCacheEvictionCount
+        type: counter
+        label: rs cache evictions
+        description: Count of the number of blocks evicted from the block cache (Not including blocks evicted because of HFile removal)
+
+      - name: rs.cache.block.hits.express.rate
+        source: blockCacheExpressHitPercent
+        type: long_gauge
+        label: rs cache express hits rate
+        description: The percent of the time that requests with the cache turned on hit the cache
+
+      - name: rs.updates.blocked.time
+        source: updatesBlockedTime
+        type: counter
+        label: blocked updates
+        description: Number of MS updates have been blocked so that the memstore can be flushed
+
+      - name: rs.flushed.cells
+        source: flushedCellsCount
+        type: counter
+        label: flushed cells
+        description: The number of cells flushed to disk
+
+      - name: rs.compaction.cells
+        source: compactedCellsCount
+        type: counter
+        label: compaction cells
+        description: The number of cells processed during minor compactions
+
+      - name: rs.compaction.major.cells
+        source: majorCompactedCellsCount
+        type: counter
+        label: major compaction cells
+        description: The number of cells processed during major compactions
+
+      - name: rs.flushed.cells.size
+        source: flushedCellsSize
+        type: counter
+        label: flushed cells size
+        description: The total amount of mob cells flushed to disk
+        unit: bytes
+
+      - name: rs.compaction.cells.size
+        source: compactedCellsSize
+        type: counter
+        label: compaction cells size
+        description: The total amount of data processed during major compactions
+        unit: bytes
+
+      - name: rs.compaction.major.cells.size
+        source: majorCompactedCellsSize
+        type: counter
+        label: major compaction cells size
+        description: The total amount of data processed during major compactions
+        unit: bytes
+
+      - name: rs.reads.hedged
+        source: hedgedReads
+        type: counter
+        label: hedged reads
+        description: The number of times we started a hedged read
+
+      - name: rs.reads.hedged.wins
+        source: hedgedReadWins
+        type: counter
+        label: hedged reads wins
+        description: The number of times we started a hedged read and a hedged read won
+
+      - name: rs.mob.cache.files
+        source: mobFileCacheCount
+        type: long_gauge
+        label: mob cached files
+        description: The count of cached mob files
+
+      - name: rs.mob.cache.files.accesses
+        source: mobFileCacheAccessCount
+        type: counter
+        label: mob cache files accesses
+        description: The count of accesses to the mob file cache
+
+      - name: rs.mob.cache.files.misses
+        source: mobFileCacheMissCount
+        type: counter
+        label: mob cache files misses
+        description: The count of misses to the mob file cache
+
+      - name: rs.mob.cache.files.evictions
+        source: mobFileCacheEvictedCount
+        type: counter
+        label: mob cache files evictions
+        description: The number of items evicted from the mob file cache
+
+      - name: rs.mob.flushes
+        source: mobFlushCount
+        type: counter
+        label: mob flushes
+        description: The number of the flushes in mob-enabled stores
+
+      - name: rs.mob.flushed.cells
+        source: mobFlushedCellsCount
+        type: counter
+        label: flushed cells
+        description: The number of mob cells flushed to disk
+
+      - name: rs.mob.flushed.cells.size
+        source: mobFlushedCellsSize
+        type: counter
+        label: mob flushed cells size
+        description: The total amount of mob cells flushed to disk
+        unit: bytes
+
+      - name: rs.mob.scan.cells
+        source: mobScanCellsCount
+        type: counter
+        label: scanned cells
+        description: The number of scanned mob cells
+
+      - name: rs.mob.scan.cells.size
+        source: mobScanCellsSize
+        type: counter
+        label: scanned cells size
+        description: The total amount of scanned mob cells
+        unit: bytes
+
+      - name: rs.mob.cache.files.hits.rate
+        source: mobFileCacheHitPercent
+        type: long_gauge
+        label: mob cache files hits rate
+        description: The hit percent to the mob file cache
+
+      - name: rs.ops.appends
+        source: Append_num_ops
+        type: counter
+        label: rs appends
+        description: The number of batches containing puts
+
+      - name: rs.ops.deletes
+        source: Delete_num_ops
+        type: counter
+        label: rs deletes
+        description: The number of batches containing delete(s)
+
+      - name: rs.ops.mutates
+        source: Mutate_num_ops
+        type: counter
+        label: rs mutates
+        description: The number of Mutates
+
+      - name: rs.ops.gets
+        source: Get_num_ops
+        type: counter
+        label: rs gets
+        description: The number of Gets
+
+      - name: rs.ops.replays
+        source: Replay_num_ops
+        type: counter
+        label: rs replays
+        description: The numbers of Replays
+
+      - name: rs.ops.increments
+        source: Increment_num_ops
+        type: counter
+        label: rs increments
+        description: The number of Increments
+
+      - name: rs.ops.appends.slow
+        source: slowAppendCount
+        type: counter
+        label: rs slow appends
+        description: The number of batches containing puts that took over 1000ms to complete
+
+      - name: rs.ops.deletes.slow
+        source: slowDeleteCount
+        type: counter
+        label: rs slow deletes
+        description: The number of batches containing delete(s) that took over 1000ms to complete
+
+      - name: rs.ops.increments.slow
+        source: slowIncrementCount
+        type: counter
+        label: rs slow increments
+        description: The number of Increments that took over 1000ms to complete
+
+      - name: rs.ops.gets.slow
+        source: slowGetCount
+        type: counter
+        label: rs slow gets
+        description: The number of Gets that took over 1000ms to complete
+
+      - name: rs.ops.puts.slow
+        source: slowPutCount
+        type: counter
+        label: rs slow puts
+        description: The number of batches containing puts that took over 1000ms to complete
+
+      - name: rs.ops.scan.size.min
+        source: ScanSize_min
+        type: long_gauge
+        label: rs scan min size
+        description: Min scan size
+        unit: bytes
+
+      - name: rs.ops.scan.size.max
+        source: ScanSize_max
+        type: long_gauge
+        label: rs scan max size
+        description: Max scan size
+        unit: bytes
+
+      - name: rs.ops.flushes
+        source: FlushOutputSize_num_ops
+        type: counter
+        label: rs flushes
+        description: Number of flushes
+
+      - name: rs.ops.flushes.out.size.min
+        source: FlushOutputSize_min
+        type: long_gauge
+        label: rs flush output min size
+        description: Min number of bytes in the resulting file for a flush
+        unit: bytes
+
+      - name: rs.ops.flushes.out.size.max
+        source: FlushOutputSize_max
+        type: long_gauge
+        label: rs flush output max size
+        description: Max number of bytes in the resulting file for a flush
+        unit: bytes
+
+      - name: rs.ops.major.compaction.in.size.min
+        source: MajorCompactionInputSize_min
+        type: long_gauge
+        label: rs compaction input min size
+        description: Compaction min total input file sizes major only
+        unit: bytes
+
+      - name: rs.ops.major.compaction.in.size.max
+        source: MajorCompactionInputSize_max
+        type: long_gauge
+        label: rs compaction input max size
+        description: Compaction max total input file sizes major only
+        unit: bytes
+
+      - name: rs.ops.compactions
+        source: CompactionInputSize_num_ops
+        type: counter
+        label: rs compactions
+        description: Compactions both major and minor
+        unit: bytes
+
+      - name: rs.ops.compactions.in.size.min
+        source: CompactionInputSize_min
+        type: long_gauge
+        label: rs compactions input min size
+        description: Min compaction total input file sizes both major and minor
+        unit: bytes
+
+      - name: rs.ops.compactions.in.size.max
+        source: CompactionInputSize_max
+        type: long_gauge
+        label: rs compactions input max size
+        description: Max compaction total input file sizes both major and minor
+        unit: bytes
+
+      - name: rs.ops.flushes.time.min
+        source: FlushTime_min
+        type: long_gauge
+        label: rs flush min time
+        description: Min time for memstore flush
+        unit: ms
+
+      - name: rs.ops.flushes.time.max
+        source: FlushTime_max
+        type: long_gauge
+        label: rs flush max time
+        description: Max time for memstore flush
+        unit: ms
+
+      - name: rs.ops.compactions.out.size.min
+        source: CompactionOutputSize_min
+        type: long_gauge
+        label: rs compactions output min size
+        description: Min compaction total output file sizes
+        unit: bytes
+
+      - name: rs.ops.compactions.out.size.max
+        source: CompactionOutputSize_max
+        type: long_gauge
+        label: rs compactions output max size
+        description: Max compaction total output file sizes both major and minor
+        unit: bytes
+
+      - name: rs.ops.splits
+        source: SplitTime_num_ops
+        type: counter
+        label: rs splits
+        description: The number of Splits
+
+      - name: rs.ops.split.time.min
+        source: SplitTime_min
+        type: long_gauge
+        label: rs split min time
+        description: Min split time
+        unit: ms
+
+      - name: rs.ops.split.time.max
+        source: SplitTime_max
+        type: long_gauge
+        label: rs split max time
+        description: Max split time
+        unit: ms
+
+      - name: rs.ops.flushes.memstore.size.min
+        source: FlushMemstoreSize_min
+        type: long_gauge
+        label: rs flush memstore min size
+        description: Min number of bytes in the memstore for a flush
+        unit: bytes
+
+      - name: rs.ops.flushes.memstore.size.max
+        source: FlushMemstoreSize_max
+        type: long_gauge
+        label: rs flush memstore max size
+        description: Max number of bytes in the memstore for a flush
+        unit: bytes
+
+      - name: rs.ops.scans
+        source: ScanTime_num_ops
+        type: counter
+        label: rs scans
+        description: The number of Scans
+
+      - name: rs.ops.scan.time.min
+        source: ScanTime_min
+        type: long_gauge
+        label: rs scan min time
+        description: Min scan time
+        unit: ms
+
+      - name: rs.ops.scan.time.max
+        source: ScanTime_max
+        type: long_gauge
+        label: rs scan max time
+        description: Max scan time
+        unit: ms
+
+      - name: rs.ops.deletes
+        source: Delete_num_ops
+        type: counter
+        label: rs deletes
+        description: The number of batches containing delete(s)
+
+      - name: rs.ops.major.compactions
+        source: MajorCompactionTime_num_ops
+        type: counter
+        label: rs major compactions
+        description: Compactions major only
+
+      - name: rs.ops.major.compaction.time.min
+        source: MajorCompactionTime_min
+        type: long_gauge
+        label: rs major compaction min time
+        description: Min time for compaction major only
+        unit: ms
+
+      - name: rs.ops.major.compaction.time.max
+        source: MajorCompactionTime_max
+        type: long_gauge
+        label: rs major compaction max time
+        description: Max time for compaction major only
+        unit: ms
+
+      - name: rs.ops.major.compactions.time
+        source: jmx_eval:MajorCompactionTime_mean*MajorCompactionTime_num_ops
+        type: counter
+        label: rs major compactions time
+        description: Time for compactions  major only
+        unit: ms
+
+      - name: rs.ops.scans.time
+        source: jmx_eval:ScanTime_mean*ScanTime_num_ops
+        type: counter
+        label: rs scans time
+        description: Scans time
+        unit: ms
+
+      - name: rs.ops.flushes.memstore.size
+        source: jmx_eval:FlushMemstoreSize_mean*FlushMemstoreSize_num_ops
+        type: counter
+        label: rs flushes memstore size
+        description: Number of bytes in the memstore for a flushes
+        unit: bytes
+
+      - name: rs.ops.major.compactions.in.files
+        source: jmx_eval:MajorCompactionInputFileCount_mean*MajorCompactionInputFileCount_num_ops
+        type: counter
+        label: rs major compactions input files
+        description: Compactions input number of files major only
+
+      - name: rs.ops.compactions.in.files
+        source: jmx_eval:CompactionInputFileCount_mean*CompactionInputFileCount_num_ops
+        type: counter
+        label: rs compactions input files
+        description: Compactions input number of files both major and minor
+
+      - name: rs.ops.splits.time
+        source: jmx_eval:SplitTime_mean*SplitTime_num_ops
+        type: counter
+        label: rs splits time
+        description: Splits time
+        unit: ms
+
+      - name: rs.ops.compactions.out.size
+        source: jmx_eval:CompactionOutputSize_mean*CompactionOutputSize_num_ops
+        type: counter
+        label: rs compactions output size
+        description: Compaction total output file sizes both major and minor
+        unit: bytes
+
+      - name: rs.ops.major.compactions.out.size
+        source: jmx_eval:MajorCompactionOutputSize_mean*MajorCompactionOutputSize_num_ops
+        type: counter
+        label: rs major compactions.output size
+        description: Compactions total output file sizes major only
+        unit: bytes
+
+      - name: rs.ops.compactions.out.files
+        source: jmx_eval:CompactionOutputFileCount_mean*CompactionOutputFileCount_num_ops
+        type: counter
+        label: rs compactions output files
+        description: Compactions output number of files both major and minor
+        unit: bytes
+
+      - name: rs.ops.flushes.time
+        source: jmx_eval:FlushTime_mean*FlushTime_num_ops
+        type: counter
+        label: rs flushes time
+        description: Time for memstore flushes
+        unit: ms
+
+      - name: rs.ops.major.compactions.out.files
+        source: jmx_eval:MajorCompactionOutputFileCount_mean*MajorCompactionOutputFileCount_num_ops
+        type: counter
+        label: rs major compactions output files
+        description: Compactions output number of files major only
+
+      - name: rs.ops.compactions.in.size
+        source: jmx_eval:CompactionInputSize_mean*CompactionInputSize_num_ops
+        type: counter
+        label: rs compactions input size
+        description: Compactions total input file sizes both major and minor
+        unit: bytes
+
+      - name: rs.ops.major.compactions.in.size
+        source: jmx_eval:MajorCompactionInputSize_mean*MajorCompactionInputSize_num_ops
+        type: counter
+        label: rs major compactions input size
+        description: Compactions total input file sizes major only
+        unit: bytes
+
+      - name: rs.ops.flushes.out.size
+        source: jmx_eval:FlushOutputSize_mean*FlushOutputSize_num_ops
+        type: counter
+        label: rs flushes output size
+        description: Number of bytes in the resulting file for a flushes
+        unit: bytes
+
+      - name: rs.ops.scans.size
+        source: jmx_eval:ScanSize_mean*ScanSize_num_ops
+        type: counter
+        label: rs scans size
+        description: Scans size
+        unit: bytes
+
+
+  - name: hbase-rs-wal
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=WAL
+
+    metric:
+      - name: rs.wal.roll.requests
+        source: rollRequest
+        type: counter
+        label: wal roll requests
+        description: How many times a log roll has been requested total
+
+      - name: rs.wal.written.size
+        source: writtenBytes
+        type: counter
+        label: wal written size
+        description: Size of the data written to the WAL
+        unit: bytes
+
+      - name: rs.wal.low.replica.roll.requests
+        source: lowReplicaRollRequest
+        type: counter
+        label: wal low replica roll requests
+        description: How many times a log roll was requested due to too few DN's in the write pipeline
+
+      - name: rs.wal.syncs
+        source: SyncTime_num_ops
+        type: counter
+        label: wal syncs
+        description: The number of syncs the WAL to HDFS
+
+      - name: rs.wal.sync.time.min
+        source: SyncTime_min
+        type: long_gauge
+        label: wal sync min time
+        description: Min time it took to sync the WAL to HDFS
+        unit: ms
+
+      - name: rs.wal.sync.time.max
+        source: SyncTime_max
+        type: long_gauge
+        label: wal sync max time
+        description: Max time it took to sync the WAL to HDFS
+        unit: ms
+
+      - name: rs.wal.append.size.min
+        source: AppendSize_min
+        type: long_gauge
+        label: wal append min size
+        description: Min size of the data appended to the WAL
+        unit: bytes
+
+      - name: rs.wal.append.size.max
+        source: AppendSize_max
+        type: long_gauge
+        label: wal append max size
+        description: Max size of the data appended to the WAL
+        unit: bytes
+
+      - name: rs.wal.append.time.min
+        source: AppendTime_min
+        type: long_gauge
+        label: wal append min time
+        description: Min time an append to the WAL took
+        unit: ms
+
+      - name: rs.wal.append.time.max
+        source: AppendTime_max
+        type: long_gauge
+        label: wal append max time
+        description: Max time an append to the WAL took
+        unit: ms
+
+      - name: rs.wal.appends.slow
+        source: slowAppendCount
+        type: counter
+        label: wal slow appends
+        description: Number of appends that were slow
+
+      - name: rs.wal.appends
+        source: appendCount
+        type: counter
+        label: wal appends
+        description: Number of appends to the write ahead log
+
+      - name: rs.wal.syncs.time
+        source: jmx_eval:SyncTime_mean*SyncTime_num_ops
+        type: counter
+        label: wal syncs time
+        description: The time it took to syncs the WAL to HDFS
+        unit: ms
+
+      - name: rs.wal.appends.size
+        source: jmx_eval:AppendSize_mean*AppendSize_num_ops
+        type: counter
+        label: wal appends size
+        description: Size of the data appended to the WAL
+        unit: bytes
+
+      - name: rs.wal.appends.time
+        source: jmx_eval:AppendTime_mean*AppendTime_num_ops
+        type: counter
+        label: wal appends time
+        description: Time an appends to the WAL took
+        unit: ms
+
+
+  - name: hbase-rs-rep-sink
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.batches.applied
+        source: sink.appliedBatches
+        type: counter
+        label: applied replication batches
+        description: Applied replication batches
+
+      - name: rs.replication.ops.applied
+        source: sink.appliedOps
+        type: counter
+        label: applied replication ops
+        description: Applied replication ops
+
+      - name: rs.replication.hfiles.applied
+        source: sink.appliedHFiles
+        type: counter
+        label: applied replication hfiles
+        description: Applied replication hfiles
+

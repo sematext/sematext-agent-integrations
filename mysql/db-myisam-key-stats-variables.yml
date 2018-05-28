@@ -1,0 +1,43 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ VARIABLES;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: myIsamKeyStatsVariables
+    metricNamespace: mysql
+
+    metric:
+      - name: myisam.key.cache.age.threshold
+        source: key_cache_age_threshold
+        type: long_gauge
+        label: key cache age threshold
+        description: "key_cache_age_threshold: This value controls the demotion of buffers from the hot sublist of a key cache to the warm sublist. Lower values cause demotion to happen more quickly"
+
+      - name: myisam.key.cache.block.size
+        source: key_cache_block_size
+        type: long_gauge
+        label: key cache block size
+        description: "key_cache_block_size: The size in bytes of blocks in the key cache"
+        unit: bytes
+
+      - name: myisam.key.cache.division.limit
+        source: key_cache_division_limit
+        type: long_gauge
+        label: key cache division limit %
+        description: "key_cache_division_limit: The division point between the hot and warm sublists of the key cache buffer list. The value is the percentage of the buffer list to use for the warm sublist. Permissible values range from 1 to 100. The default value is 100"
+        unit: "%"
+
+      - name: myisam.key.buffer
+        source: key_buffer_size
+        type: long_gauge
+        label: key buffer size
+        description: "key_buffer_size: Index blocks for MyISAM tables are buffered and are shared by all threads. key_buffer_size is the size of the buffer used for index blocks. The key buffer is also known as the key cache. The value of this variable indicates the amount of memory requested. Internally, the server allocates as much memory as possible up to this amount, but the actual allocation might be less."
+

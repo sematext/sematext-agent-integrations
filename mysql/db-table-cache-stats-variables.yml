@@ -1,0 +1,29 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ VARIABLES;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: tableCacheStatsVariables
+    metricNamespace: mysql
+
+    metric:
+      - name: tables.definition.cache
+        source: table_definition_cache
+        type: long_gauge
+        label: table definition cache
+        description: "table_definition_cache: The number of table definitions (from .frm files) that can be stored in the definition cache. If you use a large number of tables, you can create a large table definition cache to speed up opening of tables. This variable was added in MySQL 5.1.3"
+
+      - name: tables.cache
+        source: table_open_cache
+        type: long_gauge
+        label: table open cache
+        description: "table_open_cache: The number of open tables for all threads. Increasing this value increases the number of file descriptors that mysqld requires. You can check whether you need to increase the table cache by checking the Opened_tables status variable"
+

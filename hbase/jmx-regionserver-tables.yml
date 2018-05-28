@@ -1,0 +1,59 @@
+type: jmx
+
+observation:
+  - name: hbase-rs-tables
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Tables
+
+    metric:
+      - name: rs.tables
+        source: numTables
+        type: gauge
+        label: rs tables
+        description: Number of tables in the metrics system
+
+
+  - name: hbase-rs-tables-details
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Tables
+
+    metric:
+      - name: rs.table.read.requests
+        source: Namespace_${namespace}_table_${table}_metric_readRequestCount
+        type: counter
+        label: rs read requests
+        description: Number of read requests
+
+      - name: rs.table.write.requests
+        source: Namespace_${namespace}_table_${table}_metric_writeRequestCount
+        type: counter
+        label: rs write requests
+        description: Number of write requests
+
+      - name: rs.table.memstore.size
+        source: Namespace_${namespace}_table_${table}_metric_memstoreSize
+        type: gauge
+        label: rs memstore size
+        description: The size of memory stores
+        unit: bytes
+
+      - name: rs.table.store.files.size
+        source: Namespace_${namespace}_table_${table}_metric_storeFileSize
+        type: gauge
+        label: rs store files size
+        description: The size of store files size
+        unit: bytes
+
+      - name: rs.table.size
+        source: Namespace_${namespace}_table_${table}_metric_tableSize
+        type: gauge
+        label: rs table size
+        description: Total size of the table in the region server
+        unit: bytes
+
+    tag:
+      - name: hbase.namespace
+        value: ${namespace}
+
+      - name: hbase.table
+        value: ${table}

@@ -1,0 +1,173 @@
+type: jmx
+
+observation:
+  - name: kafka-broker-time-local
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestMetrics,name=LocalTimeMs,request=${request}
+
+    metric:
+      - name: broker.requests.time.local.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: broker.requests.mean.time.local
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.requests.time.local
+        source: func:DoubleMultiply(broker.requests.time.local.count, broker.requests.mean.time.local)
+        type: double_counter
+        label: broker requests local time
+        unit: ms
+
+    tag:
+      - name: kafka.broker.request
+        value: ${request}
+
+
+  - name: kafka-broker-time-remote
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestMetrics,name=RemoteTimeMs,request=${request}
+
+    metric:
+      - name: broker.requests.time.remote.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: broker.requests.mean.time.remote
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.requests.time.remote
+        source: func:DoubleMultiply(broker.requests.time.remote.count, broker.requests.mean.time.remote)
+        type: double_counter
+        label: broker requests remote time
+        unit: ms
+
+    tag:
+      - name: kafka.broker.request
+        value: ${request}
+
+
+  - name: kafka-broker-requests-queue
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestMetrics,name=RequestQueueTimeMs,request=${request}
+
+    metric:
+      - name: broker.requests.time.queue.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: broker.requests.mean.time.queue
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.requests.time.queue
+        source: func:DoubleMultiply(broker.requests.time.queue.count, broker.requests.mean.time.queue)
+        type: double_counter
+        label: broker request queue time
+        unit: ms
+
+    tag:
+      - name: kafka.broker.request
+        value: ${request}
+
+
+  - name: kafka-broker-request
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestMetrics,name=RequestsPerSec,request=${request}
+
+    metric:
+      - name: broker.requests
+        source: Count
+        type: counter
+        label: broker requests
+
+    tag:
+      - name: kafka.broker.request
+        value: ${request}
+
+
+  - name: kafka-broker-responses-queue
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestMetrics,name=ResponseQueueTimeMs,request=${request}
+
+    metric:
+      - name: broker.responses.time.queue.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: broker.responses.mean.time.queue
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.responses.time.queue
+        source: func:DoubleMultiply(broker.responses.time.queue.count, broker.responses.mean.time.queue)
+        type: double_counter
+        label: broker response queue time
+        unit: ms
+
+    tag:
+      - name: kafka.broker.request
+        value: ${request}
+
+
+  - name: kafka-broker-responses-time-send
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestMetrics,name=ResponseSendTimeMs,request=${request}
+
+    metric:
+      - name: broker.responses.time.send.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: broker.responses.mean.time.send
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.responses.time.send
+        source: func:DoubleMultiply(broker.responses.time.send.count, broker.responses.mean.time.send)
+        type: double_counter
+        label: broker response send time
+        unit: ms
+
+    tag:
+      - name: kafka.broker.request
+        value: ${request}
+
+
+  - name: kafka-broker-time-total
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestMetrics,name=TotalTimeMs,request=${request}
+
+    metric:
+      - name: broker.requests.time.total.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: broker.requests.mean.time.total
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.requests.time.total
+        source: func:DoubleMultiply(broker.requests.time.total.count, broker.requests.mean.time.total)
+        type: double_counter
+        label: broker requests total time
+        unit: ms
+
+    tag:
+      - name: kafka.broker.request
+        value: ${request}
+

@@ -1,0 +1,287 @@
+type: jmx
+
+observation:
+  - name: kafka-broker-leader-elections
+    metricNamespace: kafka
+    objectName: kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs
+
+    metric:
+      - name: broker.leader.elections.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.leader.elections
+        source: Count
+        type: counter
+        label: broker leader elections
+
+      - name: broker.leader.elections.time
+        source: func:DoubleMultiply(broker.leader.elections, broker.leader.elections.mean.time)
+        type: double_counter
+        label: broker leader elections time
+        unit: ms
+
+
+  - name: kafka-broker-leader-elections-unclean
+    metricNamespace: kafka
+    objectName: kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec
+
+    metric:
+      - name: broker.leader.elections.unclean
+        source: Count
+        type: counter
+        label: broker leader unclean elections
+
+
+  - name: kafka-broker-controllers-active
+    metricNamespace: kafka
+    objectName: kafka.controller:type=KafkaController,name=ActiveControllerCount
+
+    metric:
+      - name: broker.controllers.active
+        source: Value
+        type: long_gauge
+        label: broker active controllers
+        description: Is controller active on broker
+
+
+  - name: kafka-broker-partitions-offline
+    metricNamespace: kafka
+    objectName: kafka.controller:type=KafkaController,name=OfflinePartitionsCount
+
+    metric:
+      - name: broker.partitions.offline
+        source: Value
+        type: long_gauge
+        label: broker offline partitions
+        description: Number of unavailable partitions
+
+
+  - name: kafka-broker-replica-imbalance
+    metricNamespace: kafka
+    objectName: kafka.controller:type=KafkaController,name=PreferredReplicaImbalanceCount
+
+    metric:
+      - name: broker.replica.imbalance
+        source: Value
+        type: long_gauge
+        label: broker preferred replica imbalances
+
+
+  - name: kafka-broker-queue-response-size
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestChannel,name=ResponseQueueSize
+
+    metric:
+      - name: broker.queue.response.size
+        source: Value
+        type: long_gauge
+        label: broker response queue
+        description: Response queue size
+        unit: bytes
+
+
+  - name: kafka-broker-queue-request-size
+    metricNamespace: kafka
+    objectName: kafka.network:type=RequestChannel,name=RequestQueueSize
+
+    metric:
+      - name: broker.queue.request.size
+        source: Value
+        type: long_gauge
+        label: broker request queue
+        description: Request queue size
+        unit: bytes
+
+
+  - name: kafka-broker-expires-consumer
+    metricNamespace: kafka
+    objectName: kafka.server:type=DelayedFetchRequestMetrics,name=ConsumerExpiresPerSecond
+
+    metric:
+      - name: broker.expires.consumer
+        source: Count
+        type: counter
+        label: broker expires consumers
+        description: Number of expired delayed consumer fetch requests
+
+
+  - name: kafka-broker-expires-follower
+    metricNamespace: kafka
+    objectName: kafka.server:type=DelayedFetchRequestMetrics,name=FollowerExpiresPerSecond
+
+    metric:
+      - name: broker.expires.follower
+        source: Count
+        type: counter
+        label: broker expires followers
+        description: Number of expired delayed follower fetch requests
+
+
+  - name: kafka-broker-expires-all
+    metricNamespace: kafka
+    objectName: kafka.server:type=DelayedProducerRequestMetrics,name=ExpiresPerSecond
+
+    metric:
+      - name: broker.expires.all
+        source: Count
+        type: counter
+        label: broker all expires
+        description: Number of expired delayed producer requests
+
+
+  - name: kafka-broker-purgatory-requests-fetch-delayed
+    metricNamespace: kafka
+    objectName: kafka.server:type=FetchRequestPurgatory,name=NumDelayedRequests
+
+    metric:
+      - name: broker.purgatory.requests.fetch.delayed
+        source: Value
+        type: long_gauge
+        label: purgatory fetch delayed reqs
+        description: Number of requests delayed in the fetch purgatory
+
+
+  - name: kafka-broker-purgatory-requests-fetch-size
+    metricNamespace: kafka
+    objectName: kafka.server:type=FetchRequestPurgatory,name=PurgatorySize
+
+    metric:
+      - name: broker.purgatory.requests.fetch.size
+        source: Value
+        type: long_gauge
+        label: purgatory fetch delayed reqs size
+        description: Requests waiting in the fetch purgatory. This depends on value of fetch.wait.max.ms in the consumer
+
+
+  - name: kafka-broker-purgatory-producer-requests-fetch-delayed
+    metricNamespace: kafka
+    objectName: kafka.server:type=ProducerRequestPurgatory,name=NumDelayedRequests
+
+    metric:
+      - name: broker.purgatory.producer.requests.fetch.delayed
+        source: Value
+        type: long_gauge
+        label: purgatory producer delayed reqs
+        description: Number of requests delayed in the producer purgatory
+
+
+  - name: kafka-broker-purgatory-producer-requests-fetch-size
+    metricNamespace: kafka
+    objectName: kafka.server:type=ProducerRequestPurgatory,name=PurgatorySize
+
+    metric:
+      - name: broker.purgatory.producer.requests.fetch.size
+        source: Value
+        type: long_gauge
+        label: purgatory producer delayed reqs size
+        description: Requests waiting in the producer purgatory. This should be non-zero when acks = -1 is used in producers
+
+
+  - name: kafka-broker-replica-lag-max
+    metricNamespace: kafka
+    objectName: kafka.server:type=ReplicaFetcherManager,name=MaxLag,clientId=Replica
+
+    metric:
+      - name: broker.replica.lag.max
+        source: Value
+        type: long_gauge
+        label: broker replica max lag
+
+
+  - name: kafka-broker-replica-fetch-min
+    metricNamespace: kafka
+    objectName: kafka.server:type=ReplicaFetcherManager,name=MinFetchRate,clientId=Replica
+
+    metric:
+      - name: broker.replica.fetch.min
+        source: Value
+        type: double_gauge
+        label: broker replica min fetch
+
+
+  - name: kafka-broker-isr-expands
+    metricNamespace: kafka
+    objectName: kafka.server:type=ReplicaManager,name=IsrExpandsPerSec
+
+    metric:
+      - name: broker.isr.expands
+        source: Count
+        type: counter
+        label: broker isr expands
+        description: Number of times ISR for a partition expanded
+
+
+  - name: kafka-broker-isr-shrinks
+    metricNamespace: kafka
+    objectName: kafka.server:type=ReplicaManager,name=IsrShrinksPerSec
+
+    metric:
+      - name: broker.isr.shrinks
+        source: Count
+        type: counter
+        label: broker isr shrinks
+        description: Number of times ISR for a partition shrank
+
+
+  - name: kafka-broker-partitions-leader
+    metricNamespace: kafka
+    objectName: kafka.server:type=ReplicaManager,name=LeaderCount
+
+    metric:
+      - name: broker.partitions.leader
+        source: Value
+        type: long_gauge
+        label: broker leader partitions
+        description: Number of leader replicas on broker
+
+
+  - name: kafka-broker-partitions
+    metricNamespace: kafka
+    objectName: kafka.server:type=ReplicaManager,name=PartitionCount
+
+    metric:
+      - name: broker.partitions
+        source: Value
+        type: long_gauge
+        label: broker partitions
+        description: Number of partitions (lead or follower replicas) on broker
+
+
+  - name: kafka-broker-partitions-underreplicated
+    metricNamespace: kafka
+    objectName: kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions
+
+    metric:
+      - name: broker.partitions.underreplicated
+        source: Value
+        type: long_gauge
+        label: broker under replicated partitions
+        description: Number of partitions with unavailable replicas
+
+
+  - name: kafka-broker-log-flushes
+    metricNamespace: kafka
+    objectName: kafka.log:type=LogFlushStats,name=LogFlushRateAndTimeMs
+
+    metric:
+      - name: broker.log.flushes.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: broker.log.flushes
+        source: Count
+        type: counter
+        label: broker log flushes
+        description: Rate of flushing Kafka logs to disk
+        unit: flushes/sec
+
+      - name: broker.log.flushes.time
+        source: func:DoubleMultiply(broker.log.flushes, broker.log.flushes.mean.time)
+        type: double_counter
+        label: broker log flushes time
+        description: Time of flushing Kafka logs to disk
+        unit: ms
+

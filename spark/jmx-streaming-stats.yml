@@ -1,0 +1,241 @@
+type: jmx
+
+observation:
+  - name: sparkStreamingReceivers
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.receivers
+
+    metric:
+      - name: receivers
+        source: Value
+        type: long_gauge
+        label: spark receivers
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingTotalCompletedBatches
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.totalCompletedBatches
+
+    metric:
+      - name: batches.completed
+        source: Value
+        type: long_gauge
+        label: total completed batches
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingUnprocessedBatches
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.unprocessedBatches
+
+    metric:
+      - name: batches.unprocessed
+        source: Value
+        type: long_gauge
+        label: unprocessed batches
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingWaitingBatches
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.waitingBatches
+
+    metric:
+      - name: batches.waiting
+        source: Value
+        type: long_gauge
+        label: waiting batches
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingRunningBatches
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.runningBatches
+
+    metric:
+      - name: batches.running
+        source: Value
+        type: long_gauge
+        label: running batches
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingRetainedCompletedBatches
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.retainedCompletedBatches
+
+    metric:
+      - name: batches.completed.retained
+        source: Value
+        type: long_gauge
+        label: retained completed batches
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingTotalReceivedRecords
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.totalReceivedRecords
+
+    metric:
+      - name: records.received
+        source: Value
+        type: long_gauge
+        label: total received records
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingTotalProcessedRecords
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.totalProcessedRecords
+
+    metric:
+      - name: records.processed
+        source: Value
+        type: long_gauge
+        label: total processed records
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingLastCompletedBatchStart
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.lastCompletedBatch_processingStartTime
+
+    metric:
+      - name: completedSubmit
+        source: jmx:metrics:name=${appName}.StreamingMetrics.streaming.lastCompletedBatch_submissionTime
+        type: long_gauge
+        send: false
+
+      - name: completedStart
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: batches.completed.scheduling.delay
+        source: func:LongSubtract(completedStart,completedSubmit)
+        type: long_gauge
+        label: last completed batch scheduling time
+        unit: ms
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingLastCompletedBatchEnd
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.lastCompletedBatch_processingEndTime
+
+    metric:
+      - name: completedStart
+        source: jmx:metrics:name=${appName}.StreamingMetrics.streaming.lastCompletedBatch_processingStartTime
+        type: long_gauge
+        send: false
+
+      - name: completedEnd
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: batches.completed.processing.delay
+        source: func:LongSubtract(completedEnd,completedStart)
+        type: long_gauge
+        label: last completed batch processing time
+        unit: ms
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingLastReceivedBatchStart
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.lastReceivedBatch_processingStartTime
+
+    metric:
+      - name: receivedSubmit
+        source: jmx:metrics:name=${appName}.StreamingMetrics.streaming.lastReceivedBatch_submissionTime
+        type: long_gauge
+        send: false
+
+      - name: receivedStart
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: batches.received.scheduling.delay
+        source: func:LongSubtract(receivedStart,receivedSubmit)
+        type: long_gauge
+        label: last received batch scheduling time
+        unit: ms
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingLastReceivedBatchEnd
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.lastReceivedBatch_processingEndTime
+
+    metric:
+      - name: receivedStart
+        source: jmx:metrics:name=${appName}.StreamingMetrics.streaming.lastReceivedBatch_processingStartTime
+        type: long_gauge
+        send: false
+
+      - name: receivedEnd
+        source: Value
+        type: long_gauge
+        send: false
+
+      - name: batches.received.processing.delay
+        source: func:LongSubtract(receivedEnd,receivedStart)
+        type: long_gauge
+        label: last received batch processing time
+        unit: ms
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+
+
+  - name: sparkStreamingLastReceivedBatchRecords
+    metricNamespace: spark
+    objectName: metrics:name=${appName}.StreamingMetrics.streaming.lastReceivedBatch_records
+
+    metric:
+      - name: batches.received.records
+        source: Value
+        type: long_gauge
+        label: last received batch records
+
+    tag:
+      - name: spark.app
+        value: ${appName}
+

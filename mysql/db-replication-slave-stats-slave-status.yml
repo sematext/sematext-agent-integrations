@@ -1,0 +1,24 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ STATUS;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: replicationSlaveStatusStats
+    metricNamespace: mysql
+
+    metric:
+      - name: repl.slave.behind.seconds
+        source: Seconds_Behind_Master
+        type: long_gauge
+        label: seconds behind master
+        description: "Seconds_Behind_Master: This field is an indication of how “late” the slave is. In essence, this field measures the time difference in seconds between the slave SQL thread and the slave I/O thread. If the network connection between master and slave is fast, the slave I/O thread is very close to the master, so this field is a good approximation of how late the slave SQL thread is compared to the master. If the network is slow, this is not a good approximation"
+        unit: sec
+

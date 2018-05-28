@@ -1,0 +1,86 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-nodemanager
+
+observation:
+#  all
+  - name: nodemanager_metrics
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NodeManager,name=NodeManagerMetrics
+
+    metric:
+      - name: nm.containers.allocated
+        source: AllocatedContainers
+        type: long_gauge
+        label: num allocated containers
+
+      - name: nm.allocated.gb
+        source: AllocatedGB
+        type: long_gauge
+        label: allocated GB
+        unit: GB
+
+      - name: nm.available.gb
+        source: AvailableGB
+        type: long_gauge
+        label: available GB
+        unit: GB
+
+      - name: nm.containers.completed
+        source: ContainersCompleted
+        type: counter
+        label: containers completed
+
+      - name: nm.containers.failed
+        source: ContainersFailed
+        type: counter
+        label: containers failed
+
+      - name: nm.containers.initiating
+        source: ContainersIniting
+        type: long_gauge
+        label: containers inited
+
+      - name: nm.containers.killed
+        source: ContainersKilled
+        type: counter
+        label: containers killed
+
+      - name: nm.containers.launched
+        source: ContainersLaunched
+        type: counter
+        label: containers launched
+
+      - name: nm.containers.running
+        source: ContainersRunning
+        type: long_gauge
+        label: containers running
+
+
+  - name: nodemanager_shuffle_metrics
+    metricNamespace: hadoop
+    objectName: Hadoop:service=NodeManager,name=ShuffleMetrics
+
+    metric:
+      - name: nm.shuffle.connections
+        source: ShuffleConnections
+        type: counter
+        label: shuffle connections
+
+      - name: nm.shuffle.output.bytes
+        source: ShuffleOutputBytes
+        type: counter
+        label: shuffle output size
+        unit: bytes
+
+      - name: nm.shuffle.output.failed
+        source: ShuffleOutputsFailed
+        type: counter
+        label: shuffle outputs failed
+
+      - name: nm.shuffle.output.ok
+        source: ShuffleOutputsOK
+        type: counter
+        label: shuffle outputs ok
+

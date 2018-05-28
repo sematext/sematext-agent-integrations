@@ -1,0 +1,73 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.tomcat.TomcatVersionCheck
+    values: 7
+
+observation:
+# 
+# In case of DataSource beans, the ObjectName properties (name and count) are dynamic and can vary during runtime.
+# To match all DataSources we add `*` at the end, along with properties we need to extract as tags.
+# The properties mentioned in below objectName pattern are must have for a match.
+# Whenever the ObjectName properties are dynamic, it is recommends to add `*` at the end of ObjectName pattern.
+# 
+# The below pattern will match following ObjectNames
+# Catalina:type=DataSource,host=localhost,context=/web,class=com.sematext.SQLDataSource,name=sematext
+# Catalina:type=DataSource,host=localhost,engine=semengine,context=/web,class=com.sematext.SQLDataSource,name=sematext
+# 
+# It will not match:
+# Catalina:type=DataSource,host=localhost,context=/web,name=sematext
+# 
+  - name: datasource.tomcat.7
+    metricNamespace: tomcat
+    objectName: Catalina:type=DataSource,host=${hostname},context=${dsContext},class=${dsClass},name=${dsName},*
+
+    metric:
+      - name: datasource.init
+        source: initialSize
+        type: long_gauge
+        label: datasource connection init size
+        description: The initial number of connections that are created when the pool is started
+
+      - name: datasource.active.max
+        source: maxActive
+        type: long_gauge
+        label: max active connections
+        description: The maximum number of active connections that can be allocated from this pool at the same time
+
+      - name: datasource.idle.max
+        source: maxIdle
+        type: long_gauge
+        label: max idle datasource connections
+        description: The maximum number of connections that should be kept in the pool at all times
+
+      - name: datasource.idle.min
+        source: minIdle
+        type: long_gauge
+        label: min idle datasource connections
+        description: The minimum number of established connections that should be kept in the pool at all times
+
+      - name: datasource.active
+        source: numActive
+        type: long_gauge
+        label: active connections
+        description: Current Active
+
+      - name: datasource.idle
+        source: numIdle
+        type: long_gauge
+        label: idle datasource connections
+        description: The number of established connections in the pool that are idle
+
+    tag:
+      - name: tomcat.host
+        value: ${hostname}
+
+      - name: tomcat.datasource.context
+        value: ${dsContext}
+
+      - name: tomcat.datasource
+        value: ${dsName}
+
+      - name: tomcat.datasource.class
+        value: ${dsClass}
+

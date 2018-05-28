@@ -1,0 +1,36 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-retcher-request-time
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=FetchRequestAndResponseMetrics,name=FetchRequestRateAndTimeMs,clientId=${clientIdString},brokerHost=${broker_host},brokerPort=${broker_port}
+
+    metric:
+      - name: consumer.old.requests.mean.time
+        source: Mean
+        type: double_gauge
+        label: consumer request mean time
+        unit: ms
+
+      - name: consumer.old.requests
+        source: Count
+        type: counter
+        send: false
+        label: consumer requests
+
+      - name: consumer.old.requests.time
+        source: func:DoubleMultiply(consumer.old.requests, consumer.old.requests.mean.time)
+        type: double_counter
+        label: consumer requests time
+        unit: ms
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+      - name: kafka.consumer.client.broker.host
+        value: ${broker_host}
+
+      - name: kafka.consumer.client.broker.port
+        value: ${broker_port}
+

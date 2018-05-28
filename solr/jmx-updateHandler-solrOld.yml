@@ -1,0 +1,110 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 1-6
+
+observation:
+  - name: updatehandler_solrOld
+    metricNamespace: solr
+    objectName: solr/${core}:type=updateHandler,id=*
+
+    metric:
+      - name: indexing.commits
+        source: commits
+        type: counter
+        label: commits
+        description: total count of commits
+
+      - source: autocommit maxTime
+        type: text
+        send: false
+
+      - name: indexing.commits.auto.time.max
+        source: func:TrimUnit(autocommit maxTime,ms)
+        type: gauge
+        label: autocommit max time
+        description: autocommit max time
+        unit: ms
+
+      - name: indexing.commits.auto
+        source: autocommits
+        type: counter
+        label: autocommits
+        description: count of auto commits
+
+      - name: indexing.commits.soft
+        source: soft autocommits
+        type: counter
+        label: soft autocommits
+        description: count of soft auto commits
+
+      - name: indexing.optimizes
+        source: optimizes
+        type: counter
+        label: optimizes
+        description: count of optimizes
+
+      - name: indexing.rollbacks
+        source: rollbacks
+        type: counter
+        label: rollbacks
+        description: count of rollbacks
+
+      - name: indexing.deletes.expunge
+        source: expungeDeletes
+        type: counter
+        label: expunge deletes
+        description: count of expunge deletes
+
+      - name: indexing.docs.pending
+        source: docsPending
+        type: long_gauge
+        label: index docs pending
+        description: count of pending docs
+        unit: docs
+
+      - name: indexing.docs.added
+        source: cumulative_adds
+        type: counter
+        label: index docs added
+        description: added docs
+        unit: docs
+
+      - name: indexing.deletes.id
+        source: cumulative_deletesById
+        type: counter
+        label: deletes by id
+        description: deletes by id
+
+      - name: indexing.deletes.query
+        source: cumulative_deletesByQuery
+        type: counter
+        label: deletes by query
+        description: deletes by query
+
+      - name: indexing.errors
+        source: cumulative_errors
+        type: counter
+        label: update errors
+        description: count of update errors
+
+    tag:
+      - name: solr.collection
+        value: jmx:solr/${core}:type=core,id=${core} collection|jmx:solr/${core}:type=core,id=${core} coreName|jmx:solr/${core}:type=core coreName
+        # | operator in expressions means N clauses will be evaluated, until one that doesn't return null is found (and that value is
+        # considered as resolved; if all clauses return null, final resolved value will be null;
+        # in this case, we first look for "collection" attribute since it is available in solr 5+ versions; if it is not present,
+        # this is one of pre-5 solr versions, so as a value of "collection" tag we use value of attribute "coreName"
+
+      - name: solr.shard
+        value: jmx:solr/${core}:type=core,id=${core} shard
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaName
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+

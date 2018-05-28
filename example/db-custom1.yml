@@ -1,0 +1,27 @@
+type: db
+data:
+  query: select count(*) AS countUsers, 'Table-User' as tableName from myDatabaseName.User where state='DISABLED'
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+
+observation:
+  - name: countDisabledUsers
+    metricNamespace: custom
+
+    metric:
+      - name: user.count
+        source: countUsers
+        type: long_gauge
+        label: count of users
+
+      - name: tableName
+        source: tableName
+        type: text
+        send: false
+
+    tag:
+      - name: custom.table
+        value: eval:${tableName}

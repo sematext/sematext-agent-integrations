@@ -1,0 +1,113 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ STATUS;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: handlerStatsStatus
+    metricNamespace: mysql
+
+    metric:
+      - name: handler.commit
+        source: Handler_commit
+        type: counter
+        label: handler commit
+        description: "Handler_commit: The number of internal COMMIT statements"
+
+      - name: handler.delete
+        source: Handler_delete
+        type: counter
+        label: handler delete
+        description: "Handler_delete: The number of times that rows have been deleted from tables"
+
+      - name: handler.discover
+        source: Handler_discover
+        type: counter
+        label: handler discover
+        description: "Handler_discover: The MySQL server can ask the NDBCLUSTER storage engine if it knows about a table with a given name. This is called discovery. Handler_discover indicates the number of times that tables have been discovered using this mechanism"
+
+      - name: handler.prepare
+        source: Handler_prepare
+        type: counter
+        label: handler prepare
+        description: "Handler_prepare: A counter for the prepare phase of two-phase commit operations"
+
+      - name: handler.read.first
+        source: Handler_read_first
+        type: counter
+        label: handler read first
+        description: "Handler_read_first: The number of times the first entry in an index was read. If this value is high, it suggests that the server is doing a lot of full index scans; for example, SELECT col1 FROM foo, assuming that col1 is indexed"
+
+      - name: handler.read.key
+        source: Handler_read_key
+        type: counter
+        label: handler read key
+        description: "Handler_read_key: The number of requests to read a row based on a key. If this value is high, it is a good indication that your tables are properly indexed for your queries"
+
+      - name: handler.read.last
+        source: Handler_read_last
+        type: counter
+        label: handler read last
+        description: "Handler_read_last: The number of requests to read the last key in an index. With ORDER BY, the server will issue a first-key request followed by several next-key requests, whereas with With ORDER BY DESC, the server will issue a last-key request followed by several previous-key requests. This variable was added in MySQL 5.6.1"
+
+      - name: handler.read.next
+        source: Handler_read_next
+        type: counter
+        label: handler read next
+        description: "Handler_read_next: The number of requests to read the next row in key order. This value is incremented if you are querying an index column with a range constraint or if you are doing an index scan"
+
+      - name: handler.read.prev
+        source: Handler_read_prev
+        type: counter
+        label: handler read prev
+        description: "Handler_read_prev: The number of requests to read the previous row in key order. This read method is mainly used to optimize ORDER BY ... DESC"
+
+      - name: handler.read.rnd
+        source: Handler_read_rnd
+        type: counter
+        label: handler read rnd
+        description: "Handler_read_rnd: The number of requests to read a row based on a fixed position. This value is high if you are doing a lot of queries that require sorting of the result. You probably have a lot of queries that require MySQL to scan entire tables or you have joins that do not use keys properly"
+
+      - name: handler.read.rnd.next
+        source: Handler_read_rnd_next
+        type: counter
+        label: handler read rnd next
+        description: "Handler_read_rnd_next: The number of requests to read the next row in the data file. This value is high if you are doing a lot of table scans. Generally this suggests that your tables are not properly indexed or that your queries are not written to take advantage of the indexes you have"
+
+      - name: handler.rollback
+        source: Handler_rollback
+        type: counter
+        label: handler rollback
+        description: "Handler_rollback: The number of requests for a storage engine to perform a rollback operation"
+
+      - name: handler.savepoint
+        source: Handler_savepoint
+        type: counter
+        label: handler savepoint
+        description: "Handler_savepoint: The number of requests for a storage engine to place a savepoint"
+
+      - name: handler.savepoint.rollback
+        source: Handler_savepoint_rollback
+        type: counter
+        label: handler savepoint rollback
+        description: "Handler_savepoint_rollback: The number of requests for a storage engine to roll back to a savepoint"
+
+      - name: handler.update
+        source: Handler_update
+        type: counter
+        label: handler update
+        description: "Handler_update: The number of requests to update a row in a table"
+
+      - name: handler.write
+        source: Handler_write
+        type: counter
+        label: handler write
+        description: "Handler_write: The number of requests to insert a row in a table"
+

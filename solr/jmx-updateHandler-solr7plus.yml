@@ -1,0 +1,619 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 7-*
+
+observation:
+  - name: updatehandler_commits_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=commits
+
+    metric:
+      - name: indexing.commits
+        source: Count
+        type: counter
+        label: commits
+        description: total count of commits
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_optimizes_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=optimizes
+
+    metric:
+      - name: indexing.optimizes
+        source: Count
+        type: counter
+        label: optimizes
+        description: count of optimizes
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_rollbacks_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=rollbacks
+
+    metric:
+      - name: indexing.rollbacks
+        source: Count
+        type: counter
+        label: rollbacks
+        description: count of rollbacks
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_expungeDeletes_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=expungeDeletes
+
+    metric:
+      - name: indexing.deletes.expunge
+        source: Count
+        type: counter
+        label: expunge deletes
+        description: count of expunge deletes
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeAdds_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=cumulativeAdds
+
+    metric:
+      - name: indexing.docs.added
+        source: Count
+        type: counter
+        label: index docs added
+        description: added docs
+        unit: docs
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeDeletesById_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=cumulativeDeletesById
+
+    metric:
+      - name: indexing.deletes.id
+        source: Count
+        type: counter
+        label: deletes by id
+        description: deletes by id
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeDeletesByQuery_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=cumulativeDeletesByQuery
+
+    metric:
+      - name: indexing.deletes.query
+        source: Count
+        type: counter
+        label: deletes by query
+        description: deletes by query
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeErrors_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=cumulativeErrors
+
+    metric:
+      - name: indexing.errors
+        source: Count
+        type: counter
+        label: update errors
+        description: count of update errors
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_autoCommits_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=autoCommits
+
+    metric:
+      - name: indexing.commits.auto
+        source: Value
+        type: counter
+        label: autocommits
+        description: count of auto commits
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_softAutoCommits_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=softAutoCommits
+
+    metric:
+      - name: indexing.commits.soft
+        source: Value
+        type: counter
+        label: soft autocommits
+        description: count of soft auto commits
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_docsPending_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=docsPending
+
+    metric:
+      - name: indexing.docs.pending
+        source: Value
+        type: long_gauge
+        label: index docs pending
+        description: count of pending docs
+        unit: docs
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_autoCommitMaxTime_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=UPDATE,scope=updateHandler,name=autoCommitMaxTime
+
+    metric:
+      - source: Value
+        type: text
+        send: false
+
+      - name: indexing.commits.auto.time.max
+        source: func:TrimUnit(Value,ms)
+        type: gauge
+        label: autocommit max time
+        description: autocommit max time
+        unit: ms
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.update.handler
+        value: updateHandler
+
+#  "classic" Solr setup uses different bean names
+  - name: updatehandler_commits_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=commits
+
+    metric:
+      - name: indexing.commits
+        source: Count
+        type: counter
+        label: commits
+        description: total count of commits
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_optimizes_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=optimizes
+
+    metric:
+      - name: indexing.optimizes
+        source: Count
+        type: counter
+        label: optimizes
+        description: count of optimizes
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_rollbacks_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=rollbacks
+
+    metric:
+      - name: indexing.rollbacks
+        source: Count
+        type: counter
+        label: rollbacks
+        description: count of rollbacks
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_expungeDeletes_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=expungeDeletes
+
+    metric:
+      - name: indexing.deletes.expunge
+        source: Count
+        type: counter
+        label: expunge deletes
+        description: count of expunge deletes
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeAdds_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=cumulativeAdds
+
+    metric:
+      - name: indexing.docs.added
+        source: Count
+        type: counter
+        label: index docs added
+        description: added docs
+        unit: docs
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeDeletesById_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=cumulativeDeletesById
+
+    metric:
+      - name: indexing.deletes.id
+        source: Count
+        type: counter
+        label: deletes by id
+        description: deletes by id
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeDeletesByQuery_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=cumulativeDeletesByQuery
+
+    metric:
+      - name: indexing.deletes.query
+        source: Count
+        type: counter
+        label: deletes by query
+        description: deletes by query
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_cumulativeErrors_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=cumulativeErrors
+
+    metric:
+      - name: indexing.errors
+        source: Count
+        type: counter
+        label: update errors
+        description: count of update errors
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_autoCommits_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=autoCommits
+
+    metric:
+      - name: indexing.commits.auto
+        source: Value
+        type: counter
+        label: autocommits
+        description: count of auto commits
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_softAutoCommits_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=softAutoCommits
+
+    metric:
+      - name: indexing.commits.soft
+        source: Value
+        type: counter
+        label: soft autocommits
+        description: count of soft auto commits
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_docsPending_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=docsPending
+
+    metric:
+      - name: indexing.docs.pending
+        source: Value
+        type: long_gauge
+        label: index docs pending
+        description: count of pending docs
+        unit: docs
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_autoCommitMaxTime_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=UPDATE,scope=updateHandler,name=autoCommitMaxTime
+
+    metric:
+      - source: Value
+        type: text
+        send: false
+
+      - name: indexing.commits.auto.time.max
+        source: func:TrimUnit(Value,ms)
+        type: gauge
+        label: autocommit max time
+        description: autocommit max time
+        unit: ms
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+

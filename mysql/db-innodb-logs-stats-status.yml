@@ -1,0 +1,60 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ STATUS;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: innoDbLogsStatsStatus
+    metricNamespace: mysql
+
+    metric:
+      - name: innodb.log.waits
+        source: Innodb_log_waits
+        type: counter
+        label: innodb log waits
+        description: "Innodb_log_waits: The number of times that the log buffer was too small and a wait was required for it to be flushed before continuing"
+
+      - name: innodb.log.write.requests
+        source: Innodb_log_write_requests
+        type: counter
+        label: innodb log write requests
+        description: "Innodb_log_write_requests: The number of log write requests"
+
+      - name: innodb.log.writes
+        source: Innodb_log_writes
+        type: counter
+        label: innodb log writes
+        description: "Innodb_log_writes: The number of physical writes to the log file"
+
+      - name: innodb.log.fsyncs
+        source: Innodb_os_log_fsyncs
+        type: counter
+        label: innodb os log fsyncs
+        description: "Innodb_os_log_fsyncs: The number of fsync() writes done to the log file"
+
+      - name: innodb.log.fsyncs.pending
+        source: Innodb_os_log_pending_fsyncs
+        type: long_gauge
+        label: innodb os log pending fsyncs
+        description: "Innodb_os_log_pending_fsyncs: The number of pending log file fsync() operations"
+
+      - name: innodb.log.writes.pending
+        source: Innodb_os_log_pending_writes
+        type: long_gauge
+        label: innodb os log pending writes
+        description: "Innodb_os_log_pending_writes: The number of pending log file writes"
+
+      - name: innodb.log.written
+        source: Innodb_os_log_written
+        type: counter
+        label: innodb os log written
+        description: "Innodb_os_log_written: The number of bytes written to the log file"
+        unit: bytes
+

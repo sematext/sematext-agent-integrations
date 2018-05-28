@@ -1,0 +1,274 @@
+type: json
+data:
+  # use the same URL as other index-related collector configs which enables caching of response data and
+  # reduced overhead SPM JSON-based monitor has on the system
+  url: /_stats?indexing=true&store=true&search=true&merge=true&refresh=true&flush=true&level=shards&format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  async: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 0
+
+observation:
+  - name: searchStats_search_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].search
+
+    metric:
+      - name: query.count.primaries
+        source: query_total
+        type: counter
+        agentAggregation: SUM
+        label: query count (prim)
+        description: query count on primary shards
+
+      - name: query.latency.time.primaries
+        source: query_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: query latency (prim)
+        description: query latency on primary shards
+        unit: ms
+
+      - name: fetch.count.primaries
+        source: fetch_total
+        type: counter
+        agentAggregation: SUM
+        label: fetch count (prim)
+        description: fetch count on primary shards
+
+      - name: fetch.latency.time.primaries
+        source: fetch_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: fetch latency (prim)
+        description: fetch latency on primary shards
+        unit: ms
+
+      - name: query.latency.primaries.avg
+        source: func:DoubleDivide(query.latency.time.primaries,query.count.primaries)
+        type: gauge
+        agentAggregation: AVG
+        pctls: 99,95,50
+        label: avg. query latency (primaries)
+        description: avg. query latency on primary shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: searchStats_search_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].search
+
+    metric:
+      - name: query.count.total
+        source: query_total
+        type: counter
+        agentAggregation: SUM
+        label: query count (all)
+        description: query count on all (primary and replica) shards
+
+      - name: query.latency.time.total
+        source: query_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: query latency (all)
+        description: query latency on all (primary and replica) shards
+        unit: ms
+
+      - name: fetch.count.total
+        source: fetch_total
+        type: counter
+        agentAggregation: SUM
+        label: fetch count (all)
+        description: fetch count on all (primary and replica) shards
+
+      - name: fetch.latency.time.total
+        source: fetch_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: fetch latency (all)
+        description: fetch latency on all (primary and replica) shards
+        unit: ms
+
+      - name: query.latency.total.avg
+        source: func:DoubleDivide(query.latency.time.total,query.count.total)
+        type: gauge
+        agentAggregation: AVG
+        pctls: 99,95,50
+        label: avg. query latency (all)
+        description: avg. query latency on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: searchStats_get_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].get
+
+    metric:
+      - name: request.rtg.primaries
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get count (prim)
+        description: real-time get count on primary shards
+
+      - name: request.rtg.time.primaries
+        source: time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get latency (prim)
+        description: real-time latency on primary shards
+        unit: ms
+
+      - name: request.rtg.exists.primaries
+        source: exists_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists count (prim)
+        description: real-time get exists count on primary shards
+
+      - name: request.rtg.exists.time.primaries
+        source: exists_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists latency (prim)
+        description: real-time get exists latency on primary shards
+        unit: ms
+
+      - name: request.rtg.missing.primaries
+        source: missing_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing count (prim)
+        description: real-time get missing count on primary shards
+
+      - name: request.rtg.missing.time.primaries
+        source: missing_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing latency (prim)
+        description: real-time get missing latency on primary shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: searchStats_get_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].get
+
+    metric:
+      - name: request.rtg.total
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get count (all)
+        description: real-time get count on all (primary and replica) shards
+
+      - name: request.rtg.time.total
+        source: time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get latency (all)
+        description: real-time latency on all (primary and replica) shards
+        unit: ms
+
+      - name: request.rtg.exists.total
+        source: exists_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists count (all)
+        description: real-time get exists count on all (primary and replica) shards
+
+      - name: request.rtg.exists.time.total
+        source: exists_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists latency (all)
+        description: real-time get exists latency on all (primary and replica) shards
+        unit: ms
+
+      - name: request.rtg.missing.total
+        source: missing_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing count (all)
+        description: real-time get missing count on all (primary and replica) shards
+
+      - name: request.rtg.missing.time.total
+        source: missing_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing latency (all)
+        description: real-time get missing latency on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_cluster/nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

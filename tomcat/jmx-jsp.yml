@@ -1,0 +1,33 @@
+type: jmx
+
+observation:
+  - name: jsp.tomcat
+    metricNamespace: tomcat
+    objectName: Catalina:type=JspMonitor,name=jsp,WebModule=//${host_name}/${webapp_name},J2EEApplication=none,J2EEServer=none
+
+    metric:
+      - name: jsp.loaded
+        source: jspCount
+        type: counter
+        label: jsp loaded count
+        description: The number of JSPs that have been loaded into a webapp
+
+      - name: jsp.reloaded
+        source: jspReloadCount
+        type: counter
+        label: jsp reload count
+        description: The number of JSPs that have been reloaded
+
+      - name: jsp.unloaded
+        source: jspUnloadCount
+        type: counter
+        label: jsp unload count
+        description: The number of JSPs that have been unloaded
+
+    tag:
+      - name: tomcat.host
+        value: ${host_name}
+
+      - name: tomcat.web.app
+        value: func:IfThenElseString(webapp_name,, /, tag:webapp_name)
+

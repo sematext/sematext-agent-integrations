@@ -1,0 +1,95 @@
+type: jmx
+
+observation:
+  - name: kafka-broker-topic-in-bytes
+    metricNamespace: kafka
+    objectName: kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=${topic}
+
+    metric:
+      - name: broker.topic.in.bytes
+        source: Count
+        type: counter
+        label: broker topic in
+        unit: bytes
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+
+  - name: kafka-broker-topic-out-bytes
+    metricNamespace: kafka
+    objectName: kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec,topic=${topic}
+
+    metric:
+      - name: broker.topic.out.bytes
+        source: Count
+        type: counter
+        label: broker topic out
+        unit: bytes
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+
+  - name: kafka-broker-topic-requests-fetch-failed
+    metricNamespace: kafka
+    objectName: kafka.server:type=BrokerTopicMetrics,name=FailedFetchRequestsPerSec,topic=${topic}
+
+    metric:
+      - name: broker.topic.requests.fetch.failed
+        source: Count
+        type: counter
+        label: broker topic failed fetch requests
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+
+  - name: kafka-broker-topic-requests-produce-failed
+    metricNamespace: kafka
+    objectName: kafka.server:type=BrokerTopicMetrics,name=FailedProduceRequestsPerSec,topic=${topic}
+
+    metric:
+      - name: broker.topic.requests.produce.failed
+        source: Count
+        type: counter
+        label: broker topic failed produce requests
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+
+  - name: kafka-broker-topic-in-messages
+    metricNamespace: kafka
+    objectName: kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=${topic}
+
+    metric:
+      - name: broker.topic.in.messages
+        source: Count
+        type: counter
+        label: broker topic messages in
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+
+  - name: kafka-broker-topic-in-bytes-rejected
+    metricNamespace: kafka
+    objectName: kafka.server:type=BrokerTopicMetrics,name=BytesRejectedPerSec,topic=${topic}
+
+    metric:
+      - name: broker.topic.in.bytes.rejected
+        source: Count
+        type: counter
+        label: broker topic rejected
+        unit: bytes
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+

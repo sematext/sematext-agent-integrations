@@ -1,0 +1,54 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.tomcat.TomcatVersionCheck
+    values: 7
+
+observation:
+  - name: cache.tomcat.7
+    metricNamespace: tomcat
+    objectName: Catalina:type=Cache,host=${host_name},context=${webapp_name}
+
+    metric:
+      - name: cache.lookups
+        source: accessCount
+        type: counter
+        label: cache lookups
+        description: Number of times the cache was accessed
+
+      - name: cache.hits
+        source: hitsCount
+        type: counter
+        label: cache hits
+        description: Number of times the cache was hit
+
+      - name: cache.size.kb
+        source: cacheSize
+        type: long_gauge
+        send: false
+
+      - name: cache.size
+        source: func:LongMultiplyWithConstant(cache.size.kb,1024)
+        type: long_gauge
+        label: size
+        description: current cache size
+        unit: bytes
+
+      - name: cache.size.max.kb
+        source: cacheMaxSize
+        type: long_gauge
+        send: false
+
+      - name: cache.size.max
+        source: func:LongMultiplyWithConstant(cache.size.max.kb,1024)
+        type: long_gauge
+        label: max cache size
+        description: The maximum size of the static resource cache
+        unit: bytes
+
+    tag:
+      - name: tomcat.host
+        value: ${host_name}
+
+      - name: tomcat.web.app
+        value: ${webapp_name}
+

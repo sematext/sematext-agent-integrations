@@ -1,0 +1,85 @@
+type: json
+data:
+  url: /_nodes/_local/stats/breaker?format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+observation:
+  - name: breaker_fielddata
+    metricNamespace: es
+    path: $.nodes.${nodeId}.breakers.fielddata
+
+    metric:
+      - name: circuitBreaker.fieldData.size.max
+        source: limit_size_in_bytes
+        type: long_gauge
+        label: fieldData max size
+        description: max fieldData size
+        unit: bytes
+
+      - name: circuitBreaker.fieldData.size.estimate
+        source: estimated_size_in_bytes
+        type: long_gauge
+        label: fieldData estimated size
+        description: estimated fieldData size
+        unit: bytes
+
+      - name: circuitBreaker.fieldData.size.overhead
+        source: overhead
+        type: double_gauge
+        label: fieldData overhead
+        description: fieldData overhead
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: breaker_request
+    metricNamespace: es
+    path: $.nodes.${nodeId}.breakers.request
+
+    metric:
+      - name: circuitBreaker.request.size.max
+        source: limit_size_in_bytes
+        type: long_gauge
+        label: request maximum size
+        description: max request size
+        unit: bytes
+
+      - name: circuitBreaker.request.size.estimate
+        source: estimated_size_in_bytes
+        type: long_gauge
+        label: request estimated size
+        description: estimated request size
+        unit: bytes
+
+      - name: circuitBreaker.request.size.overhead
+        source: overhead
+        type: double_gauge
+        label: request overhead
+        description: request overhead
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

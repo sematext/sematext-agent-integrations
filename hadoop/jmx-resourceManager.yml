@@ -1,0 +1,37 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: hadoop-resourcemanager
+#  all
+
+observation:
+  - name: resourcemanager_cluster_metrics
+    metricNamespace: hadoop
+    objectName: Hadoop:service=ResourceManager,name=ClusterMetrics
+
+    metric:
+      - name: rm.nm.active
+        source: NumActiveNMs
+        type: long_gauge
+        label: active NMs
+
+      - name: rm.nm.active.decom
+        source: NumDecommissionedNMs
+        type: long_gauge
+        label: decom NMs
+
+      - name: rm.nm.active.lost
+        source: NumLostNMs
+        type: long_gauge
+        label: lost NMs
+
+      - name: rm.nm.active.rebooted
+        source: NumRebootedNMs
+        type: long_gauge
+        label: rebooted NMs
+
+      - name: rm.nm.active.unhealthy
+        source: NumUnhealthyNMs
+        type: long_gauge
+        label: unhealthy NMs
+

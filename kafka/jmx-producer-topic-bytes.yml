@@ -1,0 +1,18 @@
+type: jmx
+
+observation:
+  - name: kafka-producer-topic-bytes
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerTopicMetrics,name=BytesPerSec,topic=${topic}
+
+    metric:
+      - name: producer.old.topic.bytes
+        source: Count
+        type: counter
+        label: producer topic
+        unit: bytes
+
+    tag:
+      - name: kafka.producer.topic
+        value: ${topic}
+

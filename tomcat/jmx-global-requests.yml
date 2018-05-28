@@ -1,0 +1,45 @@
+type: jmx
+
+observation:
+  - name: global.request.processor.tomcat
+    metricNamespace: tomcat
+    objectName: Catalina:type=GlobalRequestProcessor,name="http-${host_port}"
+
+    metric:
+      - name: requests
+        source: requestCount
+        type: counter
+        label: requests
+        description: Cumulative request count of the Apache Tomcat container
+
+      - name: requests.transfer.rx.bytes
+        source: bytesReceived
+        type: counter
+        label: bytes received
+        description: Bytes received by all the request processors running on the Apache Tomcat container (without headers)
+        unit: bytes
+
+      - name: requests.transfer.tx.bytes
+        source: bytesSent
+        type: counter
+        label: bytes sent
+        description: Bytes sent by all the request processors running on the Apache Tomcat (without headers)
+        unit: bytes
+
+      - name: requests.processing.time
+        source: processingTime
+        type: counter
+        label: req processing time
+        description: Cumulated processing time
+        unit: ms
+
+      - name: requests.errors
+        source: errorCount
+        type: counter
+        label: error requests
+        description: Error count on all the request processors running on the Apache Tomcat container
+
+    tag:
+      - name: tomcat.port
+        value: func:SplitAndExtract(host_port,-,1)
+

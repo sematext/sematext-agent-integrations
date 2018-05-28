@@ -1,0 +1,45 @@
+type: json
+data:
+  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process?format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+observation:
+  - name: jvmPoolStats_pools
+    metricNamespace: jvm
+    path: $.nodes.${nodeId}.jvm.mem.pools.${poolName}
+
+    metric:
+      - name: pool.used
+        source: used_in_bytes
+        type: gauge
+        label: used
+        description: jvm pool used memory
+        unit: bytes
+
+      - name: pool.max
+        source: max_in_bytes
+        type: gauge
+        label: used
+        description: jvm pool max memory
+        unit: bytes
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: jvm.memory.pool
+        value: ${poolName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

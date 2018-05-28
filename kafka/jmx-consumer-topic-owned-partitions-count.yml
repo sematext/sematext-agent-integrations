@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-topic-owned-partitions
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=ZookeeperConsumerConnector,name=OwnedPartitionsCount,clientId=${clientIdString},groupId=${groupId},topic=${topic}
+
+    metric:
+      - name: consumer.old.partitions.owned
+        source: Value
+        type: long_gauge
+        label: consumer owned partitions
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+      - name: kafka.consumer.group.id
+        value: ${groupId}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+

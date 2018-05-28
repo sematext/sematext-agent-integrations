@@ -1,0 +1,17 @@
+type: jmx
+
+observation:
+  - name: kafka-producer-topic-messages-dropped
+    metricNamespace: kafka
+    objectName: kafka.producer:type=ProducerTopicMetrics,name=DroppedMessagesPerSec,topic=${topic}
+
+    metric:
+      - name: producer.old.topic.messages.dropped
+        source: Count
+        type: counter
+        label: producer topic dropped messages
+
+    tag:
+      - name: kafka.producer.topic
+        value: ${topic}
+

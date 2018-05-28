@@ -1,0 +1,71 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-consumer-node
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=consumer-node-metrics,client-id=${clientId},node-id=${nodeId}
+
+    metric:
+      - name: consumer.node.request.rate
+        source: request-rate
+        type: double_gauge
+        label: consumer node requests rate
+        description: The average number of requests sent per second.
+        unit: req/sec
+
+      - name: consumer.node.request.size
+        source: request-size-avg
+        type: double_gauge
+        label: consumer node request size
+        description: The average size of all requests in the window..
+        unit: bytes
+
+      - name: consumer.node.in.bytes.rate
+        source: incoming-byte-rate
+        type: double_gauge
+        label: consumer node in bytes rate
+        description: Bytes/second read off socket
+        unit: bytes/sec
+
+      - name: consumer.node.request.size.max
+        source: request-size-max
+        type: double_gauge
+        label: consumer node request max size
+        description: The maximum size of any request sent in the window.
+        unit: bytes
+
+      - name: consumer.node.out.bytes.rate
+        source: outgoing-byte-rate
+        type: double_gauge
+        label: consumer node out bytes rate
+        description: The average number of outgoing bytes sent per second to servers.
+        unit: bytes/sec
+
+      - name: consumer.node.request.latency.max
+        source: request-latency-max
+        type: double_gauge
+        label: consumer node request max latency
+        description: The maximum request latency
+        unit: ms
+
+      - name: consumer.node.request.latency
+        source: request-latency-avg
+        type: double_gauge
+        label: consumer node request latency
+        description: The average request latency
+        unit: ms
+
+      - name: consumer.node.response.rate
+        source: response-rate
+        type: double_gauge
+        label: consumer node responses rate
+        description: The average number of responses received per second.
+        unit: res/sec
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+
+      - name: kafka.clients.consumer.node
+        value: ${nodeId}
+

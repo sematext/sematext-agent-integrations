@@ -1,0 +1,202 @@
+type: jmx
+
+observation:
+  - name: hbase-rs-rep-source-cl
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.completed.logs
+        source: source.${id}.completedLogs
+        type: long_gauge
+        label: completed logs
+        description: Source completed logs
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-rlfs
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.repeated.log.file.size
+        source: source.${id}.repeatedLogFileBytes
+        type: long_gauge
+        label: repeated log files size
+        description: Source repeated log files size
+        unit: bytes
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-rlr
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.restarted.log.reads
+        source: source.${id}.restartedLogReading
+        type: long_gauge
+        label: restarted load readings
+        description: Source restarted load readings
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-clwufl
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.closed.logs.with.unknown.file.length
+        source: source.${id}.closedLogsWithUnknownFileLength
+        type: long_gauge
+        label: closed logs
+        description: Source closed logs with unknows file length
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-ucl
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.uncleanly.closed.logs
+        source: source.${id}.uncleanlyClosedLogs
+        type: long_gauge
+        label: uncleanly closed logs
+        description: Source uncleanly closed logs
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-iuclcs
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.ignored.uncleanly.closed.log.content.size
+        source: source.${id}.ignoredUncleanlyClosedLogContentsInBytes
+        type: long_gauge
+        label: ignored uncleanly closed logs size
+        description: Source ignored uncleanly closed logs content size
+        unit: bytes
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-lq
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.log.queue
+        source: source.${id}.sizeOfLogQueue
+        type: long_gauge
+        label: log queue
+        description: Source log queue
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-ler
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.log.edits.read
+        source: source.${id}.logEditsRead
+        type: counter
+        label: log edits read
+        description: Source log edits read
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-lef
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.log.edits.filtered
+        source: source.${id}.logEditsFiltered
+        type: counter
+        label: log edits filtered
+        description: Source log edits filtered
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-bs
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.batches.shipped
+        source: source.${id}.shippedBatches
+        type: counter
+        label: shipped batches
+        description: Source shipped batches
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-os
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.ops.shipped
+        source: source.${id}.shippedOps
+        type: counter
+        label: shipped operations
+        description: Source shipped operations
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-bss
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.batches.shipped.size
+        source: source.${id}.shippedBytes
+        type: counter
+        label: shipped size
+        description: Source shipped size
+        unit: bytes
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+
+  - name: hbase-rs-rep-source-lerb
+    metricNamespace: hbase
+    objectName: Hadoop:service=HBase,name=RegionServer,sub=Replication
+
+    metric:
+      - name: rs.replication.log.edits.read.bytes
+        source: source.${id}.logReadInBytes
+        type: counter
+        label: log read size
+        description: Source log read size
+        unit: bytes
+
+    tag:
+      - name: hbase.rs.replication.source
+        value: ${id}
+

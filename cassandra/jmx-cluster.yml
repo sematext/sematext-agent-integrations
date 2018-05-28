@@ -1,0 +1,60 @@
+type: jmx
+
+observation:
+  - name: leavingNodesCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.db:type=StorageService
+
+    metric:
+      - name: cluster.nodes.leaving
+        source: reflect:LeavingNodes.size
+        type: long_gauge
+        label: leaving nodes
+
+
+  - name: movingNodesCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.db:type=StorageService
+
+    metric:
+      - name: cluster.nodes.moving
+        source: reflect:MovingNodes.size
+        type: long_gauge
+        label: moving nodes
+
+
+  - name: joiningNodesCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.db:type=StorageService
+
+    metric:
+      - name: cluster.nodes.joining
+        source: reflect:JoiningNodes.size
+        type: long_gauge
+        label: joining nodes
+
+
+  - name: liveNodesCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.db:type=StorageService
+
+    metric:
+      - name: cluster.nodes.live
+        source: reflect:LiveNodes.size
+        type: long_gauge
+        label: live nodes
+        description: Count of nodes which are visible and live
+        unit: from the perspective of this node
+
+
+  - name: unreachableNodesCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.db:type=StorageService
+
+    metric:
+      - name: cluster.nodes.unreachable
+        source: reflect:UnreachableNodes.size
+        type: long_gauge
+        label: unreachable nodes
+        description: Count of the nodes which this node knows about which are currently unreachable
+

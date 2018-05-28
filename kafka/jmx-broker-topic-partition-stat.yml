@@ -1,0 +1,75 @@
+type: jmx
+
+observation:
+  - name: kafka-broker-partition-underreplicated
+    metricNamespace: kafka
+    objectName: kafka.cluster:type=Partition,name=UnderReplicated,topic=${topic},partition=${partition}
+
+    metric:
+      - name: broker.partition.underreplicated
+        source: Value
+        type: double_gauge
+        label: broker partitions under replicated
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+      - name: kafka.broker.topic.partition
+        value: ${partition}
+
+
+  - name: kafka-broker-log-offset-end
+    metricNamespace: kafka
+    objectName: kafka.log:type=Log,name=LogEndOffset,topic=${topic},partition=${partition}
+
+    metric:
+      - name: broker.log.offset.end
+        source: Value
+        type: counter
+        label: broker log offset increasing
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+      - name: kafka.broker.topic.partition
+        value: ${partition}
+
+
+  - name: kafka-broker-log-segments
+    metricNamespace: kafka
+    objectName: kafka.log:type=Log,name=NumLogSegments,topic=${topic},partition=${partition}
+
+    metric:
+      - name: broker.log.segments
+        source: Value
+        type: long_gauge
+        label: broker log segments
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+      - name: kafka.broker.topic.partition
+        value: ${partition}
+
+
+  - name: kafka-broker-log-size
+    metricNamespace: kafka
+    objectName: kafka.log:type=Log,name=Size,topic=${topic},partition=${partition}
+
+    metric:
+      - name: broker.log.size
+        source: Value
+        type: long_gauge
+        label: broker log size
+        unit: bytes
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+      - name: kafka.broker.topic.partition
+        value: ${partition}
+

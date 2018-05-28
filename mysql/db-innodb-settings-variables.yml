@@ -1,0 +1,128 @@
+type: db
+data:
+  query: SHOW /*!50002 GLOBAL */ VARIABLES;
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: innoDbSettingsVariables
+    metricNamespace: mysql
+
+    metric:
+      - name: innodb.mem.additional.size
+        source: innodb_additional_mem_pool_size
+        type: long_gauge
+        label: innodb additional memory pool
+        description: "innodb_additional_mem_pool_size: The size in bytes of a memory pool InnoDB uses to store data dictionary information and other internal data structures. The more tables you have in your application, the more memory you need to allocate here."
+        unit: bytes
+
+      - name: innodb.autoextend.increment
+        source: innodb_autoextend_increment
+        type: long_gauge
+        label: innodb autoextend increment
+        description: "innodb_autoextend_increment: The increment size (in megabytes) for extending the size of an auto-extending system tablespace file when it becomes full. The default value is 8"
+        unit: MB
+
+      - name: innodb.concurrency.tickets
+        source: innodb_concurrency_tickets
+        type: long_gauge
+        label: innodb concurrency tickets
+        description: "innodb_concurrency_tickets: Determines the number of threads that can enter InnoDB concurrently. A thread is placed in a queue when it tries to enter InnoDB if the number of threads has already reached the concurrency limit. When a thread is permitted to enter InnoDB, it is given a number of “ tickets” equal to the value of innodb_concurrency_tickets, and the thread can enter and leave InnoDB freely until it has used up its tickets"
+
+      - name: innodb.io.capacity
+        source: innodb_io_capacity
+        type: long_gauge
+        label: innodb io capacity
+        description: "innodb_io_capacity: The innodb_io_capacity parameter sets an upper limit on the number of I/O operations performed per second by InnoDB background tasks, such as flushing pages from the buffer pool and merging data from the change buffer."
+
+      - name: innodb.lock.waiting.timeout
+        source: innodb_lock_wait_timeout
+        type: long_gauge
+        label: innodb lock wait timeout
+        description: "innodb_lock_wait_timeout: The length of time in seconds an InnoDB transaction waits for a row lock before giving up. The default value is 50 seconds."
+        unit: sec
+
+      - name: innodb.log.buffer.size
+        source: innodb_log_buffer_size
+        type: long_gauge
+        label: innodb log buffer size
+        description: "innodb_log_buffer_size: The size in bytes of the buffer that InnoDB uses to write to the log files on disk. The default value is 8MB. A large log buffer enables large transactions to run without a need to write the log to disk before the transactions commit. Thus, if you have transactions that update, insert, or delete many rows, making the log buffer larger saves disk I/O"
+        unit: bytes
+
+      - name: innodb.log.file.size
+        source: innodb_log_file_size
+        type: long_gauge
+        label: innodb log file size
+        description: "innodb_log_file_size: The size in bytes of each log file in a log group"
+        unit: bytes
+
+      - name: innodb.log.group.files
+        source: innodb_log_files_in_group
+        type: long_gauge
+        label: innodb group log files
+        description: "innodb_log_files_in_group: The number of log files in the log group. InnoDB writes to the files in a circular fashion. The default (and recommended) value is 2."
+
+      - name: innodb.dirty.pages.pct.max
+        source: innodb_max_dirty_pages_pct
+        type: double_gauge
+        label: innodb max dirty pages %
+        description: "innodb_max_dirty_pages_pct: InnoDB tries to flush data from the buffer pool so that the percentage of dirty pages does not exceed this value. Specify an integer in the range from 0 to 99. The default value is 75."
+        unit: "%"
+
+      - name: innodb.purge.lag.max
+        source: innodb_max_purge_lag
+        type: long_gauge
+        label: innodb max purge lag
+        description: "innodb_max_purge_lag: Controls how to delay INSERT, UPDATE, and DELETE operations when purge operations are lagging (see Section 14.6, InnoDB Multi-Versioning). The unit value is microseconds. The default value is 0 (no delays)."
+        unit: microsec
+
+      - name: innodb.blocks.old.pct
+        source: innodb_old_blocks_pct
+        type: long_gauge
+        label: innodb old blocks %
+        description: "innodb_old_blocks_pct: Specifies the approximate percentage of the InnoDB buffer pool used for the old block sublist. The range of values is 5 to 95. The default value is 37 (that is, 3/8 of the pool)."
+        unit: "%"
+
+      - name: innodb.blocks.old.time
+        source: innodb_old_blocks_time
+        type: long_gauge
+        label: innodb old blocks time
+        description: "innodb_old_blocks_time: Specifies how long in milliseconds a block inserted into the old sublist must stay there after its first access before it can be moved to the new sublist"
+        unit: ms
+
+      - name: innodb.files.open
+        source: innodb_open_files
+        type: long_gauge
+        label: innodb open files
+        description: "innodb_open_files: This configuration option is only relevant if you use multiple InnoDB tablespaces. It specifies the maximum number of .ibd files that MySQL can keep open at one time. The minimum value is 10. The default value is 300."
+
+      - name: innodb.purge.batch.size
+        source: innodb_purge_batch_size
+        type: long_gauge
+        label: innodb purge batch size
+        description: "innodb_purge_batch_size: Defines the number of undo log pages that purge parses and processes in one batch from the history list"
+
+      - name: innodb.purge.threads
+        source: innodb_purge_threads
+        type: long_gauge
+        label: innodb purge threads
+        description: "innodb_purge_threads: The number of background threads devoted to the InnoDB purge operation. Currently, can only be 0 (the default) or 1. The default value of 0 signifies that the purge operation is performed as part of the master thread."
+
+      - name: innodb.buffer.read.ahead.threshold
+        source: innodb_read_ahead_threshold
+        type: long_gauge
+        label: innodb read ahead threshold
+        description: "innodb_read_ahead_threshold: Controls the sensitivity of linear read-ahead that InnoDB uses to prefetch pages into the buffer pool. The permissible range of values is 0 to 64. The default is 56: InnoDB must read at least 56 pages sequentially from an extent to initiate an asynchronous read for the following extent"
+
+      - name: innodb.io.read.threads
+        source: innodb_read_io_threads
+        type: long_gauge
+        label: innodb read io threads
+        description: "innodb_read_io_threads: The number of I/O threads for read operations in InnoDB."
+

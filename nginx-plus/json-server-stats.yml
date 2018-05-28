@@ -1,0 +1,55 @@
+type: json
+data:
+  url: 
+  server: ${SPM_MONITOR_NGINX_PLUS_STATUS_URL}
+  basicHttpAuthUsername: ${SPM_MONITOR_NGINX_PLUS_USER}
+  basicHttpAuthPassword: ${SPM_MONITOR_NGINX_PLUS_PASSWORD}
+
+observation:
+  - name: connections
+    metricNamespace: nginxp
+    path: $.connections
+
+    metric:
+      - name: connections.accepted
+        source: accepted
+        type: counter
+        label: accepted connections
+        description: The number of accepted client connections
+
+      - name: connections.dropped
+        source: dropped
+        type: counter
+        label: dropped connections
+        description: The number of idle client connections
+
+      - name: connections.active
+        source: active
+        type: long_gauge
+        label: active connections
+        description: The current number of active connections
+
+      - name: connections.idle
+        source: idle
+        type: long_gauge
+        label: idle connections
+        description: The current number of idle client connections
+
+
+  - name: requests
+    metricNamespace: nginxp
+    path: $.requests
+
+    metric:
+      - name: requests
+        source: total
+        type: counter
+        label: total requests
+        description: The total number of client requests
+
+      - name: requests.current
+        source: current
+        type: long_gauge
+        label: current active requests
+        description: The current number of client requests
+

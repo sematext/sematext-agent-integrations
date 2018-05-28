@@ -1,0 +1,237 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-producer
+    metricNamespace: kafka
+    objectName: kafka.producer:type=producer-metrics,client-id=${clientId}
+
+    metric:
+      - name: producer.records.queued.time
+        source: record-queue-time-avg
+        type: double_gauge
+        label: producer records queue time
+        description: The average time record batches spent in the record accumulator.
+        unit: ms
+
+      - name: producer.io.ratio
+        source: io-ratio
+        type: double_gauge
+        label: producer io ratio
+        description: The fraction of time the I/O thread spent doing I/O
+        unit: "%"
+
+      - name: producer.records.size.max
+        source: record-size-max
+        type: double_gauge
+        label: producer record max size
+        description: The maximum record size
+        unit: bytes
+
+      - name: producer.request.size
+        source: request-size-avg
+        type: double_gauge
+        label: producer request size
+        unit: bytes
+
+      - name: producer.request.size.max
+        source: request-size-max
+        type: double_gauge
+        label: producer requests max size
+
+      - name: producer.records.size
+        source: record-size-avg
+        type: double_gauge
+        label: record size
+        description: The average producer record size
+        unit: bytes
+
+      - name: producer.request.latency.max
+        source: request-latency-max
+        type: double_gauge
+        label: producer request max latency
+        unit: ms
+
+      - name: producer.requests.inflight
+        source: requests-in-flight
+        type: double_gauge
+        label: producer requests in flight
+        description: The current number of in-flight requests awaiting a response.
+
+      - name: producer.buffer.pool.wait.ratio
+        source: bufferpool-wait-ratio
+        type: double_gauge
+        label: producer buffer pool wait ratio
+        description: The fraction of time an appender waits for space allocation.
+        unit: "%"
+
+      - name: producer.io.rate
+        source: network-io-rate
+        type: double_gauge
+        label: producer network io rate
+        description: The average number of network operations (reads or writes) on all connections per second.
+        unit: op/sec
+
+      - name: producer.records.queued.time.max
+        source: record-queue-time-max
+        type: double_gauge
+        label: producer records queue max time
+        description: The maximum time record batches spent in the record accumulator.
+        unit: ms
+
+      - name: producer.in.bytes.rate
+        source: incoming-byte-rate
+        type: double_gauge
+        label: producer in bytes rate
+        unit: bytes/sec
+
+      - name: producer.connections
+        source: connection-count
+        type: double_gauge
+        label: producer connections count
+        description: The current number of active connections.
+
+      - name: producer.metadata.age
+        source: metadata-age
+        type: double_gauge
+        label: producer metadata age
+        unit: ms
+
+      - name: producer.requests.records
+        source: records-per-request-avg
+        type: double_gauge
+        label: producer records per request
+        description: The average number of records per request.
+        unit: rec/req
+
+      - name: producer.records.retry.rate
+        source: record-retry-rate
+        type: double_gauge
+        label: producer records retry rate
+        description: The average per-second number of retried record sends
+        unit: rec/sec
+
+      - name: producer.buffer.size
+        source: buffer-total-bytes
+        type: double_gauge
+        label: producer buffer total bytes
+        description: The maximum amount of buffer memory the client can use (whether or not it is currently used).
+        unit: bytes
+
+      - name: producer.compression.rate
+        source: compression-rate-avg
+        type: double_gauge
+        label: producer compression rate
+        description: The average compression rate of record batches.
+        unit: "%"
+
+      - name: producer.buffer.available
+        source: buffer-available-bytes
+        type: double_gauge
+        label: producer buffer available bytes
+        description: The total amount of buffer memory that is not being used (either unallocated or in the free list).
+        unit: bytes
+
+      - name: producer.requests.rate
+        source: request-rate
+        type: double_gauge
+        label: producer requests rate
+        unit: req/sec
+
+      - name: producer.records.send.rate
+        source: record-send-rate
+        type: double_gauge
+        label: producer records send rate
+        description: The average number of records sent per second.
+        unit: rec/sec
+
+      - name: producer.selects.rate
+        source: select-rate
+        type: double_gauge
+        label: producer selects rate
+        description: Number of times the I/O layer checked for new I/O to perform per second
+        unit: sel/sec
+
+      - name: producer.request.latency
+        source: request-latency-avg
+        type: double_gauge
+        label: producer request latency
+        unit: ms
+
+      - name: producer.records.error.rate
+        source: record-error-rate
+        type: double_gauge
+        label: producer records error rate
+        description: The average per-second number of record sends that resulted in errors
+        unit: errors/sec
+
+      - name: producer.connections.create.rate
+        source: connection-creation-rate
+        type: double_gauge
+        label: producer connection creation rate
+        description: New connections established per second in the window.
+        unit: conn/sec
+
+      - name: producer.batch.size.max
+        source: batch-size-max
+        type: double_gauge
+        label: producer max batch size
+        description: The max number of bytes sent per partition per-request.
+        unit: bytes/req
+
+      - name: producer.connections.close.rate
+        source: connection-close-rate
+        type: double_gauge
+        label: producer connection close rate
+        description: Connections closed per second in the window.
+        unit: conn/sec
+
+      - name: producer.threads.waiting
+        source: waiting-threads
+        type: double_gauge
+        label: producer waiting threads
+        description: The number of user threads blocked waiting for buffer memory to enqueue their records
+
+      - name: producer.batch.size
+        source: batch-size-avg
+        type: double_gauge
+        label: producer batch size
+        description: The average number of bytes sent per partition per-request.
+        unit: bytes/req
+
+      - name: producer.io.wait.ratio
+        source: io-wait-ratio
+        type: double_gauge
+        label: producer io wait ratio
+        description: The fraction of time the I/O thread spent waiting.
+        unit: "%"
+
+      - name: producer.io.wait.time.ns
+        source: io-wait-time-ns-avg
+        type: double_gauge
+        label: producer io wait time
+        description: The average length of time the I/O thread spent waiting for a socket ready for reads or writes.
+        unit: ms
+
+      - name: producer.out.bytes.rate
+        source: outgoing-byte-rate
+        type: double_gauge
+        label: producer out bytes rate
+        unit: bytes/sec
+
+      - name: producer.io.time.ns
+        source: io-time-ns-avg
+        type: double_gauge
+        label: producer io time
+        description: The average length of time for I/O per select call.
+        unit: ms
+
+      - name: producer.responses.rate
+        source: response-rate
+        type: double_gauge
+        label: producer responses rate
+        unit: res/sec
+
+    tag:
+      - name: kafka.clients.producer.client
+        value: ${clientId}
+

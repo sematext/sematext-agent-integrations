@@ -1,0 +1,103 @@
+type: jmx
+
+observation:
+  - name: kafka-clients-consumer
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=consumer-metrics,client-id=${clientId}
+
+    metric:
+      - name: consumer.io.ratio
+        source: io-ratio
+        type: double_gauge
+        label: consumer io ratio
+        description: The fraction of time the I/O thread spent doing I/O
+        unit: "%"
+
+      - name: consumer.request.size
+        source: request-size-avg
+        type: double_gauge
+        label: consumer request size
+        unit: bytes
+
+      - name: consumer.io.rate
+        source: network-io-rate
+        type: double_gauge
+        label: consumer network io rate
+        description: The average number of network operations (reads or writes) on all connections per second.
+        unit: op/sec
+
+      - name: consumer.incomming.bytes.rate
+        source: incoming-byte-rate
+        type: double_gauge
+        label: consumer in bytes rate
+        unit: bytes/sec
+
+      - name: consumer.connections
+        source: connection-count
+        type: double_gauge
+        label: consumer connection count
+        description: The current number of active connections.
+
+      - name: consumer.requests.rate
+        source: request-rate
+        type: double_gauge
+        label: consumer requests rate
+        unit: req/sec
+
+      - name: consumer.selects.rate
+        source: select-rate
+        type: double_gauge
+        label: consumer selects rate
+        unit: sel/sec
+
+      - name: consumer.connections.create.rate
+        source: connection-creation-rate
+        type: double_gauge
+        label: consumer connection creation rate
+        description: New connections established per second in the window.
+        unit: conn/sec
+
+      - name: consumer.connections.close.rate
+        source: connection-close-rate
+        type: double_gauge
+        label: consumer connection close rate
+        description: Connections closed per second in the window.
+        unit: conn/sec
+
+      - name: consumer.io.wait.ratio
+        source: io-wait-ratio
+        type: double_gauge
+        label: consumer io wait ratio
+        description: The fraction of time the I/O thread spent waiting.
+        unit: ms
+
+      - name: consumer.io.wait.time.ns
+        source: io-wait-time-ns-avg
+        type: double_gauge
+        label: consumer io wait time
+        description: The average length of time the I/O thread spent waiting for a socket ready for reads or writes.
+        unit: ns
+
+      - name: consumer.outgoing.bytes.rate
+        source: outgoing-byte-rate
+        type: double_gauge
+        label: consumer out bytes rate
+        unit: bytes/sec
+
+      - name: consumer.io.time.ns
+        source: io-time-ns-avg
+        type: double_gauge
+        label: consumer io time
+        description: The average length of time for I/O per select call.
+        unit: ns
+
+      - name: consumer.responses.rate
+        source: response-rate
+        type: double_gauge
+        label: consumer responses rate
+        unit: res/sec
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientId}
+

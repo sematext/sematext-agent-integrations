@@ -1,0 +1,54 @@
+type: jmx
+
+observation:
+  - name: webmodule.tomcat
+    metricNamespace: tomcat
+    objectName: Catalina:j2eeType=WebModule,name=//${host_name}/${webapp_name},J2EEApplication=none,J2EEServer=none
+
+    metric:
+      - name: web.execution.time.max
+        source: maxTime
+        type: long_gauge
+        label: max servlet processing time
+        description: Maximum execution time of all servlets in this context
+        unit: ms
+
+      - name: web.errors
+        source: errorCount
+        type: counter
+        label: servlet errors
+        description: Cumulative error count of all servlets in this context
+
+      - name: web.execution.time.total
+        source: processingTime
+        type: counter
+        label: servlets processing time
+        description: Cumulative execution times of all servlets in this context
+        unit: ms
+
+      - name: web.execution.time.min.raw
+        source: minTime
+        type: long_gauge
+        send: false
+
+      # When web.execution.time.min.raw value is Long.MAX_VALUE return 0.
+      - name: web.execution.time.min
+        source: func:IfThenElse(web.execution.time.min.raw, =, 0x7fffffffffffffffL, 0L, metric:web.execution.time.min.raw)
+        type: long_gauge
+        label: min servlet processing time
+        description: Minimum execution time of all servlets in this context
+        unit: ms
+
+      - name: web.requests
+        source: requestCount
+        type: counter
+        label: servlet requests
+        description: Cumulative request count of all servlets in this context
+
+    tag:
+      - name: tomcat.host
+        value: ${host_name}
+
+      - name: tomcat.web.app
+        value: ${webapp_name}
+

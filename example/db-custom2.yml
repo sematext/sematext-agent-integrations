@@ -1,0 +1,41 @@
+type: db
+data:
+  query: select * from myDatabaseName.User where state='ACTIVE'
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+
+observation:
+  - name: activeUsersDetails
+    metricNamespace: custom
+
+    metric:
+      - name: user.id
+        source: id
+        type: long_gauge
+        label: user id
+
+      - name: userState
+        source: state
+        type: text
+        send: false
+        
+# we want user email to be sent as a tag (hence send="false", it will be just used as source for tag value),
+# that way each user will be sent as its own metrics line; if we didn't use
+# the email (something that is distinct) as a tag, agent would aggregate all rows into single result, so in case of
+# user.id it would produce "average user.id value" and in case of "user.state" it would produce an error since
+# textual values can't be aggregated.
+
+      - name: userEmail
+        source: email
+        type: text
+        send: false
+
+    tag:
+      - name: user.email
+        value: eval:${userEmail}
+
+      - name: user.state
+        value: eval:${userState}

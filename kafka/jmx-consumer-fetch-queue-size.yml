@@ -1,0 +1,20 @@
+type: jmx
+
+observation:
+  - name: kafka-consumer-fetch-queue
+    metricNamespace: kafka
+    objectName: kafka.consumer:type=ZookeeperConsumerConnector,name=FetchQueueSize,clientId=${clientIdString},topic=${topic},threadId=${threadId}
+
+    metric:
+      - name: consumer.old.topic.queue
+        source: Value
+        type: long_gauge
+        label: consumer topic queue size
+
+    tag:
+      - name: kafka.consumer.client.id
+        value: ${clientIdString}
+
+      - name: kafka.consumer.client.topic
+        value: ${topic}
+

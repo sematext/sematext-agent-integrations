@@ -1,0 +1,49 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.observation.SubtypeCheck
+    values: spark-master
+
+observation:
+  - name: sparkMasterApps
+    metricNamespace: spark
+    objectName: metrics:name=master.apps
+
+    metric:
+      - name: apps
+        source: Value
+        type: long_gauge
+        label: spark apps
+
+
+  - name: sparkMasterWaitingApps
+    metricNamespace: spark
+    objectName: metrics:name=master.waitingApps
+
+    metric:
+      - name: apps.waiting
+        source: Value
+        type: long_gauge
+        label: waiting apps
+
+
+  - name: sparkMasterWorkers
+    metricNamespace: spark
+    objectName: metrics:name=master.workers
+
+    metric:
+      - name: workers
+        source: Value
+        type: long_gauge
+        label: spark workers
+
+
+  - name: sparkMasterAliveWorkers
+    metricNamespace: spark
+    objectName: metrics:name=master.aliveWorkers
+
+    metric:
+      - name: workers.alive
+        source: Value
+        type: long_gauge
+        label: live spark workers
+

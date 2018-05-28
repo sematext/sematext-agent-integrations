@@ -1,0 +1,18 @@
+type: jmx
+
+observation:
+  - name: zk_cluster
+    metricNamespace: zk
+    objectName: org.apache.ZooKeeperService:name0=ReplicatedServer_id${replicated_server_id}
+
+    metric:
+      - name: quorum
+        source: QuorumSize
+        type: long_gauge
+        label: quorum size
+        description: quorum size
+
+    tag:
+      - name: zk.replicated.server
+        value: ${replicated_server_id}
+

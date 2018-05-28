@@ -1,0 +1,120 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 1-6
+
+observation:
+  - name: cache1_solrOld
+    metricNamespace: solr
+    objectName: solr/${core}:type=${cacheName},id=*Cache
+
+    metric:
+      - name: cache.lookups
+        source: cumulative_lookups
+        type: counter
+        label: cache lookups
+        description: lookups count
+
+      - name: cache.hits
+        source: cumulative_hits
+        type: counter
+        label: cache hits
+        description: hits count
+
+      - name: cache.size
+        source: size
+        type: long_gauge
+        label: cache size
+        description: cache size (count of elements)
+
+      - name: cache.evicted
+        source: cumulative_evictions
+        type: counter
+        label: cache evictions
+        description: count of evictions
+
+      - source: description
+        type: text
+        send: false
+
+      - name: cache.size.max
+        source: func:com.sematext.spm.client.solr.ExtractCacheMaxSize
+        type: gauge
+        label: cache max size
+        description: cache max size
+
+      - name: cache.autowarm.count
+        source: func:com.sematext.spm.client.solr.ExtractAutowarmSetting
+        type: gauge
+        label: autowarm count or %
+        description: cache autowarm count or %
+
+    tag:
+      - name: solr.collection
+        value: jmx:solr/${core}:type=core,id=${core} collection|jmx:solr/${core}:type=core,id=${core} coreName|jmx:solr/${core}:type=core coreName
+        # | operator in expressions means N clauses will be evaluated, until one that doesn't return null is found (and that value is
+        # considered as resolved; if all clauses return null, final resolved value will be null;
+        # in this case, we first look for "collection" attribute since it is available in solr 5+ versions; if it is not present,
+        # this is one of pre-5 solr versions, so as a value of "collection" tag we use value of attribute "coreName"
+
+      - name: solr.shard
+        value: jmx:solr/${core}:type=core,id=${core} shard
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaName
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.cache
+        value: ${cacheName}
+
+    ignore:
+      - name: cacheName
+        value: fieldCache
+        # fieldCache doesn't have these attributes, it should be ignored
+
+
+  - name: cache1_solrOld_warmup
+    metricNamespace: solr
+    objectName: solr/${core}:type=${cacheName},id=*Cache
+
+    metric:
+      - name: searcherName
+        source: jmx:solr/${core}:type=searcher,id=org.apache.solr.search.SolrIndexSearcher searcherName
+        type: text
+        send: false
+
+      - source: warmupTime
+        type: long_gauge
+        send: false
+
+      - name: warmup.time
+        source: func:com.sematext.spm.client.solr.CalculateWarmupTime(warmupTime,searcherName)
+        type: counter
+        stateful: true
+        label: warmup time
+        description: warmup time
+        unit: ms
+
+    tag:
+      - name: solr.collection
+        value: jmx:solr/${core}:type=core,id=${core} collection|jmx:solr/${core}:type=core,id=${core} coreName|jmx:solr/${core}:type=core coreName
+
+      - name: solr.shard
+        value: jmx:solr/${core}:type=core,id=${core} shard
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaName
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.warmup.type
+        value: ${cacheName}
+
+    ignore:
+      - name: cacheName
+        value: fieldCache
+        # fieldCache doesn't have this attribute, it should be ignored
+

@@ -1,0 +1,67 @@
+type: json
+data:
+  url: /_cluster/state/nodes,routing_table,routing_nodes,master_node?local=true&format=smile
+  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  async: false
+  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
+  jsonHandlerClass: com.sematext.spm.client.es.CustomEsClusterStateJsonHandler
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+require:
+  - className: com.sematext.spm.client.es.IsDataNodeCheck
+    values: true
+
+observation:
+  - name: shardStats
+    metricNamespace: es
+    # path declared below will have N matches for each node-index combination... however, collectors are created
+    # "1 for each distinct path", so there will be no duplicate collectors and we will really get just one measurement
+    # for each node-index combination
+    path: $.routing_nodes.nodes.${nodeId}[?(@.index=${indexName})]
+
+    metric:
+      - name: cluster.shards.active
+        source: json:smile:/_cluster/state/nodes,routing_table,routing_nodes,master_node?local=true&format=smile $.routing_nodes.nodes.${nodeId}[?(@.index=${indexName} && @.state=STARTED||RELOCATING)] return:countMatches
+        type: long_gauge
+        label: active shards
+        description: Number of active shards
+
+      - name: cluster.shards.active.primary
+        source: json:smile:/_cluster/state/nodes,routing_table,routing_nodes,master_node?local=true&format=smile $.routing_nodes.nodes.${nodeId}[?(@.index=${indexName} && @.primary=true && @.state=STARTED||RELOCATING)] return:countMatches
+        type: long_gauge
+        label: active primary shards
+        description: Number of active primary shards
+
+      - name: cluster.shards.initializing
+        source: json:smile:/_cluster/state/nodes,routing_table,routing_nodes,master_node?local=true&format=smile $.routing_nodes.nodes.${nodeId}[?(@.index=${indexName} && @.state=INITIALIZING)] return:countMatches
+        type: long_gauge
+        label: initializing shards
+        description: Number of initializing shards
+
+      - name: cluster.shards.relocating
+        source: json:smile:/_cluster/state/nodes,routing_table,routing_nodes,master_node?local=true&format=smile $.routing_nodes.nodes.${nodeId}[?(@.index=${indexName} && @.state=RELOCATING)] return:countMatches
+        type: long_gauge
+        label: relocating shards
+        description: Number of relocating shards
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

@@ -1,0 +1,310 @@
+type: jmx
+
+observation:
+# Following metrics are applicable for all versions of Cassandra
+  - name: ssTableSize
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=LiveDiskSpaceUsed
+
+    metric:
+      - name: sstable.size
+        source: Count
+        type: long_gauge
+        label: sstable size
+        description: Disk space used by SSTables belonging to this table
+        unit: bytes
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: ssTableCount
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=LiveSSTableCount
+
+    metric:
+      - name: sstable.count
+        source: Value
+        type: long_gauge
+        label: sstables count
+        description: Number of SSTables on disk for this table
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: bloomFilterFalsePositives
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=BloomFilterFalsePositives
+
+    metric:
+      - name: bloom.falsepositives
+        source: Value
+        type: counter
+        label: bloom false positives
+        description: The number of Bloom filter false positives
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: bloomFilterFalseRatio
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=BloomFilterFalseRatio
+
+    metric:
+      - name: bloom.falsepositives.ratio
+        source: Value
+        type: double_gauge
+        label: bloom false positive ratio
+        description: The ratio of Bloom filter false positives to total checks
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: bloomFilterDiskSpaceUsed
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=BloomFilterDiskSpaceUsed
+
+    metric:
+      - name: bloom.disk.space
+        source: Value
+        type: long_gauge
+        label: bloom disk space
+        description: Disk space used by the Bloom filters
+        unit: bytes
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: ssTablesPerRead
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=SSTablesPerReadHistogram
+
+    metric:
+      - name: number.of.sstables.per.read
+        source: Mean
+        type: double_gauge
+        label: sstables per read
+        description: Number of SSTables are accessed during a read. Includes sstables that undergo bloom-filter checks, even if no data is read from the sstable
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+# Following metrics are applicable for pre 3.x version of Cassandra
+  - name: localWriteRequestsCount_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=WriteLatency
+
+    metric:
+      - name: local.write.requests
+        source: Count
+        type: counter
+        label: local write request
+        description: Local writes update the table's memtable and appends to a commitlog
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: localWriteRequestsTotalLatency_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=WriteTotalLatency
+
+    metric:
+      - name: local.write.requests.latency.time
+        source: Count
+        type: counter
+        label: local write latency total
+        unit: ms
+
+      # localWriteRequests_pre_3_x value is extracted from local.write.requests defined above, using `outer` function
+      - name: localWriteRequests_pre_3_x
+        source: outer:local.write.requests
+        type: long_gauge
+        send: false
+
+      - name: local.write.latency.avg
+        source: func:DoubleDivide(local.write.requests.latency.time,localWriteRequests_pre_3_x)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg local write latency
+        unit: ms
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: localReadRequestsCount_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=ReadLatency
+
+    metric:
+      - name: local.read.requests
+        source: Count
+        type: counter
+        label: local read request
+        description: Local reads retrieve data from a table's memtable and any necessary SSTables on disk
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: localReadRequestsTotalLatency_pre_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${keyspace},scope=${table},name=ReadTotalLatency
+
+    metric:
+      - name: local.read.requests.latency.time
+        source: Count
+        type: counter
+      # localReadRequests_pre_3_x value is extracted from local.read.requests defined above, using `outer` function
+      - name: localReadRequests_pre_3_x
+        source: outer:local.read.requests
+        type: long_gauge
+        send: false
+
+      - name: local.read.latency.avg
+        source: func:DoubleDivide(local.read.requests.latency.time,localReadRequests_pre_3_x)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg local read latency
+        unit: ms
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+# Following metrics are applicable to 3.x version of Cassandra
+  - name: localWriteRequestsCount_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Table,keyspace=${keyspace},scope=${table},name=WriteLatency
+
+    metric:
+      - name: local.write.requests
+        source: Count
+        type: counter
+        label: local write request
+        description: Local writes update the table's memtable and appends to a commitlog
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: localWriteRequestsTotalLatency_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Table,keyspace=${keyspace},scope=${table},name=WriteTotalLatency
+
+    metric:
+      - name: local.write.requests.latency.time
+        source: Count
+        type: counter
+        label: local write latency total
+        unit: ms
+
+        # localWriteRequests_3_x value is extracted from local.write.requests defined above, using `outer` function
+      - name: localWriteRequests_3_x
+        source: outer:local.write.requests
+        type: long_gauge
+        send: false
+
+      - name: local.write.latency.avg
+        source: func:DoubleDivide(local.write.requests.latency.time,localWriteRequests_3_x)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg local write latency
+        unit: ms
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: localReadRequestsCount_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Table,keyspace=${keyspace},scope=${table},name=ReadLatency
+
+    metric:
+      - name: local.read.requests
+        source: Count
+        type: counter
+        label: local read request
+        description: Local reads retrieve data from a table's memtable and any necessary SSTables on disk
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
+
+
+  - name: localReadRequestsTotalLatency_3_x
+    metricNamespace: cassandra
+    objectName: org.apache.cassandra.metrics:type=Table,keyspace=${keyspace},scope=${table},name=ReadTotalLatency
+
+    metric:
+      - name: local.read.requests.latency.time
+        source: Count
+        type: counter
+        label: local read latency total
+        unit: ms
+
+      # localReadRequests_3_x value is extracted from local.read.requests defined above, using `outer` function
+      - name: localReadRequests_3_x
+        source: outer:local.read.requests
+        type: long_gauge
+        send: false
+
+      - name: local.read.latency.avg
+        source: func:DoubleDivide(local.read.requests.latency.time,localReadRequests_3_x)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg local read latency
+        unit: ms
+
+    tag:
+      - name: cassandra.keyspace
+        value: ${keyspace}
+      - name: cassandra.table
+        value: ${table}
