@@ -42,8 +42,8 @@ observation:
         source: processingTime
         type: counter
         label: session processing time
-        description: Total processing time since startup
-        unit: cumulated elapsed milliseconds needed for session expiration handling
+        description: Total processing time since startup. Cumulated elapsed milliseconds needed for session expiration handling
+        unit: ms
 
       - name: sessions.active
         source: activeSessions
