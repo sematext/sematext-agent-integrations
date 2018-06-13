@@ -1,0 +1,3 @@
+JDBC driver for MySQL jar file should be place in this directory.
+Ideally version of driver would match the version of your MySQL DB, though
+often mismatched versions work well too.
