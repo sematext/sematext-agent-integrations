@@ -60,7 +60,7 @@ observation:
     path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].docs
 
     metric:
-      - name: index.docs.totals
+      - name: index.docs.total
         source: count
         type: long_gauge
         agentAggregation: SUM
