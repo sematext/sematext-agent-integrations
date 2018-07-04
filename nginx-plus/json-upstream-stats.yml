@@ -97,6 +97,12 @@ observation:
         description: The time (in milliseconds since Epoch) when the server became unavail/checking/unhealthy
         unit: ms
 
+      - name: upstream.server.requests
+        source: requests
+        type: counter
+        label: requests
+        description: The number of requests to this server
+
       - name: upstream.responses
         source: responses.total
         type: counter
