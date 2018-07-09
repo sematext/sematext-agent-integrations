@@ -35,25 +35,25 @@ observation:
 
       - name: upstream.state.up
         source: func:StringEquals(upstream.server.state,up)
-        type: counter
+        type: gauge
         label: state up
         description: Server is up
 
       - name: upstream.state.down
         source: func:StringEquals(upstream.server.state,down)
-        type: counter
+        type: gauge
         label: state down
         description: Server is down
 
       - name: upstream.state.unavailable
         source: func:StringEquals(upstream.server.state,unavail)
-        type: counter
+        type: gauge
         label: state unavailable
         description: Server is unavailable
 
       - name: upstream.state.unhealthy
         source: func:StringEquals(upstream.server.state,unhealthy)
-        type: counter
+        type: gauge
         label: state unhealthy
         description: Server is unhealthy
 
