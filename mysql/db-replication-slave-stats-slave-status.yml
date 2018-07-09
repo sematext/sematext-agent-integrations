@@ -28,7 +28,7 @@ observation:
         send: false
 
       - name: repl.slave.sql
-        source: func:StringEquals(repl.slave.sql.str, Yes)
+        source: func:StringEquals(repl.slave.sql.str, Yes, true)
         type: long_gauge
         label: slave sql running
         description: "Slave_SQL_Running: Whether the SQL thread is started. Value 1 means Yes, value 0 means No. Decimal value between 0 and 1 means that in monitored time period SQL thread was at some points running and at other points not running."
@@ -39,7 +39,7 @@ observation:
         send: false
 
       - name: repl.slave.io
-        source: func:StringEquals(repl.slave.io.str, Yes)
+        source: func:StringEquals(repl.slave.io.str, Yes, true)
         type: long_gauge
         label: slave io running
         description: "Slave_IO_Running: Whether the I/O thread is started and has connected successfully to the master. Value 1 means Yes, value 0 means No. Decimal value between 0 and 1 means that in monitored time period I/O thread was at some points running and at other points not running."
