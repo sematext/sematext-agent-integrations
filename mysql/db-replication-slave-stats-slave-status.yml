@@ -22,3 +22,24 @@ observation:
         description: "Seconds_Behind_Master: This field is an indication of how “late” the slave is. In essence, this field measures the time difference in seconds between the slave SQL thread and the slave I/O thread. If the network connection between master and slave is fast, the slave I/O thread is very close to the master, so this field is a good approximation of how late the slave SQL thread is compared to the master. If the network is slow, this is not a good approximation"
         unit: sec
 
+      - name: repl.slave.sql.str
+        source: Slave_SQL_Running
+        type: text
+        send: false
+
+      - name: repl.slave.sql
+        source: func:StringEquals(repl.slave.sql.str, Yes)
+        type: text
+        label: slave sql running
+        description: "Slave_SQL_Running: Whether the SQL thread is started. Value 1 means Yes, value 0 means No. Decimal value between 0 and 1 means that in monitored time period SQL thread was at some points running and at other points not running."
+
+      - name: repl.slave.io.str
+        source: Slave_IO_Running
+        type: text
+        send: false
+
+      - name: repl.slave.io
+        source: func:StringEquals(repl.slave.io.str, Yes)
+        type: text
+        label: slave io running
+        description: "Slave_IO_Running: Whether the I/O thread is started and has connected successfully to the master. Value 1 means Yes, value 0 means No. Decimal value between 0 and 1 means that in monitored time period I/O thread was at some points running and at other points not running."
