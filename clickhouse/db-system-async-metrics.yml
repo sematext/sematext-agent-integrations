@@ -1,0 +1,53 @@
+type: db
+data:
+  query: SELECT * FROM asynchronous_metrics;
+  dbUrl: jdbc:clickhouse://${SPM_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
+  dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
+  dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
+  dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_CLICKHOUSE_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of `SELECT * FROM metrics;` query gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: async-metrics
+    metricNamespace: ch
+
+    metric:
+      - name: repl.max.queue.size
+        source: ReplicasMaxQueueSize
+        type: double_gauge
+        label: Max replication queue size
+      - name: repl.queue.max.inserts
+        source: ReplicasMaxInsertsInQueue
+        type: double_gauge
+        label: Replication queue max inserts
+      - name: repl.queue.max.merges
+        source: ReplicasMaxMergesInQueue
+        type: double_gauge
+        label: Replication queue max merges
+      - name: repl.queue.max.relative.delay
+        source: ReplicasMaxRelativeDelay
+        type: double_gauge
+        label: Replication max relative delay
+      - name: repl.queue.sum.size
+        source: ReplicasSumQueueSize
+        type: double_gauge
+        label: Replication queue total size
+      - name: repl.queue.sum.inserts
+        source: ReplicasSumInsertsInQueue
+        type: double_gauge
+        label: Replication queue total inserts
+      - name: repl.queue.max.absolute.delay
+        source: ReplicasMaxAbsoluteDelay
+        type: double_gauge
+        label: Replication max absolute delay
+      - name: repl.queue.sum.merges
+        source: ReplicasSumMergesInQueue
+        type: double_gauge
+        label: Replication queue total merges
+      - name: max.part.count
+        source: MaxPartCountForPartition
+        type: double_gauge
+        label: Max active part count 
