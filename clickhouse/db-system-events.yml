@@ -6,7 +6,7 @@ data:
   dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
   dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
   dbAdditionalConnectionParams: ${SPM_MONITOR_CLICKHOUSE_DB_ADDITIONAL_PARAMS}
-  #  dbVerticalModel="true" - because output of `SELECT * FROM metrics;` query gives each attribute in its own row
+  #  dbVerticalModel="true" - because output of `SELECT * FROM events;` query gives each attribute in its own row
   # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true
 
@@ -47,7 +47,7 @@ observation:
         source: InsertedBytes
         type: counter
         label: Inserted Bytes
-      - name: merged.bytes
+      - name: merged.rows
         source: MergedRows
         type: counter
         label: Merged Rows
@@ -129,6 +129,11 @@ observation:
         source: RejectedInserts
         type: counter
         label: Rejected inserts
+      - name: zk.wait.time
+        source: ZooKeeperWaitMicroseconds
+        type: counter
+        label: Zookeeper wait time
+        unit: microseconds
       - name: zk.exceptions
         source: ZooKeeperExceptions
         type: counter
@@ -144,5 +149,5 @@ observation:
       - name: distributed.sync.insert.timeout
         source: DistributedSyncInsertionTimeoutExceeded
         type: counter
-        label: Sync. distributed insert timeouts
+        label: Distributed Sync insertion timeouts
 

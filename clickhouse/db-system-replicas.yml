@@ -1,0 +1,65 @@
+type: db
+data:
+  query: SELECT database,
+      table,
+      is_readonly,
+      is_session_expired,
+      future_parts,
+      parts_to_check,
+      queue_size,
+      inserts_in_queue,
+      merges_in_queue
+    FROM system.replicas;
+  dbUrl: jdbc:clickhouse://${SPM_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
+  dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
+  dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
+  dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_CLICKHOUSE_DB_ADDITIONAL_PARAMS}
+  
+observation:
+  - name: metrics
+    metricNamespace: ch
+
+    metric:
+      - name: database
+        source: database
+        type: text
+        send: false
+      - name: table
+        source: table
+        type: text
+        send: false
+      - name: replica.readonly
+        source: is_readonly
+        type: long_gauge
+        label: Replica readonly
+      - name: replica.session.expired
+        source: is_session_expired
+        type: long_gauge
+        label: Replica session expired
+      - name: replica.future.parts
+        source: future_parts
+        type: long_gauge
+        label: Replica future parts
+      - name: replica.parts.tocheck
+        source: parts_to_check
+        type: long_gauge
+        label: Replica parts to check
+      - name: replica.queue.size
+        source: queue_size
+        type: long_gauge
+        label: Replica queue size
+      - name: replica.queue.inserts
+        source: inserts_in_queue
+        type: long_gauge
+        label: Replica queue inserts
+      - name: replica.queue.merges
+        source: merges_in_queue
+        type: long_gauge
+        label: Replica queue merges
+
+    tag:
+      - name: ch.database
+        value: eval:${database}
+      - name: ch.table
+        value: eval:${table}

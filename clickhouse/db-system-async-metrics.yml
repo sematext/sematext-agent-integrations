@@ -6,7 +6,7 @@ data:
   dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
   dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
   dbAdditionalConnectionParams: ${SPM_MONITOR_CLICKHOUSE_DB_ADDITIONAL_PARAMS}
-  #  dbVerticalModel="true" - because output of `SELECT * FROM metrics;` query gives each attribute in its own row
+  #  dbVerticalModel="true" - because output of `SELECT * FROM asynchronous_metrics;` query gives each attribute in its own row
   # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true
 
