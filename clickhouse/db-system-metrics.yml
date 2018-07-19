@@ -12,7 +12,7 @@ data:
 
 observation:
   - name: metrics
-    metricNamespace: ch
+    metricNamespace: clickhouse
 
     metric:
       - name: tcp.connection.count

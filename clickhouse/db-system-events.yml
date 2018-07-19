@@ -12,7 +12,7 @@ data:
 
 observation:
   - name: events
-    metricNamespace: ch
+    metricNamespace: clickhouse
 
     metric:
       - name: query.count

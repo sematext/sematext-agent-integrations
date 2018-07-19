@@ -12,7 +12,7 @@ data:
 
 observation:
   - name: async-metrics
-    metricNamespace: ch
+    metricNamespace: clickhouse
 
     metric:
       - name: repl.max.queue.size
