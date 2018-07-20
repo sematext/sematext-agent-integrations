@@ -18,15 +18,16 @@ observation:
       - name: query.count
         source: Query
         type: counter
-        label: Query Count
+        label: Query count
+        description: Total query count
       - name: select.query.count
         source: SelectQuery
         type: counter
-        label: Select Query Count
+        label: Select query count
       - name: insert.query.count
         source: InsertQuery
         type: counter
-        label: Insert Query Count
+        label: Insert query count
       - name: file.opens.failed
         source: FileOpenFailed
         type: counter
@@ -34,31 +35,33 @@ observation:
       - name: read.buffer.fd.failed
         source: ReadBufferFromFileDescriptorReadFailed
         type: counter
-        label: Read buffer failed reads from file
+        label: Read buffer failed reads
+        description: Failed reads from file in ReadBuffer
       - name: write.buffer.fd.failed
         source: WriteBufferFromFileDescriptorWriteFailed
         type: counter
-        label: Write buffer failed write to file
+        label: Write buffer failed writes
+        description: Failed writes to file in WriteBuffer
       - name: inserted.rows
         source: InsertedRows
         type: counter
-        label: Inserted Rows
+        label: Inserted rows
       - name: inserted.bytes
         source: InsertedBytes
         type: counter
-        label: Inserted Bytes
+        label: Inserted bytes
       - name: merged.rows
         source: MergedRows
         type: counter
-        label: Merged Rows
+        label: Merged rows
       - name: cache.hits
         source: MarkCacheHits
         type: counter
-        label: Cache Hits
+        label: Cache hits
       - name: cache.misses
         source: MarkCacheMisses
         type: counter
-        label: Cache Misses
+        label: Cache misses
       - name: repl.part.fetches
         source: ReplicatedPartFetches
         type: counter
@@ -71,6 +74,7 @@ observation:
         source: ObsoleteReplicatedParts
         type: counter
         label: Obsolete replicated parts
+        description: Replicated parts that are replaced/rendered obsolete by fetching new parts
       - name: repl.part.merges
         source: ReplicatedPartMerges
         type: counter
@@ -91,14 +95,17 @@ observation:
         source: ReplicatedDataLoss
         type: counter
         label: Replicated parts lost
+        description: Replicated parts lost forever (possible if on all the replicas where the part was, is deteriorated), detected during part checks.
       - name: dist.connection.retries
         source: DistributedConnectionFailTry
         type: counter
         label: Distributed Connection Retries
+        description: Count of connection retries in common connection pool interserver connections
       - name: dist.connection.fails
         source: DistributedConnectionFailAtAll
         type: counter
         label: Distributed Connection Fails
+        description: ount of connection failures after all retries in common connection pool interserver connections
       - name: uncompressed.bytes.merged
         source: MergedUncompressedBytes
         type: counter
@@ -108,6 +115,7 @@ observation:
         type: counter
         label: Merge time
         unit: ms
+        description: Time taken for merge operation
       - name: context.locks
         source: ContextLock
         type: counter
@@ -125,29 +133,36 @@ observation:
         source: DelayedInserts
         type: counter
         label: Deplayed inserts
+        description: Part inserts that are delayed because the current `Max active part count` is more than `parts_to_delay_insert` setting
       - name: rejected.inserts
         source: RejectedInserts
         type: counter
         label: Rejected inserts
+        description: Part inserts that are rejected because the current `Max active part count` is more than `parts_to_throw_insert` setting
       - name: zk.wait.time
         source: ZooKeeperWaitMicroseconds
         type: counter
         label: Zookeeper wait time
         unit: microseconds
+        description: Time spent in waiting for Zookeeeper operations
       - name: zk.exceptions
         source: ZooKeeperExceptions
         type: counter
         label: Zookeeper exceptions
+        description: Count of exceptions during Zookeeper operations
       - name: zk.ephermeral.remove.fails
         source: CannotRemoveEphemeralNode
         type: counter
         label: Zookeeper ephermeral node removal failures
+        description: Count of Zookeeper ephermeral node removal failures
       - name: network.errors
         source: NetworkErrors
         type: counter
         label: Network errors
+        description: Count of network errors (timeouts and connection failures) during query execution, background pool tasks and DNS cache update
       - name: distributed.sync.insert.timeout
         source: DistributedSyncInsertionTimeoutExceeded
         type: counter
         label: Distributed Sync insertion timeouts
+        description: Count of synchronous distributed insert timeout exceeded errors in distributed storage engine
 

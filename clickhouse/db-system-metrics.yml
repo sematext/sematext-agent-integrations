@@ -31,10 +31,12 @@ observation:
         source: QueryThread
         type: long_gauge
         label: Query Threads
+        description: Current running query threads
       - name: preempted.query.count
         source: QueryPreempted
         type: long_gauge
         label: Preempted Queries
+        description: Current number of query executions preempted due to high priority queries
       - name: backgroundpool.tasks
         source: BackgroundPoolTask
         type: long_gauge
@@ -43,12 +45,12 @@ observation:
         source: Read
         type: long_gauge
         label: Reads
-        description: Number of currently running reads (syscalls read, pread and io_submit)
+        description: Current running reads
       - name: write.count
         source: Write
         type: long_gauge
         label: Writes
-        description: Number of currently running writes
+        description: Current running writes
       - name: memory.tracking
         source: MemoryTracking
         type: long_gauge
@@ -59,6 +61,7 @@ observation:
         source: Merge
         type: long_gauge
         label: Merge
+        description: Current running merges
       - name: open.files.read
         source: OpenFileForRead
         type: long_gauge
@@ -71,6 +74,7 @@ observation:
         source: DistributedSend
         type: long_gauge
         label: Distributed Sends
+        description: Currently running writes to remote servers in distributed storage engine
       - name: zk.leader.election
         source: LeaderElection
         type: long_gauge
@@ -83,11 +87,14 @@ observation:
         source: ZooKeeperSession
         type: long_gauge
         label: Zookeeper sessions
+        description: Current Zookeeper sessions
       - name: zk.watches
         source: ZooKeeperWatch
         type: long_gauge
         label: Zookeeper watches
+        description: Current active Zookeeper watches
       - name: zk.requests
         source: ZooKeeperRequest
         type: long_gauge
         label: Zookeeper requests
+        description: Current zookeeper requests in progress

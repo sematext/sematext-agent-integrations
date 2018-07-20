@@ -33,33 +33,40 @@ observation:
         source: is_readonly
         type: long_gauge
         label: Replica readonly
+        description: "True if the config doesn't have session with ZK, if an unknown error occurred when reinitializing sessions in ZK, and during session reinitialization in ZK."
       - name: replica.session.expired
         source: is_session_expired
         type: long_gauge
         label: Replica session expired
+        description: True if the ZK session expired
       - name: replica.future.parts
         source: future_parts
         type: long_gauge
         label: Replica future parts
+        description: The number of data parts that will appear as the result of INSERTs or merges that haven't been done yet
       - name: replica.parts.tocheck
         source: parts_to_check
         type: long_gauge
         label: Replica parts to check
+        description: The number of data parts in the queue for verification. A part is put in the verification queue if there is suspicion that it might be damaged.
       - name: replica.queue.size
         source: queue_size
         type: long_gauge
         label: Replica queue size
+        description: Size of the queue for operations waiting to be performed. Operations include inserting blocks of data, merges, and certain other actions.
       - name: replica.queue.inserts
         source: inserts_in_queue
         type: long_gauge
         label: Replica queue inserts
+        description: Number of inserts of blocks of data that need to be made. Insertions are usually replicated fairly quickly. If the number is high, something is wrong.
       - name: replica.queue.merges
         source: merges_in_queue
         type: long_gauge
         label: Replica queue merges
+        description: The number of merges waiting to be made. Sometimes merges are lengthy, so this value may be greater than zero for a long time
 
     tag:
-      - name: ch.database
+      - name: clickhouse.database
         value: eval:${database}
-      - name: ch.table
+      - name: clickhouse.table
         value: eval:${table}
