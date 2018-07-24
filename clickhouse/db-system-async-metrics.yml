@@ -32,3 +32,9 @@ observation:
         type: double_gauge
         label: Max active part count
         description: Maximum number of active parts on some parition
+      - name: mark.cache.size
+        source: MarkCacheBytes
+        type: double_gauge
+        label: Mark cache size
+        unit: bytes
+        description: Mark cache - Cache of 'marks' for StorageMergeTree. Marks is an index structure that addresses ranges in column file, corresponding to ranges of primary key

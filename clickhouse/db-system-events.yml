@@ -54,14 +54,16 @@ observation:
         source: MergedRows
         type: counter
         label: Merged rows
-      - name: cache.hits
+      - name: mark.cache.hits
         source: MarkCacheHits
         type: counter
-        label: Cache hits
-      - name: cache.misses
+        label: Mark cache hits
+        description: "Mark cache - Cache of 'marks' for merge tree storage engine. Marks is an index structure that addresses ranges in column file, corresponding to ranges of primary key"
+      - name: mark.cache.misses
         source: MarkCacheMisses
         type: counter
-        label: Cache misses
+        label: Mark cache misses
+        description: "Mark cache - Cache of 'marks' for merge tree storage engine. Marks is an index structure that addresses ranges in column file, corresponding to ranges of primary key"
       - name: repl.part.fetches
         source: ReplicatedPartFetches
         type: counter
@@ -100,12 +102,12 @@ observation:
         source: DistributedConnectionFailTry
         type: counter
         label: Distributed Connection Retries
-        description: Count of connection retries in common connection pool interserver connections
+        description: Count of connection retries in replicated DB connection pool
       - name: dist.connection.fails
         source: DistributedConnectionFailAtAll
         type: counter
         label: Distributed Connection Fails
-        description: ount of connection failures after all retries in common connection pool interserver connections
+        description: Count of connection failures after all retries in replicated DB connection pool
       - name: uncompressed.bytes.merged
         source: MergedUncompressedBytes
         type: counter
@@ -120,15 +122,28 @@ observation:
         source: ContextLock
         type: counter
         label: Context locks
-      - name: rw.acquired.read.locks
+      - name: rw.lock.acquired.reads
         source: RWLockAcquiredReadLocks
         type: counter
-        label: RW Lock Acquired Read Locks
-      - name: rw.reader.wait.time
+        label: RW Lock acquired read locks
+        description: Count of acquired read locks on table storage. RW locks are used to control concurrent access to table structure and data
+      - name: rw.lock.reader.wait.time
         source: RWLockReadersWaitMilliseconds
         type: counter
-        label: RW Lock Reader wait time
+        label: RW Lock reader wait time
         unit: ms
+        description: Total time watied to get read locks on table storage. RW locks are used to control concurrent access to table structure and data
+      - name: rw.lock.acquired.writes
+        source: RWLockAcquiredWriteLocks
+        type: counter
+        label: RW Lock acquired write locks
+        description: Count of acquired write locks on table. RW locks are used to control concurrent access to table structure and data
+      - name: rw.lock.writer.wait.time
+        source: RWLockWritersWaitMilliseconds
+        type: counter
+        label: RW Lock write wait time
+        unit: ms
+        description: Total time watied to get write locks on table storage. RW locks are used to control concurrent access to table structure and data
       - name: delayed.inserts
         source: DelayedInserts
         type: counter
@@ -164,5 +179,5 @@ observation:
         source: DistributedSyncInsertionTimeoutExceeded
         type: counter
         label: Distributed Sync insertion timeouts
-        description: Count of synchronous distributed insert timeout exceeded errors in distributed storage engine
+        description: Count of sync distributed insert wait timeout exceeded errors in distributed storage engine
 
