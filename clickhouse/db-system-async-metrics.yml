@@ -5,7 +5,6 @@ data:
   dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
   dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
   dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_CLICKHOUSE_DB_ADDITIONAL_PARAMS}
   #  dbVerticalModel="true" - because output of `SELECT * FROM asynchronous_metrics;` query gives each attribute in its own row
   # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true
@@ -38,3 +37,9 @@ observation:
         label: Mark cache size
         unit: bytes
         description: Mark cache - Cache of 'marks' for StorageMergeTree. Marks is an index structure that addresses ranges in column file, corresponding to ranges of primary key
+      - name: heap.size
+        source: generic.heap_size
+        type: double_gauge
+        label: Heap size
+        unit: bytes
+        description: Number of bytes in the heap (current_allocated_bytes + fragmentation + freed memory regions)
