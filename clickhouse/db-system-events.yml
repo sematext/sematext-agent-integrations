@@ -35,12 +35,12 @@ observation:
       - name: read.buffer.fd.failed
         source: ReadBufferFromFileDescriptorReadFailed
         type: counter
-        label: Read buffer failed reads
+        label: Read buffer failed file reads
         description: Failed reads from file in ReadBuffer
       - name: write.buffer.fd.failed
         source: WriteBufferFromFileDescriptorWriteFailed
         type: counter
-        label: Write buffer failed writes
+        label: Write buffer failed file writes
         description: Failed writes to file in WriteBuffer
       - name: inserted.rows
         source: InsertedRows
@@ -68,11 +68,11 @@ observation:
       - name: repl.part.fetches
         source: ReplicatedPartFetches
         type: counter
-        label: Replicate parts fetches
+        label: Replicated part fetches
       - name: repl.part.failed.fetches
         source: ReplicatedPartFailedFetches
         type: counter
-        label: Replicated parts failed fetches
+        label: Failed replicated part fetches
       - name: repl.obsolete.parts
         source: ObsoleteReplicatedParts
         type: counter
@@ -85,7 +85,7 @@ observation:
       - name: repl.part.fetches.merged
         source: ReplicatedPartFetchesOfMerged
         type: counter
-        label: Replicated part fetches of merged
+        label: Fetches of merged replicated parts
       - name: repl.part.checks
         source: ReplicatedPartChecks
         type: counter
@@ -93,11 +93,11 @@ observation:
       - name: repl.part.checks.failed
         source: ReplicatedPartChecksFailed
         type: counter
-        label: Replicated part failed checks
+        label: Failed replicated part checks
       - name: repl.data.loss
         source: ReplicatedDataLoss
         type: counter
-        label: Replicated parts lost
+        label: Lost replicated parts
         description: Replicated parts lost forever (possible if on all the replicas where the part was, is deteriorated), detected during part checks.
       - name: dist.connection.retries
         source: DistributedConnectionFailTry
