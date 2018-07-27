@@ -10,6 +10,7 @@ data:
   dbVerticalModel: true
 
 observation:
+  # periodically (asynchronously) updated metrics
   - name: async-metrics
     metricNamespace: clickhouse
 
@@ -30,7 +31,7 @@ observation:
         source: MaxPartCountForPartition
         type: double_gauge
         label: Max active part count
-        description: Maximum number of active parts on some parition
+        description: Maximum number of active parts in partitions
       - name: mark.cache.size
         source: MarkCacheBytes
         type: double_gauge

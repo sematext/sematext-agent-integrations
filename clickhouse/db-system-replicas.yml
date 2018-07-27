@@ -16,7 +16,7 @@ data:
   dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
   
 observation:
-  - name: metrics
+  - name: replicas
     metricNamespace: clickhouse
 
     metric:

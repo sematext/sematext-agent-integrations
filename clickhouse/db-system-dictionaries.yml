@@ -24,6 +24,7 @@ observation:
         source: hit_rate
         type: double_gauge
         label: Hit rate
+        unit: "%"
         description: For cache dictionaries, the percent of usage for which the value was in the cache.
       - name: dict.element.count
         source: element_count

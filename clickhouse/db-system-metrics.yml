@@ -10,6 +10,8 @@ data:
   dbVerticalModel: true
 
 observation:
+  # Current metrics - counts number of simultaneously happening events - for example, number of currently executing queries, right now,
+  # or just current value of some metric - for example, replica delay in seconds
   - name: metrics
     metricNamespace: clickhouse
 

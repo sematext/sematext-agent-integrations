@@ -10,6 +10,7 @@ data:
   dbVerticalModel: true
 
 observation:
+  # ProfileEvents counts number of happened events - for example, how many times queries was executed
   - name: events
     metricNamespace: clickhouse
 
@@ -49,6 +50,7 @@ observation:
         source: InsertedBytes
         type: counter
         label: Inserted bytes
+        unit: bytes
       - name: merged.rows
         source: MergedRows
         type: counter
@@ -117,10 +119,6 @@ observation:
         label: Merge time
         unit: ms
         description: Time taken for merge operation
-      - name: context.locks
-        source: ContextLock
-        type: counter
-        label: Context locks
       - name: rw.lock.acquired.reads
         source: RWLockAcquiredReadLocks
         type: counter
