@@ -163,7 +163,7 @@ observation:
         type: counter
         label: Zookeeper exceptions
         description: Count of exceptions during Zookeeper operations
-      - name: zk.ephemeral.remove.fails
+      - name: zk.nodes.ephemeral.remove.fails
         source: CannotRemoveEphemeralNode
         type: counter
         label: Zookeeper ephemeral node removal failures
