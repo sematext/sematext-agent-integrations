@@ -20,47 +20,47 @@ observation:
         type: counter
         label: Query count
         description: Total query count
-      - name: select.query.count
+      - name: query.select.count
         source: SelectQuery
         type: counter
         label: Select query count
-      - name: insert.query.count
+      - name: query.insert.count
         source: InsertQuery
         type: counter
         label: Insert query count
-      - name: file.opens.failed
+      - name: file.open.failed
         source: FileOpenFailed
         type: counter
         label: Failed file opens
-      - name: read.buffer.fd.failed
+      - name: buffer.read.fd.failed
         source: ReadBufferFromFileDescriptorReadFailed
         type: counter
         label: Read buffer failed file reads
         description: Failed reads from file in ReadBuffer
-      - name: write.buffer.fd.failed
+      - name: buffer.write.fd.failed
         source: WriteBufferFromFileDescriptorWriteFailed
         type: counter
         label: Write buffer failed file writes
         description: Failed writes to file in WriteBuffer
-      - name: inserted.rows
+      - name: insert.rows
         source: InsertedRows
         type: counter
         label: Inserted rows
-      - name: inserted.bytes
+      - name: insert.bytes
         source: InsertedBytes
         type: counter
         label: Inserted bytes
         unit: bytes
-      - name: merged.rows
+      - name: merge.rows
         source: MergedRows
         type: counter
         label: Merged rows
-      - name: mark.cache.hits
+      - name: cache.mark.hits
         source: MarkCacheHits
         type: counter
         label: Mark cache hits
         description: "Mark cache - Cache of 'marks' for merge tree storage engine. Marks is an index structure that addresses ranges in column file, corresponding to ranges of primary key"
-      - name: mark.cache.misses
+      - name: cache.mark.misses
         source: MarkCacheMisses
         type: counter
         label: Mark cache misses
@@ -69,16 +69,16 @@ observation:
         source: ReplicatedPartFetches
         type: counter
         label: Replicated part fetches
-      - name: repl.part.failed.fetches
+      - name: repl.part.fetches.failed
         source: ReplicatedPartFailedFetches
         type: counter
         label: Failed replicated part fetches
-      - name: repl.obsolete.parts
+      - name: repl.part.obsolete
         source: ObsoleteReplicatedParts
         type: counter
         label: Obsolete replicated parts
         description: Replicated parts that are replaced/rendered obsolete by fetching new parts
-      - name: repl.part.merges
+      - name: repl.part.merge.count
         source: ReplicatedPartMerges
         type: counter
         label: Replicated part merges
@@ -94,59 +94,60 @@ observation:
         source: ReplicatedPartChecksFailed
         type: counter
         label: Failed replicated part checks
-      - name: repl.data.loss
+      - name: repl.part.lost
         source: ReplicatedDataLoss
         type: counter
         label: Lost replicated parts
         description: Replicated parts lost forever (possible if on all the replicas where the part was, is deteriorated), detected during part checks.
-      - name: dist.connection.retries
+      - name: connection.dist.retries
         source: DistributedConnectionFailTry
         type: counter
         label: Distributed Connection Retries
         description: Count of connection retries in replicated DB connection pool
-      - name: dist.connection.fails
+      - name: connection.dist.fails
         source: DistributedConnectionFailAtAll
         type: counter
         label: Distributed Connection Fails
         description: Count of connection failures after all retries in replicated DB connection pool
-      - name: uncompressed.bytes.merged
+      - name: merge.bytes.uncompressed
         source: MergedUncompressedBytes
         type: counter
         label: Uncompressed bytes merged
+        unit: bytes
       - name: merge.time
         source: MergesTimeMilliseconds
         type: counter
         label: Merge time
         unit: ms
         description: Time taken for merge operation
-      - name: rw.lock.acquired.reads
+      - name: lock.rw.acquired.reads
         source: RWLockAcquiredReadLocks
         type: counter
         label: RW Lock acquired read locks
         description: Count of acquired read locks on table storage. RW locks are used to control concurrent access to table structure and data
-      - name: rw.lock.reader.wait.time
+      - name: lock.rw.reader.wait.time
         source: RWLockReadersWaitMilliseconds
         type: counter
         label: RW Lock reader wait time
         unit: ms
-        description: Total time watied to get read locks on table storage. RW locks are used to control concurrent access to table structure and data
-      - name: rw.lock.acquired.writes
+        description: Total time waited to get read locks on table storage. RW locks are used to control concurrent access to table structure and data
+      - name: lock.rw.acquired.writes
         source: RWLockAcquiredWriteLocks
         type: counter
         label: RW Lock acquired write locks
         description: Count of acquired write locks on table. RW locks are used to control concurrent access to table structure and data
-      - name: rw.lock.writer.wait.time
+      - name: lock.rw.writer.wait.time
         source: RWLockWritersWaitMilliseconds
         type: counter
         label: RW Lock write wait time
         unit: ms
-        description: Total time watied to get write locks on table storage. RW locks are used to control concurrent access to table structure and data
-      - name: delayed.inserts
+        description: Total time waited to get write locks on table storage. RW locks are used to control concurrent access to table structure and data
+      - name: insert.delayed
         source: DelayedInserts
         type: counter
-        label: Deplayed inserts
+        label: Delayed inserts
         description: Part inserts that are delayed because the current `Max active part count` is more than `parts_to_delay_insert` setting
-      - name: rejected.inserts
+      - name: insert.rejected
         source: RejectedInserts
         type: counter
         label: Rejected inserts
@@ -156,17 +157,17 @@ observation:
         type: counter
         label: Zookeeper wait time
         unit: microseconds
-        description: Time spent in waiting for Zookeeeper operations
+        description: Time spent in waiting for Zookeeper operations
       - name: zk.exceptions
         source: ZooKeeperExceptions
         type: counter
         label: Zookeeper exceptions
         description: Count of exceptions during Zookeeper operations
-      - name: zk.ephermeral.remove.fails
+      - name: zk.ephemeral.remove.fails
         source: CannotRemoveEphemeralNode
         type: counter
-        label: Zookeeper ephermeral node removal failures
-        description: Count of Zookeeper ephermeral node removal failures
+        label: Zookeeper ephemeral node removal failures
+        description: Count of Zookeeper ephemeral node removal failures
       - name: network.errors
         source: NetworkErrors
         type: counter
@@ -177,4 +178,17 @@ observation:
         type: counter
         label: Distributed Sync insertion timeouts
         description: Count of sync distributed insert wait timeout exceeded errors in distributed storage engine
+      - name: dict.cache.keys.expired
+        source: DictCacheKeysExpired
+        type: counter
+        label: Cache dictionary expired keys
+      - name: dict.cache.keys.notfound
+        source: DictCacheKeysNotFound
+        type: counter
+        label: Cache dictionary keys not found
+      - name: dict.cache.keys.hit
+        source: DictCacheKeysHit
+        type: counter
+        label: Cache dictionary keys hit
+
 

@@ -72,7 +72,7 @@ observation:
         source: fetch-throttle-time-avg
         type: double_gauge
         label: consumer throttle time
-        description: The avarage throttle time in ms
+        description: The average throttle time in ms
         unit: ms
 
       - name: consumer.throttle.time.max

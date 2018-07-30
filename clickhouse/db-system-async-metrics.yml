@@ -15,24 +15,24 @@ observation:
     metricNamespace: clickhouse
 
     metric:
-      - name: repl.queue.max.relative.delay
+      - name: repl.queue.delay.relative.max
         source: ReplicasMaxRelativeDelay
         type: double_gauge
         label: Max relative replica queue delay
         unit: ms
         description: Relative delay is the maximum difference of absolute delay from any other replica
-      - name: repl.queue.max.absolute.delay
+      - name: repl.queue.delay.absolute.max
         source: ReplicasMaxAbsoluteDelay
         type: double_gauge
         label: Max absolute replica queue delay
         unit: ms
         description: Maximum replica queue delay relative to current time
-      - name: max.part.count
+      - name: part.count.max
         source: MaxPartCountForPartition
         type: double_gauge
         label: Max active part count
         description: Maximum number of active parts in partitions
-      - name: mark.cache.size
+      - name: cache.mark.size
         source: MarkCacheBytes
         type: double_gauge
         label: Mark cache size

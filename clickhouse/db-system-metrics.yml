@@ -16,15 +16,15 @@ observation:
     metricNamespace: clickhouse
 
     metric:
-      - name: tcp.connection.count
+      - name: connection.tcp.count
         source: TCPConnection
         type: long_gauge
         label: TCP Connections
-      - name: http.connection.count
+      - name: connection.http.count
         source: HTTPConnection
         type: long_gauge
         label: HTTP Connections
-      - name: interserver.connection.count
+      - name: connection.interserver.count
         source: InterserverConnection
         type: long_gauge
         label: Interserver Connections
@@ -33,7 +33,7 @@ observation:
         type: long_gauge
         label: Query Threads
         description: Currently running query threads
-      - name: preempted.query.count
+      - name: query.preempted.count
         source: QueryPreempted
         type: long_gauge
         label: Preempted Queries
@@ -43,12 +43,12 @@ observation:
         type: long_gauge
         label: BackgroundPool Tasks
         description: Currently running background tasks (e.g merges) in background processing pool
-      - name: current.reads
+      - name: reads
         source: Read
         type: long_gauge
         label: Reads
         description: Currently running reads
-      - name: current.writes
+      - name: writes
         source: Write
         type: long_gauge
         label: Writes
@@ -64,15 +64,15 @@ observation:
         type: long_gauge
         label: Running merges
         description: Currently running merges
-      - name: open.files.read
+      - name: files.open.read
         source: OpenFileForRead
         type: long_gauge
         label: Open Files (Read)
-      - name: open.files.write
+      - name: files.open.write
         source: OpenFileForWrite
         type: long_gauge
         label: Open Files (Write)
-      - name: distributed.send
+      - name: send.distributed
         source: DistributedSend
         type: long_gauge
         label: Distributed Sends
@@ -82,7 +82,7 @@ observation:
         type: long_gauge
         label: Current leader elections
         description: Current leader elections this node is part of
-      - name: zk.ephemeral.nodes
+      - name: zk.nodes.ephemeral
         source: EphemeralNode
         type: long_gauge
         label: Ephemeral nodes
