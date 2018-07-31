@@ -44,3 +44,9 @@ observation:
         label: Heap size
         unit: bytes
         description: Number of bytes in the heap (current_allocated_bytes + fragmentation + freed memory regions)
+      - name: current.allocated.bytes
+        source: generic.current_allocated_bytes
+        type: double_gauge
+        label: Current allocated memory
+        unit: bytes
+        description: Number of bytes currently allocated by application

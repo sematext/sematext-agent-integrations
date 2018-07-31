@@ -1,0 +1,50 @@
+type: db
+data:
+  query: SELECT
+      database,
+      table,
+      sum(bytes) AS bytes,
+      count() AS parts,
+      sum(rows) AS rows
+    FROM system.parts
+    WHERE active = 1
+    GROUP BY
+      database,
+      table;
+  dbUrl: jdbc:clickhouse://${SPM_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
+  dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
+  dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
+  dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
+  
+observation:
+  - name: mergetree_table_stats
+    metricNamespace: clickhouse
+
+    metric:
+      - name: database
+        source: database
+        type: text
+        send: false
+      - name: table
+        source: table
+        type: text
+        send: false
+      - name: mergetree.table.size
+        source: bytes
+        type: long_gauge
+        label: Table size on disk
+        unit: bytes
+      - name: mergetree.table.parts
+        source: parts
+        type: long_gauge
+        label: Active part count
+      - name: mergetree.table.rows
+        source: rows
+        type: long_gauge
+        label: Row count
+
+    tag:
+      - name: clickhouse.database
+        value: eval:${database}
+      - name: clickhouse.table
+        value: eval:${table}

@@ -135,13 +135,13 @@ observation:
         source: RWLockAcquiredWriteLocks
         type: counter
         label: RW Lock acquired write locks
-        description: Count of acquired write locks on table. RW locks are used to control concurrent access to table structure and data
+        description: Count of acquired write locks on table. RW locks are used to control concurrent access to table structure
       - name: lock.rw.writer.wait.time
         source: RWLockWritersWaitMilliseconds
         type: counter
         label: RW Lock write wait time
         unit: ms
-        description: Total time waited to get write locks on table storage. RW locks are used to control concurrent access to table structure and data
+        description: Total time waited to get write locks on table storage. RW locks are used to control concurrent access to table structure
       - name: insert.delayed
         source: DelayedInserts
         type: counter
@@ -186,9 +186,9 @@ observation:
         source: DictCacheKeysNotFound
         type: counter
         label: Cache dictionary keys not found
-      - name: dict.cache.keys.hit
+      - name: dict.cache.keys.hits
         source: DictCacheKeysHit
         type: counter
-        label: Cache dictionary keys hit
+        label: Cache dictionary keys hits
 
 

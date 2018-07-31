@@ -72,7 +72,7 @@ observation:
         source: OpenFileForWrite
         type: long_gauge
         label: Open Files (Write)
-      - name: send.distributed
+      - name: distributed.send
         source: DistributedSend
         type: long_gauge
         label: Distributed Sends
