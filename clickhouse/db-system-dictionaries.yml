@@ -1,0 +1,37 @@
+type: db
+data:
+  query: SELECT * FROM dictionaries;
+  dbUrl: jdbc:clickhouse://${SPM_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
+  dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
+  dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
+  dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
+
+observation:
+  - name: dictionaries
+    metricNamespace: clickhouse
+
+    metric:
+      - name: dict.name
+        source: name
+        type: text
+        send: false
+      - name: dict.allocated.bytes
+        source: bytes_allocated
+        type: long_gauge
+        label: Allocated bytes
+        unit: bytes
+        description: The amount of RAM used by the dictionary.
+      - name: dict.element.count
+        source: element_count
+        type: long_gauge
+        label: Element count
+        description: The number of items stored in the dictionary.
+      - name: dict.load.factor
+        source: load_factor
+        type: double_gauge
+        label: Load factor
+        description: The filled percentage (0.0 - 1.0) of the dictionary (for a hashed dictionary, it is the filled percentage of the hash table).
+
+    tag:
+      - name: clickhouse.dict.name
+        value: eval:${dict.name}

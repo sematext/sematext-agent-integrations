@@ -1,0 +1,52 @@
+type: db
+data:
+  query: SELECT * FROM asynchronous_metrics;
+  dbUrl: jdbc:clickhouse://${SPM_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
+  dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
+  dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
+  dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
+  #  dbVerticalModel="true" - because output of `SELECT * FROM asynchronous_metrics;` query gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  # periodically (asynchronously) updated metrics
+  - name: async-metrics
+    metricNamespace: clickhouse
+
+    metric:
+      - name: repl.queue.delay.relative.max
+        source: ReplicasMaxRelativeDelay
+        type: double_gauge
+        label: Max relative replica queue delay
+        unit: ms
+        description: Relative delay is the maximum difference of absolute delay from any other replica
+      - name: repl.queue.delay.absolute.max
+        source: ReplicasMaxAbsoluteDelay
+        type: double_gauge
+        label: Max absolute replica queue delay
+        unit: ms
+        description: Maximum replica queue delay relative to current time
+      - name: part.count.max
+        source: MaxPartCountForPartition
+        type: double_gauge
+        label: Max active part count
+        description: Maximum number of active parts in partitions
+      - name: cache.mark.size
+        source: MarkCacheBytes
+        type: double_gauge
+        label: Mark cache size
+        unit: bytes
+        description: Mark cache - Cache of 'marks' for StorageMergeTree. Marks is an index structure that addresses ranges in column file, corresponding to ranges of primary key
+      - name: heap.size
+        source: generic.heap_size
+        type: double_gauge
+        label: Heap size
+        unit: bytes
+        description: Number of bytes in the heap (current_allocated_bytes + fragmentation + freed memory regions)
+      - name: current.allocated.bytes
+        source: generic.current_allocated_bytes
+        type: double_gauge
+        label: Current allocated memory
+        unit: bytes
+        description: Number of bytes currently allocated by application
