@@ -1,7 +1,7 @@
 type: jmx
 require:
   - className: com.sematext.spm.client.solr.SolrVersionCheck
-    values: 7-*
+    values: 7-7.3
 
 observation:
   - name: cache1_solr7_cloud

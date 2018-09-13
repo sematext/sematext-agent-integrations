@@ -1,0 +1,331 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 7.4-*
+
+observation:
+  - name: cache1_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=searcher,name=${cacheName}
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: cache.lookups
+        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_lookups)
+        type: counter
+        label: cache lookups
+        description: lookups count
+        # since as_counter is used, this attribute is implicitly stateful already, but we'll also set this
+        # property to true explicitly just to be clear
+        stateful: true
+
+      - name: cache.hits
+        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_hits)
+        type: counter
+        label: cache hits
+        description: hits count
+        stateful: true
+
+      - name: cache.size
+        source: func:ExtractLongFromMapString(Value,size)
+        type: long_gauge
+        label: cache size
+        description: cache size (count of elements)
+
+      - name: cache.evicted
+        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_evictions)
+        type: counter
+        label: cache evictions
+        description: count of evictions
+        stateful: true
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.cache
+        value: ${cacheName}
+
+
+  - name: cache2_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=searcher,name=${cacheName}
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: warmupTime
+        source: func:ExtractLongFromMapString(Value,warmupTime)
+        type: long_gauge
+        send: false
+
+      - name: searcherName
+        source: jmx:solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=SEARCHER,scope=searcher,name=searcherName Value
+        type: text
+        send: false
+
+      - name: warmup.time
+        source: func:com.sematext.spm.client.solr.CalculateWarmupTime(warmupTime,searcherName)
+        type: counter
+        stateful: true
+        label: warmup time
+        description: warmup time
+        unit: ms
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.cache
+        value: ${cacheName}
+
+      - name: solr.warmup.type
+        value: ${cacheName}
+
+
+  - name: cache3_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=core,name=fieldCache
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: cache.size
+        source: func:ExtractLongFromMapString(Value,entries_count)
+        type: long_gauge
+        label: cache size
+        description: cache size (count of elements)
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.cache
+        value: fieldCache
+
+
+  - name: cache4_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=core,name=fieldCache
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: total_size
+        source: func:ExtractStringFromMapString(Value,total_size)
+        type: text
+        send: false
+
+      - name: cache.size.bytes
+        source: func:com.sematext.spm.client.solr.CalculateSolrFieldCacheTotalSize
+        type: gauge
+        label: cache memory used
+        description: cache size in bytes
+        unit: bytes
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+      - name: solr.cache
+        value: fieldCache
+
+#  "classic" Solr setup uses different bean names
+  - name: cache1_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=searcher,name=${cacheName}
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: cache.lookups
+        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_lookups)
+        type: counter
+        label: cache lookups
+        description: lookups count
+        stateful: true
+
+      - name: cache.hits
+        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_hits)
+        type: counter
+        label: cache hits
+        description: hits count
+        stateful: true
+
+      - name: cache.size
+        source: func:ExtractLongFromMapString(Value,size)
+        type: long_gauge
+        label: cache size
+        description: cache size (count of elements)
+
+      - name: cache.evicted
+        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_evictions)
+        type: counter
+        label: cache evictions
+        description: count of evictions
+        stateful: true
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.cache
+        value: fieldCache
+
+
+  - name: cache2_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=searcher,name=${cacheName}
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: warmupTime
+        source: func:ExtractLongFromMapString(Value,warmupTime)
+        type: long_gauge
+        send: false
+
+      - name: searcherName
+        source: jmx:solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=SEARCHER,scope=searcher,name=searcherName Value
+        type: text
+        send: false
+
+      - name: warmup.time
+        source: func:com.sematext.spm.client.solr.CalculateWarmupTime(warmupTime,searcherName)
+        type: counter
+        stateful: true
+        label: warmup time
+        description: warmup time
+        unit: ms
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.cache
+        value: fieldCache
+
+      - name: solr.warmup.type
+        value: ${cacheName}
+
+
+  - name: cache3_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=core,name=fieldCache
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: cache.size
+        source: func:ExtractLongFromMapString(Value,entries_count)
+        type: long_gauge
+        label: cache size
+        description: cache size (count of elements)
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.cache
+        value: fieldCache
+
+
+  - name: cache4_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=core,name=fieldCache
+
+    metric:
+      - name: Value
+        source: Value
+        type: text
+        send: false
+        
+      - name: total_size
+        source: func:ExtractStringFromMapString(Value,total_size)
+        type: text
+        send: false
+
+      - name: cache.size.bytes
+        source: func:com.sematext.spm.client.solr.CalculateSolrFieldCacheTotalSize
+        type: gauge
+        label: cache memory used
+        description: cache size in bytes
+        unit: bytes
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.cache
+        value: fieldCache
+
