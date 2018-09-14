@@ -20,84 +20,90 @@ observation:
         source: TCPConnection
         type: long_gauge
         label: TCP Connections
+        description: Number of connections to TCP server (clients with native interface)
       - name: connection.http.count
         source: HTTPConnection
         type: long_gauge
         label: HTTP Connections
+        description: Number of connections to HTTP server
       - name: connection.interserver.count
         source: InterserverConnection
         type: long_gauge
         label: Interserver Connections
+        description: Number of connections from other replicas to fetch parts
       - name: query.thread.count
         source: QueryThread
         type: long_gauge
         label: Query Threads
-        description: Currently running query threads
+        description: Number of query processing threads
       - name: query.preempted.count
         source: QueryPreempted
         type: long_gauge
         label: Preempted Queries
-        description: Current number of query executions preempted due to high priority queries
+        description: Number of queries that are stopped and waiting due to 'priority' setting.
       - name: backgroundpool.tasks
         source: BackgroundPoolTask
         type: long_gauge
         label: BackgroundPool Tasks
-        description: Currently running background tasks (e.g merges) in background processing pool
+        description: Number of active tasks in BackgroundProcessingPool (merges, mutations, fetches or replication queue bookkeeping)
       - name: reads
         source: Read
         type: long_gauge
         label: Reads
-        description: Currently running reads
+        description: Number of read (read, pread, io_get events, etc.) syscalls in progress
       - name: writes
         source: Write
         type: long_gauge
         label: Writes
-        description: Currently running writes
+        description: Number of write (write, pwrite, io_get events, etc.) syscalls in progress
       - name: memory.tracking
         source: MemoryTracking
         type: long_gauge
         label: Memory
-        description: Number of bytes allocated for query processing
+        description: Total amount of memory (bytes) allocated in currently executing queries. Note that some memory allocations may not be accounted.
         unit: bytes
       - name: merge.count
         source: Merge
         type: long_gauge
         label: Running merges
-        description: Currently running merges (if merges take very less time, they may not be counted)
+        description: Number of executing background merges (if merged takes very short time, they may not be counted)
       - name: files.open.read
         source: OpenFileForRead
         type: long_gauge
         label: Open Files (Read)
+        description: Number of files open for reading
       - name: files.open.write
         source: OpenFileForWrite
         type: long_gauge
         label: Open Files (Write)
+        description: Number of files open for writing
       - name: distributed.send
         source: DistributedSend
         type: long_gauge
         label: Distributed Sends
-        description: Currently running writes to remote servers
+        description: Number of connections sending data, that was inserted to Distributed tables, to remote servers. Both synchronous and asynchronous mode.
       - name: zk.leader.election
         source: LeaderElection
         type: long_gauge
         label: Current leader elections
-        description: Current leader elections this node is part of
+        description: Number of replicas participating in leader election. Equals to total number of replicas in usual cases.
       - name: zk.nodes.ephemeral
         source: EphemeralNode
         type: long_gauge
         label: Ephemeral nodes
+        description: Number of ephemeral nodes held in ZooKeeper.
       - name: zk.sessions
         source: ZooKeeperSession
         type: long_gauge
         label: Zookeeper sessions
-        description: Currently active Zookeeper sessions
+        description: Number of sessions (connections) to ZooKeeper. Should be no more than one.
       - name: zk.watches
         source: ZooKeeperWatch
         type: long_gauge
         label: Zookeeper watches
-        description: Currently active Zookeeper watches
+        description: Number of watches (event subscriptions) in ZooKeeper.
       - name: zk.requests
         source: ZooKeeperRequest
         type: long_gauge
         label: Zookeeper requests
-        description: Current zookeeper requests in progress
+        description: Number of requests to ZooKeeper in progress.

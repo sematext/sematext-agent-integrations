@@ -19,15 +19,17 @@ observation:
         source: Query
         type: counter
         label: Total query count
-        description: Total query count
+        description: Total number of queries started to be interpreted and may be executed.
       - name: query.select.count
         source: SelectQuery
         type: counter
         label: Select query count
+        description: Number of SELECT queries started to be interpreted and may be executed.
       - name: query.insert.count
         source: InsertQuery
         type: counter
         label: Insert query count
+        description: Number of INSERT queries started to be interpreted and may be executed.
       - name: file.open.failed
         source: FileOpenFailed
         type: counter
@@ -36,25 +38,28 @@ observation:
         source: ReadBufferFromFileDescriptorReadFailed
         type: counter
         label: Read buffer failed file reads
-        description: Failed reads from file in ReadBuffer
+        description: Number of times the read (read/pread) from a file descriptor has failed.
       - name: buffer.write.fd.failed
         source: WriteBufferFromFileDescriptorWriteFailed
         type: counter
         label: Write buffer failed file writes
-        description: Failed writes to file in WriteBuffer
+        description: Number of times the write (write/pwrite) to a file descriptor has failed.
       - name: insert.rows
         source: InsertedRows
         type: counter
         label: Inserted rows
+        description: Number of rows inserted to all tables.
       - name: insert.bytes
         source: InsertedBytes
         type: counter
         label: Inserted bytes
         unit: bytes
+        description: Number of uncompressed bytes inserted to all tables.
       - name: merge.rows
         source: MergedRows
         type: counter
         label: Merged rows
+        description: Rows read for background merges. This is the number of rows before merge.
       - name: cache.mark.hits
         source: MarkCacheHits
         type: counter
@@ -69,6 +74,7 @@ observation:
         source: ReplicatedPartFetches
         type: counter
         label: Replicated part fetches
+        description: Number of times a data part was downloaded from the replica of a ReplicatedMergeTree table.
       - name: repl.part.fetches.failed
         source: ReplicatedPartFailedFetches
         type: counter
@@ -77,7 +83,7 @@ observation:
         source: ObsoleteReplicatedParts
         type: counter
         label: Obsolete replicated parts
-        description: Replicated parts that are replaced/rendered obsolete by fetching new parts
+        description: Replicated parts that are replaced/rendered obsolete by fetching new parts.
       - name: repl.part.merge.count
         source: ReplicatedPartMerges
         type: counter
@@ -86,6 +92,7 @@ observation:
         source: ReplicatedPartFetchesOfMerged
         type: counter
         label: Fetches of merged replicated parts
+        description: Number of times the system prefers to download already merged part from the replica of ReplicatedMergeTree table.
       - name: repl.part.checks
         source: ReplicatedPartChecks
         type: counter
@@ -114,12 +121,13 @@ observation:
         type: counter
         label: Uncompressed bytes merged
         unit: bytes
+        description: Uncompressed bytes that was read for background merges. This is the number before merge.
       - name: merge.time
         source: MergesTimeMilliseconds
         type: counter
         label: Merge time
         unit: ms
-        description: Time taken for merge operation
+        description: Total time spent for background merges.
       - name: lock.rw.acquired.reads
         source: RWLockAcquiredReadLocks
         type: counter
