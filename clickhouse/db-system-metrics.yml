@@ -63,7 +63,7 @@ observation:
         source: Merge
         type: long_gauge
         label: Running merges
-        description: Currently running merges
+        description: Currently running merges (if merges take very less time, they may not be counted)
       - name: files.open.read
         source: OpenFileForRead
         type: long_gauge

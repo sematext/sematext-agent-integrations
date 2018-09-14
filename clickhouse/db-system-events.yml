@@ -18,7 +18,7 @@ observation:
       - name: query.count
         source: Query
         type: counter
-        label: Query count
+        label: Total query count
         description: Total query count
       - name: query.select.count
         source: SelectQuery
