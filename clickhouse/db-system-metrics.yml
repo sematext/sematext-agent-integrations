@@ -95,15 +95,15 @@ observation:
       - name: zk.sessions
         source: ZooKeeperSession
         type: long_gauge
-        label: Zookeeper sessions
+        label: ZooKeeper sessions
         description: Number of sessions (connections) to ZooKeeper. Should be no more than one.
       - name: zk.watches
         source: ZooKeeperWatch
         type: long_gauge
-        label: Zookeeper watches
+        label: ZooKeeper watches
         description: Number of watches (event subscriptions) in ZooKeeper.
       - name: zk.requests
         source: ZooKeeperRequest
         type: long_gauge
-        label: Zookeeper requests
+        label: ZooKeeper requests
         description: Number of requests to ZooKeeper in progress.

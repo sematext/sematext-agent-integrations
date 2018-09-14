@@ -163,19 +163,19 @@ observation:
       - name: zk.wait.time
         source: ZooKeeperWaitMicroseconds
         type: counter
-        label: Zookeeper wait time
+        label: ZooKeeper wait time
         unit: microseconds
-        description: Time spent in waiting for Zookeeper operations
+        description: Time spent in waiting for ZooKeeper operations
       - name: zk.exceptions
         source: ZooKeeperExceptions
         type: counter
-        label: Zookeeper exceptions
-        description: Count of exceptions during Zookeeper operations
+        label: ZooKeeper exceptions
+        description: Count of exceptions during ZooKeeper operations
       - name: zk.nodes.ephemeral.remove.fails
         source: CannotRemoveEphemeralNode
         type: counter
-        label: Zookeeper ephemeral node removal failures
-        description: Count of Zookeeper ephemeral node removal failures
+        label: ZooKeeper ephemeral node removal failures
+        description: Count of ZooKeeper ephemeral node removal failures
       - name: network.errors
         source: NetworkErrors
         type: counter
