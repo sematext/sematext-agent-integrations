@@ -1,7 +1,8 @@
 type: jmx
 require:
   - className: com.sematext.spm.client.solr.SolrVersionCheck
-    values: 7.4-*
+    values: 7-7.3 || 7.4.1-*
+    countNeededMatches: 1
 
 observation:
   - name: cache1_solr7_cloud
@@ -9,39 +10,29 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=searcher,name=${cacheName}
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
       - name: cache.lookups
-        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_lookups)
+        source: cumulative_lookups
         type: counter
         label: cache lookups
         description: lookups count
-        # since as_counter is used, this attribute is implicitly stateful already, but we'll also set this
-        # property to true explicitly just to be clear
-        stateful: true
 
       - name: cache.hits
-        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_hits)
+        source: cumulative_hits
         type: counter
         label: cache hits
         description: hits count
-        stateful: true
 
       - name: cache.size
-        source: func:ExtractLongFromMapString(Value,size)
+        source: size
         type: long_gauge
         label: cache size
         description: cache size (count of elements)
 
       - name: cache.evicted
-        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_evictions)
+        source: cumulative_evictions
         type: counter
         label: cache evictions
         description: count of evictions
-        stateful: true
 
     tag:
       - name: solr.collection
@@ -65,13 +56,8 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=searcher,name=${cacheName}
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
       - name: warmupTime
-        source: func:ExtractLongFromMapString(Value,warmupTime)
+        source: warmupTime
         type: long_gauge
         send: false
 
@@ -113,13 +99,8 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=core,name=fieldCache
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
       - name: cache.size
-        source: func:ExtractLongFromMapString(Value,entries_count)
+        source: entries_count
         type: long_gauge
         label: cache size
         description: cache size (count of elements)
@@ -146,13 +127,7 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=CACHE,scope=core,name=fieldCache
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
-      - name: total_size
-        source: func:ExtractStringFromMapString(Value,total_size)
+      - source: total_size
         type: text
         send: false
 
@@ -185,37 +160,29 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=searcher,name=${cacheName}
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
       - name: cache.lookups
-        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_lookups)
+        source: cumulative_lookups
         type: counter
         label: cache lookups
         description: lookups count
-        stateful: true
 
       - name: cache.hits
-        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_hits)
+        source: cumulative_hits
         type: counter
         label: cache hits
         description: hits count
-        stateful: true
 
       - name: cache.size
-        source: func:ExtractLongFromMapString(Value,size)
+        source: size
         type: long_gauge
         label: cache size
         description: cache size (count of elements)
 
       - name: cache.evicted
-        source: as_counter:func:ExtractLongFromMapString(Value,cumulative_evictions)
+        source: cumulative_evictions
         type: counter
         label: cache evictions
         description: count of evictions
-        stateful: true
 
     tag:
       - name: solr.core
@@ -233,13 +200,8 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=searcher,name=${cacheName}
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
       - name: warmupTime
-        source: func:ExtractLongFromMapString(Value,warmupTime)
+        source: warmupTime
         type: long_gauge
         send: false
 
@@ -275,13 +237,8 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=core,name=fieldCache
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
       - name: cache.size
-        source: func:ExtractLongFromMapString(Value,entries_count)
+        source: entries_count
         type: long_gauge
         label: cache size
         description: cache size (count of elements)
@@ -302,13 +259,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=CACHE,scope=core,name=fieldCache
 
     metric:
-      - name: Value
-        source: Value
-        type: text
-        send: false
-        
-      - name: total_size
-        source: func:ExtractStringFromMapString(Value,total_size)
+      - source: total_size
         type: text
         send: false
 
