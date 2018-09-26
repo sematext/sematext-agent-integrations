@@ -8,7 +8,11 @@ data:
       parts_to_check,
       queue_size,
       inserts_in_queue,
-      merges_in_queue
+      merges_in_queue,
+      log_max_index,
+      log_pointer,
+      total_replicas,
+      active_replicas
     FROM system.replicas;
   dbUrl: jdbc:clickhouse://${SPM_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
   dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
@@ -63,6 +67,26 @@ observation:
         type: long_gauge
         label: Replica queue merges
         description: The number of merges waiting to be made. Sometimes merges are lengthy, so this value may be greater than zero for a long time
+      - name: replica.log.max.index
+        source: log_max_index
+        type: long_gauge
+        label: Replica log max index
+        description: Maximum entry number in the log of general activity.
+      - name: replica.log.pointer
+        source: log_pointer
+        type: long_gauge
+        label: Replica log pointer
+        description: Maximum entry number in the log of general activity that the replica copied to its execution queue, plus one. If log pointer is much smaller than log max index, something is wrong.
+      - name: replica.total.replicas
+        source: total_replicas
+        type: long_gauge
+        label: Total replicas
+        description: The total number of known replicas of this table.
+      - name: replica.active.replicas
+        source: active_replicas
+        type: long_gauge
+        label: Active replicas
+        description: The number of replicas of this table that have a session in ZooKeeper (i.e., the number of functioning replicas).
 
     tag:
       - name: clickhouse.database
