@@ -30,10 +30,6 @@ observation:
         type: counter
         label: Insert query count
         description: Number of INSERT queries started to be interpreted and may be executed.
-      - name: file.open.failed
-        source: FileOpenFailed
-        type: counter
-        label: Failed file opens
       - name: buffer.read.fd.failed
         source: ReadBufferFromFileDescriptorReadFailed
         type: counter
