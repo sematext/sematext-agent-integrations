@@ -265,8 +265,8 @@ observation:
       - name: indexing.commits.soft
         source: Value
         type: counter
-        label: soft autocommits
-        description: count of soft auto commits
+        label: soft commits
+        description: count of soft commits
 
     tag:
       - name: solr.collection

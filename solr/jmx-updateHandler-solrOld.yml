@@ -33,10 +33,10 @@ observation:
         description: count of auto commits
 
       - name: indexing.commits.soft
-        source: soft autocommits
+        source: soft commits
         type: counter
-        label: soft autocommits
-        description: count of soft auto commits
+        label: soft commits
+        description: count of soft commits
 
       - name: indexing.optimizes
         source: optimizes
