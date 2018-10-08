@@ -13,7 +13,7 @@ observation:
         source: commits
         type: counter
         label: commits
-        description: total count of commits
+        description: total count of commits (soft + hard, automatic + by request)
 
       - source: autocommit maxTime
         type: text
@@ -30,13 +30,13 @@ observation:
         source: autocommits
         type: counter
         label: autocommits
-        description: count of auto commits
+        description: count of auto commits (soft + hard)
 
       - name: indexing.commits.soft
-        source: soft commits
+        source: soft autocommits
         type: counter
-        label: soft commits
-        description: count of soft commits
+        label: soft autocommits
+        description: count of soft auto commits
 
       - name: indexing.optimizes
         source: optimizes

@@ -13,7 +13,7 @@ observation:
         source: Count
         type: counter
         label: commits
-        description: total count of commits
+        description: total count of commits (soft + hard, automatic + by request)
 
     tag:
       - name: solr.collection
@@ -238,7 +238,7 @@ observation:
         source: Value
         type: counter
         label: autocommits
-        description: count of auto commits
+        description: count of auto commits (soft + hard)
 
     tag:
       - name: solr.collection
@@ -265,8 +265,8 @@ observation:
       - name: indexing.commits.soft
         source: Value
         type: counter
-        label: soft commits
-        description: count of soft commits
+        label: soft autocommits
+        description: count of soft auto commits
 
     tag:
       - name: solr.collection
@@ -356,7 +356,7 @@ observation:
         source: Count
         type: counter
         label: commits
-        description: total count of commits
+        description: total count of commits (soft + hard, automatic + by request)
 
     tag:
       - name: solr.core
@@ -533,7 +533,7 @@ observation:
         source: Value
         type: counter
         label: autocommits
-        description: count of auto commits
+        description: count of auto commits (soft + hard)
 
     tag:
       - name: solr.core
