@@ -245,7 +245,7 @@ observation:
         send: false
 
       - name: searcherName
-        source: jmx:solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=SEARCHER,scope=searcher,name=searcherName Value
+        source: jmx:solr:dom1=core,dom2=${collection},category=SEARCHER,scope=searcher,name=searcherName Value
         type: text
         send: false
 
