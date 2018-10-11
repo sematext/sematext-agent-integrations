@@ -192,7 +192,7 @@ observation:
         value: ${core}
 
       - name: solr.cache
-        value: fieldCache
+        value: ${cacheName}
 
 
   - name: cache2_solr7_classic
@@ -206,7 +206,7 @@ observation:
         send: false
 
       - name: searcherName
-        source: jmx:solr:dom1=core,dom2=${collection},category=SEARCHER,scope=searcher,name=searcherName Value
+        source: jmx:solr:dom1=core,dom2=${core},category=SEARCHER,scope=searcher,name=searcherName Value
         type: text
         send: false
 
@@ -226,7 +226,7 @@ observation:
         value: ${core}
 
       - name: solr.cache
-        value: fieldCache
+        value: ${cacheName}
 
       - name: solr.warmup.type
         value: ${cacheName}

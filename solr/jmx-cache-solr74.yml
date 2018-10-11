@@ -226,7 +226,7 @@ observation:
         value: ${core}
 
       - name: solr.cache
-        value: fieldCache
+        value: ${cacheName}
 
 
   - name: cache2_solr7_classic
@@ -265,7 +265,7 @@ observation:
         value: ${core}
 
       - name: solr.cache
-        value: fieldCache
+        value: ${cacheName}
 
       - name: solr.warmup.type
         value: ${cacheName}
