@@ -1,0 +1,2 @@
+This directory contains the Sematext metrics definition YAMLs for Apache Tomcat.  Refer to [Monitoring Apache Tomcat](https://sematext.com/docs/integration/zookeeper/) for an overview of 
+Apache Tomcat monitoring integration. Goto [https://apps.sematext.com/ui/howto/Tomcat/overview](https://apps.sematext.com/ui/howto/Tomcat/overview) for instructions to install & set up Sematext Agent to monitor Apache Tomcat.
