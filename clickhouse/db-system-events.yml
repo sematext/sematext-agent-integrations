@@ -171,6 +171,22 @@ observation:
         type: counter
         label: ZooKeeper exceptions
         description: Count of exceptions during ZooKeeper operations
+      # The ZooKeeperExceptions counter has been split into three counters: ZooKeeperUserExceptions, ZooKeeperHardwareExceptions, and ZooKeeperOtherExceptions.
+      - name: zk.exceptions.user
+        source: ZooKeeperUserExceptions
+        type: counter
+        label: ZooKeeper user exceptions
+        description: Count of ZooKeeper exceptions caused by no znodes, bad version, node exists, node empty and no children for ephemeral
+      - name: zk.exceptions.hardware
+        source: ZooKeeperHardwareExceptions
+        type: counter
+        label: ZooKeeper hardware exceptions
+        description: Count of ZooKeeper exceptions caused by session moved/expired, connection loss, marshalling error, operation timed out and invalid zhandle state
+      - name: zk.exceptions.other
+        source: ZooKeeperOtherExceptions
+        type: counter
+        label: ZooKeeper other exceptions
+        description: Count of ZooKeeper exceptions that does not belong to user/hardware exceptions.
       - name: zk.nodes.ephemeral.remove.fails
         source: CannotRemoveEphemeralNode
         type: counter
