@@ -1,0 +1,40 @@
+type: db
+data:
+  query: SELECT
+      schemaname,
+      count(*) as table_count
+    FROM
+      (
+        SELECT schemaname
+        FROM pg_stat_user_tables
+        ORDER BY schemaname, relname
+      ) AS subquery
+    GROUP BY schemaname
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statCount
+    metricNamespace: postgresql
+
+    metric:
+      - name: count.schemaname
+        source: schemaname
+        type: text
+        send: false
+        label: Schema name
+
+      - name: count.table_count
+        source: table_count
+        type: gauge
+        label: Table count
+
+    tag:
+      - name: count.schemaname
+        value: eval:${schemaname}

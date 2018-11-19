@@ -1,0 +1,88 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_user_tables;
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statUserTables
+    metricNamespace: postgresql
+
+    metric:
+      - name: stat.user.tables.relname
+        source: relname
+        type: text
+        send: false
+        label: Table name
+
+      - name: stat.user.tables.schemaname
+        source: schemaname
+        type: text
+        send: false
+        label: Schema name
+
+      - name: stat.user.tables.seq_scan
+        source: seq_scan
+        type: long_counter
+        label: Sequential scans
+        description: "Number of sequential scans initiated on this table"
+
+      - name: stat.user.tables.seq_tup_read
+        source: seq_tup_read
+        type: long_counter
+        label: Sequential rows fetched
+        description: "Number of live rows fetched by sequential scans"
+
+      - name: stat.user.tables.idx_tup_fetch
+        source: idx_tup_fetch
+        type: long_counter
+        label: Index rows fetched
+        description: "Number of live rows fetched by index scans"
+
+      - name: stat.user.tables.n_tup_ins
+        source: n_tup_ins
+        type: long_counter
+        label: Inserted rows
+        description: "Number of rows inserted"
+
+      - name: stat.user.tables.n_tup_upd
+        source: n_tup_upd
+        type: long_counter
+        label: Updated rows
+        description: "Number of rows updated"
+
+      - name: stat.user.tables.n_tup_del
+        source: n_tup_del
+        type: long_counter
+        label: Deleted rows
+        description: "Number of rows deleted"
+
+      - name: stat.user.tables.n_tup_hot_upd
+        source: n_tup_hot_upd
+        type: long_counter
+        label: Hot updated rows
+        description: "Number of rows HOT updated (i.e., with no separate index update required)"
+
+      - name: stat.user.tables.n_live_tup
+        source: n_live_tup
+        type: gauge
+        label: Live rows
+        description: "Estimated number of live rows"
+
+      - name: stat.user.tables.n_dead_tup
+        source: n_dead_tup
+        type: gauge
+        label: Dead rows
+        description: "Estimated number of dead rows"
+
+    tag:
+      - name: stat.user.tables.relname
+        value: eval:${relname}
+      - name: stat.user.tables.schemaname
+        value: eval:${schemaname}

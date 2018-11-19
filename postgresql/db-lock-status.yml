@@ -1,0 +1,53 @@
+type: db
+data:
+  query: SELECT
+      mode,
+      pc.relname, count(*) AS lock_count
+    FROM pg_locks l
+    JOIN pg_class pc
+      ON (l.relation = pc.oid)
+    WHERE
+      l.mode IS NOT NULL AND
+      pc.relname NOT LIKE 'pg_%'
+    GROUP BY
+      pc.relname,
+      mode
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: lock
+    metricNamespace: postgresql
+
+    metric:
+      - name: lock.mode
+        source: mode
+        type: text
+        send: false
+        label: lock mode
+        description: "Name of the lock mode held or desired by this process"
+
+      - name: lock.relname
+        source: relname
+        type: text
+        send: false
+        label: lock name
+        description: "Name of the table, index, view, etc."
+
+      - name: lock.lock_count
+        source: lock_count
+        type: long_counter
+        label: lock count
+        description: "Number of active lockable object"
+
+    tag:
+      - name: lock.mode
+        value: eval:${mode}
+      - name: lock.relname
+        value: eval:${relname}

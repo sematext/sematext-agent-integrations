@@ -1,0 +1,31 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_bgwriter;
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statBGWriter92
+    metricNamespace: postgresql
+
+    metric:
+      - name: stat.bgwriter.checkpoint_write_time
+        source: checkpoint_write_time
+        type: counter
+        unit: ms
+        label: Checkpoint write time
+        description: "Total amount of time that has been spent in the portion of checkpoint processing where files are written to disk, in milliseconds"
+
+      - name: stat.bgwriter.checkpoint_sync_time
+        source: checkpoint_sync_time
+        type: counter
+        unit: ms
+        label: Checkpoint sync time
+        description: "Total amount of time that has been spent in the portion of checkpoint processing where files are synchronized to disk, in millisecond"
+

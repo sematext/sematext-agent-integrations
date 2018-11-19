@@ -1,0 +1,82 @@
+type: db
+data:
+  query: SELECT * FROM pg_statio_user_tables
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statio
+    metricNamespace: postgresql
+
+    metric:
+      - name: statio.relname
+        source: relname
+        type: text
+        send: false
+        label: Table name
+
+      - name: statio.schemaname
+        source: schemaname
+        type: text
+        send: false
+        label: Schema name
+
+      - name: statio.heap_blks_read
+        source: heap_blks_read
+        type: long_counter
+        label: Read disk blocks
+        description: "Number of disk blocks read from this table"
+
+      - name: statio.heap_blks_hit
+        source: heap_blks_hit
+        type: long_counter
+        label: Hit disk blocks
+        description: "Number of buffer hits in this table"
+
+      - name: statio.idx_blks_read
+        source: idx_blks_read
+        type: long_counter
+        label: Read index blocks
+        description: "Number of disk blocks read from all indexes on this table"
+
+      - name: statio.idx_blks_hit
+        source: idx_blks_hit
+        type: long_counter
+        label: Hit index blocks
+        description: "Number of buffer hits in all indexes on this table"
+
+      - name: statio.toast_blks_read
+        source: toast_blks_read
+        type: long_counter
+        label: Read TOAST blocks
+        description: "Number of disk blocks read from this table's TOAST table (if any)"
+
+      - name: statio.toast_blks_hit
+        source: toast_blks_hit
+        type: long_counter
+        label: Hit ROAST buffers
+        description: "Number of buffer hits in this table's TOAST table (if any)"
+
+      - name: statio.tidx_blks_read
+        source: tidx_blks_read
+        type: long_counter
+        label: Read TOAST index
+        description: "Number of disk blocks read from this table's TOAST table index (if any)"
+
+      - name: statio.tidx_blks_hit
+        source: tidx_blks_hit
+        type: long_counter
+        label: Hit TOAST buffer
+        description: "Number of buffer hits in this table's TOAST table index (if any)"
+
+    tag:
+      - name: statio.relname
+        value: eval:${relname}
+      - name: statio.schemaname
+        value: eval:${schemaname}

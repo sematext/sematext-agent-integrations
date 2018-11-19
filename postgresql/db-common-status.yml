@@ -1,0 +1,77 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_database;
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statDatabase
+    metricNamespace: postgresql
+
+    metric:
+      - name: stat.database.numbackends
+        source: numbackends
+        type: gauge
+        label: Actie connections
+        description: "Number of backends currently connected to this database. This is the only column in this view that returns a value reflecting current state; all other columns return the accumulated values since the last reset"
+
+      - name: stat.database.xact_commit
+        source: xact_commit
+        type: long_counter
+        label: Committed transactions
+        description: "Number of transactions in this database that have been committed"
+
+      - name: stat.database.xact_rollback
+        source: xact_rollback
+        type: long_counter
+        label: Rolled back transactions
+        description: "Number of transactions in this database that have been rolled back"
+
+      - name: stat.database.blks_read
+        source: blks_read
+        type: long_counter
+        label: Disk blocks read
+        description: "Number of disk blocks read in this database"
+
+      - name: stat.database.blks_hit
+        source: blks_hit
+        type: long_counter
+        label: Disk block cache hit
+        description: "Number of times disk blocks were found already in the buffer cache, so that a read was not necessary (this only includes hits in the PostgreSQL buffer cache, not the operating system's file system cache)"
+
+      - name: stat.database.tup_returned
+        source: tup_returned
+        type: long_counter
+        label: Rows returned
+        description: "Number of rows returned by queries in this database"
+
+      - name: stat.database.tup_fetched
+        source: tup_fetched
+        type: long_counter
+        label: Rows fetched
+        description: "Number of rows fetched by queries in this database"
+
+      - name: stat.database.tup_inserted
+        source: tup_inserted
+        type: long_counter
+        label: Rows inserted
+        description: "Number of rows inserted by queries in this database"
+
+      - name: stat.database.tup_updated
+        source: tup_updated
+        type: long_counter
+        label: Rows updated
+        description: "Number of rows updated by queries in this database"
+
+      - name: stat.database.tup_deleted
+        source: tup_deleted
+        type: long_counter
+        label: Rows deleted
+        description: "Number of rows deleted by queries in this"
+

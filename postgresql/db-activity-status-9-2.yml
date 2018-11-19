@@ -1,0 +1,56 @@
+type: db
+data:
+  query: SELECT
+      datname,
+      SUM(
+        CASE
+          WHEN xact_start IS NOT NULL
+          THEN 1
+          ELSE 0
+        END
+      ) as open,
+      SUM(
+        CASE
+          WHEN state = 'idle in transaction'
+          THEN 1
+          ELSE 0
+        END
+      ) as idle_in_transaction
+    FROM pg_stat_activity
+    GROUP BY
+      datid,
+      datname
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: activity92
+    metricNamespace: postgresql
+
+    metric:
+      - name: activity92.datname
+        source: datname
+        type: text
+        send: false
+        label: Database
+        description: "Name of the database this backend is connected to"
+
+      - name: activity92.open
+        source: open
+        type: gauge
+        label: Open
+
+      - name: activity92.idle_in_transaction
+        source: idle_in_transaction
+        type: gauge
+        label: Idle in transaction
+
+    tag:
+      - name: activity92.datname
+        value: eval:${datname}

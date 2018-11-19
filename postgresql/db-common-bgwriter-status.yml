@@ -1,0 +1,58 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_bgwriter;
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statBGWriter
+    metricNamespace: postgresql
+
+    metric:
+      - name: stat.bgwriter.checkpoints_timed
+        source: checkpoints_timed
+        type: long_counter
+        label: scheduled checkpoints
+        description: "Number of scheduled checkpoints that have been performed"
+
+      - name: stat.bgwriter.checkpoints_req
+        source: checkpoints_req
+        type: long_counter
+        label: requested checkpoints
+        description: "Number of requested checkpoints that have been performed"
+
+      - name: stat.bgwriter.buffers_checkpoint
+        source: buffers_checkpoint
+        type: long_counter
+        label: Checkpoint buffers
+        description: "Number of buffers written during checkpoints"
+
+      - name: stat.bgwriter.buffers_clean
+        source: buffers_clean
+        type: long_counter
+        label: Clean buffers
+        description: "Number of buffers written by the background writer"
+
+      - name: stat.bgwriter.maxwritten_clean
+        source: maxwritten_clean
+        type: long_counter
+        label: Max written clean
+        description: "Number of times the background writer stopped a cleaning scan because it had written too many buffers"
+
+      - name: stat.bgwriter.buffers_backend
+        source: buffers_backend
+        type: long_counter
+        label: Backend buffers
+        description: "Number of buffers written directly by a backend"
+
+      - name: stat.bgwriter.buffers_alloc
+        source: buffers_alloc
+        type: long_counter
+        label: Allocated buffers
+        description: "Number of buffers allocated"

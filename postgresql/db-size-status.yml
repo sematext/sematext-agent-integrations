@@ -1,0 +1,58 @@
+type: db
+data:
+  query: SELECT
+      relname,
+      pg_table_size(C.oid) as table_size,
+      pg_indexes_size(C.oid) as index_size,
+      pg_total_relation_size(C.oid) as total_size
+    FROM pg_class C
+    LEFT JOIN pg_namespace N
+      ON (N.oid = C.relnamespace)
+    WHERE
+      nspname NOT IN ('pg_catalog', 'information_schema') AND
+      nspname !~ '^pg_toast' AND
+      relkind IN ('r')
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statSize
+    metricNamespace: postgresql
+
+    metric:
+      - name: size.relname
+        source: relname
+        type: text
+        send: false
+        label: Table name
+
+      - name: size.table_size
+        source: table_size
+        type: gauge
+        unit: bytes
+        label: Table size
+        description: "Disk space used by the specified table, excluding indexes (but including TOAST, free space map, and visibility map)"
+
+      - name: size.index_size
+        source: index_size
+        type: gauge
+        unit: bytes
+        label: Index_size
+        description: "Total disk space used by indexes attached to the specified table"
+
+      - name: size.total_size
+        source: total_size
+        type: gauge
+        unit: bytes
+        label: Total size
+        description: "Total disk space used by the specified table, including all indexes and TOAST data"
+
+    tag:
+      - name: size.relname
+        value: eval:${relname}

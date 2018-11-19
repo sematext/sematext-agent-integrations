@@ -1,0 +1,61 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_all_indexes;
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: statAllIndexes
+    metricNamespace: postgresql
+
+    metric:
+      - name: stat.all.indexes.relname
+        source: relname
+        type: text
+        send: false
+        label: Table name
+
+      - name: stat.all.indexes.schemaname
+        source: schemaname
+        type: text
+        send: false
+        label: Schema name
+
+      - name: stat.all.indexes.indexrelname
+        source: indexrelname
+        type: text
+        send: false
+        label: Index name
+
+      - name: stat.all.indexes.idx_scan
+        source: idx_scan
+        type: long_counter
+        label: Index scan
+        description: "Number of index scans initiated on this index"
+
+      - name: stat.all.indexes.idx_tup_read
+        source: idx_tup_read
+        type: long_counter
+        label: Returned index entries
+        description: "Number of index entries returned by scans on this index"
+
+      - name: stat.all.indexes.idx_tup_fetch
+        source: idx_tup_fetch
+        type: long_counter
+        label: Fetched rows
+        description: "Number of live rows fetched by index scans"
+
+    tag:
+      - name: stat.all.indexes.relname
+        value: eval:${relname}
+      - name: stat.all.indexes.schemaname
+        value: eval:${schemaname}
+      - name: stat.all.indexes.indexname
+        value: eval:${indexname}
+

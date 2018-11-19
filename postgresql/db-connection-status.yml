@@ -1,0 +1,38 @@
+type: db
+data:
+  query: WITH max_con AS
+      (
+        SELECT setting::float
+        FROM pg_settings
+        WHERE name = 'max_connections'
+      )
+    SELECT
+      MAX(setting) AS max_connections,
+      SUM(numbackends)/MAX(setting) AS pct_connections
+    FROM
+      pg_stat_database,
+      max_con
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: connection
+    metricNamespace: postgresql
+
+    metric:
+      - name: connection.max_connections
+        source: max_connections
+        type: gauge
+        label: Max connections
+
+      - name: connection.pct_connections
+        source: pct_connections
+        type: gauge
+        unit: '%'
+        label: Percent usage connections

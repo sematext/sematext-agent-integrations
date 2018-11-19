@@ -1,0 +1,32 @@
+type: db
+data:
+  query: SELECT
+      abs(pg_xlog_location_diff(pg_last_xlog_receive_location(), pg_last_xlog_replay_location())) as replication_delay,
+      abs(pg_xlog_location_diff(pg_last_xlog_receive_location(), pg_last_xlog_replay_location())) as replication_delay_bytes
+    WHERE
+      (SELECT pg_is_in_recovery())
+  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: replication92
+    metricNamespace: postgresql
+
+    metric:
+      - name: replication.replication_delay
+        source: replication_delay
+        type: gauge
+        unit: ms
+        label: Replication delay
+
+      - name: replication.replication_delay_bytes
+        source: replication_delay_bytes
+        type: gauge
+        unit: bytes
+        label: Replication delay bytes
