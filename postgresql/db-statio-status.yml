@@ -6,9 +6,6 @@ data:
   dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
   dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
   dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
-  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
-  # (1st column being attribute name, 2nd column being attribute value)
-  dbVerticalModel: true
 
 observation:
   - name: statio
