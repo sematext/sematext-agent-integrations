@@ -27,6 +27,10 @@ data:
   dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
   dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
 
+require:
+  - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
+    values: 10.0-*
+
 observation:
   - name: activity10
     metricNamespace: postgresql

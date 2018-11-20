@@ -17,6 +17,10 @@ data:
   # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true
 
+require:
+  - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
+    values: 9.1
+
 observation:
   - name: replication91
     metricNamespace: postgresql
