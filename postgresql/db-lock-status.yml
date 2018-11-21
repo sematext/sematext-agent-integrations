@@ -11,12 +11,12 @@ data:
       pc.relname NOT LIKE 'pg_%'
     GROUP BY
       pc.relname,
-      mode
-  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+      mode;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
 
 observation:
   - name: lock
@@ -28,23 +28,23 @@ observation:
         type: text
         send: false
         label: lock mode
-        description: "Name of the lock mode held or desired by this process"
+        description: Name of the lock mode held or desired by this process
 
-      - name: lock.relname
-        source: relname
+      - name: lock.relation
+        source: relation
         type: text
         send: false
         label: lock name
-        description: "Name of the table, index, view, etc."
+        description: Name of the table, index, view, etc.
 
-      - name: lock.lock_count
+      - name: lock.count
         source: lock_count
         type: long_counter
         label: lock count
-        description: "Number of active lockable object"
+        description: Number of active lockable object
 
     tag:
       - name: lock.mode
         value: eval:${mode}
-      - name: lock.relname
-        value: eval:${relname}
+      - name: lock.relation
+        value: eval:${relation}

@@ -1,85 +1,85 @@
 type: db
 data:
   query: SELECT * FROM pg_stat_user_tables;
-  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
 
 observation:
-  - name: statUserTables
+  - name: usertables
     metricNamespace: postgresql
 
     metric:
-      - name: stat.user.tables.relname
+      - name: tables.user.table
         source: relname
         type: text
         send: false
         label: Table name
 
-      - name: stat.user.tables.schemaname
+      - name: tables.user.schema
         source: schemaname
         type: text
         send: false
         label: Schema name
 
-      - name: stat.user.tables.seq_scan
+      - name: tables.user.sequential.scan
         source: seq_scan
         type: long_counter
         label: Sequential scans
-        description: "Number of sequential scans initiated on this table"
+        description: Number of sequential scans initiated on this table
 
-      - name: stat.user.tables.seq_tup_read
+      - name: tables.user.sequential.rows.fetched
         source: seq_tup_read
         type: long_counter
         label: Sequential rows fetched
-        description: "Number of live rows fetched by sequential scans"
+        description: Number of live rows fetched by sequential scans
 
-      - name: stat.user.tables.idx_tup_fetch
+      - name: tables.user.index.rows.fetched
         source: idx_tup_fetch
         type: long_counter
         label: Index rows fetched
-        description: "Number of live rows fetched by index scans"
+        description: Number of live rows fetched by index scans
 
-      - name: stat.user.tables.n_tup_ins
+      - name: tables.user.rows.inserted
         source: n_tup_ins
         type: long_counter
         label: Inserted rows
-        description: "Number of rows inserted"
+        description: Number of rows inserted
 
-      - name: stat.user.tables.n_tup_upd
+      - name: tables.user.rows.updated
         source: n_tup_upd
         type: long_counter
         label: Updated rows
-        description: "Number of rows updated"
+        description: Number of rows updated
 
-      - name: stat.user.tables.n_tup_del
+      - name: tables.user.rows.deleted
         source: n_tup_del
         type: long_counter
         label: Deleted rows
-        description: "Number of rows deleted"
+        description: Number of rows deleted
 
-      - name: stat.user.tables.n_tup_hot_upd
+      - name: tables.user.rows.hot.updated
         source: n_tup_hot_upd
         type: long_counter
         label: Hot updated rows
-        description: "Number of rows HOT updated (i.e., with no separate index update required)"
+        description: Number of rows HOT updated (i.e., with no separate index update required)
 
-      - name: stat.user.tables.n_live_tup
+      - name: tables.user.rows.live
         source: n_live_tup
         type: gauge
         label: Live rows
-        description: "Estimated number of live rows"
+        description: Estimated number of live rows
 
-      - name: stat.user.tables.n_dead_tup
+      - name: tables.user.rows.dead
         source: n_dead_tup
         type: gauge
         label: Dead rows
-        description: "Estimated number of dead rows"
+        description: Estimated number of dead rows
 
     tag:
-      - name: stat.user.tables.relname
-        value: eval:${relname}
-      - name: stat.user.tables.schemaname
-        value: eval:${schemaname}
+      - name: tables.user.table
+        value: eval:${table}
+      - name: tables.user.schema
+        value: eval:${schema}

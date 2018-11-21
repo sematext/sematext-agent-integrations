@@ -12,44 +12,44 @@ data:
       nspname NOT IN ('pg_catalog', 'information_schema') AND
       nspname !~ '^pg_toast' AND
       relkind IN ('r')
-  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
 
 observation:
-  - name: statSize
+  - name: size
     metricNamespace: postgresql
 
     metric:
-      - name: size.relname
+      - name: size.table
         source: relname
         type: text
         send: false
         label: Table name
 
-      - name: size.table_size
+      - name: size.table.size
         source: table_size
         type: gauge
         unit: bytes
         label: Table size
-        description: "Disk space used by the specified table, excluding indexes (but including TOAST, free space map, and visibility map)"
+        description: Disk space used by the specified table, excluding indexes (but including TOAST, free space map, and visibility map)
 
-      - name: size.index_size
+      - name: size.index.size
         source: index_size
         type: gauge
         unit: bytes
-        label: Index_size
-        description: "Total disk space used by indexes attached to the specified table"
+        label: Index size
+        description: Total disk space used by indexes attached to the specified table
 
-      - name: size.total_size
+      - name: size.total.size
         source: total_size
         type: gauge
         unit: bytes
         label: Total size
-        description: "Total disk space used by the specified table, including all indexes and TOAST data"
+        description: Total disk space used by the specified table, including all indexes and TOAST data
 
     tag:
-      - name: size.relname
-        value: eval:${relname}
+      - name: size.table
+        value: eval:${table}

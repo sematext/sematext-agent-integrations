@@ -9,11 +9,11 @@ data:
       abs(pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn())) AS replication_delay_bytes
     WHERE
       (SELECT pg_is_in_recovery())
-  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
   #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
   # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true
@@ -23,17 +23,17 @@ require:
     values: 10.0-*
 
 observation:
-  - name: replication10
+  - name: replication
     metricNamespace: postgresql
 
     metric:
-      - name: replication.replication_delay
+      - name: replication.delay.time
         source: replication_delay
         type: gauge
         unit: ms
         label: Replication delay
 
-      - name: replication.replication_delay_bytes
+      - name: replication.delay.bytes
         source: replication_delay_bytes
         type: gauge
         unit: bytes

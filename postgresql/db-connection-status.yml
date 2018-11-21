@@ -11,12 +11,12 @@ data:
       SUM(numbackends)/MAX(setting) AS pct_connections
     FROM
       pg_stat_database,
-      max_con
-  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+      max_con;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
   #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
   # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true
@@ -26,12 +26,12 @@ observation:
     metricNamespace: postgresql
 
     metric:
-      - name: connection.max_connections
+      - name: connection.connections.max
         source: max_connections
         type: gauge
         label: Max connections
 
-      - name: connection.pct_connections
+      - name: connection.connections.usage
         source: pct_connections
         type: gauge
         unit: '%'

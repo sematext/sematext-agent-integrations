@@ -19,12 +19,12 @@ data:
     FROM pg_stat_activity
     GROUP BY
       datid,
-      datname
-  dbUrl: jdbc:postgresql://${SPM_MONITOR_POSTGRESQL_DB_HOST_PORT}
+      datname;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${SPM_MONITOR_POSTGRESQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
 
 require:
   - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
@@ -32,27 +32,29 @@ require:
     countNeededMatches: 1
 
 observation:
-  - name: activityLt83
+  - name: activity
     metricNamespace: postgresql
 
     metric:
-      - name: activityLt83.datname
+      - name: activity.database
         source: datname
         type: text
         send: false
         label: Database
-        description: "Name of the database this backend is connected to"
+        description: Name of the database this backend is connected to
 
-      - name: activityLt83.open
+      - name: activity.open.transaction.count
         source: open
         type: gauge
-        label: Open
+        label: Active backend
+        description: Number of backend which executing a query
 
-      - name: activityLt83.idle_in_transaction
+      - name: activity.idle.transaction.count
         source: idle_in_transaction
         type: gauge
-        label: Idle in transaction
+        label: Idle backend
+        description: Number of backend is in a transaction, but is not currently executing a query
 
     tag:
-      - name: activityLt83.datname
-        value: eval:${datname}
+      - name: activity.database
+        value: eval:${database}
