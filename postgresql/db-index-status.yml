@@ -55,4 +55,3 @@ observation:
         value: eval:${schema}
       - name: indexes.all.index
         value: eval:${index}
-

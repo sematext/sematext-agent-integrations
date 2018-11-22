@@ -26,12 +26,12 @@ observation:
     metricNamespace: postgresql
 
     metric:
-      - name: connection.connections.max
+      - name: connections.max
         source: max_connections
         type: gauge
         label: Max connections
 
-      - name: connection.connections.usage
+      - name: connections.usage
         source: pct_connections
         type: gauge
         unit: '%'

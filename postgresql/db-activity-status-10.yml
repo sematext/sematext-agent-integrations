@@ -43,13 +43,13 @@ observation:
         label: Database
         description: Name of the database this backend is connected to
 
-      - name: activity.open.transaction.count
+      - name: transaction.open.count
         source: open
         type: gauge
-        label: Active backend
-        description: Number of backend which executing a query
+        label: Active backends
+        description: Number of backends executing a query
 
-      - name: activity.idle.transaction.count
+      - name: transaction.idle.count
         source: idle_in_transaction
         type: gauge
         label: Idle backend

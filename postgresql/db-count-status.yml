@@ -27,7 +27,7 @@ observation:
         send: false
         label: Schema name
 
-      - name: count.table.count
+      - name: table.count
         source: table_count
         type: gauge
         label: Table count

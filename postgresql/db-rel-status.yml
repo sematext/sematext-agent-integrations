@@ -64,7 +64,7 @@ observation:
         source: n_tup_hot_upd
         type: long_counter
         label: Hot updated rows
-        description: Number of rows HOT updated (i.e., with no separate index update required)
+        description: Number of rows hot updated (i.e., with no separate index update required)
 
       - name: tables.user.rows.live
         source: n_live_tup

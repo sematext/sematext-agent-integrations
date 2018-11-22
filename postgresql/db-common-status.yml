@@ -19,7 +19,7 @@ observation:
         source: numbackends
         type: gauge
         label: Active connections
-        description: Number of backends currently connected to this database. This is the only column in this view that returns a value reflecting current state; all other columns return the accumulated values since the last reset
+        description: Number of backends currently connected to this database
 
       - name: database.transactions.commit
         source: xact_commit
@@ -74,4 +74,3 @@ observation:
         type: long_counter
         label: Rows deleted
         description: Number of rows deleted by queries in this
-

@@ -25,4 +25,4 @@ observation:
         source: failed_count
         type: long_counter
         label: failed WAL files
-        description: Number of failed attempts for archiving WAL files
+        description: Number of failed attempts to archive WAL files

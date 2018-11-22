@@ -28,49 +28,49 @@ observation:
         source: heap_blks_read
         type: long_counter
         label: Read disk blocks
-        description: Number of disk blocks read from this table
+        description: Number of disk blocks read from a table
 
       - name: statio.heap.blocks.git
         source: heap_blks_hit
         type: long_counter
         label: Hit disk blocks
-        description: Number of buffer hits in this table
+        description: Number of buffer hits in a table
 
       - name: statio.index.blocks.read
         source: idx_blks_read
         type: long_counter
         label: Read index blocks
-        description: Number of disk blocks read from all indexes on this table
+        description: Number of disk blocks read from all indexes on a table
 
       - name: statio.index.blocks.hit
         source: idx_blks_hit
         type: long_counter
         label: Hit index blocks
-        description: Number of buffer hits in all indexes on this table
+        description: Number of buffer hits in all indexes on a table
 
       - name: statio.toast.blocks.read
         source: toast_blks_read
         type: long_counter
         label: Read TOAST blocks
-        description: Number of disk blocks read from this table's TOAST table (if any)
+        description: Number of disk blocks read from a table's TOAST table (if any)
 
       - name: statio.toast.blocks.hit
         source: toast_blks_hit
         type: long_counter
         label: Hit TOAST buffers
-        description: Number of buffer hits in this table's TOAST table (if any)
+        description: Number of buffer hits in a table's TOAST table (if any)
 
       - name: statio.tidx.blocks.read
         source: tidx_blks_read
         type: long_counter
         label: Read TOAST index
-        description: Number of disk blocks read from this table's TOAST table index (if any)
+        description: Number of disk blocks read from a table's TOAST table index (if any)
 
       - name: statio.tidx.blocks.hit
         source: tidx_blks_hit
         type: long_counter
         label: Hit TOAST buffer
-        description: Number of buffer hits in this table's TOAST table index (if any)
+        description: Number of buffer hits in a table's TOAST table index (if any)
 
     tag:
       - name: statio.table

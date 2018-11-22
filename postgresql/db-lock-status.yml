@@ -28,7 +28,7 @@ observation:
         type: text
         send: false
         label: lock mode
-        description: Name of the lock mode held or desired by this process
+        description: Name of the lock mode held or desired
 
       - name: lock.relation
         source: relation
