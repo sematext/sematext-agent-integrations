@@ -73,4 +73,4 @@ observation:
         source: tup_deleted
         type: long_counter
         label: Rows deleted
-        description: Number of rows deleted by queries in this
+        description: Number of rows deleted by queries in this database
