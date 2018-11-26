@@ -39,7 +39,7 @@ observation:
         label: Cleaned buffers
         description: Number of buffers written by the background writer
 
-      - name: bgwriter.buffers.maxwritten.clean
+      - name: bgwriter.buffers.cleaning.maxwritten.stopped
         source: maxwritten_clean
         type: long_counter
         label: Max written clean buffers

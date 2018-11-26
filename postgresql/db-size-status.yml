@@ -36,7 +36,7 @@ observation:
         label: Table size
         description: Disk space used by the a table, excluding indexes (but including TOAST, free space map, and visibility map)
 
-      - name: index.size
+      - name: index.disk.size
         source: index_size
         type: gauge
         unit: bytes
