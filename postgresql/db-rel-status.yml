@@ -24,19 +24,19 @@ observation:
         send: false
         label: Schema name
 
-      - name: tables.sequential.scan
+      - name: tables.scan.sequential
         source: seq_scan
         type: long_counter
         label: Sequential scans
         description: Number of sequential scans initiated on this table
 
-      - name: tables.sequential.rows.fetched
+      - name: tables.rows.fetched.sequential
         source: seq_tup_read
         type: long_counter
         label: Sequential rows fetched
         description: Number of live rows fetched by sequential scans
 
-      - name: tables.index.rows.fetched
+      - name: tables.rows.fetched.index
         source: idx_tup_fetch
         type: long_counter
         label: Index rows fetched
@@ -54,7 +54,7 @@ observation:
         label: Updated rows
         description: Number of rows updated
 
-      - name: tables.user.rows.deleted
+      - name: tables.rows.deleted
         source: n_tup_del
         type: long_counter
         label: Deleted rows
