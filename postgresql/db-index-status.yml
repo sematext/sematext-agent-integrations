@@ -12,37 +12,37 @@ observation:
     metricNamespace: postgresql
 
     metric:
-      - name: indexes.all.table
+      - name: indexes.table
         source: relname
         type: text
         send: false
         label: Table name
 
-      - name: indexes.all.schema
+      - name: indexes.schema
         source: schemaname
         type: text
         send: false
         label: Schema name
 
-      - name: indexes.all.index
+      - name: indexes.index
         source: indexrelname
         type: text
         send: false
         label: Index name
 
-      - name: indexes.all.scan
+      - name: indexes.scan
         source: idx_scan
         type: long_counter
         label: Index scan
         description: Number of index scans initiated on this index
 
-      - name: indexes.all.rows.read
+      - name: indexes.rows.read
         source: idx_tup_read
         type: long_counter
         label: Returned index entries
         description: Number of index entries returned by scans on this index
 
-      - name: indexes.all.rows.feched
+      - name: indexes.rows.feched
         source: idx_tup_fetch
         type: long_counter
         label: Fetched rows
