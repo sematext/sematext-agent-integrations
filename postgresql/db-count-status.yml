@@ -33,5 +33,5 @@ observation:
         label: Table count
 
     tag:
-      - name: count.schema
+      - name: posgresql.schema
         value: eval:${schema}

@@ -51,5 +51,5 @@ observation:
         description: Total disk space used by the a table, including all indexes and TOAST data
 
     tag:
-      - name: size.table
+      - name: posgresql.table
         value: eval:${table}

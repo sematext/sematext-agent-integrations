@@ -73,7 +73,7 @@ observation:
         description: Number of buffer hits in a table's TOAST table index (if any)
 
     tag:
-      - name: statio.table
+      - name: posgresql.table
         value: eval:${table}
-      - name: statio.schema
+      - name: posgresql.schema
         value: eval:${schema}

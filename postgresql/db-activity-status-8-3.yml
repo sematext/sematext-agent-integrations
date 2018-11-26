@@ -55,5 +55,5 @@ observation:
         description: Number of backend is in a transaction, but is not currently executing a query
 
     tag:
-      - name: activity.database
+      - name: posgresql.database
         value: eval:${database}
