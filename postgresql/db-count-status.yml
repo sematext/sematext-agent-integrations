@@ -1,6 +1,6 @@
 type: db
 data:
-  query: SELECT
+  query: "SELECT
       schemaname,
       count(*) as table_count
     FROM
@@ -9,7 +9,7 @@ data:
         FROM pg_stat_user_tables
         ORDER BY schemaname, relname
       ) AS subquery
-    GROUP BY schemaname;
+    GROUP BY schemaname;"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}

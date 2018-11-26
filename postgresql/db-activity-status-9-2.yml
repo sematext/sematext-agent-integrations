@@ -1,6 +1,6 @@
 type: db
 data:
-  query: SELECT
+  query: "SELECT
       datname,
       SUM(
         CASE
@@ -19,7 +19,7 @@ data:
     FROM pg_stat_activity
     GROUP BY
       datid,
-      datname;
+      datname;"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}

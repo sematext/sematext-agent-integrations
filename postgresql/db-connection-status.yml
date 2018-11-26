@@ -1,6 +1,6 @@
 type: db
 data:
-  query: WITH max_con AS
+  query: "WITH max_con AS
       (
         SELECT setting::float
         FROM pg_settings
@@ -11,7 +11,7 @@ data:
       SUM(numbackends)/MAX(setting) AS pct_connections
     FROM
       pg_stat_database,
-      max_con;
+      max_con;"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}

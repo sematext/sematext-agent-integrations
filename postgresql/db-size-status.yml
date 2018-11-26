@@ -1,6 +1,6 @@
 type: db
 data:
-  query: SELECT
+  query: "SELECT
       relname,
       pg_table_size(C.oid) as table_size,
       pg_indexes_size(C.oid) as index_size,
@@ -11,7 +11,7 @@ data:
     WHERE
       nspname NOT IN ('pg_catalog', 'information_schema') AND
       nspname !~ '^pg_toast' AND
-      relkind IN ('r')
+      relkind IN ('r');"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}

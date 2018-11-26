@@ -1,6 +1,6 @@
 type: db
 data:
-  query: WITH overloaded_funcs AS
+  query: "WITH overloaded_funcs AS
       (
         SELECT funcname
         FROM pg_stat_user_functions s
@@ -24,7 +24,7 @@ data:
     JOIN pg_stat_user_functions s
       ON p.oid = s.funcid
     LEFT JOIN overloaded_funcs o
-      ON o.funcname = s.funcname;
+      ON o.funcname = s.funcname;"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}

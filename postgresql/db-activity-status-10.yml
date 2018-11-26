@@ -1,6 +1,6 @@
 type: db
 data:
-  query: SELECT
+  query: "SELECT
       datname,
       SUM(
         CASE
@@ -20,7 +20,7 @@ data:
     WHERE backend_type = 'client backend'
     GROUP BY
       datid,
-      datname
+      datname;"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}

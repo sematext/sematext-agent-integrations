@@ -1,9 +1,9 @@
 type: db
 data:
-  query: SELECT
+  query: "SELECT
       abs(pg_xlog_location_diff(pg_last_xlog_receive_location(), pg_last_xlog_replay_location())) as replication_delay_bytes
     WHERE
-      (SELECT pg_is_in_recovery())
+      (SELECT pg_is_in_recovery());"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}

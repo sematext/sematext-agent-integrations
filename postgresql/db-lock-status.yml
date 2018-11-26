@@ -1,6 +1,6 @@
 type: db
 data:
-  query: SELECT
+  query: "SELECT
       mode,
       pc.relname, count(*) AS lock_count
     FROM pg_locks l
@@ -11,7 +11,7 @@ data:
       pc.relname NOT LIKE 'pg_%'
     GROUP BY
       pc.relname,
-      mode;
+      mode;"
   dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
