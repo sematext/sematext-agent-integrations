@@ -12,7 +12,7 @@ data:
 
 require:
   - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
-    values: 9.2
+    values: 9.2-*
 
 observation:
   - name: database

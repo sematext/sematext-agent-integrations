@@ -28,7 +28,7 @@ data:
 
 require:
   - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
-    values: 8.3
+    values: 8.3-9.1
 
 observation:
   - name: activity
