@@ -29,7 +29,7 @@ observation:
         send: false
         label: Table name
 
-      - name: table.size
+      - name: table.disk.size
         source: table_size
         type: gauge
         unit: bytes
@@ -43,7 +43,7 @@ observation:
         label: Index size
         description: Total disk space used by indexes attached to the a table
 
-      - name: total.size
+      - name: table.total.disk.size
         source: total_size
         type: gauge
         unit: bytes
