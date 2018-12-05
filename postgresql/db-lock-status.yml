@@ -12,7 +12,7 @@ data:
     GROUP BY
       pc.relname,
       mode;"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -39,12 +39,12 @@ observation:
 
       - name: lock.count
         source: lock_count
-        type: long_counter
+        type: long_gauge
         label: lock count
         description: Number of active lockable object
 
     tag:
       - name: posgresql.lock.mode
-        value: eval:${mode}
+        value: eval:${lock.mode}
       - name: posgresql.lock.relation
-        value: eval:${relation}
+        value: eval:${lock.relation}

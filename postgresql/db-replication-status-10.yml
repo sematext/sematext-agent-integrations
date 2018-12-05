@@ -9,7 +9,7 @@ data:
       abs(pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn())) AS replication_delay_bytes
     WHERE
       (SELECT pg_is_in_recovery());"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -29,12 +29,12 @@ observation:
     metric:
       - name: replication.delay.time
         source: replication_delay
-        type: gauge
+        type: long_gauge
         unit: ms
         label: Replication delay
 
       - name: replication.delay.bytes
         source: replication_delay_bytes
-        type: gauge
+        type: long_gauge
         unit: bytes
         label: Replication delay bytes

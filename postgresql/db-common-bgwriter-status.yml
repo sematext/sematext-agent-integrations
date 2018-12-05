@@ -1,7 +1,7 @@
 type: db
 data:
   query: SELECT * FROM pg_stat_bgwriter;
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -17,42 +17,42 @@ observation:
     metric:
       - name: bgwriter.checkpoints.scheduled
         source: checkpoints_timed
-        type: long_counter
+        type: counter
         label: Scheduled checkpoints
         description: Number of scheduled checkpoints that have been performed
 
       - name: bgwriter.checkpoints.requested
         source: checkpoints_req
-        type: long_counter
+        type: counter
         label: Requested checkpoints
         description: Number of requested checkpoints that have been performed
 
       - name: bgwriter.buffers.written
         source: buffers_checkpoint
-        type: long_counter
+        type: counter
         label: Checkpoint buffers
         description: Number of buffers written during checkpoints
 
       - name: bgwriter.buffers.clean
         source: buffers_clean
-        type: long_counter
+        type: counter
         label: Cleaned buffers
         description: Number of buffers written by the background writer
 
       - name: bgwriter.buffers.cleaning.maxwritten.stopped
         source: maxwritten_clean
-        type: long_counter
+        type: counter
         label: Max written clean buffers
         description: Number of times the background writer stopped a cleaning scan because it had written too many buffers
 
       - name: bgwriter.buffers.backend
         source: buffers_backend
-        type: long_counter
+        type: counter
         label: Backend buffers
         description: Number of buffers written directly by a backend
 
       - name: bgwriter.buffers.alloc
         source: buffers_alloc
-        type: long_counter
+        type: counter
         label: Allocated buffers
         description: Number of buffers allocated

@@ -1,7 +1,7 @@
 type: db
 data:
   query: SELECT * FROM pg_stat_all_indexes;
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -32,26 +32,26 @@ observation:
 
       - name: indexes.scan
         source: idx_scan
-        type: long_counter
+        type: long_gauge
         label: Index scan
         description: Number of index scans initiated on this index
 
       - name: indexes.rows.read
         source: idx_tup_read
-        type: long_counter
+        type: long_gauge
         label: Returned index entries
         description: Number of index entries returned by scans on this index
 
       - name: indexes.rows.feched
         source: idx_tup_fetch
-        type: long_counter
+        type: long_gauge
         label: Fetched rows
         description: Number of live rows fetched by index scans
 
     tag:
       - name: posgresql.table
-        value: eval:${table}
+        value: eval:${indexes.table}
       - name: posgresql.schema
-        value: eval:${schema}
+        value: eval:${indexes.schema}
       - name: posgresql.index
-        value: eval:${index}
+        value: eval:${indexes.index}

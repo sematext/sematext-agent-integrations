@@ -12,7 +12,7 @@ data:
       nspname NOT IN ('pg_catalog', 'information_schema') AND
       nspname !~ '^pg_toast' AND
       relkind IN ('r');"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -31,25 +31,25 @@ observation:
 
       - name: table.disk.size
         source: table_size
-        type: gauge
+        type: long_gauge
         unit: bytes
         label: Table size
         description: Disk space used by the a table, excluding indexes (but including TOAST, free space map, and visibility map)
 
       - name: index.disk.size
         source: index_size
-        type: gauge
+        type: long_gauge
         unit: bytes
         label: Index size
         description: Total disk space used by indexes attached to the a table
 
       - name: table.total.disk.size
         source: total_size
-        type: gauge
+        type: long_gauge
         unit: bytes
         label: Total size
         description: Total disk space used by the a table, including all indexes and TOAST data
 
     tag:
       - name: posgresql.table
-        value: eval:${table}
+        value: eval:${size.table}

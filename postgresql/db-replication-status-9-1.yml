@@ -8,7 +8,7 @@ data:
       END as replication_delay
     WHERE
       (SELECT pg_is_in_recovery());"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -28,7 +28,7 @@ observation:
     metric:
       - name: replication.delay.time
         source: replication_delay
-        type: gauge
+        type: long_gauge
         unit: ms
         label: Replication delay
 

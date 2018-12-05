@@ -17,10 +17,11 @@ data:
         END
       ) as idle_in_transaction
     FROM pg_stat_activity
+    WHERE datname != ''
     GROUP BY
       datid,
       datname;"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -45,16 +46,16 @@ observation:
 
       - name: transaction.open.count
         source: open
-        type: gauge
+        type: long_gauge
         label: Active backends
         description: Number of backends executing a query
 
       - name: transaction.idle.count
         source: idle_in_transaction
-        type: gauge
+        type: long_gauge
         label: Idle backend
         description: Number of backends in a transaction, but not currently executing a query
 
     tag:
       - name: posgresql.database
-        value: eval:${database}
+        value: eval:${activity.database}

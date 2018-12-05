@@ -1,7 +1,7 @@
 type: db
 data:
   query: SELECT * FROM pg_stat_database;
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
@@ -21,19 +21,19 @@ observation:
     metric:
       - name: database.deadlocks
         source: deadlocks
-        type: long_counter
+        type: counter
         label: Deadlocks
         description: Number of deadlocks detected in this database
 
       - name: database.temp.bytes
         source: temp_bytes
-        type: long_counter
+        type: counter
         unit: bytes
         label: Temporary written bytes
         description: Total amount of data written to temporary files by queries in this database. All temporary files are counted, regardless of why the temporary file was created, and regardless of the log_temp_files setting
 
       - name: database.temp.files
         source: temp_files
-        type: long_counter
+        type: counter
         label: Temporary files
         description: "Number of temporary files created by queries in this database. All temporary files are counted, regardless of why the temporary file was created (e.g., sorting or hashing), and regardless of the log_temp_files setting"
