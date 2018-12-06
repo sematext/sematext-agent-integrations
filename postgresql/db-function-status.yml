@@ -48,25 +48,25 @@ observation:
         send: false
         label: Function name
 
-      - name: function.calls
-        source: calls
-        type: long_gauge
-        label: function calls
-        description: Number of times this function has been called
+#      - name: function.calls
+#        source: calls
+#        type: long_counter
+#        label: function calls
+#        description: Number of times this function has been called
 
-      - name: function.time.total
-        source: total_time
-        type: long_gauge
-        unit: ms
-        label: function total time
-        description: Total time spent in this function and all other functions called by it, in milliseconds
+#      - name: function.time.total
+#        source: total_time
+#        type: long_counter
+#        unit: ms
+#        label: function total time
+#        description: Total time spent in this function and all other functions called by it, in milliseconds
 
-      - name: function.time.self
-        source: self_time
-        type: long_gauge
-        unit: ms
-        label: function self time
-        description: Total time spent in this function itself, not including other functions called by it, in milliseconds
+#      - name: function.time.self
+#        source: self_time
+#        type: long_counter
+#        unit: ms
+#        label: function self time
+#        description: Total time spent in this function itself, not including other functions called by it, in milliseconds
 
     tag:
       - name: posgresql.schema

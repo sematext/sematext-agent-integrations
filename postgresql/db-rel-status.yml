@@ -24,47 +24,47 @@ observation:
         send: false
         label: Schema name
 
-      - name: tables.scan.sequential
-        source: seq_scan
-        type: long_gauge
-        label: Sequential scans
-        description: Number of sequential scans initiated on this table
+#      - name: tables.scan.sequential
+#        source: seq_scan
+#        type: long_counter
+#        label: Sequential scans
+#        description: Number of sequential scans initiated on this table
 
-      - name: tables.rows.fetched.sequential
-        source: seq_tup_read
-        type: long_gauge
-        label: Sequential rows fetched
-        description: Number of live rows fetched by sequential scans
+#      - name: tables.rows.fetched.sequential
+#        source: seq_tup_read
+#        type: long_counter
+#        label: Sequential rows fetched
+#        description: Number of live rows fetched by sequential scans
 
-      - name: tables.rows.fetched.index
-        source: idx_tup_fetch
-        type: long_gauge
-        label: Index rows fetched
-        description: Number of live rows fetched by index scans
+#      - name: tables.rows.fetched.index
+#        source: idx_tup_fetch
+#        type: long_counter
+#        label: Index rows fetched
+#        description: Number of live rows fetched by index scans
 
-      - name: tables.rows.inserted
-        source: n_tup_ins
-        type: long_gauge
-        label: Inserted rows
-        description: Number of rows inserted
+#      - name: tables.rows.inserted
+#        source: n_tup_ins
+#        type: long_counter
+#        label: Inserted rows
+#        description: Number of rows inserted
 
-      - name: tables.rows.updated
-        source: n_tup_upd
-        type: long_gauge
-        label: Updated rows
-        description: Number of rows updated
+#      - name: tables.rows.updated
+#        source: n_tup_upd
+#        type: long_counter
+#        label: Updated rows
+#        description: Number of rows updated
 
-      - name: tables.rows.deleted
-        source: n_tup_del
-        type: long_gauge
-        label: Deleted rows
-        description: Number of rows deleted
+#      - name: tables.rows.deleted
+#        source: n_tup_del
+#        type: long_counter
+#        label: Deleted rows
+#        description: Number of rows deleted
 
-      - name: tables.rows.hot.updated
-        source: n_tup_hot_upd
-        type: long_gauge
-        label: Hot updated rows
-        description: Number of rows hot updated (i.e., with no separate index update required)
+#      - name: tables.rows.hot.updated
+#        source: n_tup_hot_upd
+#        type: long_counter
+#        label: Hot updated rows
+#        description: Number of rows hot updated (i.e., with no separate index update required)
 
       - name: tables.rows.live
         source: n_live_tup

@@ -30,23 +30,23 @@ observation:
         send: false
         label: Index name
 
-      - name: indexes.scan
-        source: idx_scan
-        type: long_gauge
-        label: Index scan
-        description: Number of index scans initiated on this index
+#      - name: indexes.scan
+#        source: idx_scan
+#        type: long_counter
+#        label: Index scan
+#        description: Number of index scans initiated on this index
 
-      - name: indexes.rows.read
-        source: idx_tup_read
-        type: long_gauge
-        label: Returned index entries
-        description: Number of index entries returned by scans on this index
+#      - name: indexes.rows.read
+#        source: idx_tup_read
+#        type: long_counter
+#        label: Returned index entries
+#        description: Number of index entries returned by scans on this index
 
-      - name: indexes.rows.feched
-        source: idx_tup_fetch
-        type: long_gauge
-        label: Fetched rows
-        description: Number of live rows fetched by index scans
+#      - name: indexes.rows.feched
+#        source: idx_tup_fetch
+#        type: long_counter
+#        label: Fetched rows
+#        description: Number of live rows fetched by index scans
 
     tag:
       - name: posgresql.table
