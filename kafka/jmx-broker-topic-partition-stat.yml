@@ -1,6 +1,24 @@
 type: jmx
 
 observation:
+  - name: kafka-broker-stable-offset-lag
+    metricNamespace: kafka
+    objectName: kafka.cluster:type=Partition,name=LastStableOffsetLag,topic=${topic},partition=${partition}
+
+    metric:
+      - name: broker.stable.offset.lag
+        source: Value
+        type: double_gauge
+        label: Kafka broker stable lag
+
+    tag:
+      - name: kafka.broker.topic
+        value: ${topic}
+
+      - name: kafka.broker.topic.partition
+        value: ${partition}
+
+
   - name: kafka-broker-partition-underreplicated
     metricNamespace: kafka
     objectName: kafka.cluster:type=Partition,name=UnderReplicated,topic=${topic},partition=${partition}
