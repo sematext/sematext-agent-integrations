@@ -15,8 +15,6 @@ data:
         THEN p.proname
         ELSE p.proname || '_' || array_to_string(p.proargnames, '_')
       END funcname,
-      schemaname,
-      funcname,
       calls,
       total_time,
       self_time
