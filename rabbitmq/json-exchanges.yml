@@ -1,0 +1,124 @@
+type: json
+data:
+  url: /api/exchanges
+  server: ${SPM_MONITOR_RABBITMQ_API_URL}
+  basicHttpAuthUsername: ${SPM_MONITOR_RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${SPM_MONITOR_RABBITMQ_BASICAUTH_PASSWORD}
+  smileFormat: true
+
+observation:
+  - name: exchanges
+    metricNamespace: rabbitmq
+    path: $.[?(@.name=${name} && @.vhost=${vhost})]
+
+    metric:
+      - name: exchanges.message_stats.ack
+        source: message_stats/ack
+        type: long_gauge
+        label: ack messages
+        description: Number of messages delivered to clients and acknowledged
+
+      - name: exchanges.message_stats.ack.rate
+        source: message_stats/ack_details/rate
+        type: double_gauge
+        label: ack messages rate
+        unit: message/second
+        description: Number per second of messages delivered to clients and acknowledged
+
+      - name: exchanges.message_stats.confirm
+        source: message_stats/confirm
+        type: long_gauge
+        label: confirmed messages
+        description: Count of messages confirmed
+
+      - name: exchanges.message_stats.confirm.rate
+        source: message_stats/confirm_details/rate
+        type: double_gauge
+        label: confirmed messages rate
+        unit: message/second
+        description: Rate of messages confirmed per second
+
+      - name: exchanges.message_stats.deliver.get
+        source: message_stats/deliver_get
+        type: long_gauge
+        label: delivered get messages
+        description: Sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get.
+
+      - name: exchanges.message_stats.deliver.get.rate
+        source: message_stats/deliver_get_details/rate
+        type: double_gauge
+        label: delivered get messages rate
+        unit: message/second
+        description: Rate per second of the sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get.
+
+      - name: exchanges.message_stats.publish
+        source: message_stats/publish
+        type: long_gauge
+        label: published messages
+        description: Count of messages published
+
+      - name: exchanges.message_stats.publish.rate
+        source: message_stats/publish_details/rate
+        type: double_gauge
+        label: published messages rate
+        unit: message/second
+        description: Rate per second of messages published
+
+      - name: exchanges.message_stats.publish.in
+        source: message_stats/publish_in
+        type: long_gauge
+        label: published in messages
+        description: Count of messages published from channels into this exchange
+
+      - name: exchanges.message_stats.publish.in.rate
+        source: message_stats/publish_in_details/rate
+        type: double_gauge
+        label: published in messages rate
+        unit: message/second
+        description: Rate of messages published from channels into this exchange per sec
+
+      - name: exchanges.message_stats.publish.out
+        source: message_stats/publish_out
+        type: long_gauge
+        label: published out messages
+        description: Count of messages published from this exchange into queues
+
+      - name: exchanges.message_stats.publish.out.rate
+        source: message_stats/publish_out_details/rate
+        type: double_gauge
+        label: published out messages rate
+        unit: message/second
+        description: Rate of messages published from this exchange into queues per second
+
+      - name: exchanges.message_stats.return.unroutable
+        source: message_stats/return_unroutable
+        type: long_gauge
+        label: unroutable messages
+        description: Count of messages returned to publisher as unroutable
+
+      - name: exchanges.message_stats.return.unroutable.rate
+        source: message_stats/return_unroutable_details/rate
+        type: double_gauge
+        label: unroutable messages rate
+        unit: message/second
+        description: Rate of messages returned to publisher as unroutable per second
+
+      - name: exchanges.message_stats.redeliver
+        source: message_stats/redeliver
+        type: long_gauge
+        label: redelivered messages
+        description: Count of subset of messages in deliver_get which had the redelivered flag set
+
+      - name: exchanges.message_stats.redeliver.rate
+        source: message_stats/redeliver_details/rate
+        type: double_gauge
+        label: redelivered messages rate
+        unit: message/second
+        description: Rate of subset of messages in deliver_get which had the redelivered flag set per second
+
+    tag:
+      - name: queues.vhost
+        value: vhost
+
+      - name: queues.name
+        value: name
