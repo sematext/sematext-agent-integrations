@@ -23,7 +23,7 @@ data:
       ON p.oid = s.funcid
     LEFT JOIN overloaded_funcs o
       ON o.funcname = s.funcname;"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/postgres
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
