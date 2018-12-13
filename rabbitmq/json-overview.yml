@@ -4,7 +4,6 @@ data:
   server: ${SPM_MONITOR_RABBITMQ_API_URL}
   basicHttpAuthUsername: ${SPM_MONITOR_RABBITMQ_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${SPM_MONITOR_RABBITMQ_BASICAUTH_PASSWORD}
-  smileFormat: true
 
 observation:
   - name: overview
