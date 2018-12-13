@@ -1,0 +1,54 @@
+type: db
+data:
+  query: select * from myDatabaseName.User where state='ACTIVE'
+  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbDriverClass: com.mysql.jdbc.Driver
+  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+
+observation:
+  - name: activeUsersDetails
+    # Since horizontal model is used and we collect one counter metric (user.notifications.sent), we have to
+    # specify column names which will be used to uniquely identify rows between measurements (this is needed because
+    # counter metrics are calculated as delta between current and previous measurement). Multiple comma-separates
+    # names are allowed when single column isn't enough. Names should match column names from query result set.
+    # In this particular case probably both "email" and "id" (each on their own) are good choice for rowIdColumns, so
+    # we have chosen just one of them.
+    #
+    # NOTE 1: if rowIdColumns are not chosen in a way that ensures row uniqueness, Agent will internally aggregate
+    # rows with same rowIds so results can be unpredictable. 
+    #
+    # NOTE 2: if query produces big number of rows, Agent will have to keep track of each of them so it might
+    # have effect on resource consumption (more memory used, more CPU needed). For big tables consider limiting
+    # output to just relevant entries (e.g. users that are ACTIVE, users created over the past few months...)
+    #
+    rowIdColumns: email
+    metricNamespace: custom
+
+    metric:
+      - name: user.id
+        source: id
+        type: long_gauge
+        label: user id
+
+      - name: userState
+        source: state
+        type: text
+        send: false
+
+      - name: user.notifications.sent
+        source: totalNotificationsCount
+        type: counter
+
+      - name: userEmail
+        source: email
+        type: text
+        send: false
+
+    tag:
+      - name: user.email
+        value: eval:${userEmail}
+
+      - name: user.state
+        value: eval:${userState}
