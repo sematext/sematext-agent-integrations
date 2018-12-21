@@ -1,9 +1,9 @@
 type: json
 data:
   url: /api/nodes
-  server: ${SPM_MONITOR_RABBITMQ_API_URL}
-  basicHttpAuthUsername: ${SPM_MONITOR_RABBITMQ_BASICAUTH_USERNAME}
-  basicHttpAuthPassword: ${SPM_MONITOR_RABBITMQ_BASICAUTH_PASSWORD}
+  server: ${RABBITMQ_API_URL}
+  basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
 
 observation:
   - name: nodes
@@ -14,35 +14,36 @@ observation:
       - name: file.used
         source: fd_used
         type: long_gauge
-        label: used file
+        label: used files
         description: Used file descriptors
 
       - name: disk.free
         source: disk_free
         type: long_gauge
         label: free space
-        unit: byte
+        unit: bytes
         description: Current free disk space
 
       - name: mem.used
         source: mem_used
         type: long_gauge
         label: used memory
+        unit: bytes
         description: Memory used in bytes
 
       - name: process.wait
         source: run_queue
         type: long_gauge
-        label: warting process
+        label: warting processes
         description: Average number of Erlang processes waiting to run
 
-      - name: file.sockets
+      - name: sockets.used
         source: sockets_used
         type: long_gauge
-        label: socket file
+        label: used sockets
         description: Number of file descriptors used as sockets
 
-      - name: partitions
+      - name: network.partitions
         source: partitions
         type: long_gauge
         label: partitions
@@ -67,5 +68,5 @@ observation:
         description: Does the node have disk alarm
 
     tag:
-      - name: node.name
+      - name: rabbitmq.node
         value: ${name}

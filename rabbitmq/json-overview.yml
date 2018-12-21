@@ -1,9 +1,9 @@
 type: json
 data:
   url: /api/overview
-  server: ${SPM_MONITOR_RABBITMQ_API_URL}
-  basicHttpAuthUsername: ${SPM_MONITOR_RABBITMQ_BASICAUTH_USERNAME}
-  basicHttpAuthPassword: ${SPM_MONITOR_RABBITMQ_BASICAUTH_PASSWORD}
+  server: ${RABBITMQ_API_URL}
+  basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
 
 observation:
   - name: overview
@@ -11,170 +11,92 @@ observation:
     path: $.
 
     metric:
-      - name: object_totals.connections
+      - name: object.totals.connections
         source: object_totals/connections
         type: long_gauge
         label: connections
         description: Total number of connections
 
-      - name: object_totals.channels
+      - name: object.totals.channels
         source: object_totals/channels
         type: long_gauge
-        label: free space
-        unit: channels
+        label: channels
         description: Total number of channels
 
-      - name: object_totals.queues
+      - name: object.totals.queues
         source: object_totals/queues
         type: long_gauge
         label: queues
         description: Total number of queues
 
-      - name: object_totals.consumers
+      - name: object.totals.consumers
         source: object_totals/consumers
         type: long_gauge
         label: consumers
         description: Total number of consumers
 
-      - name: queue_totals.messages.count
+      - name: object.totals.messages.count
         source: queue_totals/messages
         type: long_gauge
         label: messages
         description: Total number of messages (ready plus unacknowledged)
 
-      - name: queue_totals.messages.rate
-        source: queue_totals/messages_details/rate
-        type: double_gauge
-        label: messages rate
-        unit: message/second
-        description: Rate of number of messages (ready plus unacknowledged)
-
-      - name: queue_totals.messages_ready.count
+      - name: object.totals.messages.ready.count
         source: queue_totals/messages_ready
         type: long_gauge
         label: ready messages
         description: Number of messages ready for delivery
 
-      - name: queue_totals.messages_ready.rate
-        source: queue_totals/messages_ready_details/rate
-        type: double_gauge
-        label: ready messages rate
-        unit: message/second
-        description: Rate of number of messages ready for delivery
-
-      - name: queue_totals.messages_unacknowledged.count
+      - name: object.totals.messages.unacknowledged.count
         source: queue_totals/messages_unacknowledged
         type: long_gauge
         label: unacknowledged messages
         description: Number of unacknowledged messages
 
-      - name: queue_totals.messages_unacknowledged.rate
-        source: queue_totals/messages_unacknowledged_details/rate
-        type: double_gauge
-        label: unacknowledged messages rate
-        unit: message/second
-        description: Rate of number of unacknowledged messages
-
-      - name: message_stats.ack
+      - name: messages.ack
         source: message_stats/ack
         type: long_gauge
         label: ack messages
         description: Number of messages delivered to clients and acknowledged
 
-      - name: message_stats.ack.rate
-        source: message_stats/ack_details/rate
-        type: double_gauge
-        label: ack messages rate
-        unit: message/second
-        description: Rate of messages delivered to clients and acknowledged per second
-
-      - name: message_stats.confirm
+      - name: messages.confirmed
         source: message_stats/confirm
         type: long_gauge
         label: confirmed messages
         description: Count of messages confirmed
 
-      - name: message_stats.confirm.rate
-        source: message_stats/confirm_details/rate
-        type: double_gauge
-        label: confirmed messages rate
-        unit: message/second
-        description: Rate of messages confirmed per second
-
-      - name: message_stats.deliver.get
+      - name: messages.delivered.get
         source: message_stats/deliver_get
         type: long_gauge
         label: delivered get messages
         description: Sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get
 
-      - name: message_stats.deliver.get.rate
-        source: message_stats/deliver_get_details/rate
-        type: double_gauge
-        label: delivered get messages rate
-        unit: message/second
-        description: Rate per second of the sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get
-
-      - name: message_stats.publish
+      - name: messages.published
         source: message_stats/publish
         type: long_gauge
         label: published messages
         description: Count of messages published
 
-      - name: message_stats.publish.rate
-        source: message_stats/publish_details/rate
-        type: double_gauge
-        label: published messages rate
-        unit: message/second
-        description: Rate of messages published per second
-
-      - name: message_stats.publish.in
+      - name: messages.published.in
         source: message_stats/publish_in
         type: long_gauge
         label: published in messages
         description: Count of messages published from channels into this exchange
 
-      - name: message_stats.publish.in.rate
-        source: message_stats/publish_in_details/rate
-        type: double_gauge
-        label: published in messages rate
-        unit: message/second
-        description: Rate of messages published from channels into this overview per sec
-
-      - name: message_stats.publish.out
+      - name: messages.published.out
         source: message_stats/publish_out
         type: long_gauge
         label: published out messages
         description: Count of messages published from this exchange into queues
 
-      - name: message_stats.publish.out.rate
-        source: message_stats/publish_out_details/rate
-        type: double_gauge
-        label: published out messages rate
-        unit: message/second
-        description: Rate of messages published from this exchange into queues per second
-
-      - name: message_stats.return.unroutable
+      - name: messages.returned.unroutable
         source: message_stats/return_unroutable
         type: long_gauge
         label: unroutable messages
         description: Count of messages returned to publisher as unroutable
 
-      - name: message_stats.return.unroutable.rate
-        source: message_stats/return_unroutable_details/rate
-        type: double_gauge
-        label: unroutable messages rate
-        unit: message/second
-        description: Rate of messages returned to publisher as unroutable per second
-
-      - name: message_stats.redeliver
+      - name: messages.redelivered
         source: message_stats/redeliver
         type: long_gauge
         label: redelivered messages
         description: Count of subset of messages in deliver_get which had the redelivered flag set
-
-      - name: message_stats.redeliver.rate
-        source: message_stats/redeliver_details/rate
-        type: double_gauge
-        label: redelivered messages rate
-        unit: message/second
-        description: Rate of subset of messages in deliver_get which had the redelivered flag set per second
