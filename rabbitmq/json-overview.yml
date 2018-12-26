@@ -11,43 +11,43 @@ observation:
     path: $.
 
     metric:
-      - name: object.totals.connections
+      - name: connections.total
         source: object_totals/connections
         type: long_gauge
         label: connections
         description: Total number of connections
 
-      - name: object.totals.channels
+      - name: channels.total
         source: object_totals/channels
         type: long_gauge
         label: channels
         description: Total number of channels
 
-      - name: object.totals.queues
+      - name: queues.total
         source: object_totals/queues
         type: long_gauge
         label: queues
         description: Total number of queues
 
-      - name: object.totals.consumers
+      - name: consumers.total
         source: object_totals/consumers
         type: long_gauge
         label: consumers
         description: Total number of consumers
 
-      - name: object.totals.messages
+      - name: messages.total
         source: queue_totals/messages
         type: long_gauge
         label: messages
         description: Total number of messages (ready plus unacknowledged)
 
-      - name: object.totals.messages.ready
+      - name: messages.total.ready
         source: queue_totals/messages_ready
         type: long_gauge
         label: ready messages
         description: Number of messages ready for delivery
 
-      - name: object.totals.messages.unacknowledged
+      - name: messages.total.unacknowledged
         source: queue_totals/messages_unacknowledged
         type: long_gauge
         label: unacknowledged messages

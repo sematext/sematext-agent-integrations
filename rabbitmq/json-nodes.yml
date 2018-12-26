@@ -34,7 +34,7 @@ observation:
       - name: process.wait
         source: run_queue
         type: long_gauge
-        label: warting processes
+        label: waiting processes
         description: Average number of Erlang processes waiting to run
 
       - name: sockets.used
