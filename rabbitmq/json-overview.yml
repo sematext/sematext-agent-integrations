@@ -35,25 +35,25 @@ observation:
         label: consumers
         description: Total number of consumers
 
-      - name: object.totals.messages.count
+      - name: object.totals.messages
         source: queue_totals/messages
         type: long_gauge
         label: messages
         description: Total number of messages (ready plus unacknowledged)
 
-      - name: object.totals.messages.ready.count
+      - name: object.totals.messages.ready
         source: queue_totals/messages_ready
         type: long_gauge
         label: ready messages
         description: Number of messages ready for delivery
 
-      - name: object.totals.messages.unacknowledged.count
+      - name: object.totals.messages.unacknowledged
         source: queue_totals/messages_unacknowledged
         type: long_gauge
         label: unacknowledged messages
         description: Number of unacknowledged messages
 
-      - name: messages.ack
+      - name: messages.acked
         source: message_stats/ack
         type: long_gauge
         label: ack messages

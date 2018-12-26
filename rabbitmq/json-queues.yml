@@ -54,7 +54,7 @@ observation:
         label: unacknowledged messages
         description: Number of messages delivered to clients but not yet acknowledged
 
-      - name: queues.messages.ack
+      - name: queues.messages.acked
         source: message_stats/ack
         type: long_gauge
         label: ack messages

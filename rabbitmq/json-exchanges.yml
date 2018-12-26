@@ -11,7 +11,7 @@ observation:
     path: $.[?(@.name=${name} && @.vhost=${vhost})]
 
     metric:
-      - name: exchanges.messages.ack
+      - name: exchanges.messages.acked
         source: message_stats/ack
         type: long_gauge
         label: ack messages
