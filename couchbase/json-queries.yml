@@ -21,14 +21,14 @@ observation:
         source: cpu_sys_percent
         type: long_gauge
         label: system cpu
-        unit: %
+        unit: "%"
         description: Percentage of CPU used by the system
 
       - name: cpu.user.percent
         source: cpu_user_percent
         type: long_gauge
         label: user cpu
-        unit: %
+        unit: "%"
         description: Percentage of CPU used by the user
 
       - name: gc.num
@@ -41,7 +41,7 @@ observation:
         source: gc_pause_percent
         type: long_gauge
         label: gc pause percent
-        unit: %
+        unit: "%"
         description: Garbage collection pause percentage
 
       - name: gc.pause.time
@@ -106,7 +106,7 @@ observation:
         source: request_prepared_percent
         type: long_gauge
         label: request prepared percent
-        unit: %
+        unit: "%"
         description: Percentage of requests prepared
 
       - name: request.time.80percentile

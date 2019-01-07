@@ -108,7 +108,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_fragmentation[0]
         type: long_gauge
         label: docs fragmentation
-        unit: %
+        unit: "%"
         description: Couch docs fragmentation
 
       - name: couch.spatial.data.size
@@ -156,7 +156,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_views_fragmentation[0]
         type: long_gauge
         label: view framentation
-        unit: %
+        unit: "%"
         description: View fragmentation
 
       - name: cpu.idle.ms
@@ -170,7 +170,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cpu_utilization_rate[0]
         type: long_gauge
         label: CPU utilization
-        unit: %
+        unit: "%"
         description: CPU utilization percentage
 
       - name: curr.connections
@@ -249,7 +249,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_cache_miss_ratio[0]
         type: long_gauge
         label: cach miss ratio
-        unit: %
+        unit: "%"
         description: Cache miss ratio
 
       - name: ep.dcp.fts.backoff
@@ -634,7 +634,7 @@ observation:
 
       - name: misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.misses[0]
-        type: long.gauge
+        type: long_gauge
         label: misses
         description: Total number of misses
 
