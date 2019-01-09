@@ -6,7 +6,7 @@ data:
   basicHttpAuthPassword: ${COUCHBASE_BASICAUTH_PASSWORD}
 
 observation:
-  - name: nodes
+  - name: buckets
     metricNamespace: couchbase
     path: $.[?(@.name=${bucketName})]
 

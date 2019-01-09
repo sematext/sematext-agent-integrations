@@ -1,6 +1,6 @@
 type: json
 data:
-  url: /pools/default/tasks
+  url: /admin/vitals
   server: ${COUCHBASE_QUERY_HOSTPORT}
   basicHttpAuthUsername: ${COUCHBASE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${COUCHBASE_BASICAUTH_PASSWORD}
@@ -18,99 +18,99 @@ observation:
         description: Cores
 
       - name: cpu.sys.percent
-        source: cpu_sys_percent
+        source: cpu.sys.percent
         type: long_gauge
         label: system cpu
         unit: "%"
         description: Percentage of CPU used by the system
 
       - name: cpu.user.percent
-        source: cpu_user_percent
+        source: cpu.user.percent
         type: long_gauge
         label: user cpu
         unit: "%"
         description: Percentage of CPU used by the user
 
       - name: gc.num
-        source: gc_num
+        source: gc.num
         type: long_gauge
         label: gc num
         description: Number of objects garbage collected
 
       - name: gc.pause.percent
-        source: gc_pause_percent
+        source: gc.pause.percent
         type: long_gauge
         label: gc pause percent
         unit: "%"
         description: Garbage collection pause percentage
 
       - name: gc.pause.time
-        source: gc_pause_time
+        source: gc.pause.time
         type: long_gauge
         label: gc pause time
         unit: seconds
         description: Garbage collection pause time
 
       - name: memory.system
-        source: memory_system
+        source: memory.system
         type: long_gauge
         label: system memory
         unit: bytes
         description: Memory used by the system
 
       - name: memory.total
-        source: memory_total
+        source: memory.total
         type: long_gauge
         label: total memory
         unit: bytes
         description: Memory used by Couchbase over the total period of time
 
       - name: memory.usage
-        source: memory_usage
+        source: memory.usage
         type: long_gauge
         label: usage memory
         unit: bytes
         description: Memory currently used by Couchbase
 
       - name: request.active.count
-        source: request_active_count
+        source: request.active.count
         type: long_gauge
         label: active requests
         description: Number of active requests
 
       - name: request.completed.count
-        source: request_completed_count
+        source: request.completed.count
         type: long_gauge
         label: requests completed
         description: Number of requests completed
 
       - name: request.per.sec.15min
-        source: request_per_sec_15min
+        source: request.per.sec.15min
         type: long_gauge
         label: requests/sec in 15 min
         description: Requests per second in the last 15 minutes
 
       - name: request.per.sec.1min
-        source: request_per_sec_1min
+        source: request.per.sec.1min
         type: long_gauge
         label: requests/sec in 1 min
         description: Requests per second in the last minute
 
       - name: request.per.sec.5min
-        source: request_per_sec_5min
+        source: request.per.sec.5min
         type: long_gauge
         label: requests/sec in 5 min
         description: Requests per second in the last 5 minutes
 
       - name: request.prepared.percent
-        source: request_prepared_percent
+        source: request.prepared.percent
         type: long_gauge
         label: request prepared percent
         unit: "%"
         description: Percentage of requests prepared
 
       - name: request.time.80percentile
-        source: request_time_80percentile
+        source: request.time.80percentile
         type: long_gauge
         label: request time 80percentile
         unit: seconds
@@ -124,28 +124,28 @@ observation:
         description: 95th percentile request time
 
       - name: request.time.99percentile
-        source: request_time_99percentile
+        source: request.time.99percentile
         type: long_gauge
         label: request time 99percentile
         unit: seconds
         description: 99th percentile request time
 
       - name: request.time.mean
-        source: request_time_mean
+        source: request.time.mean
         type: long_gauge
         label: request time mean
         unit: seconds
         description: Average request time
 
       - name: request.time.median
-        source: request_time_median
+        source: request.time.median
         type: long_gauge
         label: request time median
         unit: seconds
         description: Median request time
 
       - name: threads.total
-        source: total_threads
+        source: threads.total
         type: long_gauge
         label: total threads
         description: total_threads
