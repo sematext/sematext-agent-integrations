@@ -58,6 +58,6 @@ observation:
         description: Number of in memory items
 
     tag:
-      - name: node.name
+      - name: couchbase.node.name
         value: ${name}
 

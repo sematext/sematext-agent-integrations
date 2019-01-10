@@ -14,7 +14,7 @@ observation:
       - name: bg.wait.time.avg
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.avg_bg_wait_time[0]
         type: long_gauge
-        label: backround wait time
+        label: background wait time
         unit: seconds
         description: Average background wait time
 
@@ -37,18 +37,18 @@ observation:
         type: long_gauge
         label: bytes read
         unit: bytes
-        description: Bytes read
+        description: Average background wait time
 
       - name: bytes.read
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.bytes_read[0]
-        type: long_gauge
+        type: double_gauge
         label: bytes read
         unit: bytes
         description: Bytes read
 
       - name: bytes.written
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.bytes_written[0]
-        type: long_gauge
+        type: double_gauge
         label: bytes written
         unit: bytes
         description: Bytes written
@@ -86,7 +86,7 @@ observation:
       - name: couch.docs.actual.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_actual_disk_size[0]
         type: long_gauge
-        label: total docs disk size
+        label: docs disk size
         unit: bytes
         description: Couch docs total size on disk in bytes
 
@@ -145,7 +145,7 @@ observation:
         unit: bytes
         description: Size of object data for views
 
-      - name: couch_views_disk_size
+      - name: couch.views.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_views_disk_size[0]
         type: long_gauge
         label: disk size
@@ -155,7 +155,7 @@ observation:
       - name: couch.views.fragmentation
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_views_fragmentation[0]
         type: long_gauge
-        label: view framentation
+        label: view fragmentation
         unit: "%"
         description: View fragmentation
 
@@ -168,7 +168,7 @@ observation:
 
       - name: cpu.utilization.rate
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cpu_utilization_rate[0]
-        type: long_gauge
+        type: double_gauge
         label: CPU utilization
         unit: "%"
         description: CPU utilization percentage
@@ -384,7 +384,7 @@ observation:
       - name: ep.flusher.todo
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_flusher_todo[0]
         type: long_gauge
-        label: slusher todo
+        label: flusher todo
         description: Number of items currently being written
 
       - name: ep.item.commit.failed
@@ -595,7 +595,7 @@ observation:
         type: long_gauge
         label: free memory
         unit: bytes
-        description: Free memory
+        description: Actual free memory
 
       - name: mem.actual.used
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.mem_actual_used[0]
@@ -963,6 +963,6 @@ observation:
         description: Number of cross-datacenter replication operations
 
     tag:
-      - name: bucket.name
+      - name: couchbase.bucket.name
         value: ${bucketName}
 
