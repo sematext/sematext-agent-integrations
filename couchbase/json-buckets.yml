@@ -285,7 +285,7 @@ observation:
       - name: ep.dcp.fts.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_fts_producer_count[0]
         type: gauge
-        label: dcp fts producer
+        label: dcp fts producers
         description: Number of fts producers
 
       - name: ep.dcp.2i.total.bytes
