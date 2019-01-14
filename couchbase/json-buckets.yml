@@ -254,7 +254,7 @@ observation:
       - name: ep.cache.miss.ratio
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_cache_miss_ratio[0]
         type: double_gauge
-        label: cach miss ratio
+        label: cache miss ratio
         unit: "%"
         description: Cache miss ratio
 
