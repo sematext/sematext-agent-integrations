@@ -358,7 +358,7 @@ observation:
       - name: ep.dcp.other.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_producer_count[0]
         type: gauge
-        label: dcp other producer
+        label: dcp other producers
         description: Number of other producers
 
       - name: ep.dcp.other.total.bytes
