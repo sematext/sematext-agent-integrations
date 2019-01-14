@@ -15,21 +15,21 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.avg_bg_wait_time[0]
         type: double_gauge
         label: average background wait
-        unit: seconds
+        unit: sec
         description: Average background wait time
 
       - name: disk.commit.time.avg
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.avg_disk_commit_time[0]
         type: double_gauge
         label: average commit time
-        unit: seconds
+        unit: sec
         description: Average disk commit time
 
       - name: disk.update.time.avg
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.avg_disk_update_time[0]
         type: double_gauge
         label: average update time
-        unit: microseconds
+        unit: microsec
         description: Average disk update time
 
       - name: bg.wait.total
@@ -169,7 +169,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cpu_idle_ms[0]
         type: gauge
         label: cpu idle
-        unit: milliseconds
+        unit: millisec
         description: CPU idle milliseconds
 
       - name: cpu.utilization.rate
@@ -846,7 +846,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_queue_age[0]
         type: gauge
         label: vb active queue age
-        unit: milliseconds
+        unit: millisec
         description: Sum of disk queue item age in milliseconds
 
       - name: vb.active.queue.drain
@@ -878,28 +878,28 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_avg_active_queue_age[0]
         type: double_gauge
         label: vb avg active queue age
-        unit: seconds
+        unit: sec
         description: Average age in seconds of active items in the active item queue
 
       - name: vb.avg.pending.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_avg_pending_queue_age[0]
         type: double_gauge
         label: vb avg pending queue age
-        unit: seconds
+        unit: sec
         description: Average age in seconds of pending items in the pending item queue
 
       - name: vb.avg.replica.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_avg_replica_queue_age[0]
         type: double_gauge
         label: vb avg replica queue age
-        unit: seconds
+        unit: sec
         description: Average age in seconds of replica items in the replica item queue
 
       - name: vb.avg.total.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_avg_total_queue_age[0]
         type: double_gauge
         label: vb avg total queue age
-        unit: seconds
+        unit: sec
         description: Average age of items in the queue
 
       - name: vb.pending.curr.items
@@ -956,7 +956,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_age[0]
         type: gauge
         label: vb pending queue age
-        unit: milliseconds
+        unit: millisec
         description: Sum of disk pending queue item age in milliseconds
 
       - name: vb.pending.queue.drain
@@ -1038,7 +1038,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_age[0]
         type: gauge
         label: vb replica queue age
-        unit: milliseconds
+        unit: millisec
         description: Sum of disk replica queue item age in milliseconds
 
       - name: vb.replica.queue.drain
@@ -1068,7 +1068,7 @@ observation:
       - name: vb_total_queue_age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_total_queue_age [0]
         type: gauge
-        unit: seconds
+        unit: sec
         label: vb total queue age
         description: Sum of disk queue item age in milliseconds
 
