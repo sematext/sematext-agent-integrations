@@ -17,20 +17,6 @@ observation:
         label: cores
         description: Cores
 
-      - name: cpu.sys.percent
-        source: cpu.sys.percent
-        type: long_gauge
-        label: system cpu
-        unit: "%"
-        description: Percentage of CPU used by the system
-
-      - name: cpu.user.percent
-        source: cpu.user.percent
-        type: long_gauge
-        label: user cpu
-        unit: "%"
-        description: Percentage of CPU used by the user
-
       - name: gc.num
         source: gc.num
         type: long_gauge
