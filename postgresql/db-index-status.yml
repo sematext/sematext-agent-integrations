@@ -18,13 +18,13 @@ observation:
         source: relname
         type: text
         send: false
-        label: Table name
+        label: table name
 
       - name: indexes.schema
         source: schemaname
         type: text
         send: false
-        label: Schema name
+        label: schema name
 
       - name: indexes.index
         source: indexrelname
@@ -35,19 +35,19 @@ observation:
       - name: indexes.scan
         source: idx_scan
         type: counter
-        label: Index scan
+        label: index scan
         description: Number of index scans initiated on this index
 
       - name: indexes.rows.read
         source: idx_tup_read
         type: counter
-        label: Returned index entries
+        label: returned index entries
         description: Number of index entries returned by scans on this index
 
       - name: indexes.rows.feched
         source: idx_tup_fetch
         type: counter
-        label: Fetched rows
+        label: fetched rows
         description: Number of live rows fetched by index scans
 
     tag:

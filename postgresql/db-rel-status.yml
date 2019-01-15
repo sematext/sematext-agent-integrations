@@ -17,48 +17,48 @@ observation:
         source: relname
         type: text
         send: false
-        label: Table name
+        label: table name
 
       - name: tables.schema
         source: schemaname
         type: text
         send: false
-        label: Schema name
+        label: schema name
 
       - name: tables.scan.sequential
         source: seq_scan
         type: counter
-        label: Sequential scans
+        label: sequential scans
         description: Number of sequential scans initiated on this table
 
       - name: tables.rows.fetched.sequential
         source: seq_tup_read
         type: counter
-        label: Sequential rows fetched
+        label: sequential rows fetched
         description: Number of live rows fetched by sequential scans
 
       - name: tables.rows.fetched.index
         source: idx_tup_fetch
         type: counter
-        label: Index rows fetched
+        label: index rows fetched
         description: Number of live rows fetched by index scans
 
       - name: tables.rows.inserted
         source: n_tup_ins
         type: counter
-        label: Inserted rows
+        label: inserted rows
         description: Number of rows inserted
 
       - name: tables.rows.updated
         source: n_tup_upd
         type: counter
-        label: Updated rows
+        label: updated rows
         description: Number of rows updated
 
       - name: tables.rows.deleted
         source: n_tup_del
         type: counter
-        label: Deleted rows
+        label: deleted rows
         description: Number of rows deleted
 
       - name: tables.rows.hot.updated
@@ -70,13 +70,13 @@ observation:
       - name: tables.rows.live
         source: n_live_tup
         type: long_gauge
-        label: Live rows
+        label: live rows
         description: Estimated number of live rows
 
       - name: tables.rows.dead
         source: n_dead_tup
         type: long_gauge
-        label: Dead rows
+        label: dead rows
         description: Estimated number of dead rows
 
     tag:

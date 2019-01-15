@@ -39,13 +39,13 @@ observation:
         source: schemaname
         type: text
         send: false
-        label: Schema name
+        label: schema name
 
       - name: function.name
         source: funcname
         type: text
         send: false
-        label: Function name
+        label: function name
 
       - name: function.calls
         source: calls

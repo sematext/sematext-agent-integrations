@@ -31,10 +31,10 @@ observation:
         source: replication_delay
         type: long_gauge
         unit: ms
-        label: Replication delay
+        label: replication delay
 
       - name: replication.delay.bytes
         source: replication_delay_bytes
         type: long_gauge
         unit: bytes
-        label: Replication delay bytes
+        label: replication delay bytes

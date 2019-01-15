@@ -40,19 +40,19 @@ observation:
         source: datname
         type: text
         send: false
-        label: Database
+        label: database
         description: Name of the database this backend is connected to
 
       - name: transaction.open.count
         source: open
         type: long_gauge
-        label: Active backends
+        label: active backends
         description: Number of backends executing a query
 
       - name: transaction.idle.count
         source: idle_in_transaction
         type: long_gauge
-        label: Idle backend
+        label: idle baickend
         description: Number of backend is in a transaction, but is not currently executing a query
 
     tag:

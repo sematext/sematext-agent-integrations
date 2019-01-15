@@ -27,27 +27,27 @@ observation:
         source: relname
         type: text
         send: false
-        label: Table name
+        label: table name
 
       - name: table.disk.size
         source: table_size
         type: long_gauge
         unit: bytes
-        label: Table size
+        label: table size
         description: Disk space used by the a table, excluding indexes (but including TOAST, free space map, and visibility map)
 
       - name: index.disk.size
         source: index_size
         type: long_gauge
         unit: bytes
-        label: Index size
+        label: index size
         description: Total disk space used by indexes attached to the a table
 
       - name: table.total.disk.size
         source: total_size
         type: long_gauge
         unit: bytes
-        label: Total size
+        label: total size
         description: Total disk space used by the a table, including all indexes and TOAST data
 
     tag:

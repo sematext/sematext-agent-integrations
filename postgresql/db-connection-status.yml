@@ -29,10 +29,10 @@ observation:
       - name: database.connections.max
         source: max_connections
         type: long_gauge
-        label: Max connections
+        label: max connections
 
       - name: database.connections.usage
         source: pct_connections
         type: long_gauge
         unit: '%'
-        label: Percent usage connections
+        label: percent usage connections

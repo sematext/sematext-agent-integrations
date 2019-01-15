@@ -30,5 +30,5 @@ observation:
         source: replication_delay
         type: long_gauge
         unit: ms
-        label: Replication delay
+        label: replication delay
 

@@ -25,12 +25,12 @@ observation:
         source: schemaname
         type: text
         send: false
-        label: Schema name
+        label: schema name
 
       - name: table.count
         source: table_count
         type: long_gauge
-        label: Table count
+        label: table count
 
     tag:
       - name: posgresql.schema

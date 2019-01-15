@@ -26,4 +26,4 @@ observation:
         source: replication_delay_bytes
         type: long_gauge
         unit: bytes
-        label: Replication delay bytes
+        label: replication delay bytes

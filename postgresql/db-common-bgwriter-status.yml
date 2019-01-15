@@ -18,41 +18,41 @@ observation:
       - name: bgwriter.checkpoints.scheduled
         source: checkpoints_timed
         type: counter
-        label: Scheduled checkpoints
+        label: scheduled checkpoints
         description: Number of scheduled checkpoints that have been performed
 
       - name: bgwriter.checkpoints.requested
         source: checkpoints_req
         type: counter
-        label: Requested checkpoints
+        label: requested checkpoints
         description: Number of requested checkpoints that have been performed
 
       - name: bgwriter.buffers.written
         source: buffers_checkpoint
         type: counter
-        label: Checkpoint buffers
+        label: checkpoint buffers
         description: Number of buffers written during checkpoints
 
       - name: bgwriter.buffers.clean
         source: buffers_clean
         type: counter
-        label: Cleaned buffers
+        label: cleaned buffers
         description: Number of buffers written by the background writer
 
       - name: bgwriter.buffers.cleaning.maxwritten.stopped
         source: maxwritten_clean
         type: counter
-        label: Max written clean buffers
+        label: max written clean buffers
         description: Number of times the background writer stopped a cleaning scan because it had written too many buffers
 
       - name: bgwriter.buffers.backend
         source: buffers_backend
         type: counter
-        label: Backend buffers
+        label: backend buffers
         description: Number of buffers written directly by a backend
 
       - name: bgwriter.buffers.alloc
         source: buffers_alloc
         type: counter
-        label: Allocated buffers
+        label: allocated buffers
         description: Number of buffers allocated

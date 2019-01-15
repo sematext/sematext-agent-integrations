@@ -22,5 +22,5 @@ observation:
       - name: bgwriter.buffers.backend.fsync
         source: buffers_backend_fsync
         type: counter
-        label: Fsync backend buffers
+        label: fsync backend buffers
         description: Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)
