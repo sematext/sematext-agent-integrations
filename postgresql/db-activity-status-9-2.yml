@@ -52,7 +52,7 @@ observation:
       - name: transaction.idle.count
         source: idle_in_transaction
         type: long_gauge
-        label: idle backend
+        label: idle backends
         description: Number of backend is in a transaction, but is not currently executing a query
 
     tag:
