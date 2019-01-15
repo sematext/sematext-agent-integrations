@@ -64,7 +64,7 @@ observation:
       - name: tables.rows.hot.updated
         source: n_tup_hot_upd
         type: counter
-        label: Hot updated rows
+        label: hot updated rows
         description: Number of rows hot updated (i.e., with no separate index update required)
 
       - name: tables.rows.live

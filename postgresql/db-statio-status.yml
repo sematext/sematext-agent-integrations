@@ -23,7 +23,7 @@ observation:
         source: schemaname
         type: text
         send: false
-        label: Schema name
+        label: schema name
 
       - name: statio.heap.blocks.read
         source: heap_blks_read
