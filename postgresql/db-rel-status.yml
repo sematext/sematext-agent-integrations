@@ -29,7 +29,7 @@ observation:
         source: seq_scan
         type: counter
         label: sequential scans
-        description: Number of sequential scans initiated on this table
+        description: Number of sequential scans initiated on a table
 
       - name: tables.rows.fetched.sequential
         source: seq_tup_read
