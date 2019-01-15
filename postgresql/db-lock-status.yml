@@ -44,7 +44,7 @@ observation:
         description: Number of active lockable object
 
     tag:
-      - name: posgresql.lock.mode
+      - name: postgresql.lock.mode
         value: eval:${lock.mode}
-      - name: posgresql.lock.relation
+      - name: postgresql.lock.relation
         value: eval:${lock.relation}

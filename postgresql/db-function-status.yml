@@ -68,7 +68,7 @@ observation:
         description: Total time spent in this function itself, not including other functions called by it, in milliseconds
 
     tag:
-      - name: posgresql.schema
+      - name: postgresql.schema
         value: eval:${function.schema}
-      - name: posgresql.function.name
+      - name: postgresql.function.name
         value: eval:${function.name}

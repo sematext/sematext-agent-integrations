@@ -80,7 +80,7 @@ observation:
         description: Estimated number of dead rows
 
     tag:
-      - name: posgresql.table
+      - name: postgresql.table
         value: eval:${tables.table}
-      - name: posgresql.schema
+      - name: postgresql.schema
         value: eval:${tables.schema}

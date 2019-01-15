@@ -51,9 +51,9 @@ observation:
         description: Number of live rows fetched by index scans
 
     tag:
-      - name: posgresql.table
+      - name: postgresql.table
         value: eval:${indexes.table}
-      - name: posgresql.schema
+      - name: postgresql.schema
         value: eval:${indexes.schema}
-      - name: posgresql.index
+      - name: postgresql.index
         value: eval:${indexes.index}
