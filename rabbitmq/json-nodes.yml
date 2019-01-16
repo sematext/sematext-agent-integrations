@@ -43,27 +43,27 @@ observation:
         label: used sockets
         description: Number of file descriptors used as sockets
 
-      - name: network.partitions
-        source: partitions
-        type: long_gauge
-        label: partitions
-        description: Number of network partitions this node is seeing
+#      - name: network.partitions
+#        source: partitions
+#        type: long_gauge
+#        label: partitions
+#        description: Number of network partitions this node is seeing
 
       - name: node.running
-        source: running
-        type: long_gauge
+        source: func:BoolToInt(running)
+        type: gauge
         label: running
         description: Is the node running or not
 
       - name: mem.alarm
-        source: mem_alarm
-        type: long_gauge
+        source: func:BoolToInt(mem_alarm)
+        type: gauge
         label: memory alarm
         description: Does the host has memory alarm
 
       - name: disk.alarm
-        source: disk_free_alarm
-        type: long_gauge
+        source: func:BoolToInt(disk_free_alarm)
+        type: gauge
         label: disk alarm
         description: Does the node have disk alarm
 

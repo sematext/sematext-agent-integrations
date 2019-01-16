@@ -12,91 +12,91 @@ observation:
 
     metric:
       - name: connections.total
-        source: object_totals/connections
+        source: object_totals.connections
         type: long_gauge
         label: connections
         description: Total number of connections
 
       - name: channels.total
-        source: object_totals/channels
+        source: object_totals.channels
         type: long_gauge
         label: channels
         description: Total number of channels
 
       - name: queues.total
-        source: object_totals/queues
+        source: object_totals.queues
         type: long_gauge
         label: queues
         description: Total number of queues
 
       - name: consumers.total
-        source: object_totals/consumers
+        source: object_totals.consumers
         type: long_gauge
         label: consumers
         description: Total number of consumers
 
       - name: messages.total
-        source: queue_totals/messages
+        source: queue_totals.messages
         type: long_gauge
         label: messages
         description: Total number of messages (ready plus unacknowledged)
 
       - name: messages.total.ready
-        source: queue_totals/messages_ready
+        source: queue_totals.messages_ready
         type: long_gauge
         label: ready messages
         description: Number of messages ready for delivery
 
       - name: messages.total.unacknowledged
-        source: queue_totals/messages_unacknowledged
+        source: queue_totals.messages_unacknowledged
         type: long_gauge
         label: unacknowledged messages
         description: Number of unacknowledged messages
 
       - name: messages.acked
-        source: message_stats/ack
-        type: long_gauge
+        source: message_stats.ack
+        type: counter
         label: ack messages
         description: Number of messages delivered to clients and acknowledged
 
       - name: messages.confirmed
-        source: message_stats/confirm
-        type: long_gauge
+        source: message_stats.confirm
+        type: counter
         label: confirmed messages
         description: Count of messages confirmed
 
       - name: messages.delivered.get
-        source: message_stats/deliver_get
-        type: long_gauge
+        source: message_stats.deliver_get
+        type: counter
         label: delivered get messages
         description: Sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get
 
       - name: messages.published
-        source: message_stats/publish
-        type: long_gauge
+        source: message_stats.publish
+        type: counter
         label: published messages
         description: Count of messages published
 
       - name: messages.published.in
-        source: message_stats/publish_in
-        type: long_gauge
+        source: message_stats.publish_in
+        type: counter
         label: published in messages
         description: Count of messages published from channels into this exchange
 
       - name: messages.published.out
-        source: message_stats/publish_out
-        type: long_gauge
+        source: message_stats.publish_out
+        type: counter
         label: published out messages
         description: Count of messages published from this exchange into queues
 
       - name: messages.returned.unroutable
-        source: message_stats/return_unroutable
-        type: long_gauge
+        source: message_stats.return_unroutable
+        type: counter
         label: unroutable messages
         description: Count of messages returned to publisher as unroutable
 
       - name: messages.redelivered
-        source: message_stats/redeliver
-        type: long_gauge
+        source: message_stats.redeliver
+        type: counter
         label: redelivered messages
         description: Count of subset of messages in deliver_get which had the redelivered flag set

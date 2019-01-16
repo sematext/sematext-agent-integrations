@@ -25,7 +25,7 @@ observation:
 
       - name: queues.consumer.utilisation
         source: consumer_utilisation
-        type: long_gauge
+        type: gauge
         label: consumer utilisation
         description: The ratio of time that a queue's consumers can take new messages
 
@@ -55,32 +55,32 @@ observation:
         description: Number of messages delivered to clients but not yet acknowledged
 
       - name: queues.messages.acked
-        source: message_stats/ack
-        type: long_gauge
+        source: message_stats.ack
+        type: counter
         label: ack messages
         description: Number of messages delivered to clients and acknowledged
 
       - name: queues.messages.delivered
-        source: message_stats/deliver
-        type: long_gauge
+        source: message_stats.deliver
+        type: counter
         label: delivered messages
         description: Count of messages delivered in acknowledgement mode to consumers
 
       - name: queues.messages.delivered.get
-        source: message_stats/deliver_get
-        type: long_gauge
+        source: message_stats.deliver_get
+        type: counter
         label: delivered get messages
         description: Sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get.
 
       - name: queues.messages.published
-        source: message_stats/publish
-        type: long_gauge
+        source: message_stats.publish
+        type: counter
         label: published messages
         description: Count of messages published
 
       - name: queues.messages.redelivered
-        source: message_stats/redeliver
-        type: long_gauge
+        source: message_stats.redeliver
+        type: counter
         label: redelivered messages
         description: Count of subset of messages in deliver_get which had the redelivered flag set
 
