@@ -11,7 +11,7 @@ observation:
     path: $.[?(@.name=${name})]
 
     metric:
-      - name: file.used
+      - name: file.descriptors.used
         source: fd_used
         type: long_gauge
         label: used files
