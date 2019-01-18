@@ -39,15 +39,15 @@ observation:
 
       - name: sockets.used
         source: sockets_used
-        type: long_gauge
+        type: gauge
         label: used sockets
         description: Number of file descriptors used as sockets
 
-#      - name: network.partitions
-#        source: partitions
-#        type: long_gauge
-#        label: partitions
-#        description: Number of network partitions this node is seeing
+      - name: network.partitions
+        source: partitions.length()
+        type: gauge
+        label: partitions
+        description: Number of network partitions this node is seeing
 
       - name: node.running
         source: func:BoolToInt(running)
