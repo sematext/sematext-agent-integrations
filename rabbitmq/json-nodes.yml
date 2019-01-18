@@ -24,7 +24,7 @@ observation:
         unit: bytes
         description: Current free disk space
 
-      - name: mem.used
+      - name: memory.used
         source: mem_used
         type: long_gauge
         label: used memory
@@ -55,13 +55,13 @@ observation:
         label: running
         description: Is the node running or not
 
-      - name: mem.alarm
+      - name: memory.alarm.enabled
         source: func:BoolToInt(mem_alarm)
         type: gauge
         label: memory alarm
-        description: Does the host has memory alarm
+        description: Does the host have memory alarm
 
-      - name: disk.alarm
+      - name: disk.alarm.enabled
         source: func:BoolToInt(disk_free_alarm)
         type: gauge
         label: disk alarm
