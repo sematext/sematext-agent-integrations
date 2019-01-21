@@ -75,91 +75,91 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cmd_get[0]
         type: double_gauge
         label: cmd gets
-        description: Compare and Swap gets
+        description: Number of get commands
 
       - name: cmd.set
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cmd_set[0]
         type: double_gauge
         label: cmd sets
-        description: Compare and Swap sets
+        description: Number of set commands
 
-      - name: couch.docs.actual.disk.size
+      - name: docs.disk.actual.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_actual_disk_size[0]
         type: long_gauge
         label: doc actual disk size
         unit: bytes
         description: Couch docs total size on disk in bytes
 
-      - name: couch.docs.data.size
+      - name: docs.data.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_data_size[0]
         type: gauge
         label: doc data disk size
         unit: bytes
         description: Couch docs data size in bytes
 
-      - name: couch.docs.disk.size
+      - name: docs.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_disk_size[0]
         type: gauge
         label: docs disk size
         unit: bytes
         description: Couch docs total size in bytes
 
-      - name: couch.docs.fragmentation
+      - name: docs.fragmentation
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_fragmentation[0]
         type: double_gauge
         label: doc fragmentation
         unit: "%"
         description: Couch docs fragmentation
 
-      - name: couch.spatial.data.size
+      - name: data.spatial.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_spatial_data_size[0]
         type: gauge
         label: spatial data size
         unit: bytes
         description: Size of object data for spatial views
 
-      - name: couch.spatial.disk.size
+      - name: disk.spatial.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_spatial_disk_size[0]
         type: gauge
         label: spatial disk size
         unit: bytes
         description: Amount of disk space occupied by spatial views
 
-      - name: couch.spatial.ops
+      - name: ops.spatial
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_spatial_ops[0]
         type: gauge
         label: spatial ops
         description: Spatial operations
 
-      - name: couch.total.disk.size
+      - name: disk.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_total_disk_size[0]
         type: gauge
         label: total disk size
         unit: bytes
         description: Couch total disk size
 
-      - name: couch.views.data.size
+      - name: views.data.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_views_data_size[0]
         type: long_gauge
         label: view data size
         unit: bytes
         description: Size of object data for views
 
-      - name: couch.views.disk.size
+      - name: views.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_views_disk_size[0]
         type: long_gauge
         label: view disk size
         unit: bytes
         description: Amount of disk space occupied by views
 
-      - name: couch.views.fragmentation
+      - name: views.fragmentation
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_views_fragmentation[0]
         type: double_gauge
         label: view fragmentation
         unit: "%"
         description: View fragmentation
 
-      - name: couch.views.ops
+      - name: views.ops
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_views_ops[0]
         type: double_gauge
         label: view ops
@@ -167,43 +167,43 @@ observation:
 
       - name: cpu.idle.ms
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cpu_idle_ms[0]
-        type: gauge
+        type: long_gauge
         label: cpu idle
         unit: millisec
         description: CPU idle milliseconds
 
-      - name: cpu.utilization.rate
+      - name: cpu.utilization
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cpu_utilization_rate[0]
         type: double_gauge
         label: cpu utilization
         unit: "%"
         description: CPU utilization percentage
 
-      - name: curr.connections
+      - name: connections.current
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.curr_connections[0]
         type: long_gauge
         label: connections
         description: Current bucket connections
 
-      - name: curr.items.tot
+      - name: items.current.total
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.curr_items_tot[0]
         type: long_gauge
         label: total items
-        description: Total number of items
+        description: Num current items including those not active (replica, dead and pending states)
 
-      - name: curr.items
+      - name: items.current
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.curr_items[0]
         type: long_gauge
         label: memory items
-        description: Number of active items in memory
+        description: Num items in active vbuckets (temp + live)
 
-      - name: decr.hits
+      - name: decrement.hits
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.decr_hits[0]
         type: gauge
         label: decrement hits
         description: Decrement hits
 
-      - name: decr.misses
+      - name: decrement.misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.decr_misses[0]
         type: gauge
         label: decrement misses
@@ -292,8 +292,8 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_total_bytes[0]
         type: double_gauge
         label: dcp fts total bytes
-        unit: bytes/second
-        description: Number bytes per second being sent for indexes DCP connections
+        unit: bytes/sec
+        description: Number of bytes per second being sent for indexes DCP connections
 
       - name: ep.dcp.2i.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_backoff[0]
@@ -329,7 +329,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_total_bytes[0]
         type: gauge
         label: dcp indexes total bytes
-        description: Number bytes per second being sent for indexes DCP connections
+        description: Number of bytes per second being sent for indexes DCP connections
 
       - name: ep.dcp.other.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_backoff[0]
@@ -365,8 +365,8 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_total_bytes[0]
         type: double_gauge
         label: dcp other total bytes
-        unit: bytes/second
-        description: Number bytes per second being sent for other DCP connections
+        unit: bytes/sec
+        description: Number of bytes per second being sent for other DCP connections
 
       - name: ep.dcp.replica.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_backoff[0]
@@ -403,7 +403,7 @@ observation:
         type: gauge
         label: dcp replica total bytes
         unit: bytes
-        description: Number bytes per second being sent for replica DCP connections
+        description: Number of bytes per second being sent for replica DCP connections
 
       - name: ep.dcp.views.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_views_backoff[0]
@@ -440,7 +440,7 @@ observation:
         type: gauge
         label: dcp views total bytes
         unit: bytes
-        description: Number bytes per second being sent for views DCP connections
+        description: Number of bytes per second being sent for views DCP connections
 
       - name: ep.dcp.xdcr.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_backoff[0]
@@ -476,20 +476,20 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_total_bytes[0]
         type: double_gauge
         label: dcp xdcr total bytes
-        unit: bytes/second
-        description: Number bytes per second being sent for xdcr DCP connections
+        unit: bytes/sec
+        description: Number of bytes per second being sent for xdcr DCP connections
 
       - name: ep.diskqueue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_diskqueue_drain[0]
         type: gauge
         label: queue drained
-        description: Total Drained items on disk queue
+        description: Total drained items in disk queue
 
       - name: ep.diskqueue.fill
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_diskqueue_fill[0]
         type: gauge
         label: queued
-        description: Total enqueued items on disk queue
+        description: Total enqueued items in disk queue
 
       - name: ep.diskqueue.items
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_diskqueue_items[0]
@@ -526,16 +526,16 @@ observation:
       - name: ep.mem.high.wat
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_mem_high_wat[0]
         type: long_gauge
-        label: mem high water mark
+        label: memory high water mark
         unit: bytes
-        description: Mem usage high water mark for auto-evictions
+        description: Memory usage high water mark for auto-evictions
 
       - name: ep.mem.low.wat
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_mem_low_wat[0]
         type: long_gauge
-        label: mem low water mark
+        label: memory low water mark
         unit: bytes
-        description: Mem usage low water mark for auto-evictions
+        description: Memory usage low water mark for auto-evictions
 
       - name: ep.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_meta_data_memory[0]
@@ -694,13 +694,13 @@ observation:
         label: hit ratio
         description: Hit ratio
 
-      - name: incr.hits
+      - name: increment.hits
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.incr_hits[0]
         type: long_gauge
         label: increment hits
         description: Number of increment hits
 
-      - name: incr.misses
+      - name: increment.misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.incr_misses[0]
         type: gauge
         label: increment misses
@@ -780,7 +780,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.rest_requests[0]
         type: long_gauge
         label: rest requests
-        unit: request/second
+        unit: request/sec
         description: Number of HTTP requests
 
       - name: swap.total
@@ -801,7 +801,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_eject[0]
         type: double_gauge
         label: vb active eject
-        unit: items/second
+        unit: items/sec
         description: Number of items per second being ejected to disk from active vBuckets
 
       - name: vb.active.itm.memory
@@ -832,14 +832,14 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_ops_create[0]
         type: double_gauge
         label: vb active ops create
-        unit: items/second
+        unit: items/sec
         description: New items per second being inserted into active vBuckets in this bucket
 
       - name: vb.active.ops.update
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_ops_update[0]
         type: double_gauge
         label: vb active ops update
-        unit: items/second
+        unit: items/sec
         description: Number of items updated on active vBucket per second for this bucket
 
       - name: vb.active.queue.age
@@ -859,7 +859,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_queue_fill[0]
         type: double_gauge
         label: vb active queue fill
-        unit: items/second
+        unit: items/sec
         description: Number of active items per second being put on the active item disk queue
 
       - name: vb.active.queue.size
@@ -912,7 +912,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_eject[0]
         type: double_gauge
         label: vb pending eject
-        unit: items/second
+        unit: items/sec
         description: Number of items per second being ejected to disk from pending vBuckets
 
       - name: vb.pending.itm.memory
@@ -949,7 +949,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_ops_update[0]
         type: double_gauge
         label: vb pending ops update
-        unit: items/second
+        unit: items/sec
         description: Number of items updated on pending vBucket per second for this bucket
 
       - name: vb.pending.queue.age
@@ -969,7 +969,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_fill[0]
         type: gauge
         label: vb pending queue fill
-        description: Total enqueued pending items on disk queue
+        description: Total enqueued pending items in disk queue
 
       - name: vb.pending.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_size[0]
@@ -993,7 +993,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_eject[0]
         type: double_gauge
         label: vb replica eject
-        unit: items/second
+        unit: items/sec
         description: Number of items per second being ejected to disk from replica vBuckets
 
       - name: vb.replica.itm.memory
@@ -1031,7 +1031,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_ops_update[0]
         type: double_gauge
         label: vb replica ops update
-        unit: items/second
+        unit: items/sec
         description: Number of items updated on replica vBucket per second for this bucket
 
       - name: vb.replica.queue.age
@@ -1051,7 +1051,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_fill[0]
         type: gauge
         label: vb replica queue fill
-        description: Total enqueued replica items on disk queue
+        description: Total enqueued replica items in disk queue
 
       - name: vb.replica.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_size[0]

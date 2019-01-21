@@ -30,7 +30,7 @@ observation:
         unit: bytes
         description: Couch docs data size in bytes
 
-      - name: docs.disk.size
+      - name: docs.disk.actual.size
         source: couch_docs_actual_disk_size
         type: long_gauge
         label: data disk size
