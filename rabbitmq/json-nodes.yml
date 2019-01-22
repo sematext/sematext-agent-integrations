@@ -49,17 +49,32 @@ observation:
         label: partitions
         description: Number of network partitions this node is seeing
 
+      - name: running
+        source: running
+        type: text
+        send: false
+
       - name: node.running
         source: func:BoolToInt(running)
         type: gauge
         label: running
         description: Is the node running or not
 
+      - name: mem_alarm
+        source: mem_alarm
+        type: text
+        send: false
+
       - name: memory.alarm.enabled
         source: func:BoolToInt(mem_alarm)
         type: gauge
         label: memory alarm
         description: Does the host have memory alarm
+
+      - name: disk_free_alarm
+        source: disk_free_alarm
+        type: text
+        send: false
 
       - name: disk.alarm.enabled
         source: func:BoolToInt(disk_free_alarm)
