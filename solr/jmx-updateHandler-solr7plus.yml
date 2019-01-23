@@ -324,7 +324,7 @@ observation:
         send: false
 
       - name: indexing.commits.auto.time.max
-        source: func:TrimUnit(Value,ms)
+        source: func:LongTrimUnit(Value,ms)
         type: gauge
         label: autocommit max time
         description: autocommit max time
@@ -601,7 +601,7 @@ observation:
         send: false
 
       - name: indexing.commits.auto.time.max
-        source: func:TrimUnit(Value,ms)
+        source: func:LongTrimUnit(Value,ms)
         type: gauge
         label: autocommit max time
         description: autocommit max time
