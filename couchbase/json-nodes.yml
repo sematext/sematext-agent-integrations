@@ -11,7 +11,7 @@ observation:
     path: $.nodes.[?(@.hostname=${name})].interestingStats
 
     metric:
-      - name: items.curr
+      - name: items.active
         source: curr_items
         type: long_gauge
         label: active items
