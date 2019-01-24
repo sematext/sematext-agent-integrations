@@ -19,20 +19,25 @@ observation:
 
       - name: gc.num
         source: gc.num
-        type: long_gauge
+        type: counter
         label: gc num
         description: Number of objects garbage collected
 
       - name: gc.pause.percent
         source: gc.pause.percent
-        type: long_gauge
+        type: gauge
         label: gc pause percent
         unit: "%"
         description: Garbage collection pause percentage
 
-      - name: gc.pause.time
+      - name: gc.pause.time.text
         source: gc.pause.time
-        type: long_gauge
+        type: text
+        send: false
+
+      - name: gc.pause.time
+        source: as_counter:func:DoubleTrimUnit(gc.pause.time.text, ms)
+        type: counter
         label: gc pause time
         unit: seconds
         description: Garbage collection pause time
@@ -66,72 +71,31 @@ observation:
 
       - name: request.completed.count
         source: request.completed.count
-        type: long_gauge
+        type: counter
         label: requests completed
         description: Number of requests completed
 
-      - name: request.per.sec.15min
-        source: request.per.sec.15min
-        type: long_gauge
-        label: requests/sec in 15 min
-        description: Requests per second in the last 15 minutes
-
-      - name: request.per.sec.1min
-        source: request.per.sec.1min
-        type: long_gauge
-        label: requests/sec in 1 min
-        description: Requests per second in the last minute
-
-      - name: request.per.sec.5min
-        source: request.per.sec.5min
-        type: long_gauge
-        label: requests/sec in 5 min
-        description: Requests per second in the last 5 minutes
-
       - name: request.prepared.percent
         source: request.prepared.percent
-        type: long_gauge
+        type: gauge
         label: request prepared percent
         unit: "%"
         description: Percentage of requests prepared
 
-      - name: request.time.80percentile
-        source: request.time.80percentile
-        type: long_gauge
-        label: request time 80percentile
-        unit: seconds
-        description: 80th percentile request time
-
-      - name: request_.time.95percentile
-        source: request_time_95percentile
-        type: long_gauge
-        label: request time 95percentile
-        unit: seconds
-        description: 95th percentile request time
-
-      - name: request.time.99percentile
-        source: request.time.99percentile
-        type: long_gauge
-        label: request time 99percentile
-        unit: seconds
-        description: 99th percentile request time
+      - name: request.time.mean.text
+        source: request_time.mean
+        type: text
+        send: false
 
       - name: request.time.mean
-        source: request.time.mean
-        type: long_gauge
+        source: func:DoubleTrimUnit(request.time.mean.text, ms)
+        type: gauge
         label: request time mean
         unit: seconds
         description: Average request time
 
-      - name: request.time.median
-        source: request.time.median
-        type: long_gauge
-        label: request time median
-        unit: seconds
-        description: Median request time
-
       - name: threads.total
-        source: threads.total
+        source: total.threads
         type: long_gauge
         label: total threads
         description: total_threads
