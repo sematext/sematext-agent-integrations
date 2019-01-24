@@ -690,7 +690,7 @@ observation:
 
       - name: hit.ratio
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.hit_ratio[0]
-        type: gauge
+        type: double_gauge
         label: hit ratio
         description: Hit ratio
 
@@ -864,13 +864,13 @@ observation:
 
       - name: vb.active.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_queue_size[0]
-        type: gauge
+        type: long_gauge
         label: vb active queue size
         description: Number of active items in the queue
 
       - name: vb.active.resident.items.ratio
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_resident_items_ratio[0]
-        type: gauge
+        type: double_gauge
         label: vb active resident items ratio
         description: Number of resident items
 
@@ -973,13 +973,13 @@ observation:
 
       - name: vb.pending.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_size[0]
-        type: gauge
+        type: long_gauge
         label: vb pending queue size
         description: Number of pending items in the queue
 
       - name: vb.pending.resident.items.ratio
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_resident_items_ratio[0]
-        type: gauge
+        type: double_gauge
         label: vb pending resident items ratio
         description: Number of resident pending items
 
@@ -1055,13 +1055,13 @@ observation:
 
       - name: vb.replica.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_size[0]
-        type: gauge
+        type: long_gauge
         label: vb replica queue size
         description: Replica items in disk queue
 
       - name: vb.replica.resident.items.ratio
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_resident_items_ratio[0]
-        type: gauge
+        type: double_gauge
         label: vb replica resident items ratio
         description: Number of resident replica items
 
