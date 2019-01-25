@@ -1,0 +1,102 @@
+type: json
+data:
+  url: /api/overview
+  server: ${RABBITMQ_API_URL}
+  basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
+
+observation:
+  - name: overview
+    metricNamespace: rabbitmq
+    path: $.
+
+    metric:
+      - name: connections.count
+        source: object_totals.connections
+        type: long_gauge
+        label: connections
+        description: Total number of connections
+
+      - name: channels.count
+        source: object_totals.channels
+        type: long_gauge
+        label: channels
+        description: Total number of channels
+
+      - name: queues.count
+        source: object_totals.queues
+        type: long_gauge
+        label: queues
+        description: Total number of queues
+
+      - name: consumers.count
+        source: object_totals.consumers
+        type: long_gauge
+        label: consumers
+        description: Total number of consumers
+
+      - name: messages.count
+        source: queue_totals.messages
+        type: long_gauge
+        label: messages
+        description: Total number of messages (ready plus unacknowledged)
+
+      - name: messages.ready.count
+        source: queue_totals.messages_ready
+        type: long_gauge
+        label: ready messages
+        description: Number of messages ready for delivery
+
+      - name: messages.unacknowledged.count
+        source: queue_totals.messages_unacknowledged
+        type: long_gauge
+        label: unacknowledged messages
+        description: Number of unacknowledged messages
+
+      - name: messages.acked
+        source: message_stats.ack
+        type: counter
+        label: ack messages
+        description: Number of messages delivered to clients and acknowledged
+
+      - name: messages.confirmed
+        source: message_stats.confirm
+        type: counter
+        label: confirmed messages
+        description: Count of messages confirmed
+
+      - name: messages.delivered.get
+        source: message_stats.deliver_get
+        type: counter
+        label: delivered get messages
+        description: Sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get
+
+      - name: messages.published
+        source: message_stats.publish
+        type: counter
+        label: published messages
+        description: Count of messages published
+
+      - name: messages.published.in
+        source: message_stats.publish_in
+        type: counter
+        label: published in messages
+        description: Count of messages published from channels into this exchange
+
+      - name: messages.published.out
+        source: message_stats.publish_out
+        type: counter
+        label: published out messages
+        description: Count of messages published from this exchange into queues
+
+      - name: messages.returned.unroutable
+        source: message_stats.return_unroutable
+        type: counter
+        label: unroutable messages
+        description: Count of messages returned to publisher as unroutable
+
+      - name: messages.redelivered
+        source: message_stats.redeliver
+        type: counter
+        label: redelivered messages
+        description: Count of subset of messages in deliver_get which had the redelivered flag set

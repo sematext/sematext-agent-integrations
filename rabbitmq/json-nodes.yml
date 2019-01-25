@@ -1,0 +1,87 @@
+type: json
+data:
+  url: /api/nodes
+  server: ${RABBITMQ_API_URL}
+  basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
+
+observation:
+  - name: nodes
+    metricNamespace: rabbitmq
+    path: $.[?(@.name=${name})]
+
+    metric:
+      - name: file.descriptors.used
+        source: fd_used
+        type: long_gauge
+        label: used files
+        description: Used file descriptors
+
+      - name: disk.free
+        source: disk_free
+        type: long_gauge
+        label: free space
+        unit: bytes
+        description: Current free disk space
+
+      - name: memory.used
+        source: mem_used
+        type: long_gauge
+        label: used memory
+        unit: bytes
+        description: Memory used in bytes
+
+      - name: process.wait
+        source: run_queue
+        type: long_gauge
+        label: waiting processes
+        description: Average number of Erlang processes waiting to run
+
+      - name: sockets.used
+        source: sockets_used
+        type: gauge
+        label: used sockets
+        description: Number of file descriptors used as sockets
+
+      - name: network.partitions
+        source: partitions.length()
+        type: gauge
+        label: partitions
+        description: Number of network partitions this node is seeing
+
+      - name: running
+        source: running
+        type: text
+        send: false
+
+      - name: node.running
+        source: func:BoolToInt(running)
+        type: gauge
+        label: running
+        description: Is the node running or not
+
+      - name: mem_alarm
+        source: mem_alarm
+        type: text
+        send: false
+
+      - name: memory.alarm.enabled
+        source: func:BoolToInt(mem_alarm)
+        type: gauge
+        label: memory alarm
+        description: Does the host have memory alarm
+
+      - name: disk_free_alarm
+        source: disk_free_alarm
+        type: text
+        send: false
+
+      - name: disk.alarm.enabled
+        source: func:BoolToInt(disk_free_alarm)
+        type: gauge
+        label: disk alarm
+        description: Does the node have disk alarm
+
+    tag:
+      - name: rabbitmq.node
+        value: ${name}

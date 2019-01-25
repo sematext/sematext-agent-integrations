@@ -1,0 +1,67 @@
+type: json
+data:
+  url: /api/exchanges
+  server: ${RABBITMQ_API_URL}
+  basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
+
+observation:
+  - name: exchanges
+    metricNamespace: rabbitmq
+    path: $.[?(@.name=${name} && @.vhost=${vhost})]
+
+    metric:
+      - name: exchanges.messages.acked
+        source: message_stats.ack
+        type: counter
+        label: ack messages
+        description: Number of messages delivered to clients and acknowledged
+
+      - name: exchanges.messages.confirmed
+        source: message_stats.confirm
+        type: counter
+        label: confirmed messages
+        description: Count of messages confirmed
+
+      - name: exchanges.messages.delivered.get
+        source: message_stats.deliver_get
+        type: counter
+        label: delivered get messages
+        description: Sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get.
+
+      - name: exchanges.messages.published
+        source: message_stats.publish
+        type: counter
+        label: published messages
+        description: Count of messages published
+
+      - name: exchanges.messages.published.in
+        source: message_stats.publish_in
+        type: counter
+        label: published in messages
+        description: Count of messages published from channels into this exchange
+
+      - name: exchanges.messages.published.out
+        source: message_stats.publish_out
+        type: counter
+        label: published out messages
+        description: Count of messages published from this exchange into queues
+
+      - name: exchanges.messages.returned.unroutable
+        source: message_stats.return_unroutable
+        type: counter
+        label: unroutable messages
+        description: Count of messages returned to publisher as unroutable
+
+      - name: exchanges.messages.redelivered
+        source: message_stats.redeliver
+        type: counter
+        label: redelivered messages
+        description: Count of subset of messages in deliver_get which had the redelivered flag set
+
+    tag:
+      - name: rabbitmq.vhost
+        value: ${vhost}
+
+      - name: rabbitmq.queue
+        value: ${name}

@@ -1,0 +1,92 @@
+type: json
+data:
+  url: /api/queues
+  server: ${RABBITMQ_API_URL}
+  basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
+
+observation:
+  - name: queues
+    metricNamespace: rabbitmq
+    path: $.[?(@.name=${name} && @.vhost=${vhost})]
+
+    metric:
+      - name: queues.consumers.active
+        source: active_consumers
+        type: long_gauge
+        label: active consumers
+        description: Number of active consumers, consumers that can immediately receive any messages sent to the queue
+
+      - name: queues.consumers
+        source: consumers
+        type: long_gauge
+        label: consumers
+        description: Number of consumers
+
+      - name: queues.consumer.utilisation
+        source: consumer_utilisation
+        type: gauge
+        label: consumer utilisation
+        description: The ratio of time that a queue's consumers can take new messages
+
+      - name: queues.memory
+        source: memory
+        type: long_gauge
+        label: memory
+        unit: bytes
+        description: Bytes of memory consumed by the Erlang process associated with the queue, including stack, heap and internal structures
+
+      - name: queues.messages
+        source: messages
+        type: long_gauge
+        label: messages
+        description: Count of the total messages in the queue
+
+      - name: queues.messages.ready
+        source: messages_ready
+        type: long_gauge
+        label: ready messages
+        description: Number of messages ready to be delivered to clients
+
+      - name: queues.messages.unacknowledged
+        source: messages_unacknowledged
+        type: long_gauge
+        label: unacknowledged messages
+        description: Number of messages delivered to clients but not yet acknowledged
+
+      - name: queues.messages.acked
+        source: message_stats.ack
+        type: counter
+        label: ack messages
+        description: Number of messages delivered to clients and acknowledged
+
+      - name: queues.messages.delivered
+        source: message_stats.deliver
+        type: counter
+        label: delivered messages
+        description: Count of messages delivered in acknowledgement mode to consumers
+
+      - name: queues.messages.delivered.get
+        source: message_stats.deliver_get
+        type: counter
+        label: delivered get messages
+        description: Sum of messages delivered in acknowledgement mode to consumers, in no-acknowledgement mode to consumers, in acknowledgement mode in response to basic.get, and in no-acknowledgement mode in response to basic.get.
+
+      - name: queues.messages.published
+        source: message_stats.publish
+        type: counter
+        label: published messages
+        description: Count of messages published
+
+      - name: queues.messages.redelivered
+        source: message_stats.redeliver
+        type: counter
+        label: redelivered messages
+        description: Count of subset of messages in deliver_get which had the redelivered flag set
+
+    tag:
+      - name: rabbitmq.vhost
+        value: ${vhost}
+
+      - name: rabbitmq.queue
+        value: ${name}
