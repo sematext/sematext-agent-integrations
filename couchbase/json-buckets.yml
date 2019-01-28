@@ -214,13 +214,13 @@ observation:
         label: delete misses
         description: Delete misses
 
-      - name: disk.commit.count
+      - name: disk.commits.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.disk_commit_count[0]
         type: double_gauge
         label: commits
         description: Disk commits
 
-      - name: disk.update.count
+      - name: disk.updates.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.disk_update_count[0]
         type: double_gauge
         label: updates
