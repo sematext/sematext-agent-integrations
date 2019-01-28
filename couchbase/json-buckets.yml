@@ -92,14 +92,14 @@ observation:
 
       - name: docs.data.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_data_size[0]
-        type: gauge
+        type: long_gauge
         label: doc data disk size
         unit: bytes
         description: Couch docs data size in bytes
 
       - name: docs.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_docs_disk_size[0]
-        type: gauge
+        type: long_gauge
         label: docs disk size
         unit: bytes
         description: Couch docs total size in bytes
@@ -115,7 +115,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_spatial_data_size[0]
         type: gauge
         label: spatial data size
-        unit: bytes
+        unit: bytesals
         description: Size of object data for spatial views
 
       - name: disk.spatial.size
@@ -133,7 +133,7 @@ observation:
 
       - name: disk.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.couch_total_disk_size[0]
-        type: gauge
+        type: long_gauge
         label: total disk size
         unit: bytes
         description: Couch total disk size
@@ -180,13 +180,13 @@ observation:
 
       - name: items.current.total
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.curr_items_tot[0]
-        type: long_gauge
+        type: counter
         label: total items
         description: Num current items including those not active (replica, dead and pending states)
 
       - name: items.current
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.curr_items[0]
-        type: long_gauge
+        type: counter
         label: memory items
         description: Num items in active vbuckets (temp + live)
 
@@ -216,19 +216,19 @@ observation:
 
       - name: disk.commit.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.disk_commit_count[0]
-        type: long_gauge
+        type: double_gauge
         label: commits
         description: Disk commits
 
       - name: disk.update.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.disk_update_count[0]
-        type: long_gauge
+        type: double_gauge
         label: updates
         description: Disk updates
 
       - name: disk.write.queue
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.disk_write_queue[0]
-        type: gauge
+        type: long_gauge
         label: writes
         description: Disk write queue depth
 
@@ -271,7 +271,7 @@ observation:
 
       - name: ep.dcp.fts.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_fts_items_sent[0]
-        type: gauge
+        type: double_gauge
         label: dcp fts items sent
         description: Number of fts items sent
 
@@ -308,7 +308,7 @@ observation:
 
       - name: ep.dcp.2i.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_items_sent[0]
-        type: gauge
+        type: double_gauge
         label: dcp indexes items sent
         description: Number of indexes items sent
 
@@ -320,7 +320,7 @@ observation:
 
       - name: ep.dcp.2i.total.bytes
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_total_bytes[0]
-        type: gauge
+        type: double_gauge
         label: dcp indexes total bytes
         description: Number of bytes per second being sent for indexes DCP connections
 
@@ -375,13 +375,13 @@ observation:
 
       - name: ep.dcp.replica.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_items_remaining[0]
-        type: gauge
+        type: long_gauge
         label: dcp replica items remaining
         description: Number of replica items remaining to be sent
 
       - name: ep.dcp.replica.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_items_sent[0]
-        type: gauge
+        type: double_gauge
         label: dcp replica items sent
         description: Number of replica items sent
 
@@ -393,7 +393,7 @@ observation:
 
       - name: ep.dcp.replica.bytes.total
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_total_bytes[0]
-        type: gauge
+        type: double_gauge
         label: dcp replica total bytes
         unit: bytes
         description: Number of bytes per second being sent for replica DCP connections
@@ -449,13 +449,13 @@ observation:
 
       - name: ep.dcp.xdcr.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_items_remaining[0]
-        type: gauge
+        type: long_gauge
         label: dcp xdcr items remaining
         description: Number of xdcr items remaining to be sent
 
       - name: ep.dcp.xdcr.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_items_sent[0]
-        type: gauge
+        type: double_gauge
         label: dcp xdcr items sent
         description: Number of xdcr items sent
 
@@ -474,25 +474,25 @@ observation:
 
       - name: ep.diskqueue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_diskqueue_drain[0]
-        type: gauge
+        type: double_gauge
         label: queue drained
         description: Total drained items in disk queue
 
       - name: ep.diskqueue.fill
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_diskqueue_fill[0]
-        type: gauge
+        type: double_gauge
         label: queued
         description: Total enqueued items in disk queue
 
       - name: ep.diskqueue.items
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_diskqueue_items[0]
-        type: gauge
+        type: long_gauge
         label: queue waiting items
         description: Total number of items waiting to be written to disk
 
       - name: ep.flusher.todo
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_flusher_todo[0]
-        type: gauge
+        type: long_gauge
         label: current flushing items
         description: Number of items currently being written
 
@@ -532,7 +532,7 @@ observation:
 
       - name: ep.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_meta_data_memory[0]
-        type: long_gauge
+        type: counter
         label: metadata mem
         unit: bytes
         description: Total amount of item metadata consuming RAM in this bucket
@@ -587,13 +587,13 @@ observation:
 
       - name: ep.ops.create
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_ops_create[0]
-        type: gauge
+        type: double_gauge
         label: create ops
         description: Create operations
 
       - name: ep.ops.update
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_ops_update[0]
-        type: gauge
+        type: double_gauge
         label: update ops
         description: Update operations
 
@@ -659,13 +659,13 @@ observation:
 
       - name: get.hits
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.get_hits[0]
-        type: long_gauge
+        type: double_gauge
         label: get hits
         description: Number of get hits
 
       - name: get.misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.get_misses[0]
-        type: long_gauge
+        type: double_gauge
         label: get misses
         description: Number of get misses
 
@@ -799,13 +799,13 @@ observation:
 
       - name: vb.active.itm.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_itm_memory[0]
-        type: long_gauge
+        type: counter
         label: vb active item mem
         description: Amount of active user data cached in RAM in this bucket
 
       - name: vb.active.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_meta_data_memory[0]
-        type: long_gauge
+        type: counter
         label: vb active meta mem
         description: Amount of active item metadata consuming RAM in this bucket
 
@@ -837,14 +837,14 @@ observation:
 
       - name: vb.active.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_queue_age[0]
-        type: gauge
+        type: long_gauge
         label: vb active queue age
         unit: millisec
         description: Sum of disk queue item age in milliseconds
 
       - name: vb.active.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_queue_drain[0]
-        type: gauge
+        type: double_gauge
         label: vb active queue drain
         description: Total drained items in the queue
 
@@ -978,7 +978,7 @@ observation:
 
       - name: vb.replica.curr.items
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_curr_items[0]
-        type: gauge
+        type: counter
         label: vb replica curr items
         description: Number of in memory items
 
@@ -991,32 +991,32 @@ observation:
 
       - name: vb.replica.itm.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_itm_memory[0]
-        type: gauge
+        type: counter
         label: vb replica item mem
         description: Amount of replica user data cached in RAM in this bucket
 
       - name: vb.replica.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_meta_data_memory[0]
-        type: gauge
+        type: counter
         label: vb replica meta data mem
         unit: bytes
         description: Total metadata memory
 
       - name: vb.replica.num.non.resident
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_num_non_resident[0]
-        type: gauge
+        type: long_gauge
         label: vb replica num non resident
         description: Number of non resident vBuckets in the replica state for this bucket
 
       - name: vb.replica.num
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_num[0]
-        type: gauge
+        type: long_gauge
         label: vb replica num
         description: Number of replica vBuckets
 
       - name: vb.replica.ops.create
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_ops_create[0]
-        type: gauge
+        type: double_gauge
         label: vb replica ops create
         description: Number of replica create operations
 
@@ -1029,20 +1029,20 @@ observation:
 
       - name: vb.replica.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_age[0]
-        type: gauge
+        type: long_gauge
         label: vb replica queue age
         unit: millisec
         description: Sum of disk replica queue item age in milliseconds
 
       - name: vb.replica.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_drain[0]
-        type: gauge
+        type: double_gauge
         label: vb replica queue drain
         description: Total drained replica items in the queue
 
       - name: vb.replica.queue.fill
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_fill[0]
-        type: gauge
+        type: double_gauge
         label: vb replica queue fill
         description: Total enqueued replica items in disk queue
 
@@ -1060,7 +1060,7 @@ observation:
 
       - name: vb_total_queue_age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_total_queue_age [0]
-        type: gauge
+        type: long_gauge
         unit: sec
         label: vb total queue age
         description: Sum of disk queue item age in milliseconds
