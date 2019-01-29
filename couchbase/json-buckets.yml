@@ -236,7 +236,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_bg_fetched[0]
         type: double_gauge
         label: reads
-        description: Disk reads per second
+        description: Number of background fetches
 
       - name: ep.cache.miss.rate
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_cache_miss_rate[0]
@@ -254,223 +254,217 @@ observation:
       - name: ep.dcp.fts.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_fts_backoff[0]
         type: gauge
-        label: dcp fts backoff
+        label: DCP fts backoff
         description: Number of backoffs for fts DCP connections
 
       - name: ep.dcp.fts.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_fts_count[0]
         type: long_gauge
-        label: dcp fts count
+        label: DCP fts count
         description: Number of fts DCP connections
 
       - name: ep.dcp.fts.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_fts_items_remaining[0]
         type: gauge
-        label: dcp fts items remaining
+        label: DCP fts items remaining
         description: Number of fts items remaining to be sent
 
       - name: ep.dcp.fts.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_fts_items_sent[0]
         type: double_gauge
-        label: dcp fts items sent
+        label: DCP fts items sent
         description: Number of fts items sent
 
       - name: ep.dcp.fts.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_fts_producer_count[0]
         type: long_gauge
-        label: dcp fts producers
+        label: DCP fts producers
         description: Number of fts producers
 
       - name: ep.dcp.2i.total.bytes
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_total_bytes[0]
         type: double_gauge
-        label: dcp fts total bytes
+        label: DCP fts total bytes
         unit: bytes/sec
         description: Number of bytes per second being sent for indexes DCP connections
 
       - name: ep.dcp.2i.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_backoff[0]
         type: gauge
-        label: dcp indexes backoff
+        label: DCP indexes backoff
         description: Number of backoffs for indexes DCP
 
       - name: ep.dcp.2i.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_count[0]
         type: long_gauge
-        label: dcp indexes count
+        label: DCP indexes count
         description: Number of indexes DCP connections
 
       - name: ep.dcp.2i.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_items_remaining[0]
         type: gauge
-        label: dcp indexes items remaining
+        label: DCP indexes items remaining
         description: Number of indexes items remaining to be sent
 
       - name: ep.dcp.2i.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_items_sent[0]
         type: double_gauge
-        label: dcp indexes items sent
+        label: DCP indexes items sent
         description: Number of indexes items sent
 
       - name: ep.dcp.2i.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_producer_count[0]
         type: long_gauge
-        label: dcp indexes producer
+        label: DCP indexes producer
         description: Number of indexes producers
-
-      - name: ep.dcp.2i.total.bytes
-        source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_2i_total_bytes[0]
-        type: double_gauge
-        label: dcp indexes total bytes
-        description: Number of bytes per second being sent for indexes DCP connections
 
       - name: ep.dcp.other.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_backoff[0]
         type: gauge
-        label: dcp other backoff
+        label: DCP other backoff
         description: Number of backoffs for other DCP connections
 
       - name: ep.dcp.other.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_count[0]
         type: long_gauge
-        label: dcp other count
+        label: DCP other count
         description: Number of other DCP connections
 
       - name: ep.dcp.other.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_items_remaining[0]
         type: gauge
-        label: dcp other items remaining
+        label: DCP other items remaining
         description: Number of other items remaining to be sent
 
       - name: ep.dcp.other.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_items_sent[0]
         type: gauge
-        label: dcp other items sent
+        label: DCP other items sent
         description: Number of other items sent
 
       - name: ep.dcp.other.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_producer_count[0]
         type: long_gauge
-        label: dcp other producers
+        label: DCP other producers
         description: Number of other producers
 
       - name: ep.dcp.other.total.bytes
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_other_total_bytes[0]
         type: double_gauge
-        label: dcp other total bytes
+        label: DCP other total bytes
         unit: bytes/sec
         description: Number of bytes per second being sent for other DCP connections
 
       - name: ep.dcp.replica.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_backoff[0]
         type: gauge
-        label: dcp replica backoff
+        label: DCP replica backoff
         description: Number of backoffs for replica DCP connections
 
       - name: ep.dcp.replica.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_count[0]
         type: long_gauge
-        label: dcp replica count
+        label: DCP replica count
         description: Number of replica DCP connections
 
       - name: ep.dcp.replica.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_items_remaining[0]
         type: long_gauge
-        label: dcp replica items remaining
+        label: DCP replica items remaining
         description: Number of replica items remaining to be sent
 
       - name: ep.dcp.replica.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_items_sent[0]
         type: double_gauge
-        label: dcp replica items sent
+        label: DCP replica items sent
         description: Number of replica items sent
 
       - name: ep.dcp.replica.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_producer_count[0]
         type: long_gauge
-        label: dcp replica producer
+        label: DCP replica producer
         description: Number of replica producers
 
       - name: ep.dcp.replica.bytes.total
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_replica_total_bytes[0]
         type: double_gauge
-        label: dcp replica total bytes
+        label: DCP replica total bytes
         unit: bytes
         description: Number of bytes per second being sent for replica DCP connections
 
       - name: ep.dcp.views.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_views_backoff[0]
         type: gauge
-        label: dcp views backoff
+        label: DCP views backoff
         description: Number of backoffs for views DCP connections
 
       - name: ep.dcp.views.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_views_count[0]
         type: long_gauge
-        label: dcp views count
+        label: DCP views count
         description: Number of views DCP connections
 
       - name: ep.dcp.views.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_views_items_remaining[0]
         type: gauge
-        label: dcp views items remaining
+        label: DCP views items remaining
         description: Number of views items remaining to be sent
 
       - name: ep.dcp.views.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_views_items_sent[0]
         type: gauge
-        label: dcp views items sent
+        label: DCP views items sent
         description: Number of views items sent
 
       - name: ep.dcp.views.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_views_producer_count[0]
         type: long_gauge
-        label: dcp views producer
+        label: DCP views producer
         description: Number of views producers
 
       - name: ep.dcp.views.bytes.total
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_views_total_bytes[0]
         type: gauge
-        label: dcp views total bytes
+        label: DCP views total bytes
         unit: bytes
         description: Number of bytes per second being sent for views DCP connections
 
       - name: ep.dcp.xdcr.backoff
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_backoff[0]
         type: gauge
-        label: dcp xdcr backoff
-        description: Number of backoffs for xdcr DCP connections
+        label: DCP XDCR backoff
+        description: Number of backoffs for XDCR DCP connections
 
       - name: ep.dcp.xdcr.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_count[0]
         type: long_gauge
-        label: dcp xdcr count
-        description: Number of xdcr DCP connections
+        label: DCP XDCR count
+        description: Number of XDCR DCP connections
 
       - name: ep.dcp.xdcr.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_items_remaining[0]
         type: long_gauge
-        label: dcp xdcr items remaining
-        description: Number of xdcr items remaining to be sent
+        label: DCP XDCR items remaining
+        description: Number of XDCR items remaining to be sent
 
       - name: ep.dcp.xdcr.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_items_sent[0]
         type: double_gauge
-        label: dcp xdcr items sent
-        description: Number of xdcr items sent
+        label: DCP XDCR items sent
+        description: Number of XDCR items sent
 
       - name: ep.dcp.xdcr.producer.count
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_producer_count[0]
         type: long_gauge
-        label: dcp xdcr producer
-        description: Number of xdcr producers
+        label: DCP XDCR producer
+        description: Number of XDCR producers
 
       - name: ep.dcp.xdcr.total.bytes
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_dcp_xdcr_total_bytes[0]
         type: double_gauge
-        label: dcp xdcr total bytes
+        label: DCP XDCR total bytes
         unit: bytes/sec
-        description: Number of bytes per second being sent for xdcr DCP connections
+        description: Number of bytes per second being sent for XDCR DCP connections
 
       - name: ep.diskqueue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_diskqueue_drain[0]
@@ -673,7 +667,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.hibernated_requests[0]
         type: long_gauge
         label: hibernated requests
-        description: Number of streaming requests now idle
+        description: Number of streaming requests idle
 
       - name: hibernated.waked
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.hibernated_waked[0]
@@ -839,7 +833,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_queue_age[0]
         type: long_gauge
         label: vb active queue age
-        unit: millisec
+        unit: ms
         description: Sum of disk queue item age in milliseconds
 
       - name: vb.active.queue.drain
@@ -949,7 +943,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_age[0]
         type: gauge
         label: vb pending queue age
-        unit: millisec
+        unit: ms
         description: Sum of disk pending queue item age in milliseconds
 
       - name: vb.pending.queue.drain
@@ -1031,7 +1025,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_queue_age[0]
         type: long_gauge
         label: vb replica queue age
-        unit: millisec
+        unit: ms
         description: Sum of disk replica queue item age in milliseconds
 
       - name: vb.replica.queue.drain
@@ -1068,7 +1062,7 @@ observation:
       - name: xdc.ops
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.xdc_ops[0]
         type: double_gauge
-        label: xdcr ops
+        label: XDCR ops
         description: Number of cross-datacenter replication operations
 
     tag:
