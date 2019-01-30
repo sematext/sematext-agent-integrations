@@ -180,13 +180,13 @@ observation:
 
       - name: items.current.total
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.curr_items_tot[0]
-        type: counter
+        type: long_gauge
         label: total items
         description: Num current items including those not active (replica, dead and pending states)
 
       - name: items.current
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.curr_items[0]
-        type: counter
+        type: long_gauge
         label: memory items
         description: Num items in active vbuckets (temp + live)
 
@@ -498,7 +498,7 @@ observation:
 
       - name: ep.kv.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_kv_size[0]
-        type: counter
+        type: long_gauge
         label: kv size
         unit: bytes
         description: Total amount of user data cached in RAM in this bucket
