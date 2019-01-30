@@ -192,25 +192,25 @@ observation:
 
       - name: decrement.hits
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.decr_hits[0]
-        type: gauge
+        type: double_gauge
         label: decrement hits
         description: Decrement hits
 
       - name: decrement.misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.decr_misses[0]
-        type: gauge
+        type: double_gauge
         label: decrement misses
         description: Decrement misses
 
       - name: delete.hits
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.delete_hits[0]
-        type: gauge
+        type: double_gauge
         label: delete hits
         description: Delete hits
 
       - name: delete.misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.delete_misses[0]
-        type: gauge
+        type: double_gauge
         label: delete misses
         description: Delete misses
 
@@ -498,7 +498,7 @@ observation:
 
       - name: ep.kv.size
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_kv_size[0]
-        type: long_gauge
+        type: counter
         label: kv size
         unit: bytes
         description: Total amount of user data cached in RAM in this bucket
@@ -526,14 +526,14 @@ observation:
 
       - name: ep.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_meta_data_memory[0]
-        type: counter
+        type: long_gauge
         label: metadata mem
         unit: bytes
         description: Total amount of item metadata consuming RAM in this bucket
 
       - name: ep.num.non.resident
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_num_non_resident[0]
-        type: gauge
+        type: long_gauge
         label: non-resident items
         description: Number of non-resident items
 
@@ -611,19 +611,19 @@ observation:
 
       - name: ep.tap.replica.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_tap_replica_queue_drain[0]
-        type: gauge
+        type: double_gauge
         label: drain items
         description: Total drained items in the replica queue
 
       - name: ep.tap.total.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_tap_total_queue_drain[0]
-        type: gauge
+        type: double_gauge
         label: drain items
         description: Total drained items in the queue
 
       - name: ep.tap.total.queue.fill
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_tap_total_queue_fill[0]
-        type: gauge
+        type: double_gauge
         label: queued
         description: Total enqueued items in the queue
 
@@ -635,7 +635,7 @@ observation:
 
       - name: ep.tmp.oom.errors
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.ep_tmp_oom_errors[0]
-        type: long_gauge
+        type: double_gauge
         label: ooms
         description: Number of times recoverable OOMs happened while processing operations
 
@@ -647,7 +647,7 @@ observation:
 
       - name: evictions
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.evictions[0]
-        type: long_gauge
+        type: double_gauge
         label: evictions
         description: Number of evictions
 
@@ -683,13 +683,13 @@ observation:
 
       - name: increment.hits
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.incr_hits[0]
-        type: long_gauge
+        type: double_gauge
         label: increment hits
         description: Number of increment hits
 
       - name: increment.misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.incr_misses[0]
-        type: gauge
+        type: double_gauge
         label: increment misses
         description: Number of increment misses
 
@@ -737,7 +737,7 @@ observation:
 
       - name: misses
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.misses[0]
-        type: gauge
+        type: double_gauge
         label: misses
         description: Total number of misses
 
@@ -793,13 +793,13 @@ observation:
 
       - name: vb.active.itm.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_itm_memory[0]
-        type: counter
+        type: long_gauge
         label: vb active item mem
         description: Amount of active user data cached in RAM in this bucket
 
       - name: vb.active.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_active_meta_data_memory[0]
-        type: counter
+        type: long_gauge
         label: vb active meta mem
         description: Amount of active item metadata consuming RAM in this bucket
 
@@ -891,7 +891,7 @@ observation:
 
       - name: vb.pending.curr.items
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_curr_items[0]
-        type: gauge
+        type: long_gauge
         label: vb pending curr item
         description: Number of items in pending vBuckets
 
@@ -904,13 +904,13 @@ observation:
 
       - name: vb.pending.itm.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_itm_memory[0]
-        type: gauge
+        type: long_gauge
         label: vb pending item mem
         description: Amount of pending user data cached in RAM in this bucket
 
       - name: vb.pending.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_meta_data_memory[0]
-        type: gauge
+        type: long_gauge
         label: vb pending meta mem
         description: Amount of pending item metadata consuming RAM in this bucket
 
@@ -922,13 +922,13 @@ observation:
 
       - name: vb.pending.num
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_num[0]
-        type: gauge
+        type: long_gauge
         label: vb pending num
         description: Number of pending items
 
       - name: vb.pending.ops.create
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_ops_create[0]
-        type: gauge
+        type: double_gauge
         label: vb pending ops create
         description: Number of pending create operations
 
@@ -941,20 +941,20 @@ observation:
 
       - name: vb.pending.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_age[0]
-        type: gauge
+        type: long_gauge
         label: vb pending queue age
         unit: ms
         description: Sum of disk pending queue item age in milliseconds
 
       - name: vb.pending.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_drain[0]
-        type: gauge
+        type: double_gauge
         label: vb pending queue drain
         description: Total drained pending items in the queue
 
       - name: vb.pending.queue.fill
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_pending_queue_fill[0]
-        type: gauge
+        type: double_gauge
         label: vb pending queue fill
         description: Total enqueued pending items in disk queue
 
@@ -972,7 +972,7 @@ observation:
 
       - name: vb.replica.curr.items
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_curr_items[0]
-        type: counter
+        type: long_gauge
         label: vb replica curr items
         description: Number of in memory items
 
@@ -985,13 +985,13 @@ observation:
 
       - name: vb.replica.itm.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_itm_memory[0]
-        type: counter
+        type: long_gauge
         label: vb replica item mem
         description: Amount of replica user data cached in RAM in this bucket
 
       - name: vb.replica.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.vb_replica_meta_data_memory[0]
-        type: counter
+        type: long_gauge
         label: vb replica meta data mem
         unit: bytes
         description: Total metadata memory
