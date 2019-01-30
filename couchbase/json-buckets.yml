@@ -44,14 +44,14 @@ observation:
         type: double_gauge
         label: bytes read
         unit: bytes
-        description: Bytes read
+        description: Number of bytes per second sent into a bucket
 
       - name: bytes.written
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.bytes_written[0]
         type: double_gauge
         label: bytes written
         unit: bytes
-        description: Bytes written
+        description: Number of bytes per second sent from a bucket
 
       - name: cas.badval
         source: json:/pools/default/buckets/${bucketName}/stats $.op.samples.cas_badval[0]
