@@ -1,0 +1,60 @@
+type: json
+data:
+  url: /subsz
+  server: ${NATS_HOSTPORT}
+
+observation:
+  - name: subsz
+    metricNamespace: nats
+    path: $.
+
+    metric:
+      - name: num_subscriptions
+        source: num_subscriptions
+        type: long_gauge
+        label: num subscriptions
+        description: num subscriptions
+
+      - name: num_inserts
+        source: num_inserts
+        type: long_gauge
+        label: num inserts
+        description: The number of insert operations in subscriptions list
+
+      - name: num_removes
+        source: num_removes
+        type: long_gauge
+        label: num subscriptions
+        description: The number of remove operations in subscriptions list
+
+      - name: num_matches
+        source: num_matches
+        type: long_gauge
+        label: num matches
+        description: The number of times a match is found for a subscription
+
+      - name: num_cache
+        source: num_cache
+        type: long_gauge
+        label: num cache
+        description: The number of result sets in the cache
+
+      - name: cache_hit_rate
+        source: cache_hit_rate
+        type: double_gauge
+        label: cache hit rate
+        description: The rate matches are being retrieved from cache
+
+      - name: max_fanout
+        source: max_fanout
+        type: long_gauge
+        label: max fanout
+        description: The maximum fanout served by cache
+
+
+      - name: avg_fanout
+        source: avg_fanout
+        type: double_gauge
+        label: avg fanout
+        description: The average fanout served by cache
+

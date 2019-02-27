@@ -1,0 +1,20 @@
+type: json
+data:
+  url: /connz
+  server: ${NATS_HOSTPORT}
+
+observation:
+  - name: connz
+    metricNamespace: nats
+    path: $.
+
+    metric:
+      - name: num_connections
+        source: num_connections
+        type: long_gauge
+        label: num connections
+        description: num connections
+
+    tag:
+      - name: nats.server
+        value: json:/connz $.server_id

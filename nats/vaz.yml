@@ -1,0 +1,74 @@
+type: json
+data:
+  url: /varz
+  server: ${NATS_HOSTPORT}
+
+observation:
+  - name: varz
+    metricNamespace: nats
+    path: $.
+
+    metric:
+      - name: in_msgs
+        source: in_msgs
+        type: long_gauge
+        label: incoming messages
+        description: The amount of incoming messages
+
+      - name: in_bytes
+        source: in_bytes
+        type: long_gauge
+        label: incoming bytes
+        description: The amount of incoming bytes
+
+      - name: out_msgs
+        source: out_msgs
+        type: long_gauge
+        label: outgoing messages
+        description: The amount of outgoing messages
+
+      - name: out_bytes
+        source: out_bytes
+        type: long_gauge
+        label: outgoing bytes
+        description: The amount of outgoing bytes
+
+      - name: remotes
+        source: remotes
+        type: long_gauge
+        label: remotes
+        description: The number of registered remotes
+
+      - name: slow_consumers
+        source: slow_consumers
+        type: long_gauge
+        label: slow consumers
+        description: The number of slow consumers currently on NATS
+
+      - name: remotes
+        source: remotes
+        type: long_gauge
+        label: remotes
+        description: The number of registered remotes
+
+      - name: remotes
+        source: remotes
+        type: long_gauge
+        label: remotes
+        description: The number of registered remotes
+
+      - name: remotes
+        source: remotes
+        type: long_gauge
+        label: remotes
+        description: The number of registered remotes
+
+      - name: remotes
+        source: remotes
+        type: long_gauge
+        label: remotes
+        description: The number of registered remotes
+
+    tag:
+      - name: nats.server
+        value: json:/connz $.server_id
