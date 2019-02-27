@@ -285,7 +285,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_total_bytes[0:10] return:sum()
         type: double_gauge
         label: DCP fts total bytes
-        unit: bytes/sec
+        unit: bytes
         description: Number of bytes per second being sent for indexes DCP connections
 
       - name: ep.dcp.2i.backoff
@@ -352,7 +352,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_other_total_bytes[0:10] return:sum()
         type: double_gauge
         label: DCP other total bytes
-        unit: bytes/sec
+        unit: bytes
         description: Number of bytes per second being sent for other DCP connections
 
       - name: ep.dcp.replica.backoff
@@ -463,7 +463,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_xdcr_total_bytes[0:10] return:sum()
         type: double_gauge
         label: DCP XDCR total bytes
-        unit: bytes/sec
+        unit: bytes
         description: Number of bytes per second being sent for XDCR DCP connections
 
       - name: ep.diskqueue.drain
@@ -767,7 +767,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.rest_requests[0:10] return:sum()
         type: double_gauge
         label: rest requests
-        unit: request/sec
+        unit: request
         description: Number of HTTP requests
 
       - name: swap.total
@@ -788,7 +788,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_eject[0:10] return:sum()
         type: double_gauge
         label: vb active eject
-        unit: items/sec
+        unit: items
         description: Number of items being ejected to disk from active vBuckets
 
       - name: vb.active.itm.memory
@@ -819,14 +819,14 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_ops_create[0:10] return:sum()
         type: double_gauge
         label: vb active ops create
-        unit: items/sec
+        unit: items
         description: New items being inserted into active vBuckets in this bucket
 
       - name: vb.active.ops.update
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_ops_update[0:10] return:sum()
         type: double_gauge
         label: vb active ops update
-        unit: items/sec
+        unit: items
         description: Number of items updated on active vBucket for this bucket
 
       - name: vb.active.queue.age
@@ -846,7 +846,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_queue_fill[0:10] return:sum()
         type: double_gauge
         label: vb active queue fill
-        unit: items/sec
+        unit: items
         description: Number of active items being put on the active item disk queue
 
       - name: vb.active.queue.size
@@ -899,7 +899,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_eject[0:10] return:sum()
         type: double_gauge
         label: vb pending eject
-        unit: items/sec
+        unit: items
         description: Number of items being ejected to disk from pending vBuckets
 
       - name: vb.pending.itm.memory
@@ -936,7 +936,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_ops_update[0:10] return:sum()
         type: double_gauge
         label: vb pending ops update
-        unit: items/sec
+        unit: items
         description: Number of items updated on pending vBucket for this bucket
 
       - name: vb.pending.queue.age
@@ -980,7 +980,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_eject[0:10] return:sum()
         type: double_gauge
         label: vb replica eject
-        unit: items/sec
+        unit: items
         description: Number of items being ejected to disk from replica vBuckets
 
       - name: vb.replica.itm.memory
@@ -1018,7 +1018,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_ops_update[0:10] return:sum()
         type: double_gauge
         label: vb replica ops update
-        unit: items/sec
+        unit: items
         description: Number of items updated on replica vBucket for this bucket
 
       - name: vb.replica.queue.age
