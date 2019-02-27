@@ -41,45 +41,45 @@ observation:
 
       - name: bytes.read
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bytes_read[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: bytes read
         unit: bytes
         description: Number of bytes per second sent into a bucket.
 
       - name: bytes.written
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bytes_written[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: bytes written
         unit: bytes
         description: Number of bytes per second sent from a bucket
 
       - name: cas.badval
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.cas_badval[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: cas bad values
         description: Compare and Swap bad values
 
       - name: cas.hits
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.cas_hits[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: cas hits
         description: Compare and Swap hits
 
       - name: cas.misses
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.cas_misses[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: cas misses
         description: Compare and Swap misses
 
       - name: cmd.get
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.cmd_get[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: cmd gets
         description: Number of get commands
 
       - name: cmd.set
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.cmd_set[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: cmd sets
         description: Number of set commands
 
@@ -192,25 +192,25 @@ observation:
 
       - name: decrement.hits
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.decr_hits[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: decrement hits
         description: Decrement hits
 
       - name: decrement.misses
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.decr_misses[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: decrement misses
         description: Decrement misses
 
       - name: delete.hits
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.delete_hits[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: delete hits
         description: Delete hits
 
       - name: delete.misses
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.delete_misses[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: delete misses
         description: Delete misses
 
@@ -234,7 +234,7 @@ observation:
 
       - name: ep.bg.fetched
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_bg_fetched[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: reads
         description: Disk reads per second
 
@@ -283,7 +283,7 @@ observation:
 
       - name: ep.dcp.2i.total.bytes
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_total_bytes[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP fts total bytes
         unit: bytes/sec
         description: Number of bytes per second being sent for indexes DCP connections
@@ -338,7 +338,7 @@ observation:
 
       - name: ep.dcp.other.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_other_items_sent[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP other items sent
         description: Number of other items sent
 
@@ -350,7 +350,7 @@ observation:
 
       - name: ep.dcp.other.total.bytes
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_other_total_bytes[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP other total bytes
         unit: bytes/sec
         description: Number of bytes per second being sent for other DCP connections
@@ -375,7 +375,7 @@ observation:
 
       - name: ep.dcp.replica.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_replica_items_sent[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP replica items sent
         description: Number of replica items sent
 
@@ -387,7 +387,7 @@ observation:
 
       - name: ep.dcp.replica.bytes.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_replica_total_bytes[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP replica total bytes
         unit: bytes
         description: Number of bytes per second being sent for replica DCP connections
@@ -424,7 +424,7 @@ observation:
 
       - name: ep.dcp.views.bytes.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_total_bytes[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP views total bytes
         unit: bytes
         description: Number of bytes per second being sent for views DCP connections
@@ -449,7 +449,7 @@ observation:
 
       - name: ep.dcp.xdcr.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_xdcr_items_sent[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP XDCR items sent
         description: Number of XDCR items sent
 
@@ -461,20 +461,20 @@ observation:
 
       - name: ep.dcp.xdcr.total.bytes
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_xdcr_total_bytes[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: DCP XDCR total bytes
         unit: bytes/sec
         description: Number of bytes per second being sent for XDCR DCP connections
 
       - name: ep.diskqueue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_diskqueue_drain[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: queue drained
         description: Total drained items in disk queue
 
       - name: ep.diskqueue.fill
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_diskqueue_fill[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: queued
         description: Total enqueued items in disk queue
 
@@ -539,37 +539,37 @@ observation:
 
       - name: ep.num.ops.del.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_del_meta[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: ops del meta
         description: Number of delete operations per second for this bucket as the target for XDCR
 
       - name: ep.num.ops.del.ret.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_del_ret_meta[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: ops del ret meta
         description: Number of delRetMeta operations per second for this bucket as the target for XDCR
 
       - name: ep.num.ops.get.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_get_meta[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: ops get meta
         description: Number of read operations per second for this bucket as the target for XDCR
 
       - name: ep.num.ops.set.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_set_meta[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: ops set meta
         description: Number of set operations per second for this bucket as the target for XDCR
 
       - name: ep.num.ops.set.ret.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_set_ret_meta[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: ops set rep meta
         description: Number of setRetMeta operations per second for this bucket as the target for XDCR
 
       - name: ep.num.value.ejects
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_value_ejects[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: ejects
         description: Number of times item values got ejected from memory to disk
 
@@ -581,13 +581,13 @@ observation:
 
       - name: ep.ops.create
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_ops_create[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: create ops
         description: Create operations
 
       - name: ep.ops.update
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_ops_update[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: update ops
         description: Update operations
 
@@ -647,19 +647,19 @@ observation:
 
       - name: evictions
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.evictions[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: evictions
         description: Number of evictions
 
       - name: get.hits
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.get_hits[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: get hits
         description: Number of get hits
 
       - name: get.misses
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.get_misses[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: get misses
         description: Number of get misses
 
@@ -683,13 +683,13 @@ observation:
 
       - name: increment.hits
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.incr_hits[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: increment hits
         description: Number of increment hits
 
       - name: increment.misses
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.incr_misses[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: increment misses
         description: Number of increment misses
 
@@ -743,7 +743,7 @@ observation:
 
       - name: ops
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ops[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: ops
         description: Total number of operations
 
@@ -765,7 +765,7 @@ observation:
 
       - name: rest.requests
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.rest_requests[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: rest requests
         unit: request/sec
         description: Number of HTTP requests
@@ -786,7 +786,7 @@ observation:
 
       - name: vb.active.eject
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_eject[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb active eject
         unit: items/sec
         description: Number of items being ejected to disk from active vBuckets
@@ -817,14 +817,14 @@ observation:
 
       - name: vb.active.ops.create
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_ops_create[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb active ops create
         unit: items/sec
         description: New items being inserted into active vBuckets in this bucket
 
       - name: vb.active.ops.update
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_ops_update[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb active ops update
         unit: items/sec
         description: Number of items updated on active vBucket for this bucket
@@ -838,13 +838,13 @@ observation:
 
       - name: vb.active.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_queue_drain[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb active queue drain
         description: Total drained items in the queue
 
       - name: vb.active.queue.fill
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_queue_fill[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb active queue fill
         unit: items/sec
         description: Number of active items being put on the active item disk queue
@@ -897,7 +897,7 @@ observation:
 
       - name: vb.pending.eject
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_eject[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb pending eject
         unit: items/sec
         description: Number of items being ejected to disk from pending vBuckets
@@ -928,13 +928,13 @@ observation:
 
       - name: vb.pending.ops.create
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_ops_create[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb pending ops create
         description: Number of pending create operations
 
       - name: vb.pending.ops.update
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_ops_update[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb pending ops update
         unit: items/sec
         description: Number of items updated on pending vBucket for this bucket
@@ -948,13 +948,13 @@ observation:
 
       - name: vb.pending.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_queue_drain[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb pending queue drain
         description: Total drained pending items in the queue
 
       - name: vb.pending.queue.fill
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_queue_fill[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb pending queue fill
         description: Total enqueued pending items in disk queue
 
@@ -978,7 +978,7 @@ observation:
 
       - name: vb.replica.eject
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_eject[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb replica eject
         unit: items/sec
         description: Number of items being ejected to disk from replica vBuckets
@@ -1010,13 +1010,13 @@ observation:
 
       - name: vb.replica.ops.create
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_ops_create[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb replica ops create
         description: Number of replica create operations
 
       - name: vb.replica.ops.update
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_ops_update[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb replica ops update
         unit: items/sec
         description: Number of items updated on replica vBucket for this bucket
@@ -1030,13 +1030,13 @@ observation:
 
       - name: vb.replica.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_queue_drain[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb replica queue drain
         description: Total drained replica items in the queue
 
       - name: vb.replica.queue.fill
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_queue_fill[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: vb replica queue fill
         description: Total enqueued replica items in disk queue
 
@@ -1061,7 +1061,7 @@ observation:
 
       - name: xdc.ops
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.xdc_ops[0:10] return:sum()
-        type: double_counter
+        type: double_gauge
         label: XDCR ops
         description: Number of cross-datacenter replication operations
 
