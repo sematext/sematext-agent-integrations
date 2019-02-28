@@ -9,11 +9,11 @@ observation:
     path: $.
 
     metric:
-      - name: num_routes
+      - name: nroutes
         source: num_routes
         type: long_gauge
-        label: num routes
-        description: num routes
+        label: routes
+        description: number of routes
 
     tag:
       - name: nats.server

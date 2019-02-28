@@ -9,25 +9,25 @@ observation:
     path: $.
 
     metric:
-      - name: in_msgs
+      - name: msgs.in
         source: in_msgs
         type: long_gauge
         label: incoming messages
         description: The amount of incoming messages
 
-      - name: in_bytes
+      - name: bytes.in
         source: in_bytes
         type: long_gauge
         label: incoming bytes
         description: The amount of incoming bytes
 
-      - name: out_msgs
+      - name: msgs.out
         source: out_msgs
         type: long_gauge
         label: outgoing messages
         description: The amount of outgoing messages
 
-      - name: out_bytes
+      - name: bytes.out
         source: out_bytes
         type: long_gauge
         label: outgoing bytes
@@ -39,35 +39,11 @@ observation:
         label: remotes
         description: The number of registered remotes
 
-      - name: slow_consumers
+      - name: consumers.slow
         source: slow_consumers
         type: long_gauge
         label: slow consumers
         description: The number of slow consumers currently on NATS
-
-      - name: remotes
-        source: remotes
-        type: long_gauge
-        label: remotes
-        description: The number of registered remotes
-
-      - name: remotes
-        source: remotes
-        type: long_gauge
-        label: remotes
-        description: The number of registered remotes
-
-      - name: remotes
-        source: remotes
-        type: long_gauge
-        label: remotes
-        description: The number of registered remotes
-
-      - name: remotes
-        source: remotes
-        type: long_gauge
-        label: remotes
-        description: The number of registered remotes
 
     tag:
       - name: nats.server
