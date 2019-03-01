@@ -36,7 +36,7 @@ observation:
         send: false
 
       - name: gc.pause.time
-        source: func:DoubleTrimTimeUnit(gc.pause.time.text, ms)
+        source: as_counter:func:DoubleTrimTimeUnit(gc.pause.time.text, ms)
         type: counter
         label: gc pause time
         unit: seconds
