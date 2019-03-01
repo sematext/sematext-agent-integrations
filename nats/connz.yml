@@ -13,7 +13,7 @@ observation:
         source: num_connections
         type: long_gauge
         label: connections
-        description: number of connections
+        description: The number of connections
 
     tag:
       - name: nats.server
