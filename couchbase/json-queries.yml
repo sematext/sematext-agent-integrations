@@ -36,7 +36,7 @@ observation:
         send: false
 
       - name: gc.pause.time
-        source: as_counter:func:DoubleTrimUnit(gc.pause.time.text, ms)
+        source: func:DoubleTrimTimeUnit(gc.pause.time.text, ms)
         type: counter
         label: gc pause time
         unit: seconds
@@ -88,7 +88,7 @@ observation:
         send: false
 
       - name: request.time.mean
-        source: func:DoubleTrimUnit(request.time.mean.text, ms)
+        source: func:DoubleTrimTimeUnit(request.time.mean.text, ms)
         type: gauge
         label: request time mean
         unit: seconds
