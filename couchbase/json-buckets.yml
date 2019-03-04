@@ -115,7 +115,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_data_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: gauge
         label: spatial data size
-        unit: bytesals
+        unit: bytes
         description: Size of object data for spatial views
 
       - name: disk.spatial.size
@@ -834,7 +834,7 @@ observation:
         type: double_gauge
         label: vb active queue age
         unit: ms
-        description: Sum of disk queue item age in milliseconds
+        description: Sum of disk queue item age
 
       - name: vb.active.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_queue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
@@ -944,7 +944,7 @@ observation:
         type: double_gauge
         label: vb pending queue age
         unit: ms
-        description: Sum of disk pending queue item age in milliseconds
+        description: Sum of disk pending queue item age
 
       - name: vb.pending.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_queue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
@@ -1026,7 +1026,7 @@ observation:
         type: double_gauge
         label: vb replica queue age
         unit: ms
-        description: Sum of disk replica queue item age in milliseconds
+        description: Sum of disk replica queue item age
 
       - name: vb.replica.queue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_queue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
@@ -1055,9 +1055,9 @@ observation:
       - name: vb_total_queue_age
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_total_queue_age[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: double_gauge
-        unit: sec
+        unit: ms
         label: vb total queue age
-        description: Sum of disk queue item age in milliseconds
+        description: Sum of disk queue item age
 
       - name: xdc.ops
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.xdc_ops[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
