@@ -28,28 +28,28 @@ observation:
         type: long_gauge
         label: data size
         unit: bytes
-        description: Couch docs data size in bytes
+        description: Couch docs data size
 
       - name: docs.disk.actual.size
         source: couch_docs_actual_disk_size
         type: long_gauge
         label: data disk size
         unit: bytes
-        description: Couch docs total size on disk in bytes
+        description: Couch docs total size on disk
 
       - name: views.size
         source: couch_views_data_size
         type: long_gauge
         label: views size
         unit: bytes
-        description: Couch views data size in bytes
+        description: Couch views data size
 
       - name: views.disk.size
         source: couch_views_actual_disk_size
         type: long_gauge
         label: views disk size
         unit: bytes
-        description: Couch views data size on disk in bytes
+        description: Couch views data size on disk
 
       - name: items.replica
         source: vb_replica_curr_items

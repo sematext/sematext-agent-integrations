@@ -37,7 +37,7 @@ observation:
         type: double_gauge
         label: bytes read
         unit: bytes
-        description: Average background wait time
+        description: Total background wait time
 
       - name: bytes.read
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bytes_read[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
@@ -88,21 +88,21 @@ observation:
         type: double_gauge
         label: doc actual disk size
         unit: bytes
-        description: Couch docs total size on disk in bytes.
+        description: Couch docs total size on disk
 
       - name: docs.data.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_docs_data_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: double_gauge
         label: doc data disk size
         unit: bytes
-        description: Couch docs data size in bytes
+        description: Couch docs data size
 
       - name: docs.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_docs_disk_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: double_gauge
         label: docs disk size
         unit: bytes
-        description: Couch docs total size in bytes
+        description: Couch docs total size
 
       - name: docs.fragmentation
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_docs_fragmentation[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
