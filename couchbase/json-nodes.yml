@@ -54,7 +54,7 @@ observation:
       - name: items.replica
         source: vb_replica_curr_items
         type: long_gauge
-        label: momory items
+        label: memory items
         description: Number of in memory items
 
     tag:
