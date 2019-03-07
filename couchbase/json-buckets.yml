@@ -33,9 +33,10 @@ observation:
         description: Average disk update time
 
       - name: bg.wait.total
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bg_wait_total[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bg_wait_total[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: background wait time
+        unit: sec
         description: Total background wait time
 
       - name: bytes.read
