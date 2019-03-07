@@ -84,21 +84,21 @@ observation:
 
       - name: docs.disk.actual.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_docs_actual_disk_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: doc actual disk size
         unit: bytes
         description: Couch docs total size on disk
 
       - name: docs.data.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_docs_data_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: doc data disk size
         unit: bytes
         description: Couch docs data size
 
       - name: docs.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_docs_disk_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: docs disk size
         unit: bytes
         description: Couch docs total size
@@ -132,21 +132,21 @@ observation:
 
       - name: disk.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_total_disk_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: total disk size
         unit: bytes
         description: Couch total disk size.
 
       - name: views.data.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_views_data_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: view data size
         unit: bytes
         description: Size of object data for views.
 
       - name: views.disk.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_views_disk_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: view disk size
         unit: bytes
         description: Amount of disk space occupied by views.
@@ -173,19 +173,19 @@ observation:
 
       - name: connections.current
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.curr_connections[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: connections
         description: Current bucket connections.
 
       - name: items.current.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.curr_items_tot[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: total items
         description: Num current items including those not active (replica, dead and pending states)
 
       - name: items.current
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.curr_items[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: memory items
         description: Num items in active vbuckets (temp + live)
 
@@ -227,7 +227,7 @@ observation:
 
       - name: disk.write.queue
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.disk_write_queue[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: writes
         description: Disk write queue depth
 
@@ -479,13 +479,13 @@ observation:
 
       - name: ep.diskqueue.items
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_diskqueue_items[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: queue waiting items
         description: Total number of items waiting to be written to disk
 
       - name: ep.flusher.todo
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_flusher_todo[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: current flushing items
         description: Number of items currently being written
 
@@ -497,42 +497,42 @@ observation:
 
       - name: ep.kv.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_kv_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: kv size
         unit: bytes
         description: Total amount of user data cached in RAM in this bucket
 
       - name: ep.max.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_max_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: max size
         unit: bytes
         description: The maximum amount of memory this bucket can use
 
       - name: ep.mem.high.wat
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_mem_high_wat[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: memory high water mark
         unit: bytes
         description: Memory usage high water mark for auto-evictions
 
       - name: ep.mem.low.wat
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_mem_low_wat[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: memory low water mark
         unit: bytes
         description: Memory usage low water mark for auto-evictions
 
       - name: ep.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_meta_data_memory[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: metadata mem
         unit: bytes
         description: Total amount of item metadata consuming RAM in this bucket
 
       - name: ep.num.non.resident
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_non_resident[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: non-resident items
         description: Number of non-resident items
 
@@ -574,7 +574,7 @@ observation:
 
       - name: ep.oom.errors
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_oom_errors[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: ooms
         description: Number of times unrecoverable OOMs happened while processing operations
 
@@ -592,13 +592,13 @@ observation:
 
       - name: ep.overhead
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_overhead[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: overhead
         description: Extra memory used by transient data like persistence queues or checkpoints
 
       - name: ep.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_queue_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: queue size
         description: Number of items queued for storage
 
@@ -628,7 +628,7 @@ observation:
 
       - name: ep.tap.total.total.backlog.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_tap_total_total_backlog_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: backlog size
         description: Number of remaining items for replication
 
@@ -640,7 +640,7 @@ observation:
 
       - name: ep.vb.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_vb_total[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb total
         description: Total number of vBuckets for this bucket
 
@@ -694,42 +694,42 @@ observation:
 
       - name: mem.actual.free
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.mem_actual_free[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: actual free
         unit: bytes
         description: Actual free memory
 
       - name: mem.actual.used
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.mem_actual_used[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: actual used
         unit: bytes
         description: Used memory
 
       - name: mem.free
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.mem_free[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: free
         unit: bytes
         description: Free memory
 
       - name: mem.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.mem_total[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: total
         unit: bytes
         description: Total available memory
 
       - name: mem.used
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.mem_used[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: used
         unit: bytes
         description: Engine's total memory usage (deprecated)
 
       - name: mem.used.sys
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.mem_used_sys[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: used sys
         unit: bytes
         description: System memory usage
@@ -771,14 +771,14 @@ observation:
 
       - name: swap.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.swap_total[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: swap total
         unit: bytes
         description: Total amount of swap available
 
       - name: swap.used
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.swap_used[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: swap used
         unit: bytes
         description: Amount of swap used
@@ -792,25 +792,25 @@ observation:
 
       - name: vb.active.itm.memory
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_itm_memory[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb active item mem
         description: Amount of active user data cached in RAM in this bucket
 
       - name: vb.active.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_meta_data_memory[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb active meta mem
         description: Amount of active item metadata consuming RAM in this bucket
 
       - name: vb.active.num.non.resident
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_num_non_resident[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb active num non resident
         description: Number of non resident vBuckets in the active state for this bucket
 
       - name: vb.active.num
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_num[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb active num
         description: Number of active items
 
@@ -830,7 +830,7 @@ observation:
 
       - name: vb.active.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_queue_age[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb active queue age
         unit: ms
         description: Sum of disk queue item age
@@ -850,7 +850,7 @@ observation:
 
       - name: vb.active.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_queue_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb active queue size
         description: Number of active items in the queue
 
@@ -971,7 +971,7 @@ observation:
 
       - name: vb.replica.curr.items
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_curr_items[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb replica curr items
         description: Number of in memory items
 
@@ -984,26 +984,26 @@ observation:
 
       - name: vb.replica.itm.memory
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_itm_memory[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb replica item mem
         description: Amount of replica user data cached in RAM in this bucket
 
       - name: vb.replica.meta.data.memory
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_meta_data_memory[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb replica meta data mem
         unit: bytes
         description: Total metadata memory
 
       - name: vb.replica.num.non.resident
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_num_non_resident[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb replica num non resident
         description: Number of non resident vBuckets in the replica state for this bucket
 
       - name: vb.replica.num
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_num[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb replica num
         description: Number of replica vBuckets
 
@@ -1022,7 +1022,7 @@ observation:
 
       - name: vb.replica.queue.age
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_queue_age[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb replica queue age
         unit: ms
         description: Sum of disk replica queue item age
@@ -1041,7 +1041,7 @@ observation:
 
       - name: vb.replica.queue.size
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_queue_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         label: vb replica queue size
         description: Replica items in disk queue
 
@@ -1051,9 +1051,9 @@ observation:
         label: vb replica resident items ratio
         description: Number of resident replica items
 
-      - name: vb_total_queue_age
+      - name: vb.queue.age.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_total_queue_age[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: gauge
+        type: long_gauge
         unit: ms
         label: vb total queue age
         description: Sum of disk queue item age
