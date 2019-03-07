@@ -159,8 +159,8 @@ observation:
         description: View fragmentation
 
       - name: views.ops
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_views_ops[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_views_ops[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: view ops
         description: View operations
 
@@ -235,12 +235,13 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_bg_fetched[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
         type: double_counter
         label: reads
-        description: Disk reads per second
+        description: Disk reads
 
       - name: ep.cache.miss.rate
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_cache_miss_rate[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: double_gauge
         label: cache miss rate
+        unit: "%"
         description: Cache miss rate
 
       - name: ep.cache.miss.ratio
@@ -306,8 +307,8 @@ observation:
         description: Number of indexes items remaining to be sent
 
       - name: ep.dcp.2i.items.sent
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_items_sent[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_items_sent[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP indexes items sent
         description: Number of indexes items sent
 
@@ -669,8 +670,8 @@ observation:
         description: Number of streaming requests idle
 
       - name: hibernated.waked
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.hibernated_waked[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.hibernated_waked[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: hibernated waked
         description: Rate of streaming request wakeups
 
@@ -858,6 +859,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_active_resident_items_ratio[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: double_gauge
         label: vb active resident items ratio
+        unit: "%"
         description: Number of resident items
 
       - name: vb.avg.active.queue.age
@@ -889,8 +891,8 @@ observation:
         description: Average age of items in the queue
 
       - name: vb.pending.curr.items
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_curr_items[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_pending_curr_items[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
+        type: long_gauge
         label: vb pending curr item
         description: Number of items in pending vBuckets
 
@@ -1049,6 +1051,7 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb_replica_resident_items_ratio[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: double_gauge
         label: vb replica resident items ratio
+        unit: "%"
         description: Number of resident replica items
 
       - name: vb.queue.age.total
