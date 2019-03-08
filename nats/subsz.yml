@@ -45,14 +45,14 @@ observation:
         label: cache hit rate
         description: The rate matches are being retrieved from cache
 
-      - name: fanout.max
+      - name: cache.fanout.max
         source: max_fanout
         type: long_gauge
         label: max fanout
         description: The maximum fanout served by cache
 
 
-      - name: fanout.avg
+      - name: cache.fanout.avg
         source: avg_fanout
         type: double_gauge
         label: avg fanout
