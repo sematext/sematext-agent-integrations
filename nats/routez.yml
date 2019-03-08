@@ -4,7 +4,7 @@ data:
   server: ${NATS_HOSTPORT}
 
 observation:
-  - name: connz
+  - name: routez
     metricNamespace: nats
     path: $.
 

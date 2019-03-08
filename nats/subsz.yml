@@ -15,28 +15,28 @@ observation:
         label: subscriptions
         description: The number of subscriptions
 
-      - name: inserts
+      - name: subscriptions.inserts
         source: num_inserts
         type: long_gauge
         label: inserts
         description: The number of insert operations in subscriptions list
 
-      - name: removes
+      - name: subscriptions.removes
         source: num_removes
         type: long_gauge
         label: removes
         description: The number of remove operations in subscriptions list
 
-      - name: matches
+      - name: subscriptions.matches
         source: num_matches
         type: long_gauge
         label: matches
         description: The number of times a match is found for a subscription
 
-      - name: cache
+      - name: cache.size
         source: num_cache
         type: long_gauge
-        label: cache
+        label: cache size
         description: The number of result sets in the cache
 
       - name: cache.hit.rate

@@ -9,7 +9,7 @@ observation:
     path: $.
 
     metric:
-      - name: msgs.in
+      - name: messages.in
         source: in_msgs
         type: long_gauge
         label: incoming messages
@@ -18,10 +18,11 @@ observation:
       - name: bytes.in
         source: in_bytes
         type: long_gauge
+        unit: bytes
         label: incoming bytes
         description: The amount of incoming bytes
 
-      - name: msgs.out
+      - name: messages.out
         source: out_msgs
         type: long_gauge
         label: outgoing messages
@@ -30,6 +31,7 @@ observation:
       - name: bytes.out
         source: out_bytes
         type: long_gauge
+        unit: bytes
         label: outgoing bytes
         description: The amount of outgoing bytes
 
