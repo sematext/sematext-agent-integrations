@@ -11,26 +11,26 @@ observation:
     metric:
       - name: messages.in
         source: in_msgs
-        type: long_gauge
+        type: counter
         label: incoming messages
         description: The amount of incoming messages
 
       - name: bytes.in
         source: in_bytes
-        type: long_gauge
+        type: counter
         unit: bytes
         label: incoming bytes
         description: The amount of incoming bytes
 
       - name: messages.out
         source: out_msgs
-        type: long_gauge
+        type: counter
         label: outgoing messages
         description: The amount of outgoing messages
 
       - name: bytes.out
         source: out_bytes
-        type: long_gauge
+        type: counter
         unit: bytes
         label: outgoing bytes
         description: The amount of outgoing bytes

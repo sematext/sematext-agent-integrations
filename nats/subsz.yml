@@ -11,25 +11,25 @@ observation:
     metric:
       - name: subscriptions.total
         source: num_subscriptions
-        type: long_gauge
+        type: counter
         label: subscriptions
         description: The number of subscriptions
 
       - name: subscriptions.inserts
         source: num_inserts
-        type: long_gauge
+        type: counter
         label: inserts
         description: The number of insert operations in subscriptions list
 
       - name: subscriptions.removes
         source: num_removes
-        type: long_gauge
+        type: counter
         label: removes
         description: The number of remove operations in subscriptions list
 
       - name: subscriptions.matches
         source: num_matches
-        type: long_gauge
+        type: counter
         label: matches
         description: The number of times a match is found for a subscription
 
