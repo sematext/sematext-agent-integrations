@@ -9,7 +9,7 @@ observation:
     path: $.
 
     metric:
-      - name: subscriptions
+      - name: subscriptions.total
         source: num_subscriptions
         type: long_gauge
         label: subscriptions
