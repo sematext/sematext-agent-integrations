@@ -112,22 +112,22 @@ observation:
         description: Couch docs fragmentation
 
       - name: data.spatial.size
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_data_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_data_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
+        type: long_gauge
         label: spatial data size
         unit: bytes
         description: Size of object data for spatial views
 
       - name: disk.spatial.size
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_disk_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_disk_size[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
+        type: long_gauge
         label: spatial disk size
         unit: bytes
         description: Amount of disk space occupied by spatial views
 
       - name: ops.spatial
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_ops[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_ops[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
+        type: long_gauge
         label: spatial ops
         description: Spatial operations
 
@@ -254,7 +254,7 @@ observation:
 
       - name: ep.dcp.fts.backoff
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_fts_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP fts backoff
         description: Number of backoffs for fts DCP connections
 
@@ -266,7 +266,7 @@ observation:
 
       - name: ep.dcp.fts.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_fts_items_remaining[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP fts items remaining
         description: Number of fts items remaining to be sent
 
@@ -291,7 +291,7 @@ observation:
 
       - name: ep.dcp.2i.backoff
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP indexes backoff
         description: Number of backoffs for indexes DCP
 
@@ -303,7 +303,7 @@ observation:
 
       - name: ep.dcp.2i.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_items_remaining[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP indexes items remaining
         description: Number of indexes items remaining to be sent
 
@@ -321,7 +321,7 @@ observation:
 
       - name: ep.dcp.other.backoff
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_other_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP other backoff
         description: Number of backoffs for other DCP connections
 
@@ -333,7 +333,7 @@ observation:
 
       - name: ep.dcp.other.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_other_items_remaining[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP other items remaining
         description: Number of other items remaining to be sent
 
@@ -358,7 +358,7 @@ observation:
 
       - name: ep.dcp.replica.backoff
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_replica_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP replica backoff
         description: Number of backoffs for replica DCP connections
 
@@ -395,7 +395,7 @@ observation:
 
       - name: ep.dcp.views.backoff
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP views backoff
         description: Number of backoffs for views DCP connections
 
@@ -407,13 +407,13 @@ observation:
 
       - name: ep.dcp.views.items.remaining
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_items_remaining[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP views items remaining
         description: Number of views items remaining to be sent
 
       - name: ep.dcp.views.items.sent
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_items_sent[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP views items sent
         description: Number of views items sent
 
@@ -432,7 +432,7 @@ observation:
 
       - name: ep.dcp.xdcr.backoff
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_xdcr_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: DCP XDCR backoff
         description: Number of backoffs for XDCR DCP connections
 
@@ -493,7 +493,7 @@ observation:
 
       - name: ep.item.commit.failed
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_item_commit_failed[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: failed commits
         description: Number of times a transaction failed to commit due to storage errors
 
@@ -750,18 +750,18 @@ observation:
 
       - name: page.faults
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.page_faults[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: faults
         description: Number of page faults
 
       - name: replication.docs.rep.queue
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.replication_docs_rep_queue[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: repl docs queue
 
       - name: replication.meta.latency.aggr
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.replication_meta_latency_aggr[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: repl meta latency aggr
 
       - name: rest.requests
@@ -918,7 +918,7 @@ observation:
 
       - name: vb.pending.num.non.resident
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.vb.pending_num_non_resident[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: gauge
+        type: double_gauge
         label: vb pending num non resident
         description: Number of non resident vBuckets in the pending state for this bucket
 
