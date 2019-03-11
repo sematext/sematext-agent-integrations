@@ -11,12 +11,19 @@ observation:
     path: $.[?(@.name=${bucketName})]
 
     metric:
-      - name: bg.wait.time.avg
+      - name: background.wait.time.avg
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.avg_bg_wait_time[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
         type: double_gauge
         label: average background wait
         unit: sec
         description: Average background wait time
+
+      - name: background.wait.total
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bg_wait_total[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
+        label: background wait time
+        unit: sec
+        description: Total background wait time
 
       - name: disk.commit.time.avg
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.avg_disk_commit_time[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
@@ -31,13 +38,6 @@ observation:
         label: average update time
         unit: microsec
         description: Average disk update time
-
-      - name: bg.wait.total
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bg_wait_total[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
-        type: double_counter
-        label: background wait time
-        unit: sec
-        description: Total background wait time
 
       - name: bytes.read
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.bytes_read[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
@@ -232,7 +232,7 @@ observation:
         label: writes
         description: Disk write queue depth
 
-      - name: ep.bg.fetched
+      - name: ep.background.fetched
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_bg_fetched[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
         type: double_counter
         label: reads
