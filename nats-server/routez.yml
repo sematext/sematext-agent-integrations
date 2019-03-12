@@ -5,7 +5,7 @@ data:
 
 observation:
   - name: routez
-    metricNamespace: nats_server
+    metricNamespace: nats.server
     path: $.
 
     metric:
