@@ -16,5 +16,5 @@ observation:
         description: The number of routes
 
     tag:
-      - name: nats.servers.server
+      - name: nats.server.id
         value: json:/routez $.server_id

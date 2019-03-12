@@ -16,5 +16,5 @@ observation:
         description: The number of connections
 
     tag:
-      - name: nats.servers.server
+      - name: nats.server.id
         value: json:/connz $.server_id

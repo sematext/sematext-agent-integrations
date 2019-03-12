@@ -48,5 +48,5 @@ observation:
         description: The number of slow consumers currently on NATS
 
     tag:
-      - name: nats.servers.server
+      - name: nats.server.id
         value: json:/connz $.server_id
