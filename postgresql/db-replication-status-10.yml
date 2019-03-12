@@ -1,0 +1,40 @@
+type: db
+data:
+  query: "SELECT
+      CASE
+        WHEN pg_last_wal_receive_lsn() = pg_last_wal_replay_lsn()
+        THEN 0
+        ELSE GREATEST (0, EXTRACT (EPOCH FROM now() - pg_last_xact_replay_timestamp()))
+      END AS replication_delay,
+      abs(pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn())) AS replication_delay_bytes
+    WHERE
+      (SELECT pg_is_in_recovery());"
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+require:
+  - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
+    values: 10.0-*
+
+observation:
+  - name: replication
+    metricNamespace: postgresql
+
+    metric:
+      - name: replication.delay.time
+        source: replication_delay
+        type: long_gauge
+        unit: ms
+        label: replication delay
+
+      - name: replication.delay.bytes
+        source: replication_delay_bytes
+        type: long_gauge
+        unit: bytes
+        label: replication delay bytes

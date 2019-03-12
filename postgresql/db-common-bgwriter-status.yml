@@ -1,0 +1,58 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_bgwriter;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: bgwriter
+    metricNamespace: postgresql
+
+    metric:
+      - name: bgwriter.checkpoints.scheduled
+        source: checkpoints_timed
+        type: counter
+        label: scheduled checkpoints
+        description: Number of scheduled checkpoints that have been performed
+
+      - name: bgwriter.checkpoints.requested
+        source: checkpoints_req
+        type: counter
+        label: requested checkpoints
+        description: Number of requested checkpoints that have been performed
+
+      - name: bgwriter.buffers.written
+        source: buffers_checkpoint
+        type: counter
+        label: checkpoint buffers
+        description: Number of buffers written during checkpoints
+
+      - name: bgwriter.buffers.clean
+        source: buffers_clean
+        type: counter
+        label: cleaned buffers
+        description: Number of buffers written by the background writer
+
+      - name: bgwriter.buffers.cleaning.maxwritten.stopped
+        source: maxwritten_clean
+        type: counter
+        label: max written clean buffers
+        description: Number of times the background writer stopped a cleaning scan because it had written too many buffers
+
+      - name: bgwriter.buffers.backend
+        source: buffers_backend
+        type: counter
+        label: backend buffers
+        description: Number of buffers written directly by a backend
+
+      - name: bgwriter.buffers.alloc
+        source: buffers_alloc
+        type: counter
+        label: allocated buffers
+        description: Number of buffers allocated

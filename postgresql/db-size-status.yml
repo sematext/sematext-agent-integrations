@@ -1,0 +1,55 @@
+type: db
+data:
+  query: "SELECT
+      relname,
+      pg_table_size(C.oid) as table_size,
+      pg_indexes_size(C.oid) as index_size,
+      pg_total_relation_size(C.oid) as total_size
+    FROM pg_class C
+    LEFT JOIN pg_namespace N
+      ON (N.oid = C.relnamespace)
+    WHERE
+      nspname NOT IN ('pg_catalog', 'information_schema') AND
+      nspname !~ '^pg_toast' AND
+      relkind IN ('r');"
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+
+observation:
+  - name: size
+    metricNamespace: postgresql
+
+    metric:
+      - name: size.table
+        source: relname
+        type: text
+        send: false
+        label: table name
+
+      - name: table.disk.size
+        source: table_size
+        type: long_gauge
+        unit: bytes
+        label: table size
+        description: Disk space used by the a table, excluding indexes (but including TOAST, free space map, and visibility map)
+
+      - name: index.disk.size
+        source: index_size
+        type: long_gauge
+        unit: bytes
+        label: index size
+        description: Total disk space used by indexes attached to the a table
+
+      - name: table.total.disk.size
+        source: total_size
+        type: long_gauge
+        unit: bytes
+        label: total size
+        description: Total disk space used by the a table, including all indexes and TOAST data
+
+    tag:
+      - name: postgresql.table
+        value: eval:${size.table}

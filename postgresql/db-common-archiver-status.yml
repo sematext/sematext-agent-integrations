@@ -1,0 +1,28 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_archiver;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: archiver
+    metricNamespace: postgresql
+
+    metric:
+      - name: archiver.wal.success.count
+        source: archived_count
+        type: counter
+        label: WAL files
+        description: Number of WAL files that have been successfully archived
+
+      - name: archiver.wal.failed.count
+        source: failed_count
+        type: counter
+        label: failed WAL files
+        description: Number of failed attempts to archive WAL files

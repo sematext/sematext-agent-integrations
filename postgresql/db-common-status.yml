@@ -1,0 +1,76 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_database;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+observation:
+  - name: database
+    metricNamespace: postgresql
+
+    metric:
+      - name: database.connections.active.count
+        source: numbackends
+        type: long_gauge
+        label: active connections
+        description: Number of backends currently connected to this database
+
+      - name: database.transactions.commit
+        source: xact_commit
+        type: counter
+        label: committed transactions
+        description: Number of transactions in this database that have been committed
+
+      - name: database.transactions.rollback
+        source: xact_rollback
+        type: counter
+        label: rolled back transactions
+        description: Number of transactions in this database that have been rolled back
+
+      - name: database.blocks.read
+        source: blks_read
+        type: counter
+        label: disk blocks read
+        description: Number of disk blocks read in this database
+
+      - name: database.blocks.hit
+        source: blks_hit
+        type: counter
+        label: disk block cache hit
+        description: Number of times disk blocks were found already in the buffer cache, so that a read was not necessary (this only includes hits in the PostgreSQL buffer cache, not the operating system's file system cache)
+
+      - name: database.rows.returned
+        source: tup_returned
+        type: counter
+        label: rows returned
+        description: Number of rows returned by queries in this database
+
+      - name: database.rows.fetched
+        source: tup_fetched
+        type: counter
+        label: rows fetched
+        description: Number of rows fetched by queries in this database
+
+      - name: database.rows.inserted
+        source: tup_inserted
+        type: counter
+        label: rows inserted
+        description: Number of rows inserted by queries in this database
+
+      - name: database.rows.updated
+        source: tup_updated
+        type: counter
+        label: rows updated
+        description: Number of rows updated by queries in this database
+
+      - name: database.rows.deleted
+        source: tup_deleted
+        type: counter
+        label: rows deleted
+        description: Number of rows deleted by queries in this database

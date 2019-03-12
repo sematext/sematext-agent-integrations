@@ -1,0 +1,50 @@
+type: db
+data:
+  query: "SELECT
+      mode,
+      pc.relname, count(*) AS lock_count
+    FROM pg_locks l
+    JOIN pg_class pc
+      ON (l.relation = pc.oid)
+    WHERE
+      l.mode IS NOT NULL AND
+      pc.relname NOT LIKE 'pg_%'
+    GROUP BY
+      pc.relname,
+      mode;"
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+
+observation:
+  - name: lock
+    metricNamespace: postgresql
+
+    metric:
+      - name: lock.mode
+        source: mode
+        type: text
+        send: false
+        label: lock mode
+        description: Name of the lock mode held or desired
+
+      - name: lock.relation
+        source: relation
+        type: text
+        send: false
+        label: lock name
+        description: Name of the table, index, view, etc.
+
+      - name: lock.count
+        source: lock_count
+        type: long_gauge
+        label: lock count
+        description: Number of active lockable object
+
+    tag:
+      - name: postgresql.lock.mode
+        value: eval:${lock.mode}
+      - name: postgresql.lock.relation
+        value: eval:${lock.relation}

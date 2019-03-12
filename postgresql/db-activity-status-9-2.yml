@@ -1,0 +1,60 @@
+type: db
+data:
+  query: "SELECT
+      datname,
+      SUM(
+        CASE
+          WHEN xact_start IS NOT NULL
+          THEN 1
+          ELSE 0
+        END
+      ) as open,
+      SUM(
+        CASE
+          WHEN state = 'idle in transaction'
+          THEN 1
+          ELSE 0
+        END
+      ) as idle_in_transaction
+    FROM pg_stat_activity
+    WHERE datname != ''
+    GROUP BY
+      datid,
+      datname;"
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+
+require:
+  - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
+    values: 9.2-*
+
+observation:
+  - name: activity
+    metricNamespace: postgresql
+
+    metric:
+      - name: activity.database
+        source: datname
+        type: text
+        send: false
+        label: database
+        description: Name of the database this backend is connected to
+
+      - name: transaction.open.count
+        source: open
+        type: long_gauge
+        label: active backends
+        description: Number of backends executing a query
+
+      - name: transaction.idle.count
+        source: idle_in_transaction
+        type: long_gauge
+        label: idle backends
+        description: Number of backend is in a transaction, but not currently executing a query
+
+    tag:
+      - name: postgresql.database
+        value: eval:${activity.database}

@@ -1,0 +1,39 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_database;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+require:
+  - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
+    values: 9.2-*
+
+observation:
+  - name: database
+    metricNamespace: postgresql
+
+    metric:
+      - name: database.deadlocks
+        source: deadlocks
+        type: counter
+        label: deadlocks
+        description: Number of deadlocks detected in this database
+
+      - name: database.temp.bytes
+        source: temp_bytes
+        type: counter
+        unit: bytes
+        label: temporary written bytes
+        description: Total amount of data written to temporary files by queries in this database. All temporary files are counted, regardless of why the temporary file was created, and regardless of the log_temp_files setting
+
+      - name: database.temp.files
+        source: temp_files
+        type: counter
+        label: temporary files
+        description: "Number of temporary files created by queries in this database. All temporary files are counted, regardless of why the temporary file was created (e.g., sorting or hashing), and regardless of the log_temp_files setting"

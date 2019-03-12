@@ -1,0 +1,26 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_bgwriter;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
+  # (1st column being attribute name, 2nd column being attribute value)
+  dbVerticalModel: true
+
+require:
+  - className: com.sematext.spm.client.postgresql.PostgreSQLVersionCheck
+    values: 9.1-*
+
+observation:
+  - name: bgwriter
+    metricNamespace: postgresql
+
+    metric:
+      - name: bgwriter.buffers.backend.fsync
+        source: buffers_backend_fsync
+        type: counter
+        label: fsync backend buffers
+        description: Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)

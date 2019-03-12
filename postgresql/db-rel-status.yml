@@ -1,0 +1,86 @@
+type: db
+data:
+  query: SELECT * FROM pg_stat_user_tables;
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+
+observation:
+  - name: usertables
+    metricNamespace: postgresql
+    rowIdColumns: schemaname,relname
+
+    metric:
+      - name: tables.table
+        source: relname
+        type: text
+        send: false
+        label: table name
+
+      - name: tables.schema
+        source: schemaname
+        type: text
+        send: false
+        label: schema name
+
+      - name: tables.scan.sequential
+        source: seq_scan
+        type: counter
+        label: sequential scans
+        description: Number of sequential scans initiated on a table
+
+      - name: tables.rows.fetched.sequential
+        source: seq_tup_read
+        type: counter
+        label: sequential rows fetched
+        description: Number of live rows fetched by sequential scans
+
+      - name: tables.rows.fetched.index
+        source: idx_tup_fetch
+        type: counter
+        label: index rows fetched
+        description: Number of live rows fetched by index scans
+
+      - name: tables.rows.inserted
+        source: n_tup_ins
+        type: counter
+        label: inserted rows
+        description: Number of rows inserted
+
+      - name: tables.rows.updated
+        source: n_tup_upd
+        type: counter
+        label: updated rows
+        description: Number of rows updated
+
+      - name: tables.rows.deleted
+        source: n_tup_del
+        type: counter
+        label: deleted rows
+        description: Number of rows deleted
+
+      - name: tables.rows.hot.updated
+        source: n_tup_hot_upd
+        type: counter
+        label: hot updated rows
+        description: Number of rows hot updated (i.e., with no separate index update required)
+
+      - name: tables.rows.live
+        source: n_live_tup
+        type: long_gauge
+        label: live rows
+        description: Estimated number of live rows
+
+      - name: tables.rows.dead
+        source: n_dead_tup
+        type: long_gauge
+        label: dead rows
+        description: Estimated number of dead rows
+
+    tag:
+      - name: postgresql.table
+        value: eval:${tables.table}
+      - name: postgresql.schema
+        value: eval:${tables.schema}

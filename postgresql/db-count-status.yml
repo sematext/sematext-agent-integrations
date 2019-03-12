@@ -1,0 +1,37 @@
+type: db
+data:
+  query: "SELECT
+      schemaname,
+      count(*) as table_count
+    FROM
+      (
+        SELECT schemaname
+        FROM pg_stat_user_tables
+        ORDER BY schemaname, relname
+      ) AS subquery
+    GROUP BY schemaname;"
+  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbDriverClass: org.postgresql.Driver
+  dbUser: ${POSTGRESQL_DB_USER}
+  dbPassword: ${POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+
+observation:
+  - name: count
+    metricNamespace: postgresql
+
+    metric:
+      - name: count.schema
+        source: schemaname
+        type: text
+        send: false
+        label: schema name
+
+      - name: table.count
+        source: table_count
+        type: long_gauge
+        label: table count
+
+    tag:
+      - name: postgresql.schema
+        value: eval:${count.schema}
