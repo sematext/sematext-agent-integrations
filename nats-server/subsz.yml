@@ -1,11 +1,11 @@
 type: json
 data:
   url: /subsz
-  server: ${NATS_HOSTPORT}
+  server: ${NATS_SERVER_HOSTPORT}
 
 observation:
   - name: subsz
-    metricNamespace: nats
+    metricNamespace: nats_server
     path: $.
 
     metric:

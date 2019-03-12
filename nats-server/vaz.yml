@@ -1,11 +1,11 @@
 type: json
 data:
   url: /varz
-  server: ${NATS_HOSTPORT}
+  server: ${NATS_SERVER_HOSTPORT}
 
 observation:
   - name: varz
-    metricNamespace: nats
+    metricNamespace: nats_server
     path: $.
 
     metric:
@@ -48,5 +48,5 @@ observation:
         description: The number of slow consumers currently on NATS
 
     tag:
-      - name: nats.server
+      - name: nats.servers.server
         value: json:/connz $.server_id
