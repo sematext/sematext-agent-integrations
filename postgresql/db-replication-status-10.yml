@@ -14,7 +14,6 @@ data:
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
   dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
-  # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true
 
 require:
