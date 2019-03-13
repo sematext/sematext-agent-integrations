@@ -126,8 +126,8 @@ observation:
         description: Amount of disk space occupied by spatial views
 
       - name: ops.spatial
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_ops[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:long(avg())
-        type: long_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.couch_spatial_ops[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: spatial ops
         description: Spatial operations
 
@@ -215,14 +215,14 @@ observation:
         description: Delete misses
 
       - name: disk.commits.count
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.disk_commit_count[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.disk_commit_count[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: commits
         description: Disk commits
 
       - name: disk.updates.count
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.disk_update_count[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.disk_update_count[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: updates
         description: Disk updates
 
@@ -253,8 +253,8 @@ observation:
         description: Cache miss ratio
 
       - name: ep.dcp.fts.backoff
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_fts_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_fts_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP fts backoff
         description: Number of backoffs for fts DCP connections
 
@@ -271,8 +271,8 @@ observation:
         description: Number of fts items remaining to be sent
 
       - name: ep.dcp.fts.items.sent
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_fts_items_sent[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_fts_items_sent[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP fts items sent
         description: Number of fts items sent
 
@@ -287,11 +287,11 @@ observation:
         type: double_counter
         label: DCP fts total bytes
         unit: bytes
-        description: Number of bytes per second being sent for indexes DCP connections
+        description: Number of bytes being sent for indexes DCP connections
 
       - name: ep.dcp.2i.backoff
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_2i_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP indexes backoff
         description: Number of backoffs for indexes DCP
 
@@ -320,8 +320,8 @@ observation:
         description: Number of indexes producers
 
       - name: ep.dcp.other.backoff
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_other_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_other_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP other backoff
         description: Number of backoffs for other DCP connections
 
@@ -354,11 +354,11 @@ observation:
         type: double_counter
         label: DCP other total bytes
         unit: bytes
-        description: Number of bytes per second being sent for other DCP connections
+        description: Number of bytes being sent for other DCP connections
 
       - name: ep.dcp.replica.backoff
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_replica_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_replica_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP replica backoff
         description: Number of backoffs for replica DCP connections
 
@@ -391,11 +391,11 @@ observation:
         type: double_counter
         label: DCP replica total bytes
         unit: bytes
-        description: Number of bytes per second being sent for replica DCP connections
+        description: Number of bytes being sent for replica DCP connections
 
       - name: ep.dcp.views.backoff
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP views backoff
         description: Number of backoffs for views DCP connections
 
@@ -412,8 +412,8 @@ observation:
         description: Number of views items remaining to be sent
 
       - name: ep.dcp.views.items.sent
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_items_sent[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_items_sent[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP views items sent
         description: Number of views items sent
 
@@ -425,14 +425,14 @@ observation:
 
       - name: ep.dcp.views.bytes.total
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_views_total_bytes[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
-        type: double_gauge
+        type: double_counter
         label: DCP views total bytes
         unit: bytes
-        description: Number of bytes per second being sent for views DCP connections
+        description: Number of bytes being sent for views DCP connections
 
       - name: ep.dcp.xdcr.backoff
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_xdcr_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_dcp_xdcr_backoff[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: DCP XDCR backoff
         description: Number of backoffs for XDCR DCP connections
 
@@ -465,7 +465,7 @@ observation:
         type: double_counter
         label: DCP XDCR total bytes
         unit: bytes
-        description: Number of bytes per second being sent for XDCR DCP connections
+        description: Number of bytes being sent for XDCR DCP connections
 
       - name: ep.diskqueue.drain
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_diskqueue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
@@ -542,31 +542,31 @@ observation:
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_del_meta[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
         type: double_counter
         label: ops del meta
-        description: Number of delete operations per second for this bucket as the target for XDCR
+        description: Number of delete operations for this bucket as the target for XDCR
 
       - name: ep.num.ops.del.ret.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_del_ret_meta[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
         type: double_counter
         label: ops del ret meta
-        description: Number of delRetMeta operations per second for this bucket as the target for XDCR
+        description: Number of delRetMeta operations for this bucket as the target for XDCR
 
       - name: ep.num.ops.get.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_get_meta[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
         type: double_counter
         label: ops get meta
-        description: Number of read operations per second for this bucket as the target for XDCR
+        description: Number of read operations for this bucket as the target for XDCR
 
       - name: ep.num.ops.set.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_set_meta[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
         type: double_counter
         label: ops set meta
-        description: Number of set operations per second for this bucket as the target for XDCR
+        description: Number of set operations for this bucket as the target for XDCR
 
       - name: ep.num.ops.set.ret.meta
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_ops_set_ret_meta[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
         type: double_counter
         label: ops set rep meta
-        description: Number of setRetMeta operations per second for this bucket as the target for XDCR
+        description: Number of setRetMeta operations for this bucket as the target for XDCR
 
       - name: ep.num.value.ejects
         source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_num_value_ejects[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
@@ -611,14 +611,14 @@ observation:
         description: Number of resident items
 
       - name: ep.tap.replica.queue.drain
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_tap_replica_queue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_tap_replica_queue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: drain items
         description: Total drained items in the replica queue
 
       - name: ep.tap.total.queue.drain
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_tap_total_queue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_tap_total_queue_drain[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: drain items
         description: Total drained items in the queue
 
@@ -635,8 +635,8 @@ observation:
         description: Number of remaining items for replication
 
       - name: ep.tmp.oom.errors
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_tmp_oom_errors[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.ep_tmp_oom_errors[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: ooms
         description: Number of times recoverable OOMs happened while processing operations
 
@@ -737,8 +737,8 @@ observation:
         description: System memory usage
 
       - name: misses
-        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.misses[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:avg()
-        type: double_gauge
+        source: json:/pools/default/buckets/${bucketName}/stats?zoom=minute $.op.samples.misses[0:${SPM_MONITOR_COLLECT_INTERVAL}] return:sum()
+        type: double_counter
         label: misses
         description: Total number of misses
 
