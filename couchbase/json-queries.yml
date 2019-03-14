@@ -1,0 +1,101 @@
+type: json
+data:
+  url: /admin/vitals
+  server: ${COUCHBASE_QUERY_HOSTPORT}
+  basicHttpAuthUsername: ${COUCHBASE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${COUCHBASE_BASICAUTH_PASSWORD}
+
+observation:
+  - name: queries
+    metricNamespace: couchbase
+    path: $.
+
+    metric:
+      - name: cores
+        source: cores
+        type: long_gauge
+        label: cores
+        description: Cores
+
+      - name: gc.num
+        source: gc.num
+        type: counter
+        label: gc num
+        description: Number of objects garbage collected
+
+      - name: gc.pause.percent
+        source: gc.pause.percent
+        type: gauge
+        label: gc pause percent
+        unit: "%"
+        description: Garbage collection pause percentage
+
+      - name: gc.pause.time.text
+        source: gc.pause.time
+        type: text
+        send: false
+
+      - name: gc.pause.time
+        source: as_counter:func:DoubleTrimTimeUnit(gc.pause.time.text, ms)
+        type: counter
+        label: gc pause time
+        unit: seconds
+        description: Garbage collection pause time
+
+      - name: memory.system
+        source: memory.system
+        type: long_gauge
+        label: system memory
+        unit: bytes
+        description: Memory used by the system
+
+      - name: memory.total
+        source: memory.total
+        type: long_gauge
+        label: total memory
+        unit: bytes
+        description: Memory used by Couchbase over the total period of time
+
+      - name: memory.usage
+        source: memory.usage
+        type: long_gauge
+        label: usage memory
+        unit: bytes
+        description: Memory currently used by Couchbase
+
+      - name: request.active.count
+        source: request.active.count
+        type: long_gauge
+        label: active requests
+        description: Number of active requests
+
+      - name: request.completed.count
+        source: request.completed.count
+        type: counter
+        label: requests completed
+        description: Number of requests completed
+
+      - name: request.prepared.percent
+        source: request.prepared.percent
+        type: gauge
+        label: request prepared percent
+        unit: "%"
+        description: Percentage of requests prepared
+
+      - name: request.time.mean.text
+        source: request_time.mean
+        type: text
+        send: false
+
+      - name: request.time.mean
+        source: func:DoubleTrimTimeUnit(request.time.mean.text, ms)
+        type: gauge
+        label: request time mean
+        unit: seconds
+        description: Average request time
+
+      - name: threads.total
+        source: total.threads
+        type: long_gauge
+        label: total threads
+        description: total_threads
