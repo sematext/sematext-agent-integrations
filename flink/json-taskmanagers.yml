@@ -1,0 +1,119 @@
+type: json
+data:
+  url: /v1/taskmanagers
+  server: ${FLINK_HOSTPORT}
+
+observation:
+  - name: taskmanagers
+    metricNamespace: flink
+    path: $.[?(@.id=${taskmanagerid})]
+
+    metric:
+      - name: taskmanagers.cores
+        source: json:/v1/taskmanagers/${taskmanagerid} $.hardware.cpuCores
+        type: long_gauge
+        label: cpu cores
+        description: cpu cores
+
+      - name: taskmanagers.memory.total
+        source: json:/v1/taskmanagers/${taskmanagerid} $.hardware.physicalMemory
+        type: long_gauge
+        unit: bytes
+        label: total memory
+        description: physical memory
+
+      - name: taskmanagers.memory.managed
+        source: json:/v1/taskmanagers/${taskmanagerid} $.hardware.managedMemory
+        type: long_gauge
+        unit: bytes
+        label: managed memory
+        description: managed memory
+
+      - name: taskmanagers.heap.used
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.heapUsed
+        type: long_gauge
+        unit: bytes
+        label: used heap
+        description: The amount of heap memory currently used
+
+      - name: taskmanagers.heap.committed
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.heapCommitted
+        type: long_gauge
+        unit: bytes
+        label: committed heap
+        description: The amount of heap memory guaranteed to be available to the JVM
+
+      - name: taskmanagers.heap.max
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.heapMax
+        type: long_gauge
+        label: max heap
+        description: The maximum amount of heap memory that can be used for memory management
+        unit: bytes
+
+      - name: taskmanagers.nonheap.used
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.nonHeapUsed
+        type: long_gauge
+        unit: bytes
+        label: used non-heap
+        description: The amount of non-heap memory currently used
+
+      - name: taskmanagers.nonheap.committed
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.nonheapCommitted
+        type: long_gauge
+        unit: bytes
+        label: committed non-heap
+        description: The amount of non-heap memory guaranteed to be available to the JVM
+
+      - name: taskmanagers.direct.count
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.directCount
+        type: long_gauge
+        label: direct count
+        description: The number of buffers in the direct buffer pool
+
+      - name: taskmanagers.direct.used
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.directUsed
+        type: long_gauge
+        unit: bytes
+        label: direct used
+        description: The amount of memory used by the JVM for the direct buffer pool
+
+      - name: taskmanagers.direct.max
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.directMax
+        type: long_gauge
+        unit: bytes
+        label: direct used
+        description: The total capacity of all buffers in the direct buffer pool
+
+      - name: taskmanagers.mapped.count
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.mappedCount
+        type: long_gauge
+        label: mapped count
+        description: The number of buffers in the mapped buffer pool
+
+      - name: taskmanagers.mapped.used
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.mappedUsed
+        type: long_gauge
+        label: mapped used
+        description: The amount of memory used by the JVM for the mapped buffer pool
+
+      - name: taskmanagers.mapped.max
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.mappedMax
+        type: long_gauge
+        unit: bytes
+        label: mapped max
+        description: The number of buffers in the mapped buffer pool
+
+      - name: taskmanagers.memory.segments.available
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.memorySegmentsAvailable
+        type: long_gauge
+        label: available memory segments
+
+      - name: taskmanagers.memory.segments.total
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.memorySegmentsTotal
+        type: long_gauge
+        label: total memory segments
+
+
+    tag:
+      - name: taskmanagerid
+        value: ${taskmanagerid}

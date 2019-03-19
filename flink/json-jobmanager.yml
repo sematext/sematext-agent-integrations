@@ -1,0 +1,126 @@
+type: json
+data:
+  url: /v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load
+  server: ${FLINK_HOSTPORT}
+
+observation:
+  - name: jobmanager
+    metricNamespace: flink
+    path: $.
+
+    metric:
+      - name: jobmanager.numRegisteredTaskManagers
+        source: [?(@id=numRegisteredTaskManagers)].value
+        type: long_gauge
+        label: num task managers
+        description: The number of registered taskmanagers
+
+      - name: jobmanager.jobs.running
+        source: [?(@id=numRunningJobs)].value
+        type: long_gauge
+        label: running jobs
+        description: The number of running jobs
+
+      - name: jobmanager.memory.task.slots.total
+        source: [?(@id=taskSlotsTotal)].value
+        type: long_gauge
+        label: total task slots
+        description: The total number of task slots
+
+      - name: jobmanager.memory.task.slots.available
+        source: [?(@id=taskSlotsAvailable)].value
+        type: long_gauge
+        label: available task slots
+        description: The number of available task slots
+
+      - name: jobmanager.heap.max
+        source: [?(@id=Status.JVM.Memory.Heap.Max)].value
+        type: long_gauge
+        unit: bytes
+        label: heap max
+        description: The maximum amount of heap memory that can be used for memory management
+
+      - name: jobmanager.heap.used
+        source: [?(@id=Status.JVM.Memory.Heap.Used)].value
+        type: long_gauge
+        unit: bytes
+        label: used heap
+        description: The amount of heap memory currently used
+
+      - name: jobmanager.nonheap.max
+        source: [?(@id=Status.JVM.Memory.NonHeap.Max)].value
+        type: long_gauge
+        unit: bytes
+        label: used heap
+        description: The maximum amount of non-heap memory that can be used for memory management
+
+      - name: jobmanager.nonheap.used
+        source: [?(@id=Status.JVM.Memory.NonHeap.Used)].value
+        type: long_gauge
+        unit: bytes
+        label: used non-heap
+        description: The amount of non-heap memory currently used
+
+      - name: jobmanager.nonheap.committed
+        source: [?(@id=Status.JVM.Memory.NonHeap.Committed)].value
+        type: long_gauge
+        unit: bytes
+        label: committed non-heap
+        description: The amount of non-heap memory guaranteed to be available to the JVM
+
+      - name: jobmanager.direct.count
+        source: [?(@id=Status.JVM.Memory.Direct.Count)].value
+        type: long_gauge
+        label: direct count
+        description: The number of buffers in the direct buffer pool
+
+      - name: jobmanager.direct.used
+        source: [?(@id=Status.JVM.Memory.Direct.MemoryUsed)].value
+        type: long_gauge
+        unit: bytes
+        label: direct used
+        description: The amount of memory used by the JVM for the direct buffer pool
+
+      - name: jobmanager.direct.max
+        source: [?(@id=Status.JVM.Memory.Direct.TotalCapacity)].value
+        type: long_gauge
+        unit: bytes
+        label: direct used
+        description: The total capacity of all buffers in the direct buffer pool
+
+      - name: jobmanager.mapped.count
+        source: [?(@id=Status.JVM.Memory.Mapped.Count)].value
+        type: long_gauge
+        label: mapped count
+        description: The number of buffers in the mapped buffer pool
+
+      - name: jobmanager.mapped.max
+        source: [?(@id=Status.JVM.Memory.Mapped.TotalCapacity)].value
+        type: long_gauge
+        unit: bytes
+        label: mapped count
+        description: The number of buffers in the mapped buffer pool
+
+      - name: jobmanager.mapped.used
+        source: [?(@id=Status.JVM.Memory.Mapped.MemoryUsed)].value
+        type: long_gauge
+        unit: bytes
+        label: mapped used
+        description: The amount of memory used by the JVM for the mapped buffer pool
+
+      - name: jobmanager.threads.count
+        source: [?(@id=Status.JVM.Threads.Count)].value
+        type: long_gauge
+        label: The total number of live threads
+
+      - name: jobmanager.cpu.time
+        source: [?(@id=Status.JVM.CPU.Time)].value
+        type: long_gauge
+        label: cpu time
+        description: The CPU time used by the JVM
+
+      - name: jobmanager.cpu.load
+        source: [?(@id=Status.JVM.CPU.Load)].value
+        type: long_gauge
+        label: cpu load
+        description: The recent CPU usage of the JVM.
