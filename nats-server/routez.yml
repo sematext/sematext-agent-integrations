@@ -5,11 +5,11 @@ data:
 
 observation:
   - name: routez
-    metricNamespace: nats.server
+    metricNamespace: nats
     path: $.
 
     metric:
-      - name: routes
+      - name: server.routes
         source: num_routes
         type: long_gauge
         label: routes

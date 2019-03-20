@@ -5,56 +5,54 @@ data:
 
 observation:
   - name: subsz
-    metricNamespace: nats.server
+    metricNamespace: nats
     path: $.
 
     metric:
-      - name: subscriptions.total
+      - name: server.subscriptions.total
         source: num_subscriptions
         type: counter
         label: subscriptions
         description: The number of subscriptions
 
-      - name: subscriptions.inserts
+      - name: server.subscriptions.inserts
         source: num_inserts
         type: counter
         label: inserts
         description: The number of insert operations in subscriptions list
 
-      - name: subscriptions.removes
+      - name: server.subscriptions.removes
         source: num_removes
         type: counter
         label: removes
         description: The number of remove operations in subscriptions list
 
-      - name: subscriptions.matches
+      - name: server.subscriptions.matches
         source: num_matches
         type: counter
         label: matches
         description: The number of times a match is found for a subscription
 
-      - name: cache.size
+      - name: server.cache.size
         source: num_cache
         type: long_gauge
         label: cache size
         description: The number of result sets in the cache
 
-      - name: cache.hit.rate
+      - name: server.cache.hit.rate
         source: cache_hit_rate
         type: double_gauge
         label: cache hit rate
         description: The rate matches are being retrieved from cache (value is in [0-1])
 
-      - name: cache.fanout.max
+      - name: server.cache.fanout.max
         source: max_fanout
         type: long_gauge
         label: max fanout
         description: The maximum fanout served by cache
 
-
-      - name: cache.fanout.avg
+      - name: server.cache.fanout.avg
         source: avg_fanout
         type: double_gauge
         label: avg fanout
         description: The average fanout served by cache
-

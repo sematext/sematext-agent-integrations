@@ -5,12 +5,11 @@ data:
 
 observation:
   - name: connz
-    metricNamespace: nats.server
-
+    metricNamespace: nats
     path: $.
 
     metric:
-      - name: connections
+      - name: server.connections
         source: num_connections
         type: long_gauge
         label: connections
