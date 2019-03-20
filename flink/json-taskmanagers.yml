@@ -107,11 +107,12 @@ observation:
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.memorySegmentsAvailable
         type: long_gauge
         label: available memory segments
+        description: The number of unused memory segments
 
       - name: taskmanagers.memory.segments.total
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.memorySegmentsTotal
         type: long_gauge
-        label: total memory segments
+        label: The number of allocated memory segments
 
 
     tag:

@@ -1,6 +1,6 @@
 type: json
 data:
-  url: /v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load
+  url: /v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded
   server: ${FLINK_HOSTPORT}
 
 observation:
@@ -47,6 +47,13 @@ observation:
         label: used heap
         description: The amount of heap memory currently used
 
+      - name: jobmanager.heap.committed
+        source: [?(@id=Status.JVM.Memory.Heap.Committed)].value
+        type: long_gauge
+        unit: bytes
+        label: committed heap
+        description: The amount of heap memory guaranteed to be available to the JVM
+
       - name: jobmanager.nonheap.max
         source: [?(@id=Status.JVM.Memory.NonHeap.Max)].value
         type: long_gauge
@@ -68,11 +75,12 @@ observation:
         label: committed non-heap
         description: The amount of non-heap memory guaranteed to be available to the JVM
 
-      - name: jobmanager.direct.count
-        source: [?(@id=Status.JVM.Memory.Direct.Count)].value
+      - name: jobmanager.direct.max
+        source: [?(@id=Status.JVM.Memory.Direct.TotalCapacity)].value
         type: long_gauge
-        label: direct count
-        description: The number of buffers in the direct buffer pool
+        unit: bytes
+        label: direct used
+        description: The total capacity of all buffers in the direct buffer pool
 
       - name: jobmanager.direct.used
         source: [?(@id=Status.JVM.Memory.Direct.MemoryUsed)].value
@@ -81,18 +89,11 @@ observation:
         label: direct used
         description: The amount of memory used by the JVM for the direct buffer pool
 
-      - name: jobmanager.direct.max
-        source: [?(@id=Status.JVM.Memory.Direct.TotalCapacity)].value
+      - name: jobmanager.direct.count
+        source: [?(@id=Status.JVM.Memory.Direct.Count)].value
         type: long_gauge
-        unit: bytes
-        label: direct used
-        description: The total capacity of all buffers in the direct buffer pool
-
-      - name: jobmanager.mapped.count
-        source: [?(@id=Status.JVM.Memory.Mapped.Count)].value
-        type: long_gauge
-        label: mapped count
-        description: The number of buffers in the mapped buffer pool
+        label: direct count
+        description: The number of buffers in the direct buffer pool
 
       - name: jobmanager.mapped.max
         source: [?(@id=Status.JVM.Memory.Mapped.TotalCapacity)].value
@@ -107,6 +108,12 @@ observation:
         unit: bytes
         label: mapped used
         description: The amount of memory used by the JVM for the mapped buffer pool
+
+      - name: jobmanager.mapped.count
+        source: [?(@id=Status.JVM.Memory.Mapped.Count)].value
+        type: long_gauge
+        label: mapped count
+        description: The number of buffers in the mapped buffer pool
 
       - name: jobmanager.threads.count
         source: [?(@id=Status.JVM.Threads.Count)].value
@@ -123,4 +130,16 @@ observation:
         source: [?(@id=Status.JVM.CPU.Load)].value
         type: long_gauge
         label: cpu load
-        description: The recent CPU usage of the JVM.
+        description: The recent CPU usage of the JVM
+
+      - name: jobmanager.class.loaded
+        source: [?(@id=Status.JVM.ClassLoader.ClassesLoaded)].value
+        type: long_gauge
+        label: class loaded
+        description: The total number of classes loaded since the start of the JVM
+
+      - name: jobmanager.class.unloaded
+        source: [?(@id=Status.JVM.ClassLoader.ClassesUnloaded)].value
+        type: long_gauge
+        label: class unloadded
+        description: The total number of classes unloaded since the start of the JVM
