@@ -6,7 +6,7 @@ data:
 observation:
   - name: taskmanagers
     metricNamespace: flink
-    path: $.[?(@.id=${taskmanagerid})]
+    path: $.taskmanagers[?(@.id=${taskmanagerid})]
 
     metric:
       - name: taskmanagers.cores
@@ -58,7 +58,7 @@ observation:
         description: The amount of non-heap memory currently used
 
       - name: taskmanagers.nonheap.committed
-        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.nonheapCommitted
+        source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.nonHeapCommitted
         type: long_gauge
         unit: bytes
         label: committed non-heap

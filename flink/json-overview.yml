@@ -29,18 +29,18 @@ observation:
 
       - name: jobs.finished
         source: jobs-finished
-        type: long_counter
+        type: counter
         label: finished jobs
         description: finished jobs
 
       - name: jobs.cancelled
         source: jobs-cancelled
-        type: long_counter
+        type: counter
         label: cancelled jobs
         description: cancelled jobs
 
       - name: jobs.failed
         source: jobs-failed
-        type: long_counter
+        type: counter
         label: failed jobs
         description: failed jobs
