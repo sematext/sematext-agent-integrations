@@ -6,7 +6,7 @@ data:
 observation:
   - name: jobs
     metricNamespace: flink
-    path: $
+    path: $.
 
     metric:
       - name: jobs.uptime
