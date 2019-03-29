@@ -4,142 +4,221 @@ data:
   server: ${FLINK_HOSTPORT}
 
 observation:
-  - name: jobmanager
+  - name: jobmanager_registered_taskmanagers_num
     metricNamespace: flink
-    path: $
-
+    path: $.[?(@.id=numRegisteredTaskManagers)]
     metric:
-      - name: jobmanager.numRegisteredTaskManagers
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=numRegisteredTaskManagers)].value
+      - name: jobmanager.registered.taskmanagers.num
+        source: value
         type: long_gauge
         label: num task managers
         description: The number of registered taskmanagers
 
+  - name: jobmanager_jobs_running
+    metricNamespace: flink
+    path: $.[?(@.id=numRunningJobs)]
+    metric:
       - name: jobmanager.jobs.running
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=numRunningJobs)].value
+        source: value
         type: long_gauge
         label: running jobs
         description: The number of running jobs
 
+  - name: jobmanager_memory_task_slots_total
+    metricNamespace: flink
+    path: $.[?(@.id=taskSlotsTotal)]
+    metric:
       - name: jobmanager.memory.task.slots.total
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=taskSlotsTotal)].value
+        source: value
         type: long_gauge
         label: total task slots
         description: The total number of task slots
 
+  - name: jobmanager_memory_task_slots_available
+    metricNamespace: flink
+    path: $.[?(@.id=taskSlotsAvailable)]
+    metric:
       - name: jobmanager.memory.task.slots.available
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=taskSlotsAvailable)].value
+        source: value
         type: long_gauge
         label: available task slots
         description: The number of available task slots
 
+  - name: jobmanager_heap_max
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Heap.Max)]
+    metric:
       - name: jobmanager.heap.max
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Heap.Max)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: heap max
         description: The maximum amount of heap memory that can be used for memory management
 
+  - name: jobmanager_heap_used
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Heap.Used)]
+    metric:
       - name: jobmanager.heap.used
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Heap.Used)].value
+        source: $.[?(@.id=Status.JVM.Memory.Heap.Used)].value
         type: long_gauge
         unit: bytes
         label: used heap
         description: The amount of heap memory currently used
 
+  - name: jobmanager_heap_committed
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Heap.Committed)]
+    metric:
       - name: jobmanager.heap.committed
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Heap.Committed)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: committed heap
         description: The amount of heap memory guaranteed to be available to the JVM
 
+  - name: jobmanager_nonheap_max
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.NonHeap.Max)]
+    metric:
       - name: jobmanager.nonheap.max
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.NonHeap.Max)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: used heap
         description: The maximum amount of non-heap memory that can be used for memory management
 
+  - name: jobmanager_nonheap_used
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.NonHeap.Used)]
+    metric:
       - name: jobmanager.nonheap.used
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.NonHeap.Used)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: used non-heap
         description: The amount of non-heap memory currently used
 
+  - name: jobmanager_nonheap_committed
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.NonHeap.Committed)]
+    metric:
       - name: jobmanager.nonheap.committed
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.NonHeap.Committed)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: committed non-heap
         description: The amount of non-heap memory guaranteed to be available to the JVM
 
+  - name: jobmanager_direct_max
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Direct.TotalCapacity)]
+    metric:
       - name: jobmanager.direct.max
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Direct.TotalCapacity)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: direct used
         description: The total capacity of all buffers in the direct buffer pool
 
+  - name: jobmanager_direct_used
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Direct.MemoryUsed)]
+    metric:
       - name: jobmanager.direct.used
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Direct.MemoryUsed)].value
+        source: $.[?(@.id=Status.JVM.Memory.Direct.MemoryUsed)].value
         type: long_gauge
         unit: bytes
         label: direct used
         description: The amount of memory used by the JVM for the direct buffer pool
 
+  - name: jobmanager_direct_count
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Direct.Count)]
+    metric:
       - name: jobmanager.direct.count
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Direct.Count)].value
+        source: value
         type: long_gauge
         label: direct count
         description: The number of buffers in the direct buffer pool
 
+  - name: jobmanager_mapped_max
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Mapped.TotalCapacity)]
+    metric:
       - name: jobmanager.mapped.max
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Mapped.TotalCapacity)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: mapped count
         description: The number of buffers in the mapped buffer pool
 
+  - name: jobmanager_mapped_used
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Mapped.MemoryUsed)]
+    metric:
       - name: jobmanager.mapped.used
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Mapped.MemoryUsed)].value
+        source: value
         type: long_gauge
         unit: bytes
         label: mapped used
         description: The amount of memory used by the JVM for the mapped buffer pool
 
+  - name: jobmanager_mapped_count
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Memory.Mapped.Count)]
+    metric:
       - name: jobmanager.mapped.count
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Memory.Mapped.Count)].value
+        source: value
         type: long_gauge
         label: mapped count
         description: The number of buffers in the mapped buffer pool
 
+  - name: jobmanager_threads_count
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.Threads.Count)]
+    metric:
       - name: jobmanager.threads.count
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.Threads.Count)].value
+        source: value
         type: long_gauge
         label: The total number of live threads
 
+  - name: jobmanager_cpu_time
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.CPU.Time)]
+    metric:
       - name: jobmanager.cpu.time
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.CPU.Time)].value
+        source: value
         type: long_gauge
         label: cpu time
         description: The CPU time used by the JVM
 
+  - name: jobmanager_cpu_load
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.CPU.Load)]
+    metric:
       - name: jobmanager.cpu.load
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.CPU.Load)].value
+        source: value
         type: long_gauge
         label: cpu load
         description: The recent CPU usage of the JVM
 
-      - name: jobmanager.class.loaded
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.ClassLoader.ClassesLoaded)].value
+  - name: jobmanager_class_loaded
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.ClassLoader.ClassesLoaded)]
+    metric:
+      - name: jobmanager.class.loade
+        source: value
         type: long_gauge
         label: class loaded
         description: The total number of classes loaded since the start of the JVM
 
+  - name: jobmanager_class_unloaded
+    metricNamespace: flink
+    path: $.[?(@.id=Status.JVM.ClassLoader.ClassesUnloaded)]
+    metric:
       - name: jobmanager.class.unloaded
-        source: json:/v1/jobmanager/metrics?get=numRunningJobs,numRegisteredTaskManagers,taskSlotsAvailable,taskSlotsTotal,Status.JVM.Memory.Heap.Max,Status.JVM.Memory.Heap.Used,Status.JVM.Memory.Heap.Committed,Status.JVM.Memory.NonHeap.Max,Status.JVM.Memory.NonHeap.Used,Status.JVM.Memory.NonHeap.Committed,Status.JVM.Memory.Direct.Count,Status.JVM.Memory.Direct.MemoryUsed,Status.JVM.Memory.Direct.TotalCapacity,Status.JVM.Memory.Mapped.Count,Status.JVM.Memory.Mapped.MemoryUsed,Status.JVM.Memory.Mapped.TotalCapacity,Status.JVM.Threads.Count,Status.JVM.CPU.Time,Status.JVM.CPU.Load,Status.JVM.ClassLoader.ClassesLoaded,Status.JVM.ClassLoader.ClassesUnloaded $.[?(@.id=Status.JVM.ClassLoader.ClassesUnloaded)].value
+        source: value
         type: long_gauge
         label: class unloadded
         description: The total number of classes unloaded since the start of the JVM
