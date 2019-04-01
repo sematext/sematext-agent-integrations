@@ -1,0 +1,20 @@
+type: json
+data:
+  url: /routez
+  server: ${NATS_SERVER_HOSTPORT}
+
+observation:
+  - name: routez
+    metricNamespace: nats
+    path: $.
+
+    metric:
+      - name: server.routes
+        source: num_routes
+        type: long_gauge
+        label: routes
+        description: The number of routes
+
+    tag:
+      - name: nats.server.id
+        value: json:/routez $.server_id
