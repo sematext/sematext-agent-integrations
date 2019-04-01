@@ -43,7 +43,7 @@ observation:
         source: cache_hit_rate
         type: double_gauge
         label: cache hit rate
-        description: The rate matches are being retrieved from cache (value is in [0-1])
+        description: "The rate matches are being retrieved from cache (value is in [0-1])"
 
       - name: server.cache.fanout.max
         source: max_fanout
