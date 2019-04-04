@@ -22,7 +22,7 @@ observation:
         source: sum
         type: gauge
         label: downtime
-        description: For jobs currently in a failing/recovering situation, the time elapsed during this outage. 0 for running jobs and -1 for completed jobs
+        description: "For jobs currently in a failing/recovering situation, the time elapsed during this outage. 0 for running jobs and -1 for completed jobs"
 
   - name: jobs_restartingtime
     metricNamespace: flink
@@ -53,7 +53,7 @@ observation:
         source: sum
         type: gauge
         label: checkpoints
-        description: The number of total checkpoints (in progress, completed, failed)
+        description: "The number of total checkpoints (in progress, completed, failed)"
 
   - name: jobs_checkpoints_failed
     metricNamespace: flink
