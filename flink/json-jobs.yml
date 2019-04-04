@@ -24,7 +24,7 @@ observation:
         label: downtime
         description: For jobs currently in a failing/recovering situation, the time elapsed during this outage. 0 for running jobs and -1 for completed jobs
 
-  - name: jobs_restartingTime
+  - name: jobs_restartingtime
     metricNamespace: flink
     path: $.[?(@.id=restartingTime)]
     metric:
