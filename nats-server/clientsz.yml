@@ -1,0 +1,20 @@
+type: json
+data:
+  url: /streaming/clientsz
+  server: ${NATS_STREAMING_HOSTPORT}
+
+observation:
+  - name: clientsz
+    metricNamespace: nats
+    path: $.
+
+    metric:
+      - name: streaming.clients.total
+        source: total
+        type: long_gauge
+        label: total channels
+
+      - name: streaming.clients.max
+        source: limit
+        type: long_gauge
+        label: max channels

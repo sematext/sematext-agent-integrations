@@ -1,0 +1,53 @@
+type: json
+data:
+  url: /streaming/serverz
+  server: ${NATS_STREAMING_HOSTPORT}
+
+observation:
+  - name: serverz
+    metricNamespace: nats
+    path: $.
+
+    metric:
+      - name: streaming.clients
+        source: clients
+        type: long_gauge
+        label: clients
+        description: The number of clients
+
+      - name: streaming.subscriptions
+        source: subscriptions
+        type: long_gauge
+        label: subscriptions
+        description: The number of subscriptions
+
+      - name: streaming.channels
+        source: channels
+        type: long_gauge
+        label: channels
+        description: The number of channels
+
+      - name: streaming.messages
+        source: total_msgs
+        type: long_gauge
+        label: mesages
+        description: The total of messages
+
+      - name: streaming.bytes
+        source: total_bytes
+        type: long_gauge
+        unit: bytes
+        label: bytes
+        description: The total of bytes
+
+      - name: streaming.files.open
+        source: open_fds
+        type: long_gauge
+        label: open files description
+
+      - name: streaming.files.max
+        source: max_fds
+        type: long_gauge
+        label: max open files description
+
+
