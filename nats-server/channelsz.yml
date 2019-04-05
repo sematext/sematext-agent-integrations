@@ -1,7 +1,7 @@
 type: json
 data:
   url: /streaming/channelsz
-  server: ${NATS_STREAMING_HOSTPORT}
+  server: ${NATS_SERVER_HOSTPORT}
 
 observation:
   - name: channelsz
@@ -20,21 +20,21 @@ observation:
         label: max channels
 
   - name: channelsz_channel
-      metricNamespace: nats-streaming
-      path: $.channels[?(@.name=${channelName}})]
+    metricNamespace: nats-streaming
+    path: $.channels[?(@.name=${channelName}})]
 
-      metric:
-        - name: streaming.channels.messages
-          source: msgs
-          type: long_gauge
-          label: messages
+    metric:
+      - name: streaming.channels.messages
+        source: msgs
+        type: long_gauge
+        label: messages
 
-        - name: streaming.channels.bytes
-          source: bytes
-          type: long_gauge
-          unit: bytes
-          label: bytes
+      - name: streaming.channels.bytes
+        source: bytes
+        type: long_gauge
+        unit: bytes
+        label: bytes
 
-      tag:
-        - name: streaming.channels.name
-          value: ${channelName}
+    tag:
+      - name: streaming.channels.name
+        value: ${channelName}

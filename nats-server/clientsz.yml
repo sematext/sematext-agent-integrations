@@ -1,7 +1,7 @@
 type: json
 data:
   url: /streaming/clientsz
-  server: ${NATS_STREAMING_HOSTPORT}
+  server: ${NATS_SERVER_HOSTPORT}
 
 observation:
   - name: clientsz
