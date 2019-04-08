@@ -29,25 +29,23 @@ observation:
 
       - name: streaming.messages
         source: total_msgs
-        type: long_gauge
+        type: counter
         label: mesages
-        description: The total of messages
+        description: The total of messages streamed
 
       - name: streaming.bytes
         source: total_bytes
-        type: long_gauge
+        type: counter
         unit: bytes
         label: bytes
-        description: The total of bytes
+        description: The total of bytes streamed
 
       - name: streaming.files.open
         source: open_fds
         type: long_gauge
-        label: open files description
+        label: open file descriptors
 
       - name: streaming.files.max
         source: max_fds
         type: long_gauge
-        label: max open files description
-
-
+        label: max open file descriptors

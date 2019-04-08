@@ -14,7 +14,7 @@ observation:
         type: long_gauge
         label: total channels
 
-      - name: streaming.clients.max
+      - name: streaming.clients.limit
         source: limit
         type: long_gauge
         label: max channels

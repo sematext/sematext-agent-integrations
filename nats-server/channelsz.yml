@@ -14,27 +14,27 @@ observation:
         type: long_gauge
         label: total channels
 
-      - name: streaming.channels.max
+      - name: streaming.channels.limit
         source: limit
         type: long_gauge
         label: max channels
 
   - name: channelsz_channel
-    metricNamespace: nats-streaming
+    metricNamespace: nats
     path: $.channels[?(@.name=${channelName}})]
 
     metric:
       - name: streaming.channels.messages
         source: msgs
-        type: long_gauge
-        label: messages
+        type: counter
+        label: The total of messages
 
       - name: streaming.channels.bytes
         source: bytes
-        type: long_gauge
+        type: counter
         unit: bytes
-        label: bytes
+        label: The total of bytes
 
     tag:
-      - name: streaming.channels.name
+      - name: nats.streaming.channels.name
         value: ${channelName}
