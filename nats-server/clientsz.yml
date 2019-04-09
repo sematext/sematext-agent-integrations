@@ -18,3 +18,24 @@ observation:
         source: limit
         type: long_gauge
         label: max channels
+
+  - name: clientsz_client_subscription
+    metricNamespace: nats
+    path: $.clients[?(@.id=${clientName}})].subscriptions.${subscriptionName}
+
+    metric:
+      - name: streaming.clients.subscriptions.pending.count
+        source: counter
+        type: long_gauge
+        label: pending count
+
+      - name: streaming.clients.subscriptions.sent
+        source: counter
+        type: long_gauge
+        label: pending count
+
+    tag:
+      - name: nats.streaming.clients.ids
+        value: ${clientName}
+      - name: nats.streaming.clients.subscriptions.name
+        value: ${subscriptionName}

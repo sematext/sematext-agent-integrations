@@ -38,3 +38,25 @@ observation:
     tag:
       - name: nats.streaming.channels.name
         value: ${channelName}
+
+
+  - name: channelsz_channel_subscription
+    metricNamespace: nats
+    path: $.channels[?(@.name=${channelName}})].subscriptions.${subscriptionName}
+
+    metric:
+      - name: streaming.channels.subscriptions.pending.count
+        source: counter
+        type: long_gauge
+        label: pending count
+
+      - name: streaming.channels.subscriptions.sent
+        source: counter
+        type: long_gauge
+        label: pending count
+
+    tag:
+      - name: nats.streaming.channels.name
+        value: ${channelName}
+      - name: nats.streaming.channels.subscriptions.name
+        value: ${subscriptionName}
