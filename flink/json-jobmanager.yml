@@ -8,11 +8,11 @@ observation:
     metricNamespace: flink
     path: $.[?(@.id=numRegisteredTaskManagers)]
     metric:
-      - name: jobmanager.registered.taskmanagers.num
+      - name: jobmanager.taskmanagers.registered
         source: value
         type: long_gauge
-        label: num task managers
-        description: The number of registered taskmanagers
+        label: registered task managers
+        description: The number of registered task managers
 
   - name: jobmanager_jobs_running
     metricNamespace: flink
@@ -48,130 +48,130 @@ observation:
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Heap.Max)]
     metric:
-      - name: jobmanager.heap.max
+      - name: jobmanager.memory.heap.max
         source: value
         type: long_gauge
         unit: bytes
-        label: heap max
+        label: max heap memory
         description: The maximum amount of heap memory that can be used for memory management
 
   - name: jobmanager_heap_used
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Heap.Used)]
     metric:
-      - name: jobmanager.heap.used
+      - name: jobmanager.memory.heap.used
         source: $.[?(@.id=Status.JVM.Memory.Heap.Used)].value
         type: long_gauge
         unit: bytes
-        label: used heap
+        label: used heap memory
         description: The amount of heap memory currently used
 
   - name: jobmanager_heap_committed
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Heap.Committed)]
     metric:
-      - name: jobmanager.heap.committed
+      - name: jobmanager.memory.heap.committed
         source: value
         type: long_gauge
         unit: bytes
-        label: committed heap
+        label: committed heap memory
         description: The amount of heap memory guaranteed to be available to the JVM
 
   - name: jobmanager_nonheap_max
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.NonHeap.Max)]
     metric:
-      - name: jobmanager.nonheap.max
+      - name: jobmanager.memory.nonheap.max
         source: value
         type: long_gauge
         unit: bytes
-        label: used heap
+        label: used heap memory
         description: The maximum amount of non-heap memory that can be used for memory management
 
   - name: jobmanager_nonheap_used
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.NonHeap.Used)]
     metric:
-      - name: jobmanager.nonheap.used
+      - name: jobmanager.memory.nonheap.used
         source: value
         type: long_gauge
         unit: bytes
-        label: used non-heap
+        label: used non-heap memory
         description: The amount of non-heap memory currently used
 
   - name: jobmanager_nonheap_committed
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.NonHeap.Committed)]
     metric:
-      - name: jobmanager.nonheap.committed
+      - name: jobmanager.memory.nonheap.committed
         source: value
         type: long_gauge
         unit: bytes
-        label: committed non-heap
+        label: committed non-heap memory
         description: The amount of non-heap memory guaranteed to be available to the JVM
 
-  - name: jobmanager_direct_max
+  - name: jobmanager_direct_total
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Direct.TotalCapacity)]
     metric:
-      - name: jobmanager.direct.max
+      - name: jobmanager.memory.direct.buffer.total
         source: value
         type: long_gauge
         unit: bytes
-        label: direct used
+        label: total direct memory
         description: The total capacity of all buffers in the direct buffer pool
 
   - name: jobmanager_direct_used
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Direct.MemoryUsed)]
     metric:
-      - name: jobmanager.direct.used
+      - name: jobmanager.memory.direct.buffer.used
         source: $.[?(@.id=Status.JVM.Memory.Direct.MemoryUsed)].value
         type: long_gauge
         unit: bytes
-        label: direct used
+        label: used direct memory
         description: The amount of memory used by the JVM for the direct buffer pool
 
   - name: jobmanager_direct_count
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Direct.Count)]
     metric:
-      - name: jobmanager.direct.count
+      - name: jobmanager.memory.direct.buffer.count
         source: value
         type: long_gauge
-        label: direct count
+        label: count direct memory
         description: The number of buffers in the direct buffer pool
 
-  - name: jobmanager_mapped_max
+  - name: jobmanager_mapped_total
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Mapped.TotalCapacity)]
     metric:
-      - name: jobmanager.mapped.max
+      - name: jobmanager.memory.mapped.buffers.total
         source: value
         type: long_gauge
         unit: bytes
-        label: mapped count
+        label: total mapped memory
         description: The number of buffers in the mapped buffer pool
 
   - name: jobmanager_mapped_used
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Mapped.MemoryUsed)]
     metric:
-      - name: jobmanager.mapped.used
+      - name: jobmanager.memory.mapped.buffers.used
         source: value
         type: long_gauge
         unit: bytes
-        label: mapped used
+        label: used mapped memory
         description: The amount of memory used by the JVM for the mapped buffer pool
 
   - name: jobmanager_mapped_count
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Mapped.Count)]
     metric:
-      - name: jobmanager.mapped.count
+      - name: jobmanager.memory.mapped.buffers.count
         source: value
         type: long_gauge
-        label: mapped count
+        label: count mapped memory
         description: The number of buffers in the mapped buffer pool
 
   - name: jobmanager_threads_count
@@ -189,7 +189,8 @@ observation:
     metric:
       - name: jobmanager.cpu.time
         source: value
-        type: long_gauge
+        type: counter
+        unit: ms
         label: cpu time
         description: The CPU time used by the JVM
 
@@ -199,25 +200,25 @@ observation:
     metric:
       - name: jobmanager.cpu.load
         source: value
-        type: long_gauge
+        type: gauge
         label: cpu load
         description: The recent CPU usage of the JVM
 
-  - name: jobmanager_class_loaded
+  - name: jobmanager_classes_loaded
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.ClassLoader.ClassesLoaded)]
     metric:
-      - name: jobmanager.class.loade
+      - name: jobmanager.classes.loaded
         source: value
         type: long_gauge
         label: class loaded
         description: The total number of classes loaded since the start of the JVM
 
-  - name: jobmanager_class_unloaded
+  - name: jobmanager_classes_unloaded
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.ClassLoader.ClassesUnloaded)]
     metric:
-      - name: jobmanager.class.unloaded
+      - name: jobmanager.classes.unloaded
         source: value
         type: long_gauge
         label: class unloadded

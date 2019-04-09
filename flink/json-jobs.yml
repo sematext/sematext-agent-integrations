@@ -10,7 +10,8 @@ observation:
     metric:
       - name: jobs.uptime
         source: sum
-        type: gauge
+        type: counter
+        unit: ms
         label: uptime
         description: The time that the job has been running without interruption
 
@@ -20,17 +21,18 @@ observation:
     metric:
       - name: jobs.downtime
         source: sum
-        type: gauge
+        type: counter
+        unit: ms
         label: downtime
         description: "For jobs currently in a failing/recovering situation, the time elapsed during this outage. 0 for running jobs and -1 for completed jobs"
 
-  - name: jobs_restartingtime
+  - name: jobs_restarts_time
     metricNamespace: flink
     path: $.[?(@.id=restartingTime)]
     metric:
-      - name: jobs.restartingtime
+      - name: jobs.restarts.time
         source: sum
-        type: gauge
+        type: counter
         unit: ms
         label: restarting time
         description: The time it took to restart the job, or how long the current restart has been in progress
@@ -39,9 +41,9 @@ observation:
     metricNamespace: flink
     path: $.[?(@.id=fullRestarts)]
     metric:
-      - name: jobs.full.restarts
+      - name: jobs.restarts.full.count
         source: sum
-        type: gauge
+        type: counter
         label: full restarts
         description: The total number of full restarts since this job was submitted
 
@@ -51,7 +53,7 @@ observation:
     metric:
       - name: jobs.checkpoints.total
         source: sum
-        type: gauge
+        type: counter
         label: checkpoints
         description: "The number of total checkpoints (in progress, completed, failed)"
 
@@ -61,7 +63,7 @@ observation:
     metric:
       - name: jobs.checkpoints.failed
         source: sum
-        type: gauge
+        type: counter
         label: failed checkpoints
         description: The number of failed checkpoints
 
@@ -81,7 +83,7 @@ observation:
     metric:
       - name: jobs.checkpoints.completed
         source: sum
-        type: gauge
+        type: counter
         label: completed checkpoint
         description: The number of successfully completed checkpoints
 

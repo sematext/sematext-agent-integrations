@@ -29,78 +29,81 @@ observation:
         label: managed memory
         description: managed memory
 
-      - name: taskmanagers.heap.used
+      - name: taskmanagers.memory.heap.used
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.heapUsed
         type: long_gauge
         unit: bytes
-        label: used heap
+        label: used heap memory
         description: The amount of heap memory currently used
 
-      - name: taskmanagers.heap.committed
+      - name: taskmanagers.memory.heap.committed
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.heapCommitted
         type: long_gauge
         unit: bytes
-        label: committed heap
+        label: committed heap memory
         description: The amount of heap memory guaranteed to be available to the JVM
 
-      - name: taskmanagers.heap.max
+      - name: taskmanagers.memory.heap.max
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.heapMax
         type: long_gauge
-        label: max heap
-        description: The maximum amount of heap memory that can be used for memory management
         unit: bytes
+        label: max heap memory
+        description: The maximum amount of heap memory that can be used for memory management
 
-      - name: taskmanagers.nonheap.used
+      - name: taskmanagers.memory.nonheap.used
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.nonHeapUsed
         type: long_gauge
         unit: bytes
-        label: used non-heap
+        label: used non-heap memory
         description: The amount of non-heap memory currently used
 
-      - name: taskmanagers.nonheap.committed
+      - name: taskmanagers.memory.nonheap.committed
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.nonHeapCommitted
         type: long_gauge
         unit: bytes
-        label: committed non-heap
+        label: committed non-heap memory
         description: The amount of non-heap memory guaranteed to be available to the JVM
 
-      - name: taskmanagers.direct.count
+      - name: taskmanagers.memory.direct.buffer.count
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.directCount
         type: long_gauge
-        label: direct count
+        unit: bytes
+        label: count direct memory
         description: The number of buffers in the direct buffer pool
 
-      - name: taskmanagers.direct.used
+      - name: taskmanagers.memory.direct.buffer.used
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.directUsed
         type: long_gauge
         unit: bytes
-        label: direct used
+        label: used direct memory
         description: The amount of memory used by the JVM for the direct buffer pool
 
-      - name: taskmanagers.direct.max
+      - name: taskmanagers.memory.direct.buffer.max
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.directMax
         type: long_gauge
         unit: bytes
-        label: direct used
+        label: max direct memory
         description: The total capacity of all buffers in the direct buffer pool
 
-      - name: taskmanagers.mapped.count
+      - name: taskmanagers.memory.mapped.buffer.count
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.mappedCount
         type: long_gauge
-        label: mapped count
+        unit: bytes
+        label: count mapped memory
         description: The number of buffers in the mapped buffer pool
 
-      - name: taskmanagers.mapped.used
+      - name: taskmanagers.memory.mapped.buffer.used
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.mappedUsed
         type: long_gauge
-        label: mapped used
+        unit: bytes
+        label: used mapped memory
         description: The amount of memory used by the JVM for the mapped buffer pool
 
-      - name: taskmanagers.mapped.max
+      - name: taskmanagers.memory.mapped.buffer.max
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.mappedMax
         type: long_gauge
         unit: bytes
-        label: mapped max
+        label: max mapped memory
         description: The number of buffers in the mapped buffer pool
 
       - name: taskmanagers.memory.segments.available
