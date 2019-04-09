@@ -20,43 +20,43 @@ observation:
         value: json:/connz $.server_id
 
   - name: connz_conn
-      metricNamespace: nats
-      path: $.connections[?(@.name=${connectionName}})]
+    metricNamespace: nats
+    path: $.connections[?(@.name=${connectionName}})]
 
-      metric:
-        - name: server.connections.bytes.pending
-          source: pending_bytes
-          type: long_counter
-          unit: bytes
-          label: pinding bytes
+    metric:
+      - name: server.connections.bytes.pending
+        source: pending_bytes
+        type: counter
+        unit: bytes
+        label: pinding bytes
 
-        - name: server.connections.messages.in
-          source: in_msgs
-          type: counter
-          label: incomming messages
+      - name: server.connections.messages.in
+        source: in_msgs
+        type: counter
+        label: incomming messages
 
-        - name: server.connections.messages.out
-          source: out_msgs
-          type: counter
-          label: outgoing messages
+      - name: server.connections.messages.out
+        source: out_msgs
+        type: counter
+        label: outgoing messages
 
-        - name: server.connections.bytes.in
-          source: in_msgs
-          type: counter
-          unit: bytes
-          label: incoming bytes
+      - name: server.connections.bytes.in
+        source: in_msgs
+        type: counter
+        unit: bytes
+        label: incoming bytes
 
-        - name: server.connections.bytes.out
-          source: out_bytes
-          type: counter
-          unit: bytes
-          label: outgoing bytes
+      - name: server.connections.bytes.out
+        source: out_bytes
+        type: counter
+        unit: bytes
+        label: outgoing bytes
 
-        - name: server.connections.subscriptions
-          source: subscriptions
-          type: long_gauge
-          label: number of subscriptions
+      - name: server.connections.subscriptions
+        source: subscriptions
+        type: long_gauge
+        label: number of subscriptions
 
-      tag:
-        - name: nats.server.connections.name
-          value: ${connectionName}
+    tag:
+      - name: nats.server.connections.name
+        value: ${connectionName}
