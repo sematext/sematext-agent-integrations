@@ -21,7 +21,7 @@ observation:
 
   - name: connz_conn
     metricNamespace: nats
-    path: $.connections[?(@.name=${connectionName}})]
+    path: $.connections[?(@.name=${connectionName})]
 
     metric:
       - name: server.connections.bytes.pending
