@@ -130,7 +130,7 @@ observation:
 
   - name: indexStats_store_total
     metricNamespace: es
-    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].store
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].store
 
     metric:
       - name: index.files.size.total
@@ -214,7 +214,7 @@ observation:
 
   - name: indexStats_indexing_total
     metricNamespace: es
-    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].indexing
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].indexing
 
     metric:
       - name: indexing.docs.added.total
