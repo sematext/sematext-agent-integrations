@@ -28,12 +28,12 @@ observation:
         source: pending_bytes
         type: counter
         unit: bytes
-        label: pinding bytes
+        label: pending bytes
 
       - name: server.connections.messages.in
         source: in_msgs
         type: counter
-        label: incomming messages
+        label: incoming messages
 
       - name: server.connections.messages.out
         source: out_msgs

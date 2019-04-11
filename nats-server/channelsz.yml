@@ -27,13 +27,13 @@ observation:
       - name: streaming.channels.messages
         source: msgs
         type: counter
-        label: The total of messages
+        label: messages streamed
 
       - name: streaming.channels.bytes
         source: bytes
         type: counter
         unit: bytes
-        label: The total of bytes
+        label: bytes streamed
 
     tag:
       - name: nats.streaming.channels.name
@@ -45,15 +45,11 @@ observation:
     path: $.channels[?(@.name=${channelName}})].subscriptions.${subscriptionName}
 
     metric:
-      - name: streaming.channels.subscriptions.pending.count
-        source: counter
-        type: long_gauge
-        label: pending count
-
-      - name: streaming.channels.subscriptions.sent
-        source: counter
-        type: long_gauge
-        label: pending count
+      - name: streaming.channels.subscriptions.pending
+        source: pending_count
+        type: counter
+        label: pending messages
+        description: number of messages sent to your subscriber that have not been acknowledged
 
     tag:
       - name: nats.streaming.channels.name

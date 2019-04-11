@@ -13,7 +13,7 @@ observation:
         source: num_routes
         type: long_gauge
         label: routes
-        description: The number of routes
+        description: number of routes
 
     tag:
       - name: nats.server.id
@@ -32,7 +32,7 @@ observation:
       - name: server.routes.messages.in
         source: in_msgs
         type: counter
-        label: incomming messages
+        label: incoming messages
 
       - name: server.routes.messages.out
         source: out_msgs

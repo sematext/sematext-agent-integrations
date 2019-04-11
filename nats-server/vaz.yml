@@ -13,39 +13,39 @@ observation:
         source: in_msgs
         type: counter
         label: incoming messages
-        description: The amount of incoming messages
+        description: amount of incoming messages
 
       - name: server.bytes.in
         source: in_bytes
         type: counter
         unit: bytes
         label: incoming bytes
-        description: The amount of incoming bytes
+        description: amount of incoming bytes
 
       - name: server.messages.out
         source: out_msgs
         type: counter
         label: outgoing messages
-        description: The amount of outgoing messages
+        description: amount of outgoing messages
 
       - name: server.bytes.out
         source: out_bytes
         type: counter
         unit: bytes
         label: outgoing bytes
-        description: The amount of outgoing bytes
+        description: amount of outgoing bytes
 
       - name: server.remotes
         source: remotes
         type: long_gauge
         label: remotes
-        description: The number of registered remotes
+        description: number of registered remotes
 
       - name: server.consumers.slow
         source: slow_consumers
         type: long_gauge
         label: slow consumers
-        description: The number of slow consumers currently on NATS
+        description: number of slow consumers currently on NATS
 
     tag:
       - name: nats.server.id

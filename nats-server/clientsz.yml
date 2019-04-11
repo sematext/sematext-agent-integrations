@@ -21,21 +21,17 @@ observation:
 
   - name: clientsz_client_subscription
     metricNamespace: nats
-    path: $.clients[?(@.id=${clientName}})].subscriptions.${subscriptionName}
+    path: $.clients[?(@.id=${clientId})].subscriptions.${subscriptionName}
 
     metric:
-      - name: streaming.clients.subscriptions.pending.count
-        source: counter
-        type: long_gauge
-        label: pending count
-
-      - name: streaming.clients.subscriptions.sent
-        source: counter
-        type: long_gauge
-        label: pending count
+      - name: streaming.clients.subscriptions.pending
+        source: pending_count
+        type: counter
+        label: pending messages
+        description: number of messages sent to your subscriber that have not been acknowledged
 
     tag:
-      - name: nats.streaming.clients.ids
-        value: ${clientName}
+      - name: nats.streaming.clients.id
+        value: ${clientId}
       - name: nats.streaming.clients.subscriptions.name
         value: ${subscriptionName}

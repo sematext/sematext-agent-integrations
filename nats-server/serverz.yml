@@ -13,32 +13,32 @@ observation:
         source: clients
         type: long_gauge
         label: clients
-        description: The number of clients
+        description: number of clients
 
       - name: streaming.subscriptions
         source: subscriptions
         type: long_gauge
         label: subscriptions
-        description: The number of subscriptions
+        description: number of subscriptions
 
       - name: streaming.channels
         source: channels
         type: long_gauge
         label: channels
-        description: The number of channels
+        description: number of channels
 
       - name: streaming.messages
         source: total_msgs
         type: counter
-        label: mesages
-        description: The total of messages streamed
+        label: messages
+        description: total of messages streamed
 
       - name: streaming.bytes
         source: total_bytes
         type: counter
         unit: bytes
         label: bytes
-        description: The total of bytes streamed
+        description: total of bytes streamed
 
       - name: streaming.files.open
         source: open_fds
