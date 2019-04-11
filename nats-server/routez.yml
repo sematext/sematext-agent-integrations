@@ -24,7 +24,7 @@ observation:
     path: $.routes[?(@.name=${routeName}})]
 
     metric:
-      - name: server.routes.size.pending
+      - name: server.routes.pending
         source: pending_size
         type: long_gauge
         label: pending size

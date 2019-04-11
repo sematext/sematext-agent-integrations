@@ -24,7 +24,7 @@ observation:
     path: $.connections[?(@.name=${connectionName})]
 
     metric:
-      - name: server.connections.bytes.pending
+      - name: server.connections.pending
         source: pending_bytes
         type: long_gauge
         unit: bytes
