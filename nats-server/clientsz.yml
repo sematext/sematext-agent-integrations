@@ -26,7 +26,7 @@ observation:
     metric:
       - name: streaming.clients.subscriptions.pending
         source: pending_count
-        type: counter
+        type: long_gauge
         label: pending messages
         description: number of messages sent to your subscriber that have not been acknowledged
 

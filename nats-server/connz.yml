@@ -26,7 +26,7 @@ observation:
     metric:
       - name: server.connections.bytes.pending
         source: pending_bytes
-        type: counter
+        type: long_gauge
         unit: bytes
         label: pending bytes
 
