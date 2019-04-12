@@ -42,7 +42,7 @@ observation:
 
   - name: channelsz_channel_subscription
     metricNamespace: nats
-    path: $.channels[?(@.name=${channelName}})].subscriptions.${subscriptionName}
+    path: $.channels[?(@.name=${channelName}})].subscriptions.[?(@.durable_name=${subscriptionName}})]
 
     metric:
       - name: streaming.channels.subscriptions.pending
@@ -54,5 +54,6 @@ observation:
     tag:
       - name: nats.streaming.channels.name
         value: ${channelName}
+
       - name: nats.streaming.channels.subscriptions.name
         value: ${subscriptionName}
