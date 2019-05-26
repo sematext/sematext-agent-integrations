@@ -6,5 +6,6 @@ Elasticsearch monitoring integration. Go to [https://apps.sematext.com/ui/howto/
 Learn more:
 * [Elasticsearch Monitoring Guide](https://sematext.com/blog/elasticsearch-guide/)
 * [Top 10 Elasticsearch Metrics To Monitor](https://sematext.com/blog/top-10-elasticsearch-metrics-to-watch/)
-* [Elasticsearch Open Source Monitoring Tools](https://sematext.com/blog/elasticsearch-open-source-monitoring-tools/)
+* [Open Source Monitoring Tools for Monitoring Elasticsearch](https://sematext.com/blog/elasticsearch-open-source-monitoring-tools/)
 * [Monitoring Elasticsearch With Sematext](https://sematext.com/blog/monitoring-elasticsearch-with-sematext/)
+* [eBook: Elasticsearch Monitoring - The Complete Guide](https://sematext.com/resources/elasticsearch-monitoring-ebook/)
