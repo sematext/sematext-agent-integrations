@@ -1,7 +1,7 @@
 type: json
 data:
   url: /api/overview
-  server: ${RABBITMQ_API_URL}
+  server: ${RABBITMQ_HOST_PORT}
   basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
 

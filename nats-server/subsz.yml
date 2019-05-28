@@ -1,7 +1,7 @@
 type: json
 data:
   url: /subsz
-  server: ${NATS_SERVER_HOSTPORT}
+  server: ${NATS_SERVER_HOST_PORT}
 
 observation:
   - name: subsz
