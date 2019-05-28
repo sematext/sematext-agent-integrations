@@ -12,7 +12,7 @@ data:
     FROM
       pg_stat_database,
       max_con;"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB_NAME}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}

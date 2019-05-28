@@ -9,7 +9,7 @@ data:
       abs(pg_wal_lsn_diff(pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn())) AS replication_delay_bytes
     WHERE
       (SELECT pg_is_in_recovery());"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB_NAME}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}

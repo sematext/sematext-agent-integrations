@@ -12,7 +12,7 @@ data:
       nspname NOT IN ('pg_catalog', 'information_schema') AND
       nspname !~ '^pg_toast' AND
       relkind IN ('r');"
-  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB_NAME}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
