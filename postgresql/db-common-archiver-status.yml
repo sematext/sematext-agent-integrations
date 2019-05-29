@@ -1,7 +1,7 @@
 type: db
 data:
   query: SELECT * FROM pg_stat_archiver;
-  dbUrl: jdbc:postgresql://${POSTGRESQL_DB_HOST_PORT}/${POSTGRESQL_DB_DATABASE}
+  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB_NAME}
   dbDriverClass: org.postgresql.Driver
   dbUser: ${POSTGRESQL_DB_USER}
   dbPassword: ${POSTGRESQL_DB_PASSWORD}
