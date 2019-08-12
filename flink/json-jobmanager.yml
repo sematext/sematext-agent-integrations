@@ -136,7 +136,7 @@ observation:
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Direct.Count)]
     metric:
-      - name: jobmanager.memory.direct.buffer.count
+      - name: jobmanager.memory.direct.buffer.
         source: value
         type: long_gauge
         label: count direct memory
@@ -168,7 +168,7 @@ observation:
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Memory.Mapped.Count)]
     metric:
-      - name: jobmanager.memory.mapped.buffers.count
+      - name: jobmanager.memory.mapped.buffers.
         source: value
         type: long_gauge
         label: count mapped memory
@@ -178,7 +178,7 @@ observation:
     metricNamespace: flink
     path: $.[?(@.id=Status.JVM.Threads.Count)]
     metric:
-      - name: jobmanager.threads.count
+      - name: jobmanager.threads.
         source: value
         type: long_gauge
         label: The total number of live threads

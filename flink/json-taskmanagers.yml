@@ -64,7 +64,7 @@ observation:
         label: committed non-heap memory
         description: The amount of non-heap memory guaranteed to be available to the JVM
 
-      - name: taskmanagers.memory.direct.buffer.count
+      - name: taskmanagers.memory.direct.buffer
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.directCount
         type: long_gauge
         unit: bytes
@@ -85,7 +85,7 @@ observation:
         label: max direct memory
         description: The total capacity of all buffers in the direct buffer pool
 
-      - name: taskmanagers.memory.mapped.buffer.count
+      - name: taskmanagers.memory.mapped.buffer
         source: json:/v1/taskmanagers/${taskmanagerid} $.metrics.mappedCount
         type: long_gauge
         unit: bytes

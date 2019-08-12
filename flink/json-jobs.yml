@@ -41,7 +41,7 @@ observation:
     metricNamespace: flink
     path: $.[?(@.id=fullRestarts)]
     metric:
-      - name: jobs.restarts.full.count
+      - name: jobs.restarts.full
         source: sum
         type: counter
         label: full restarts
