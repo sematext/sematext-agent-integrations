@@ -84,7 +84,7 @@ observation:
       - name: jobs.checkpoints.completed
         source: sum
         type: counter
-        label: completed checkpoint
+        label: completed checkpoints
         description: The number of successfully completed checkpoints
 
   - name: jobs_checkpoints_last_size
