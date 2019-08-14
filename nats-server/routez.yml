@@ -13,8 +13,49 @@ observation:
         source: num_routes
         type: long_gauge
         label: routes
-        description: The number of routes
+        description: number of routes
 
     tag:
       - name: nats.server.id
         value: json:/routez $.server_id
+
+  - name: routez_route
+    metricNamespace: nats
+    path: $.routes[?(@.name=${routeName}})]
+
+    metric:
+      - name: server.routes.pending
+        source: pending_size
+        type: long_gauge
+        label: pending size
+
+      - name: server.routes.messages.in
+        source: in_msgs
+        type: counter
+        label: incoming messages
+
+      - name: server.routes.messages.out
+        source: out_msgs
+        type: counter
+        label: outgoing messages
+
+      - name: server.routes.bytes.in
+        source: in_msgs
+        type: counter
+        unit: bytes
+        label: incoming bytes
+
+      - name: server.routes.bytes.out
+        source: out_bytes
+        type: counter
+        unit: bytes
+        label: outgoing bytes
+
+      - name: server.routes.subscriptions
+        source: subscriptions
+        type: long_gauge
+        label: number of subscriptions
+
+    tag:
+      - name: nats.server.routes.name
+        value: ${routeName}

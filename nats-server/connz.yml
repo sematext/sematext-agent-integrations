@@ -18,3 +18,45 @@ observation:
     tag:
       - name: nats.server.id
         value: json:/connz $.server_id
+
+  - name: connz_conn
+    metricNamespace: nats
+    path: $.connections[?(@.name=${connectionName})]
+
+    metric:
+      - name: server.connections.pending
+        source: pending_bytes
+        type: long_gauge
+        unit: bytes
+        label: pending bytes
+
+      - name: server.connections.messages.in
+        source: in_msgs
+        type: counter
+        label: incoming messages
+
+      - name: server.connections.messages.out
+        source: out_msgs
+        type: counter
+        label: outgoing messages
+
+      - name: server.connections.bytes.in
+        source: in_msgs
+        type: counter
+        unit: bytes
+        label: incoming bytes
+
+      - name: server.connections.bytes.out
+        source: out_bytes
+        type: counter
+        unit: bytes
+        label: outgoing bytes
+
+      - name: server.connections.subscriptions
+        source: subscriptions
+        type: long_gauge
+        label: number of subscriptions
+
+    tag:
+      - name: nats.server.connections.name
+        value: ${connectionName}

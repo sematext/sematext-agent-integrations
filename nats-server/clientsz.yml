@@ -1,0 +1,37 @@
+type: json
+data:
+  url: /streaming/clientsz
+  server: ${NATS_SERVER_HOSTPORT}
+
+observation:
+  - name: clientsz
+    metricNamespace: nats
+    path: $.
+
+    metric:
+      - name: streaming.clients.total
+        source: total
+        type: long_gauge
+        label: total channels
+
+      - name: streaming.clients.limit
+        source: limit
+        type: long_gauge
+        label: max channels
+
+  - name: clientsz_client_subscription
+    metricNamespace: nats
+    path: $.clients[?(@.id=${clientId})].subscriptions.${subscriptionName}
+
+    metric:
+      - name: streaming.clients.subscriptions.pending
+        source: pending_count
+        type: long_gauge
+        label: pending messages
+        description: number of messages sent to your subscriber that have not been acknowledged
+
+    tag:
+      - name: nats.streaming.clients.id
+        value: ${clientId}
+      - name: nats.streaming.clients.subscriptions.name
+        value: ${subscriptionName}
