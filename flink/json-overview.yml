@@ -1,0 +1,46 @@
+type: json
+data:
+  url: /v1/overview
+  server: ${FLINK_HOSTPORT}
+
+observation:
+  - name: overview
+    metricNamespace: flink
+    path: $.
+
+    metric:
+      - name: jobs.slots.total
+        source: slots-total
+        type: long_gauge
+        label: total slots
+        description: total slots
+
+      - name: jobs.slots.available
+        source: slots-available
+        type: long_gauge
+        label: available slots
+        description: available slots
+
+      - name: jobs.running
+        source: jobs-running
+        type: long_gauge
+        label: running jobs
+        description: running jobs
+
+      - name: jobs.finished
+        source: jobs-finished
+        type: counter
+        label: finished jobs
+        description: finished jobs
+
+      - name: jobs.cancelled
+        source: jobs-cancelled
+        type: counter
+        label: cancelled jobs
+        description: cancelled jobs
+
+      - name: jobs.failed
+        source: jobs-failed
+        type: counter
+        label: failed jobs
+        description: failed jobs

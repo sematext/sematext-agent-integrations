@@ -1,0 +1,121 @@
+type: json
+data:
+  url: /v1/jobs/metrics?get=numberOfFailedCheckpoints,lastCheckpointSize,lastCheckpointExternalPath,totalNumberOfCheckpoints,lastCheckpointRestoreTimestamp,lastCheckpointAlignmentBuffered,restartingTime,uptime,numberOfInProgressCheckpoints,downtime,numberOfCompletedCheckpoints,fullRestarts,lastCheckpointDuration
+  server: ${FLINK_HOSTPORT}
+
+observation:
+  - name: jobs_uptime
+    metricNamespace: flink
+    path: $.[?(@.id=uptime)]
+    metric:
+      - name: jobs.uptime
+        source: sum
+        type: counter
+        unit: ms
+        label: uptime
+        description: The time that the job has been running without interruption
+
+  - name: jobs_downtime
+    metricNamespace: flink
+    path: $.[?(@.id=downtime)]
+    metric:
+      - name: jobs.downtime
+        source: sum
+        type: counter
+        unit: ms
+        label: downtime
+        description: "For jobs currently in a failing/recovering situation, the time elapsed during this outage. 0 for running jobs and -1 for completed jobs"
+
+  - name: jobs_restarts_time
+    metricNamespace: flink
+    path: $.[?(@.id=restartingTime)]
+    metric:
+      - name: jobs.restarts.time
+        source: sum
+        type: counter
+        unit: ms
+        label: restarting time
+        description: The time it took to restart the job, or how long the current restart has been in progress
+
+  - name: jobs_full_restarts
+    metricNamespace: flink
+    path: $.[?(@.id=fullRestarts)]
+    metric:
+      - name: jobs.restarts.full
+        source: sum
+        type: counter
+        label: full restarts
+        description: The total number of full restarts since this job was submitted
+
+  - name: jobs_checkpoints_total
+    metricNamespace: flink
+    path: $.[?(@.id=totalNumberOfCheckpoints)]
+    metric:
+      - name: jobs.checkpoints.total
+        source: sum
+        type: counter
+        label: checkpoints
+        description: "The number of total checkpoints (in progress, completed, failed)"
+
+  - name: jobs_checkpoints_failed
+    metricNamespace: flink
+    path: $.[?(@.id=numberOfFailedCheckpoints)]
+    metric:
+      - name: jobs.checkpoints.failed
+        source: sum
+        type: counter
+        label: failed checkpoints
+        description: The number of failed checkpoints
+
+  - name: jobs_checkpoints_inprogress
+    metricNamespace: flink
+    path: $.[?(@.id=numberOfInProgressCheckpoints)]
+    metric:
+      - name: jobs.checkpoints.inprogress
+        source: sum
+        type: gauge
+        label: in progress checkpoints
+        description: The number of in progress checkpoints
+
+  - name: jobs_checkpoints_completed
+    metricNamespace: flink
+    path: $.[?(@.id=numberOfCompletedCheckpoints)]
+    metric:
+      - name: jobs.checkpoints.completed
+        source: sum
+        type: counter
+        label: completed checkpoints
+        description: The number of successfully completed checkpoints
+
+  - name: jobs_checkpoints_last_size
+    metricNamespace: flink
+    path: $.[?(@.id=lastCheckpointSize)]
+    metric:
+      - name: jobs.checkpoints.last.size
+        source: sum
+        type: gauge
+        unit: bytes
+        label: last checkpoint size
+        description: The total size of the last checkpoint
+
+  - name: jobs_checkpoints_last_buffered
+    metricNamespace: flink
+    path: $.[?(@.id=lastCheckpointAlignmentBuffered)]
+    metric:
+      - name: jobs.checkpoints.last.buffered
+        source: sum
+        type: gauge
+        unit: bytes
+        label: buffered
+        description: The number of buffered bytes during alignment over all subtasks for the last checkpoint
+
+  - name: jobs_checkpoints_last_duration
+    metricNamespace: flink
+    path: $.[?(@.id=lastCheckpointDuration)]
+    metric:
+      - name: jobs.checkpoints.last.duration
+        source: sum
+        type: gauge
+        unit: ms
+        label: duration
+        description: The time it took to complete the last checkpoint
