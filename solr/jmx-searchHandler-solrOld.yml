@@ -75,7 +75,7 @@ observation:
       - name: searchHandler
         value: org.apache.solr.handler.component.SearchHandler
 
-observation:
+
   - name: mlt_searchhandler_solrOld
     metricNamespace: solr
     objectName: solr/${core}:type=${searchHandler},id=org.apache.solr.handler.MoreLikeThisHandler
