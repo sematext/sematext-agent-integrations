@@ -33,8 +33,22 @@ observation:
         description: jvm pool used memory
         unit: bytes
 
-      - name: pool.max
+      - name: pool.committed
+        source: complex:Usage.committed
+        type: gauge
+        label: jvm pool committed
+        description: jvm pool committed memory
+        unit: bytes
+
+      - name: reported.pool.max
         source: complex:Usage.max
+        type: gauge
+        send: false
+
+      # some pools are not limited, so their max size is reported as -1. That can cause calculation issues, so it is
+      # probably better to not report it at all in such cases
+      - name: pool.max
+        source: func:IfThenElse(reported.pool.max, =, -1L, NULL, metric:reported.pool.max)
         type: gauge
         label: jvm pool used max
         description: jvm pool max memory
