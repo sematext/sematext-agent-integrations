@@ -1,9 +1,9 @@
 type: json
 data:
   url: /api/exchanges
-  server: ${RABBITMQ_HOST_PORT}
-  basicHttpAuthUsername: ${RABBITMQ_BASICAUTH_USERNAME}
-  basicHttpAuthPassword: ${RABBITMQ_BASICAUTH_PASSWORD}
+  server: ${ST_RABBITMQ_HOST_PORT}
+  basicHttpAuthUsername: ${ST_RABBITMQ_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_RABBITMQ_BASICAUTH_PASSWORD}
 
 observation:
   - name: exchanges

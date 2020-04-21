@@ -2,13 +2,13 @@ type: db
 data:
   query: SHOW /*!50002 GLOBAL */ VARIABLES;
   dbDriver:
-    - url: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+    - url: jdbc:mysql://${ST_MONITOR_MYSQL_DB_HOST_PORT}
       clazz: com.mysql.jdbc.Driver
-    - url: jdbc:mariadb://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+    - url: jdbc:mariadb://${ST_MONITOR_MYSQL_DB_HOST_PORT}
       clazz: org.mariadb.jdbc.Driver
-  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${ST_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${ST_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${ST_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
   #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
   # (1st column being attribute name, 2nd column being attribute value)
   dbVerticalModel: true

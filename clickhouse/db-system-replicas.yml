@@ -14,10 +14,10 @@ data:
       total_replicas,
       active_replicas
     FROM system.replicas;
-  dbUrl: jdbc:clickhouse://${SPM_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
+  dbUrl: jdbc:clickhouse://${ST_MONITOR_CLICKHOUSE_DB_HOST_PORT}/system
   dbDriverClass: ru.yandex.clickhouse.ClickHouseDriver
-  dbUser: ${SPM_MONITOR_CLICKHOUSE_DB_USER}
-  dbPassword: ${SPM_MONITOR_CLICKHOUSE_DB_PASSWORD}
+  dbUser: ${ST_MONITOR_CLICKHOUSE_DB_USER}
+  dbPassword: ${ST_MONITOR_CLICKHOUSE_DB_PASSWORD}
   
 observation:
   - name: replicas

@@ -1,9 +1,9 @@
 type: json
 data:
   url: /admin/vitals
-  server: ${COUCHBASE_QUERY_HOST_PORT}
-  basicHttpAuthUsername: ${COUCHBASE_BASICAUTH_USERNAME}
-  basicHttpAuthPassword: ${COUCHBASE_BASICAUTH_PASSWORD}
+  server: ${ST_COUCHBASE_QUERY_HOST_PORT}
+  basicHttpAuthUsername: ${ST_COUCHBASE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_COUCHBASE_BASICAUTH_PASSWORD}
 
 observation:
   - name: queries

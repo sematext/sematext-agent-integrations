@@ -1,11 +1,11 @@
 type: db
 data:
   query: SELECT * FROM pg_stat_bgwriter;
-  dbUrl: jdbc:postgresql://${POSTGRESQL_HOST_PORT}/${POSTGRESQL_DB_NAME}
+  dbUrl: jdbc:postgresql://${ST_POSTGRESQL_HOST_PORT}/${ST_POSTGRESQL_DB_NAME}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${POSTGRESQL_DB_USER}
-  dbPassword: ${POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${ST_POSTGRESQL_DB_USER}
+  dbPassword: ${ST_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${ST_POSTGRESQL_DB_ADDITIONAL_PARAMS}
   dbVerticalModel: true
 
 require:

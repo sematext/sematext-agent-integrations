@@ -1,9 +1,9 @@
 type: json
 data:
   url: 
-  server: ${SPM_MONITOR_NGINX_PLUS_STATUS_URL}
-  basicHttpAuthUsername: ${SPM_MONITOR_NGINX_PLUS_USER}
-  basicHttpAuthPassword: ${SPM_MONITOR_NGINX_PLUS_PASSWORD}
+  server: ${ST_MONITOR_NGINX_PLUS_STATUS_URL}
+  basicHttpAuthUsername: ${ST_MONITOR_NGINX_PLUS_USER}
+  basicHttpAuthPassword: ${ST_MONITOR_NGINX_PLUS_PASSWORD}
 
 observation:
   - name: zones

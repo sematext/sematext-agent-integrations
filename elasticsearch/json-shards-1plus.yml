@@ -1,9 +1,9 @@
 type: json
 data:
   url: /_cluster/state/nodes,routing_table,routing_nodes,master_node?local=true&format=smile
-  server: ${SPM_MONITOR_ES_NODE_HOSTPORT}
-  basicHttpAuthUsername: ${SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME}
-  basicHttpAuthPassword: ${SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
   async: false
   # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json

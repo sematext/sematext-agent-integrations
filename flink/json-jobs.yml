@@ -1,7 +1,7 @@
 type: json
 data:
   url: /v1/jobs/metrics?get=numberOfFailedCheckpoints,lastCheckpointSize,lastCheckpointExternalPath,totalNumberOfCheckpoints,lastCheckpointRestoreTimestamp,lastCheckpointAlignmentBuffered,restartingTime,uptime,numberOfInProgressCheckpoints,downtime,numberOfCompletedCheckpoints,fullRestarts,lastCheckpointDuration
-  server: ${FLINK_HOSTPORT}
+  server: ${ST_FLINK_HOSTPORT}
 
 observation:
   - name: jobs_uptime

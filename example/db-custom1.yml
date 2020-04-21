@@ -1,11 +1,11 @@
 type: db
 data:
   query: select count(*) AS countUsers, 'Table-User' as tableName from myDatabaseName.User where state='DISABLED'
-  dbUrl: jdbc:mysql://${SPM_MONITOR_MYSQL_DB_HOST_PORT}
+  dbUrl: jdbc:mysql://${ST_MONITOR_MYSQL_DB_HOST_PORT}
   dbDriverClass: com.mysql.jdbc.Driver
-  dbUser: ${SPM_MONITOR_MYSQL_DB_USER}
-  dbPassword: ${SPM_MONITOR_MYSQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${ST_MONITOR_MYSQL_DB_USER}
+  dbPassword: ${ST_MONITOR_MYSQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${ST_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
 
 observation:
   - name: countDisabledUsers

@@ -1,9 +1,9 @@
 type: json
 data:
   url: /pools/default
-  server: ${COUCHBASE_HOST_PORT}
-  basicHttpAuthUsername: ${COUCHBASE_BASICAUTH_USERNAME}
-  basicHttpAuthPassword: ${COUCHBASE_BASICAUTH_PASSWORD}
+  server: ${ST_COUCHBASE_HOST_PORT}
+  basicHttpAuthUsername: ${ST_COUCHBASE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_COUCHBASE_BASICAUTH_PASSWORD}
 
 observation:
   - name: nodes
