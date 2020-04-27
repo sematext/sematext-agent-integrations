@@ -1,7 +1,7 @@
 type: json
 data:
   url: /api/v1/applications
-  server: ${ST_SPARK_API_HOST}:${ST_SPARK_API_PORT}
+  server: ${ST_MONITOR_SPARK_API_HOST}:${ST_MONITOR_SPARK_API_PORT}
 
 observation:
   - name: apps

@@ -1,11 +1,11 @@
 type: db
 data:
   query: SELECT * FROM pg_stat_database;
-  dbUrl: jdbc:postgresql://${ST_POSTGRESQL_HOST_PORT}/${ST_POSTGRESQL_DB_NAME}
+  dbUrl: jdbc:postgresql://${ST_MONITOR_POSTGRESQL_HOST_PORT}/${ST_MONITOR_POSTGRESQL_DB_NAME}
   dbDriverClass: org.postgresql.Driver
-  dbUser: ${ST_POSTGRESQL_DB_USER}
-  dbPassword: ${ST_POSTGRESQL_DB_PASSWORD}
-  dbAdditionalConnectionParams: ${ST_POSTGRESQL_DB_ADDITIONAL_PARAMS}
+  dbUser: ${ST_MONITOR_POSTGRESQL_DB_USER}
+  dbPassword: ${ST_MONITOR_POSTGRESQL_DB_PASSWORD}
+  dbAdditionalConnectionParams: ${ST_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
   dbVerticalModel: true
 
 observation:

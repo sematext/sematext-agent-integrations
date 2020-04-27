@@ -1,7 +1,7 @@
 type: json
 data:
   url: /v1/overview
-  server: ${ST_FLINK_HOSTPORT}
+  server: ${ST_MONITOR_FLINK_HOSTPORT}
 
 observation:
   - name: overview

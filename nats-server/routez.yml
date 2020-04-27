@@ -1,7 +1,7 @@
 type: json
 data:
   url: /routez
-  server: ${ST_NATS_SERVER_HOST_PORT}
+  server: ${ST_MONITOR_NATS_SERVER_HOST_PORT}
 
 observation:
   - name: routez

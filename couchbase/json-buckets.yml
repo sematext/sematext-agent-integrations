@@ -1,9 +1,9 @@
 type: json
 data:
   url: /pools/default/buckets/
-  server: ${ST_COUCHBASE_HOST_PORT}
-  basicHttpAuthUsername: ${ST_COUCHBASE_BASICAUTH_USERNAME}
-  basicHttpAuthPassword: ${ST_COUCHBASE_BASICAUTH_PASSWORD}
+  server: ${ST_MONITOR_COUCHBASE_HOST_PORT}
+  basicHttpAuthUsername: ${ST_MONITOR_COUCHBASE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_COUCHBASE_BASICAUTH_PASSWORD}
 
 observation:
   - name: buckets
