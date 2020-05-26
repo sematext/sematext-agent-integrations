@@ -14,7 +14,7 @@ observation:
         unit: ms
 
       - name: request.latency.max
-        source: c
+        source: MaxRequestLatency
         type: long_gauge
         label: max req latency
         description: Max request latency
