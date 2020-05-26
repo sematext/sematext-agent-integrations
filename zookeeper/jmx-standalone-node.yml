@@ -8,13 +8,13 @@ observation:
     metric:
       - name: request.latency.avg
         source: AvgRequestLatency
-        type: long_gauge
+        type: double_gauge
         label: avg req latency
         description: Avg request latency
         unit: ms
 
       - name: request.latency.max
-        source: MaxRequestLatency
+        source: c
         type: long_gauge
         label: max req latency
         description: Max request latency
