@@ -9,7 +9,7 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=replay,name=remaining.bytes
 
     metric:
-      - name: tlog.replay.remaining.bytes
+      - name: tlog.replay.size.remaining
         source: Value
         type: long_gauge
         label: tlog replay remaining bytes
@@ -61,10 +61,9 @@ observation:
     metric:
       - name: tlog.replay.ops
         source: Count
-        type: long_gauge
+        type: counter
         label: replayed operations
         description: total replayed operations
-        unit: operations
 
     tag:
       - name: solr.collection
@@ -84,9 +83,9 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=copyOverOldUpdates,name=ops
 
     metric:
-      - name: tlog.copyOverOldUpdates
+      - name: tlog.updates.copyOverOld
         source: Count
-        type: long_gauge
+        type: counter
         label: copy over old updates
         description: copy over old updates requests
         unit: requests
@@ -109,12 +108,11 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=buffered,name=ops
 
     metric:
-      - name: tlog.buffered
+      - name: tlog.updates.buffered
         source: Value
         type: long_gauge
         label: buffered updates
         description: buffered updates
-        unit: updates
 
     tag:
       - name: solr.collection
@@ -134,12 +132,11 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=applyingBuffered,name=ops
 
     metric:
-      - name: tlog.applyingBuffered
+      - name: tlog.updates.buffered.applying
         source: Count
-        type: long_gauge
+        type: counter
         label: applying buffered updates
         description: buffered updates
-        unit: operations
 
     tag:
       - name: solr.collection
@@ -164,7 +161,6 @@ observation:
         type: gauge
         label: tlog state
         description: REPLAYING(0), BUFFERING(1), APPLYING_BUFFERED(2), ACTIVE(3)
-        unit: enum
 
     tag:
       - name: solr.collection
