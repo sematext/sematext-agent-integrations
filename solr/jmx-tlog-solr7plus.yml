@@ -34,12 +34,11 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=replay,name=remaining.logs
 
     metric:
-      - name: tlog.replay.remaining.logs
+      - name: tlog.replay.logs.remaining
         source: Value
         type: gauge
         label: tlog replay remaining logs
         description: remaining transaction logs to replay
-        unit: logs
 
     tag:
       - name: solr.collection
@@ -136,7 +135,7 @@ observation:
         source: Count
         type: counter
         label: applying buffered updates
-        description: buffered updates
+        description: applying buffered updates
 
     tag:
       - name: solr.collection
