@@ -1,0 +1,175 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 7-*
+
+observation:
+  - name: tlog_remainingBytes_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=replay,name=remaining.bytes
+
+    metric:
+      - name: tlog.replay.size.remaining
+        source: Value
+        type: long_gauge
+        label: tlog replay remaining bytes
+        description: remaining bytes to replay from the transaction log
+        unit: bytes
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: tlog_remainingLogs_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=replay,name=remaining.logs
+
+    metric:
+      - name: tlog.replay.logs.remaining
+        source: Value
+        type: gauge
+        label: tlog replay remaining logs
+        description: remaining transaction logs to replay
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: tlog_replay_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=replay,name=ops
+
+    metric:
+      - name: tlog.replay.ops
+        source: Count
+        type: counter
+        label: replayed operations
+        description: total replayed operations
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: tlog_copyOverOldUpdates_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=copyOverOldUpdates,name=ops
+
+    metric:
+      - name: tlog.updates.copyOverOld
+        source: Count
+        type: counter
+        label: copy over old updates
+        description: copy over old updates requests
+        unit: requests
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: tlog_buffered_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=buffered,name=ops
+
+    metric:
+      - name: tlog.updates.buffered
+        source: Value
+        type: long_gauge
+        label: buffered updates
+        description: buffered updates
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: tlog_applyingBuffered_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,scope=applyingBuffered,name=ops
+
+    metric:
+      - name: tlog.updates.buffered.applying
+        source: Count
+        type: counter
+        label: applying buffered updates
+        description: applying buffered updates
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: tlog_state_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=TLOG,name=state
+
+    metric:
+      - name: tlog.state
+        source: Value
+        type: gauge
+        label: tlog state
+        description: REPLAYING(0), BUFFERING(1), APPLYING_BUFFERED(2), ACTIVE(3)
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
