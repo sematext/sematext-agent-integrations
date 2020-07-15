@@ -6,11 +6,12 @@ data:
   dbUser: ${ST_MONITOR_POSTGRESQL_DB_USER}
   dbPassword: ${ST_MONITOR_POSTGRESQL_DB_PASSWORD}
   dbAdditionalConnectionParams: ${ST_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
-  dbVerticalModel: true
+  dbVerticalModel: false
 
 observation:
   - name: archiver
     metricNamespace: postgresql
+    singleRowResult: true
 
     metric:
       - name: archiver.wal.success.count
@@ -24,3 +25,7 @@ observation:
         type: counter
         label: failed WAL files
         description: Number of failed attempts to archive WAL files
+
+    tag:
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

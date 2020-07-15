@@ -84,3 +84,5 @@ observation:
         value: eval:${tables.table}
       - name: postgresql.schema
         value: eval:${tables.schema}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

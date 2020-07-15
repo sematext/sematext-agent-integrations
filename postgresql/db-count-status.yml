@@ -35,3 +35,5 @@ observation:
     tag:
       - name: postgresql.schema
         value: eval:${count.schema}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

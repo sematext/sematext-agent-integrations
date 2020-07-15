@@ -53,3 +53,5 @@ observation:
     tag:
       - name: postgresql.table
         value: eval:${size.table}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

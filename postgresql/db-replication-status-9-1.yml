@@ -30,3 +30,6 @@ observation:
         unit: ms
         label: replication delay
 
+    tag:
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

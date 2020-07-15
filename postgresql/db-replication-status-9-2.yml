@@ -25,3 +25,7 @@ observation:
         type: long_gauge
         unit: bytes
         label: replication delay bytes
+
+    tag:
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

@@ -31,7 +31,7 @@ observation:
         description: Name of the lock mode held or desired
 
       - name: lock.relation
-        source: relation
+        source: relname
         type: text
         send: false
         label: lock name
@@ -48,3 +48,5 @@ observation:
         value: eval:${lock.mode}
       - name: postgresql.lock.relation
         value: eval:${lock.relation}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

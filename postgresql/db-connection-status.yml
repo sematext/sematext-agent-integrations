@@ -17,20 +17,25 @@ data:
   dbUser: ${ST_MONITOR_POSTGRESQL_DB_USER}
   dbPassword: ${ST_MONITOR_POSTGRESQL_DB_PASSWORD}
   dbAdditionalConnectionParams: ${ST_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
-  dbVerticalModel: true
+  dbVerticalModel: false
 
 observation:
   - name: connection
     metricNamespace: postgresql
+    singleRowResult: true
 
     metric:
       - name: database.connections.max
         source: max_connections
-        type: long_gauge
+        type: double_gauge
         label: max connections
 
       - name: database.connections.usage
         source: pct_connections
-        type: long_gauge
+        type: double_gauge
         unit: '%'
         label: percent usage connections
+
+    tag:
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

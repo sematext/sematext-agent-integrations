@@ -57,3 +57,5 @@ observation:
         value: eval:${indexes.schema}
       - name: postgresql.index
         value: eval:${indexes.index}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}
