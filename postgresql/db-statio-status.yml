@@ -78,3 +78,5 @@ observation:
         value: eval:${statio.table}
       - name: postgresql.schema
         value: eval:${statio.schema}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

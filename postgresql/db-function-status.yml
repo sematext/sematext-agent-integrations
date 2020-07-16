@@ -72,3 +72,5 @@ observation:
         value: eval:${function.schema}
       - name: postgresql.function.name
         value: eval:${function.name}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

@@ -6,11 +6,12 @@ data:
   dbUser: ${ST_MONITOR_POSTGRESQL_DB_USER}
   dbPassword: ${ST_MONITOR_POSTGRESQL_DB_PASSWORD}
   dbAdditionalConnectionParams: ${ST_MONITOR_POSTGRESQL_DB_ADDITIONAL_PARAMS}
-  dbVerticalModel: true
+  dbVerticalModel: false
 
 observation:
   - name: bgwriter
     metricNamespace: postgresql
+    singleRowResult: true
 
     metric:
       - name: bgwriter.checkpoints.scheduled
@@ -54,3 +55,7 @@ observation:
         type: counter
         label: allocated buffers
         description: Number of buffers allocated
+
+    tag:
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

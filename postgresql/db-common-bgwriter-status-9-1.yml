@@ -22,3 +22,7 @@ observation:
         type: counter
         label: fsync backend buffers
         description: Number of times a backend had to execute its own fsync call (normally the background writer handles those even when the backend does its own write)
+
+    tag:
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}

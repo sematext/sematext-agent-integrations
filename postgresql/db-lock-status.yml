@@ -48,3 +48,5 @@ observation:
         value: eval:${lock.mode}
       - name: postgresql.lock.relation
         value: eval:${lock.relation}
+      - name: postgresql.database
+        value: ${ST_MONITOR_POSTGRESQL_DB_NAME}
