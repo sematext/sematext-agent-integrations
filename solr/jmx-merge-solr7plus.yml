@@ -9,7 +9,7 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=errors
 
     metric:
-      - name: index.merge.errors
+      - name: index.merges.errors
         source: Count
         type: counter
         label: merge errors
@@ -33,7 +33,7 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=minor
 
     metric:
-      - name: index.merge.minor
+      - name: index.merges.minor
         source: Count
         type: counter
         label: minor merges
@@ -57,11 +57,11 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=minor.running.docs
 
     metric:
-      - name: index.merge.minor.running.docs
+      - name: index.merges.minor.running.docs
         source: Value
-        type: counter
-        label: docs merged in minor merges
-        description: docs merged in minor merges
+        type: gauge
+        label: docs in minor merges
+        description: docs in currently running minor merges
 
     tag:
       - name: solr.collection
@@ -81,11 +81,11 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=minor.running.segments
 
     metric:
-      - name: index.merge.minor.running.segments
+      - name: index.merges.minor.running.segments
         source: Value
-        type: counter
-        label: segments merged in minor merges
-        description: segments merged in minor merges
+        type: gauge
+        label: segments in minor merges
+        description: segments in currently running minor merges
 
     tag:
       - name: solr.collection
@@ -105,7 +105,7 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major
 
     metric:
-      - name: index.merge.major
+      - name: index.merges.major
         source: Count
         type: counter
         label: major merges
@@ -129,11 +129,11 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major.running.docs
 
     metric:
-      - name: index.merge.major.running.docs
+      - name: index.merges.major.running.docs
         source: Value
         type: gauge
-        label: docs merged in major merges
-        description: docs merged in major merges
+        label: docs in major merges
+        description: docs in currently running major merges
 
     tag:
       - name: solr.collection
@@ -153,11 +153,11 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major.running.segments
 
     metric:
-      - name: index.merge.major.running.segments
+      - name: index.merges.major.running.segments
         source: Value
         type: gauge
-        label: segments merged in major merges
-        description: segments merged in major merges
+        label: segments in major merges
+        description: segments in currently running major merges
 
     tag:
       - name: solr.collection
@@ -177,7 +177,7 @@ observation:
     objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major.deletedDocs
 
     metric:
-      - name: index.merge.major.deletedDocs
+      - name: index.merges.major.deleted.docs
         source: Count
         type: counter
         label: expunged docs in major merges
@@ -202,7 +202,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=errors
 
     metric:
-      - name: index.merge.errors
+      - name: index.merges.errors
         source: Count
         type: counter
         label: merge errors
@@ -220,7 +220,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=minor
 
     metric:
-      - name: index.merge.minor
+      - name: index.merges.minor
         source: Count
         type: counter
         label: minor merges
@@ -238,7 +238,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=minor.running.docs
 
     metric:
-      - name: index.merge.minor.running.docs
+      - name: index.merges.minor.running.docs
         source: Value
         type: counter
         label: docs merged in minor merges
@@ -256,7 +256,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=minor.running.segments
 
     metric:
-      - name: index.merge.minor.running.segments
+      - name: index.merges.minor.running.segments
         source: Value
         type: counter
         label: segments merged in minor merges
@@ -274,7 +274,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major
 
     metric:
-      - name: index.merge.major
+      - name: index.merges.major
         source: Count
         type: counter
         label: major merges
@@ -292,7 +292,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major.running.docs
 
     metric:
-      - name: index.merge.major.running.docs
+      - name: index.merges.major.running.docs
         source: Value
         type: gauge
         label: docs merged in major merges
@@ -310,7 +310,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major.running.segments
 
     metric:
-      - name: index.merge.major.running.segments
+      - name: index.merges.major.running.segments
         source: Value
         type: gauge
         label: segments merged in major merges
@@ -328,7 +328,7 @@ observation:
     objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major.deletedDocs
 
     metric:
-      - name: index.merge.major.deletedDocs
+      - name: index.merges.major.deleted.docs
         source: Count
         type: counter
         label: expunged docs in major merges
