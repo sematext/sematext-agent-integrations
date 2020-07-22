@@ -1,0 +1,342 @@
+type: jmx
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 7-*
+
+observation:
+  - name: merge_errors_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=errors
+
+    metric:
+      - name: index.merge.errors
+        source: Count
+        type: counter
+        label: merge errors
+        description: merge errors
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: merge_minor_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=minor
+
+    metric:
+      - name: index.merge.minor
+        source: Count
+        type: counter
+        label: minor merges
+        description: minor merges
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: merge_minor_running_docs_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=minor.running.docs
+
+    metric:
+      - name: index.merge.minor.running.docs
+        source: Value
+        type: counter
+        label: docs merged in minor merges
+        description: docs merged in minor merges
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: merge_minor_running_segments_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=minor.running.segments
+
+    metric:
+      - name: index.merge.minor.running.segments
+        source: Value
+        type: counter
+        label: segments merged in minor merges
+        description: segments merged in minor merges
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: merge_major_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major
+
+    metric:
+      - name: index.merge.major
+        source: Count
+        type: counter
+        label: major merges
+        description: major merges
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: merge_major_running_docs_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major.running.docs
+
+    metric:
+      - name: index.merge.major.running.docs
+        source: Value
+        type: gauge
+        label: docs merged in major merges
+        description: docs merged in major merges
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: merge_major_running_segments_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major.running.segments
+
+    metric:
+      - name: index.merge.major.running.segments
+        source: Value
+        type: gauge
+        label: segments merged in major merges
+        description: segments merged in major merges
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+  - name: merge_major_deleted_docs_solr7_cloud
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${collection},dom3=${shard},dom4=${replica},category=INDEX,scope=merge,name=major.deletedDocs
+
+    metric:
+      - name: index.merge.major.deletedDocs
+        source: Count
+        type: counter
+        label: expunged docs in major merges
+        description: deleted docs expunged in major merges
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: ${replica}
+
+      - name: solr.core
+        value: func:ConcatUsingString(_,collection,shard,replica)
+
+#  "classic" Solr setup uses different bean names
+  - name: merge_errors_solr7_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=errors
+
+    metric:
+      - name: index.merge.errors
+        source: Count
+        type: counter
+        label: merge errors
+        description: merge errors
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+  - name: merge_minor_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=minor
+
+    metric:
+      - name: index.merge.minor
+        source: Count
+        type: counter
+        label: minor merges
+        description: minor merges
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+  - name: merge_minor_docs_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=minor.running.docs
+
+    metric:
+      - name: index.merge.minor.running.docs
+        source: Value
+        type: counter
+        label: docs merged in minor merges
+        description: docs merged in minor merges
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+  - name: merge_minor_segments_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=minor.running.segments
+
+    metric:
+      - name: index.merge.minor.running.segments
+        source: Value
+        type: counter
+        label: segments merged in minor merges
+        description: segments merged in minor merges
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+  - name: merge_major_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major
+
+    metric:
+      - name: index.merge.major
+        source: Count
+        type: counter
+        label: major merges
+        description: major merges
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+  - name: merge_major_docs_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major.running.docs
+
+    metric:
+      - name: index.merge.major.running.docs
+        source: Value
+        type: gauge
+        label: docs merged in major merges
+        description: docs merged in major merges
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+  - name: merge_major_segments_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major.running.segments
+
+    metric:
+      - name: index.merge.major.running.segments
+        source: Value
+        type: gauge
+        label: segments merged in major merges
+        description: segments merged in major merges
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+  - name: merge_major_deleted_docs_solr7_classic
+    metricNamespace: solr
+    objectName: solr:dom1=core,dom2=${core},category=INDEX,scope=merge,name=major.deletedDocs
+
+    metric:
+      - name: index.merge.major.deletedDocs
+        source: Count
+        type: counter
+        label: expunged docs in major merges
+        description: deleted docs expunged in major merges
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
