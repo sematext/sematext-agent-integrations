@@ -11,6 +11,19 @@ observation:
     path: $.[?(@.name=${name})]
 
     metric:
+      - name: gc.count
+        source: gc_num
+        type: counter
+        label: GC count
+        description: Number of garbage collections
+
+      - name: gc.reclaimed.bytes
+        source: gc_bytes_reclaimed
+        type: counter
+        label: GC bytes reclaimed
+        unit: bytes
+        description: Bytes reclaimed by garbage collections
+
       - name: file.descriptors.used
         source: fd_used
         type: long_gauge
