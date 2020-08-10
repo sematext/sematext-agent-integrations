@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: jenkins-job-waiting
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Job,name=Waiting
+
+    metric:
+      - name: jenkins.jobs.waiting.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: jenkins.jobs.waiting.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: jenkins.jobs.waiting.time
+        source: func:DoubleMultiply(jenkins.jobs.waiting.count, jenkins.jobs.waiting.mean.time)
+        type: double_counter
+        label: jenkins waiting jobs time
+        unit: ms

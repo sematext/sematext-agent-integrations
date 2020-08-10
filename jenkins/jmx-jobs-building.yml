@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: jenkins-job-building
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Job,name=Building
+
+    metric:
+      - name: jenkins.jobs.building.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: jenkins.jobs.building.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: jenkins.jobs.building.time
+        source: func:DoubleMultiply(jenkins.jobs.building.count, jenkins.jobs.building.mean.time)
+        type: double_counter
+        label: jenkins building jobs time
+        unit: ms
