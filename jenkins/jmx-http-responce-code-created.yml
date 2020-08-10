@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-created
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=Created
+
+    metric:
+      - name: jenkins.http.responce.code.created.count
+        source: Count
+        type: counter
+        label: jenkins http responce code created count

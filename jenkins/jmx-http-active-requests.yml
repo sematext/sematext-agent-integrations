@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-active-requests
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,name=ActiveRequests
+
+    metric:
+      - name: jenkins.http.active.requests
+        source: Count
+        type: long_gauge
+        label: jenkins http active requests

@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-ok
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=Ok
+
+    metric:
+      - name: jenkins.http.responce.code.ok.count
+        source: Count
+        type: counter
+        label: jenkins http responce code ok count

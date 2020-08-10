@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-not-modified
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=NotModified
+
+    metric:
+      - name: jenkins.http.responce.code.not.modified.count
+        source: Count
+        type: counter
+        label: jenkins http responce code not modified count

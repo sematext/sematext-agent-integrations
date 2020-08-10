@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-bad-request
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=BadRequest
+
+    metric:
+      - name: jenkins.http.responce.code.bad.request.count
+        source: Count
+        type: counter
+        label: jenkins http responce code bad request count

@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: jenkins-job-execution-time
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Job,class=Execution,name=Time
+
+    metric:
+      - name: jenkins.jobs.count
+        source: Count
+        type: counter
+        label: jenkins jobs count
+
+      - name: jenkins.job.execution.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: jenkins.job.execution.time
+        source: func:DoubleMultiply(jenkins.jobs.count, jenkins.job.execution.mean.time)
+        type: double_counter
+        label: jenkins jobs execution time
+        unit: ms

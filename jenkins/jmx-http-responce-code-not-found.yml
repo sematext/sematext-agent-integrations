@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-not-found
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=NotFound
+
+    metric:
+      - name: jenkins.http.responce.code.not.found.count
+        source: Count
+        type: counter
+        label: jenkins http responce code not found count

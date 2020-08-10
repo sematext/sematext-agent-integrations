@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-no-content
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=NoContent
+
+    metric:
+      - name: jenkins.http.responce.code.no.content.count
+        source: Count
+        type: counter
+        label: jenkins http responce code no content count

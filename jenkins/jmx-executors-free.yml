@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-executors-free
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Executor,name=Free
+
+    metric:
+      - name: jenkins.executors.free
+        source: Value
+        type: long_gauge
+        label: jenkins free executors
