@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-nodes-offline
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Node,name=Offline
+
+    metric:
+      - name: jenkins.nodes.offline.count
+        source: Count
+        type: counter
+        label: jenkins nodes offline count

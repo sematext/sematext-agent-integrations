@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-nodes-online
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Node,name=Online
+
+    metric:
+      - name: jenkins.nodes.online.count
+        source: Count
+        type: counter
+        label: jenkins nodes online count

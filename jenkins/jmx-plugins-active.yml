@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-plugins-active
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Plugins,name=Active
+
+    metric:
+      - name: jenkins.plugins.active.count
+        source: Count
+        type: counter
+        label: jenkins plugins active count

@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-plugins-inactive
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Plugins,name=Inactive
+
+    metric:
+      - name: jenkins.plugins.inactive.count
+        source: Count
+        type: counter
+        label: jenkins plugins inactive count
