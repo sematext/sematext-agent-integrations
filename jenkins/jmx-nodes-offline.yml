@@ -7,6 +7,6 @@ observation:
 
     metric:
       - name: jenkins.nodes.offline.count
-        source: Count
-        type: counter
+        source: Value
+        type: long_gauge
         label: jenkins nodes offline count

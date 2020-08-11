@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-queue-size
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Queue,name=Size
+
+    metric:
+      - name: jenkins.queue.size
+        source: Value
+        type: long_gauge
+        label: jenkins queue size

@@ -7,6 +7,6 @@ observation:
 
     metric:
       - name: jenkins.plugins.active.count
-        source: Count
-        type: counter
+        source: Value
+        type: long_gauge
         label: jenkins plugins active count

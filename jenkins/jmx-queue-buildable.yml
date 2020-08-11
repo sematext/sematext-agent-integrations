@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-queue-buildable
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Queue,name=Buildable
+
+    metric:
+      - name: jenkins.queue.buildable.count
+        source: Value
+        type: long_gauge
+        label: jenkins queue buildable count

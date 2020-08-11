@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-queue-pending
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Queue,name=Pending
+
+    metric:
+      - name: jenkins.queue.pending.count
+        source: Value
+        type: long_gauge
+        label: jenkins queue pending count
