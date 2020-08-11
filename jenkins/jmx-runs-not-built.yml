@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-runs-not-built-count
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Runs,name=Not_built
+
+    metric:
+      - name: jenkins.runs.not.built.count
+        source: Count
+        type: counter
+        label: jenkins runs not built count

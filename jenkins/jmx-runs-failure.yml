@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-runs-failure-count
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Runs,name=Failure
+
+    metric:
+      - name: jenkins.runs.failure.count
+        source: Count
+        type: counter
+        label: jenkins runs failure count

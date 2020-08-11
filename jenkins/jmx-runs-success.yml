@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-runs-success-count
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Runs,name=Success
+
+    metric:
+      - name: jenkins.runs.success.count
+        source: Count
+        type: counter
+        label: jenkins runs success count
