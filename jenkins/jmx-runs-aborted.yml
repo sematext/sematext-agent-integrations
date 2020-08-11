@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-runs-aborted-count
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Runs,name=Aborted
+
+    metric:
+      - name: jenkins.runs.aborted.count
+        source: Count
+        type: counter
+        label: jenkins runs aborted count
