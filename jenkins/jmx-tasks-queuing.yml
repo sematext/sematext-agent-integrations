@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: jenkins-task-queuing
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Task,name=Queuing
+
+    metric:
+      - name: jenkins.tasks.queuing.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: jenkins.tasks.queuing.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: jenkins.tasks.queuing.time
+        source: func:DoubleMultiply(jenkins.tasks.queuing.count, jenkins.tasks.queuing.mean.time)
+        type: double_counter
+        label: jenkins queuing tasks time
+        unit: ms

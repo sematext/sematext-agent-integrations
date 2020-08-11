@@ -9,7 +9,7 @@ observation:
       - name: jenkins.jobs.scheduled.count
         source: Count
         type: counter
-        label: jenkins scheduled jobs count
+        send: false
 
       - name: jenkins.jobs.scheduled.mean.time
         source: Mean

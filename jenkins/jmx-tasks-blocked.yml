@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: jenkins-task-blocked
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Task,name=Blocked
+
+    metric:
+      - name: jenkins.tasks.blocked.count
+        source: Count
+        type: counter
+        send: false
+
+      - name: jenkins.tasks.blocked.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: jenkins.tasks.blocked.time
+        source: func:DoubleMultiply(jenkins.tasks.blocked.count, jenkins.tasks.blocked.mean.time)
+        type: double_counter
+        label: jenkins blocked tasks time
+        unit: ms

@@ -6,10 +6,10 @@ observation:
     objectName: io.jenkins:type=Job,name=Total
 
     metric:
-      - name: jenkins.jobs.total.count
+      - name: jenkins.jobs.count
         source: Count
         type: counter
-        label: jenkins total jobs count
+        label: jenkins jobs count
 
       - name: jenkins.jobs.total.mean.time
         source: Mean
@@ -17,7 +17,7 @@ observation:
         send: false
 
       - name: jenkins.jobs.total.time
-        source: func:DoubleMultiply(jenkins.jobs.total.count, jenkins.jobs.total.mean.time)
+        source: func:DoubleMultiply(jenkins.jobs.count, jenkins.jobs.total.mean.time)
         type: double_counter
         label: jenkins total jobs time
         unit: ms
