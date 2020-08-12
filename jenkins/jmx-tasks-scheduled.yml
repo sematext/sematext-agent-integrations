@@ -10,14 +10,3 @@ observation:
         source: Count
         type: counter
         label: jenkins tasks count
-
-      - name: tasks.scheduled.mean.time
-        source: Mean
-        type: double_gauge
-        send: false
-
-      - name: tasks.scheduled.time
-        source: func:DoubleMultiply(tasks.count, tasks.scheduled.mean.time)
-        type: double_counter
-        label: jenkins scheduled tasks time
-        unit: ms
