@@ -9,7 +9,7 @@ observation:
       - name: jobs.building.count
         source: Count
         type: counter
-        send: false
+        label: jenkins jobs building count
 
       - name: jobs.building.mean.time
         source: Mean

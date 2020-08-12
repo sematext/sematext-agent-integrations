@@ -9,7 +9,7 @@ observation:
       - name: tasks.waiting.count
         source: Count
         type: counter
-        send: false
+        label: jenkins tasks waiting count
 
       - name: tasks.waiting.mean.time
         source: Mean

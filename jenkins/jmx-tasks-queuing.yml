@@ -9,7 +9,7 @@ observation:
       - name: tasks.queuing.count
         source: Count
         type: counter
-        send: false
+        label: jenkins tasks queuing count
 
       - name: tasks.queuing.mean.time
         source: Mean

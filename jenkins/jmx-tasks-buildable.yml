@@ -9,7 +9,7 @@ observation:
       - name: tasks.buildable.count
         source: Count
         type: counter
-        send: false
+        label: jenkins tasks buildable count
 
       - name: tasks.buildable.mean.time
         source: Mean

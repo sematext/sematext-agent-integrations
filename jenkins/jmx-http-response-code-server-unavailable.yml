@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Http,class=ResponseCodes,name=ServiceUnavailable
 
     metric:
-      - name: http.responce.code.server.unavailable.count
+      - name: http.response.code.server.unavailable.count
         source: Count
         type: counter
-        label: jenkins http responce code server unavailable count
+        label: jenkins http response code server unavailable count

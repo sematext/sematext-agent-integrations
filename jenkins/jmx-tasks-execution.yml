@@ -9,7 +9,7 @@ observation:
       - name: tasks.execution.count
         source: Count
         type: counter
-        send: false
+        label: jenkins tasks execution count
 
       - name: tasks.execution.mean.time
         source: Mean

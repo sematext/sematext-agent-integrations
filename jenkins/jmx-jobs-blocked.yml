@@ -9,7 +9,7 @@ observation:
       - name: jobs.blocked.count
         source: Count
         type: counter
-        send: false
+        label: jenkins jobs blocked count
 
       - name: jobs.blocked.mean.time
         source: Mean

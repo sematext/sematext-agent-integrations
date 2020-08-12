@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Http,class=ResponseCodes,name=Forbidden
 
     metric:
-      - name: http.responce.code.forbidden.count
+      - name: http.response.code.forbidden.count
         source: Count
         type: counter
-        label: jenkins http responce code forbidden count
+        label: jenkins http response code forbidden count
