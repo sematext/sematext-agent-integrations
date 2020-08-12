@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Node,name=Builds
 
     metric:
-      - name: jenkins.node.builds.count
+      - name: node.builds.count
         source: Count
         type: counter
         label: jenkins node builds count
 
-      - name: jenkins.node.builds.mean.time
+      - name: node.builds.mean.time
         source: Mean
         type: double_gauge
         send: false
 
-      - name: jenkins.node.builds.time
-        source: func:DoubleMultiply(jenkins.node.builds.count, jenkins.node.builds.mean.time)
+      - name: node.builds.time
+        source: func:DoubleMultiply(node.builds.count, node.builds.mean.time)
         type: double_counter
         label: jenkins node builds time
         unit: ms

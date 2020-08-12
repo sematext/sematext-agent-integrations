@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Node,name=Offline
 
     metric:
-      - name: jenkins.nodes.offline.count
+      - name: nodes.offline.count
         source: Value
         type: long_gauge
         label: jenkins nodes offline count

@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Task,name=Execution
 
     metric:
-      - name: jenkins.tasks.execution.count
+      - name: tasks.execution.count
         source: Count
         type: counter
         send: false
 
-      - name: jenkins.tasks.execution.mean.time
+      - name: tasks.execution.mean.time
         source: Mean
         type: double_gauge
         send: false
 
-      - name: jenkins.tasks.execution.time
-        source: func:DoubleMultiply(jenkins.tasks.execution.count, jenkins.tasks.execution.mean.time)
+      - name: tasks.execution.time
+        source: func:DoubleMultiply(tasks.execution.count, tasks.execution.mean.time)
         type: double_counter
         label: jenkins execution tasks time
         unit: ms

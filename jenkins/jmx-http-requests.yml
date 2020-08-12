@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Http,name=Requests
 
     metric:
-      - name: jenkins.http.requests.count
+      - name: http.requests.count
         source: Count
         type: counter
         label: jenkins http requests count
 
-      - name: jenkins.http.requests.mean.time
+      - name: http.requests.mean.time
         source: Mean
         type: double_gauge
         send: false
 
-      - name: jenkins.http.requests.time
-        source: func:DoubleMultiply(jenkins.http.requests.count, jenkins.http.requests.mean.time)
+      - name: http.requests.time
+        source: func:DoubleMultiply(http.requests.count, http.requests.mean.time)
         type: double_counter
         label: jenkins http requests time
         unit: ms

@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Executor,name=In-use
 
     metric:
-      - name: jenkins.executors.in.use
+      - name: executors.in.use
         source: Value
         type: long_gauge
         label: jenkins in-use executors

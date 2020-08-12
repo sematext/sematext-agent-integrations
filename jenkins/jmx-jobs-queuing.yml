@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Job,name=Queuing
 
     metric:
-      - name: jenkins.jobs.queuing.count
+      - name: jobs.queuing.count
         source: Count
         type: counter
         send: false
 
-      - name: jenkins.jobs.queuing.mean.time
+      - name: jobs.queuing.mean.time
         source: Mean
         type: double_gauge
         send: false
 
-      - name: jenkins.jobs.queuing.time
-        source: func:DoubleMultiply(jenkins.jobs.queuing.count, jenkins.jobs.queuing.mean.time)
+      - name: jobs.queuing.time
+        source: func:DoubleMultiply(jobs.queuing.count, jobs.queuing.mean.time)
         type: double_counter
         label: jenkins queuing jobs time
         unit: ms

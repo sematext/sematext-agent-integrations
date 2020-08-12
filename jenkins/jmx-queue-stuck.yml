@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Queue,name=Stuck
 
     metric:
-      - name: jenkins.queue.stuck.count
+      - name: queue.stuck.count
         source: Value
         type: long_gauge
         label: jenkins queue stuck count

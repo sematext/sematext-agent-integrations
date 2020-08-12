@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Health-check,name=Score
 
     metric:
-      - name: jenkins.health.check.score
+      - name: health.check.score
         source: Value
         type: long_gauge
         label: jenkins health check score

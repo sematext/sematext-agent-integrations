@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Http,class=ResponseCodes,name=NotModified
 
     metric:
-      - name: jenkins.http.responce.code.not.modified.count
+      - name: http.responce.code.not.modified.count
         source: Count
         type: counter
         label: jenkins http responce code not modified count

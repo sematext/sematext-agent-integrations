@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Task,name=Scheduled
 
     metric:
-      - name: jenkins.tasks.count
+      - name: tasks.count
         source: Count
         type: counter
         label: jenkins tasks count
 
-      - name: jenkins.tasks.scheduled.mean.time
+      - name: tasks.scheduled.mean.time
         source: Mean
         type: double_gauge
         send: false
 
-      - name: jenkins.tasks.scheduled.time
-        source: func:DoubleMultiply(jenkins.tasks.count, jenkins.tasks.scheduled.mean.time)
+      - name: tasks.scheduled.time
+        source: func:DoubleMultiply(tasks.count, tasks.scheduled.mean.time)
         type: double_counter
         label: jenkins scheduled tasks time
         unit: ms
