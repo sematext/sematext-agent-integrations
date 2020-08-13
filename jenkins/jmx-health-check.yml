@@ -1,12 +1,23 @@
 type: jmx
 
 observation:
-  - name: jenkins-health-check-score
+  - name: jenkins-health-check
     metricNamespace: jenkins
-    objectName: io.jenkins:type=Health-check,name=Score
+    objectName: io.jenkins:type=Health-check
 
     metric:
-      - name: health.check.score
-        source: Value
-        type: long_gauge
-        label: jenkins health check score
+      - name: health.check.count
+        source: Count
+        type: counter
+        label: jenkins health check count
+
+      - name: health.check.mean.time
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: health.check.time
+        source: func:DoubleMultiply(health.check.count, health.check.mean.time)
+        type: double_counter
+        label: jenkins health check time
+        unit: ms
