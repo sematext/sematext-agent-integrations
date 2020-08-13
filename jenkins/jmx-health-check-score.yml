@@ -8,5 +8,5 @@ observation:
     metric:
       - name: health.check.score
         source: Value
-        type: long_gauge
+        type: double_gauge
         label: jenkins health check score
