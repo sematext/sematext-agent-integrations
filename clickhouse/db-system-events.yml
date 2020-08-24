@@ -197,6 +197,36 @@ observation:
         type: counter
         label: ZooKeeper ephemeral node removal failures
         description: Count of ZooKeeper ephemeral node removal failures
+      - name: zk.requests.list
+        source: ZooKeeperList
+        type: counter
+        label: ZooKeeper list requests
+        description: Count of Zookeeper list requests
+      - name: zk.requests.create
+        source: ZooKeeperCreate
+        type: counter
+        label: ZooKeeper create requests
+        description: Count of Zookeeper create requests
+      - name: zk.requests.remove
+        source: ZooKeeperRemove
+        type: counter
+        label: ZooKeeper remove requests
+        description: Count of Zookeeper remove requests
+      - name: zk.requests.exists
+        source: ZooKeeperExists
+        type: counter
+        label: ZooKeeper exists requests
+        description: Count of Zookeeper exists requests
+      - name: zk.requests.get
+        source: ZooKeeperGet
+        type: counter
+        label: ZooKeeper get requests
+        description: Count of Zookeeper get requests
+      - name: zk.requests.set
+        source: ZooKeeperSet
+        type: counter
+        label: ZooKeeper set requests
+        description: Count of Zookeeper set requests
       - name: network.errors
         source: NetworkErrors
         type: counter
