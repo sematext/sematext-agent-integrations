@@ -9,4 +9,4 @@ observation:
       - name: plugins.failed.count
         source: Value
         type: long_gauge
-        label: jenkins plugins failed count
+        label: plugins failed count

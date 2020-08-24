@@ -9,4 +9,4 @@ observation:
       - name: queue.pending.count
         source: Value
         type: long_gauge
-        label: jenkins queue pending count
+        label: queue pending count

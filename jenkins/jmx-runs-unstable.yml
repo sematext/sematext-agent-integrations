@@ -9,4 +9,4 @@ observation:
       - name: runs.unstable.count
         source: Count
         type: counter
-        label: jenkins runs unstable count
+        label: runs unstable count

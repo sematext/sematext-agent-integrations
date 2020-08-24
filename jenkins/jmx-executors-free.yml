@@ -9,4 +9,4 @@ observation:
       - name: executors.free
         source: Value
         type: long_gauge
-        label: jenkins free executors
+        label: free executors

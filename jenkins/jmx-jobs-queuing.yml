@@ -9,7 +9,7 @@ observation:
       - name: jobs.queuing.count
         source: Count
         type: counter
-        label: jenkins jobs queuing count
+        label: jobs queuing count
 
       - name: jobs.queuing.mean.time
         source: Mean
@@ -19,5 +19,5 @@ observation:
       - name: jobs.queuing.time
         source: func:DoubleMultiply(jobs.queuing.count, jobs.queuing.mean.time)
         type: double_counter
-        label: jenkins queuing jobs time
+        label: queuing jobs time
         unit: ms

@@ -9,4 +9,4 @@ observation:
       - name: http.response.code.server.unavailable.count
         source: Count
         type: counter
-        label: jenkins http response code server unavailable count
+        label: http response code server unavailable count

@@ -9,4 +9,4 @@ observation:
       - name: http.active.requests
         source: Count
         type: long_gauge
-        label: jenkins http active requests
+        label: http active requests

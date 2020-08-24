@@ -9,4 +9,4 @@ observation:
       - name: executors.in.use
         source: Value
         type: long_gauge
-        label: jenkins in-use executors
+        label: in-use executors

@@ -9,4 +9,4 @@ observation:
       - name: runs.not.built.count
         source: Count
         type: counter
-        label: jenkins runs not built count
+        label: runs not built count

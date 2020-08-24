@@ -9,4 +9,4 @@ observation:
       - name: nodes.online.count
         source: Value
         type: long_gauge
-        label: jenkins nodes online count
+        label: nodes online count

@@ -9,4 +9,4 @@ observation:
       - name: jobs.scheduled.count
         source: Count
         type: counter
-        label: jenkins jobs scheduled count
+        label: jobs scheduled count

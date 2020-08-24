@@ -9,4 +9,4 @@ observation:
       - name: plugins.active.count
         source: Value
         type: long_gauge
-        label: jenkins plugins active count
+        label: plugins active count

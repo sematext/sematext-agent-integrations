@@ -9,7 +9,7 @@ observation:
       - name: jobs.building.count
         source: Count
         type: counter
-        label: jenkins jobs building count
+        label: jobs building count
 
       - name: jobs.building.mean.time
         source: Mean
@@ -19,5 +19,5 @@ observation:
       - name: jobs.building.time
         source: func:DoubleMultiply(jobs.building.count, jobs.building.mean.time)
         type: double_counter
-        label: jenkins building jobs time
+        label: building jobs time
         unit: ms

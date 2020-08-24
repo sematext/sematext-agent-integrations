@@ -9,4 +9,4 @@ observation:
       - name: tasks.scheduled.count
         source: Count
         type: counter
-        label: jenkins tasks scheduled count
+        label: tasks scheduled count

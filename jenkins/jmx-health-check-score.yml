@@ -9,4 +9,4 @@ observation:
       - name: health.check.score
         source: Value
         type: double_gauge
-        label: jenkins health check score
+        label: health check score

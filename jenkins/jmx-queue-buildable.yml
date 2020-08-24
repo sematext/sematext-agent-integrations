@@ -9,4 +9,4 @@ observation:
       - name: queue.buildable.count
         source: Value
         type: long_gauge
-        label: jenkins queue buildable count
+        label: queue buildable count

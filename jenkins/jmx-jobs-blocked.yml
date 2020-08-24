@@ -9,7 +9,7 @@ observation:
       - name: jobs.blocked.count
         source: Count
         type: counter
-        label: jenkins jobs blocked count
+        label: jobs blocked count
 
       - name: jobs.blocked.mean.time
         source: Mean
@@ -19,5 +19,5 @@ observation:
       - name: jobs.blocked.time
         source: func:DoubleMultiply(jobs.blocked.count, jobs.blocked.mean.time)
         type: double_counter
-        label: jenkins blocked jobs time
+        label: blocked jobs time
         unit: ms

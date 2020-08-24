@@ -9,7 +9,7 @@ observation:
       - name: tasks.execution.count
         source: Count
         type: counter
-        label: jenkins tasks execution count
+        label: tasks execution count
 
       - name: tasks.execution.mean.time
         source: Mean
@@ -19,5 +19,5 @@ observation:
       - name: tasks.execution.time
         source: func:DoubleMultiply(tasks.execution.count, tasks.execution.mean.time)
         type: double_counter
-        label: jenkins execution tasks time
+        label: execution tasks time
         unit: ms

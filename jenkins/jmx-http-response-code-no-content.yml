@@ -9,4 +9,4 @@ observation:
       - name: http.response.code.no.content.count
         source: Count
         type: counter
-        label: jenkins http response code no content count
+        label: http response code no content count

@@ -9,7 +9,7 @@ observation:
       - name: node.builds.count
         source: Count
         type: counter
-        label: jenkins node builds count
+        label: node builds count
 
       - name: node.builds.mean.time
         source: Mean
@@ -19,5 +19,5 @@ observation:
       - name: node.builds.time
         source: func:DoubleMultiply(node.builds.count, node.builds.mean.time)
         type: double_counter
-        label: jenkins node builds time
+        label: node builds time
         unit: ms

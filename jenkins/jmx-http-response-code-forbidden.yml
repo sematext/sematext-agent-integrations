@@ -9,4 +9,4 @@ observation:
       - name: http.response.code.forbidden.count
         source: Count
         type: counter
-        label: jenkins http response code forbidden count
+        label: http response code forbidden count

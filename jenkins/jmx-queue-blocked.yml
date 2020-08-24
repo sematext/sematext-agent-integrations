@@ -9,4 +9,4 @@ observation:
       - name: queue.blocked.count
         source: Value
         type: long_gauge
-        label: jenkins queue blocked count
+        label: queue blocked count

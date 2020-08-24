@@ -9,7 +9,7 @@ observation:
       - name: health.check.count
         source: Count
         type: counter
-        label: jenkins health check count
+        label: health check count
 
       - name: health.check.mean.time
         source: Mean
@@ -19,5 +19,5 @@ observation:
       - name: health.check.time
         source: func:DoubleMultiply(health.check.count, health.check.mean.time)
         type: double_counter
-        label: jenkins health check time
+        label: health check time
         unit: ms

@@ -9,4 +9,4 @@ observation:
       - name: queue.stuck.count
         source: Value
         type: long_gauge
-        label: jenkins queue stuck count
+        label: queue stuck count

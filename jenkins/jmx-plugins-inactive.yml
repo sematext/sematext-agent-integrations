@@ -9,4 +9,4 @@ observation:
       - name: plugins.inactive.count
         source: Value
         type: long_gauge
-        label: jenkins plugins inactive count
+        label: plugins inactive count

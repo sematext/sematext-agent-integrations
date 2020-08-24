@@ -9,7 +9,7 @@ observation:
       - name: jobs.total.count
         source: Count
         type: counter
-        label: jenkins jobs total count
+        label: jobs total count
 
       - name: jobs.total.mean.time
         source: Mean
@@ -19,5 +19,5 @@ observation:
       - name: jobs.total.time
         source: func:DoubleMultiply(jobs.total.count, jobs.total.mean.time)
         type: double_counter
-        label: jenkins total jobs time
+        label: total jobs time
         unit: ms

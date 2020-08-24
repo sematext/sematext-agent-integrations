@@ -9,4 +9,4 @@ observation:
       - name: queue.size
         source: Value
         type: long_gauge
-        label: jenkins queue size
+        label: queue size

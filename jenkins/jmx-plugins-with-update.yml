@@ -9,4 +9,4 @@ observation:
       - name: plugins.with.update.count
         source: Value
         type: long_gauge
-        label: jenkins plugins with update count
+        label: plugins with update count

@@ -9,4 +9,4 @@ observation:
       - name: http.response.code.bad.request.count
         source: Count
         type: counter
-        label: jenkins http response code bad request count
+        label: http response code bad request count
