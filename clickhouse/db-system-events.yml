@@ -30,9 +30,9 @@ observation:
         type: counter
         label: Insert query count
         description: Number of INSERT queries started to be interpreted and may be executed.
-      - name: file.open.failed	
-        source: FileOpenFailed	
-        type: counter	
+      - name: file.open.failed
+        source: FileOpenFailed
+        type: counter
         label: Failed file opens
       - name: buffer.read.fd.failed
         source: ReadBufferFromFileDescriptorReadFailed
@@ -122,12 +122,17 @@ observation:
         label: Uncompressed bytes merged
         unit: bytes
         description: Uncompressed bytes that was read for background merges. This is the number before merge.
+      - name: merge.count
+        source: Merge
+        type: counter
+        label: Merge count
+        description: Number of launched background merges
       - name: merge.time
         source: MergesTimeMilliseconds
         type: counter
         label: Merge time
         unit: ms
-        description: Total time spent for background merges.
+        description: Total time spent for background merges
       - name: lock.rw.acquired.reads
         source: RWLockAcquiredReadLocks
         type: counter
