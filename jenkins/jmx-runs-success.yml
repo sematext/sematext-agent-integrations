@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Runs,name=Success
 
     metric:
-      - name: runs.success.count
+      - name: runs.success
         source: Count
         type: counter
         label: runs success count

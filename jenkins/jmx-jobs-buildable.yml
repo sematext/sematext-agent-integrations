@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Job,name=Buildable
 
     metric:
-      - name: jobs.buildable.count
+      - name: jobs.buildable
         source: Count
         type: counter
         label: jobs buildable count
 
-      - name: jobs.buildable.mean.time
+      - name: jobs.buildable.time.mean
         source: Mean
         type: double_gauge
         send: false
 
       - name: jobs.buildable.time
-        source: func:DoubleMultiply(jobs.buildable.count, jobs.buildable.mean.time)
+        source: func:DoubleMultiply(jobs.buildable, jobs.buildable.time.mean)
         type: double_counter
         label: buildable jobs time
         unit: ms

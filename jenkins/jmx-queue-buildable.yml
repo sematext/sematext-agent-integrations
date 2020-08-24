@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Queue,name=Buildable
 
     metric:
-      - name: queue.buildable.count
+      - name: queue.buildable
         source: Value
         type: long_gauge
         label: queue buildable count

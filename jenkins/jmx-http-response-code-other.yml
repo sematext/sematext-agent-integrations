@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Http,class=ResponseCodes,name=Other
 
     metric:
-      - name: http.response.code.other.count
+      - name: http.response.code.other
         source: Count
         type: counter
         label: http other response code count

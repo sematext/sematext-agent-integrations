@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Runs,name=Unstable
 
     metric:
-      - name: runs.unstable.count
+      - name: runs.unstable
         source: Count
         type: counter
         label: runs unstable count

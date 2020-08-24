@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Queue,name=Blocked
 
     metric:
-      - name: queue.blocked.count
+      - name: queue.blocked
         source: Value
         type: long_gauge
         label: queue blocked count

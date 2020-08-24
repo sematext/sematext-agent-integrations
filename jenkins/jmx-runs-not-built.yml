@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Runs,name=Not_built
 
     metric:
-      - name: runs.not.built.count
+      - name: runs.not-built
         source: Count
         type: counter
         label: runs not built count

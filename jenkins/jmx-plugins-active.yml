@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Plugins,name=Active
 
     metric:
-      - name: plugins.active.count
+      - name: plugins.active
         source: Value
         type: long_gauge
         label: plugins active count

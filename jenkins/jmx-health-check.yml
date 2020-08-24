@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Health-check
 
     metric:
-      - name: health.check.count
+      - name: health.checks
         source: Count
         type: counter
         label: health check count
 
-      - name: health.check.mean.time
+      - name: health.check.time.mean
         source: Mean
         type: double_gauge
         send: false
 
       - name: health.check.time
-        source: func:DoubleMultiply(health.check.count, health.check.mean.time)
+        source: func:DoubleMultiply(health.checks, health.check.time.mean)
         type: double_counter
         label: health check time
         unit: ms

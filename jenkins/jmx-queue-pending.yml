@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Queue,name=Pending
 
     metric:
-      - name: queue.pending.count
+      - name: queue.pending
         source: Value
         type: long_gauge
         label: queue pending count

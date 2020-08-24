@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Http,name=ActiveRequests
 
     metric:
-      - name: http.active.requests
+      - name: http.requests.active
         source: Count
         type: long_gauge
         label: http active requests

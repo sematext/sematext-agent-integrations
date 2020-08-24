@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Plugins,name=Failed
 
     metric:
-      - name: plugins.failed.count
+      - name: plugins.failed
         source: Value
         type: long_gauge
         label: plugins failed count

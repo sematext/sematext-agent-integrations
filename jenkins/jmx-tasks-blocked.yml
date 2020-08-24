@@ -6,18 +6,18 @@ observation:
     objectName: io.jenkins:type=Task,name=Blocked
 
     metric:
-      - name: tasks.blocked.count
+      - name: tasks.blocked
         source: Count
         type: counter
         label: tasks blocked count
 
-      - name: tasks.blocked.mean.time
+      - name: tasks.blocked.time.mean
         source: Mean
         type: double_gauge
         send: false
 
       - name: tasks.blocked.time
-        source: func:DoubleMultiply(tasks.blocked.count, tasks.blocked.mean.time)
+        source: func:DoubleMultiply(tasks.blocked, tasks.blocked.time.mean)
         type: double_counter
         label: blocked tasks time
         unit: ms
