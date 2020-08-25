@@ -62,7 +62,7 @@ observation:
         label: Memory
         description: Total amount of memory (bytes) allocated in currently executing queries. Note that some memory allocations may not be accounted.
         unit: bytes
-      - name: merge.count
+      - name: merge.running
         source: Merge
         type: long_gauge
         label: Running merges

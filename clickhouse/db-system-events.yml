@@ -30,9 +30,9 @@ observation:
         type: counter
         label: Insert query count
         description: Number of INSERT queries started to be interpreted and may be executed.
-      - name: file.open.failed	
-        source: FileOpenFailed	
-        type: counter	
+      - name: file.open.failed
+        source: FileOpenFailed
+        type: counter
         label: Failed file opens
       - name: buffer.read.fd.failed
         source: ReadBufferFromFileDescriptorReadFailed
@@ -122,12 +122,17 @@ observation:
         label: Uncompressed bytes merged
         unit: bytes
         description: Uncompressed bytes that was read for background merges. This is the number before merge.
+      - name: merge.count
+        source: Merge
+        type: counter
+        label: Merge count
+        description: Number of launched background merges
       - name: merge.time
         source: MergesTimeMilliseconds
         type: counter
         label: Merge time
         unit: ms
-        description: Total time spent for background merges.
+        description: Total time spent for background merges
       - name: lock.rw.acquired.reads
         source: RWLockAcquiredReadLocks
         type: counter
@@ -192,6 +197,36 @@ observation:
         type: counter
         label: ZooKeeper ephemeral node removal failures
         description: Count of ZooKeeper ephemeral node removal failures
+      - name: zk.requests.list
+        source: ZooKeeperList
+        type: counter
+        label: ZooKeeper list requests
+        description: Count of Zookeeper list requests
+      - name: zk.requests.create
+        source: ZooKeeperCreate
+        type: counter
+        label: ZooKeeper create requests
+        description: Count of Zookeeper create requests
+      - name: zk.requests.remove
+        source: ZooKeeperRemove
+        type: counter
+        label: ZooKeeper remove requests
+        description: Count of Zookeeper remove requests
+      - name: zk.requests.exists
+        source: ZooKeeperExists
+        type: counter
+        label: ZooKeeper exists requests
+        description: Count of Zookeeper exists requests
+      - name: zk.requests.get
+        source: ZooKeeperGet
+        type: counter
+        label: ZooKeeper get requests
+        description: Count of Zookeeper get requests
+      - name: zk.requests.set
+        source: ZooKeeperSet
+        type: counter
+        label: ZooKeeper set requests
+        description: Count of Zookeeper set requests
       - name: network.errors
         source: NetworkErrors
         type: counter
