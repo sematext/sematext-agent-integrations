@@ -10,6 +10,7 @@ observation:
         source: Count
         type: counter
         label: jobs building count
+        description: The count at which jobs are built.
 
       - name: jobs.building.time.mean
         source: Mean
@@ -21,3 +22,4 @@ observation:
         type: double_counter
         label: building jobs time
         unit: ms
+        description: The time jobs spend for building.

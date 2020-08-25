@@ -10,6 +10,7 @@ observation:
         source: Count
         type: counter
         label: health check count
+        description: The number of health checks associated with the HealthCheckRegistry defined within the Metrics Plugin
 
       - name: health.check.time.mean
         source: Mean
@@ -21,3 +22,4 @@ observation:
         type: double_counter
         label: health check time
         unit: ms
+        description: The duration of all health check runs.

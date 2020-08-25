@@ -10,6 +10,7 @@ observation:
         source: Count
         type: counter
         label: jobs waiting count
+        description: The count at which jobs enter the quiet period.
 
       - name: jobs.waiting.time.mean
         source: Mean
@@ -21,3 +22,4 @@ observation:
         type: double_counter
         label: waiting jobs time
         unit: ms
+        description: TThe total amount of time that jobs spend in their quiet period.

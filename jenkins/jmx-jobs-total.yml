@@ -10,6 +10,7 @@ observation:
         source: Count
         type: counter
         label: jobs total count
+        description: The total count of jobs
 
       - name: jobs.total.time.mean
         source: Mean
@@ -21,3 +22,4 @@ observation:
         type: double_counter
         label: total jobs time
         unit: ms
+        description: The time jobs spend from entering the build queue to completing building

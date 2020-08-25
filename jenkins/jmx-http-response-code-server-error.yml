@@ -10,3 +10,4 @@ observation:
         source: Count
         type: counter
         label: http response code server error count
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/500 status code

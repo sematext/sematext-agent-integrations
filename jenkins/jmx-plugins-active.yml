@@ -10,3 +10,4 @@ observation:
         source: Value
         type: long_gauge
         label: plugins active count
+        description: The number of plugins in the Jenkins instance that started successfully.

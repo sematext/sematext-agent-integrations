@@ -10,3 +10,4 @@ observation:
         source: Count
         type: counter
         label: jobs scheduled count
+        description: The count at which jobs are scheduled. If a job is already in the queue and an identical request for scheduling the job is received then Jenkins will coalesce the two requests. This metric gives a reasonably pure measure of the load requirements of the Jenkins master as it is unaffected by the number of executors available to the system.

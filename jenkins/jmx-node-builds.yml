@@ -10,6 +10,7 @@ observation:
         source: Count
         type: counter
         label: node builds count
+        description: The number of build nodes available to Jenkins.
 
       - name: nodes.builds.time.mean
         source: Mean
@@ -21,3 +22,4 @@ observation:
         type: double_counter
         label: node builds time
         unit: ms
+        description: The time nodes spend for building.

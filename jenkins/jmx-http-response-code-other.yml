@@ -10,3 +10,4 @@ observation:
         source: Count
         type: counter
         label: http other response code count
+        description: The count at which the Jenkins master Web UI is responding to requests with a non-informational status code that is not in the list - HTTP/200, HTTP/201, HTTP/204, HTTP/304, HTTP/400, HTTP/403, HTTP/404, HTTP/500, or HTTP/503

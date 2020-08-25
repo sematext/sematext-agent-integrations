@@ -10,3 +10,4 @@ observation:
         source: Value
         type: long_gauge
         label: plugins failed count
+        description: The number of plugins in the Jenkins instance that failed to start. A value other than 0 is typically indicative of a potential issue within the Jenkins installation that will either be solved by explicitly disabling the plugin(s) or by resolving the plugin dependency issues.

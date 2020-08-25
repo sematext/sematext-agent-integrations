@@ -10,3 +10,4 @@ observation:
         source: Count
         type: counter
         label: http response code ok count
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/200 status code

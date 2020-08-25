@@ -10,6 +10,7 @@ observation:
         source: Count
         type: counter
         label: jobs buildable count
+        description: The count at which jobs in the build queue enter the buildable state.
 
       - name: jobs.buildable.time.mean
         source: Mean
@@ -21,3 +22,4 @@ observation:
         type: double_counter
         label: buildable jobs time
         unit: ms
+        description: The amount of time jobs in the build queue enter spend in buildable state.

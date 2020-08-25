@@ -10,6 +10,7 @@ observation:
         source: Count
         type: counter
         label: http requests count
+        description: The count of Jenkins master Web UI requests.
 
       - name: http.requests.time.mean
         source: Mean
@@ -21,3 +22,4 @@ observation:
         type: double_counter
         label: http requests time
         unit: ms
+        description: The time Jenkins master spends to process Web UI requests and generating the corresponding responses.

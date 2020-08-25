@@ -10,3 +10,4 @@ observation:
         source: Value
         type: long_gauge
         label: in-use executors
+        description: The number of executors available to Jenkins that are currently in use.

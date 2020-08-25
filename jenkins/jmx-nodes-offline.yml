@@ -10,3 +10,4 @@ observation:
         source: Value
         type: long_gauge
         label: nodes offline count
+        description: The number of build nodes available to Jenkins but currently off-line.
