@@ -12,13 +12,13 @@ observation:
         label: health check count
         description: The number of health checks associated with the HealthCheckRegistry defined within the Metrics Plugin
 
-      - name: health.check.time.mean
+      - name: health.checks.time.mean
         source: Mean
         type: double_gauge
         send: false
 
-      - name: health.check.time
-        source: func:DoubleMultiply(health.checks, health.check.time.mean)
+      - name: health.checks.time
+        source: func:DoubleMultiply(health.checks, health.checks.time.mean)
         type: double_counter
         label: health check time
         unit: ms
