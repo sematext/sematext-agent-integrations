@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Http,class=ResponseCodes,name=BadRequest
 
     metric:
-      - name: http.response.code.bad-request
+      - name: http.response.code.bad_request
         source: Count
         type: counter
         label: http response code bad request count

@@ -6,7 +6,7 @@ observation:
     objectName: io.jenkins:type=Http,class=ResponseCodes,name=ServerError
 
     metric:
-      - name: http.response.code.server-error
+      - name: http.response.code.server_error
         source: Count
         type: counter
         label: http response code server error count
