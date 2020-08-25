@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-queue-blocked
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Queue,name=Blocked
+
+    metric:
+      - name: queue.blocked
+        source: Value
+        type: long_gauge
+        label: queue blocked count
+        description: The number of jobs that are in the Jenkins build queue and currently in the blocked state.

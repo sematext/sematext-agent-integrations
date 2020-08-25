@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-plugins-with-update
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Plugins,name=WithUpdate
+
+    metric:
+      - name: plugins.with_update
+        source: Value
+        type: long_gauge
+        label: plugins with update count
+        description: The number of plugins in the Jenkins instance that have an newer version reported as available in the current Jenkins update center metadata held by Jenkins. This value is not indicative of an issue with Jenkins but high values can be used as a trigger to review the plugins with updates with a view to seeing whether those updates potentially contain fixes for issues that could be affecting your Jenkins instance.

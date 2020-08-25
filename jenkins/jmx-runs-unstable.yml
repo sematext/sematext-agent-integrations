@@ -1,0 +1,12 @@
+type: jmx
+
+observation:
+  - name: jenkins-runs-unstable-count
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Runs,name=Unstable
+
+    metric:
+      - name: runs.unstable
+        source: Count
+        type: counter
+        label: runs unstable count

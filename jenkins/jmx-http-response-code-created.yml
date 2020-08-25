@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-created
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=Created
+
+    metric:
+      - name: http.response.code.created
+        source: Count
+        type: counter
+        label: http response code created count
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/201 status code.

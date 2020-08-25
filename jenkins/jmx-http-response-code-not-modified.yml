@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-not-modified
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=NotModified
+
+    metric:
+      - name: http.response.code.not_modified
+        source: Count
+        type: counter
+        label: http response code not modified count
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/304 status code.

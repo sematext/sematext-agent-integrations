@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-executors-in-use
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Executor,name=In-use
+
+    metric:
+      - name: executors.in_use
+        source: Value
+        type: long_gauge
+        label: in-use executors
+        description: The number of executors available to Jenkins that are currently in use.

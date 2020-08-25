@@ -1,0 +1,25 @@
+type: jmx
+
+observation:
+  - name: jenkins-job-total
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Job,name=Total
+
+    metric:
+      - name: jobs.total
+        source: Count
+        type: counter
+        label: jobs total count
+        description: The total count of jobs.
+
+      - name: jobs.total.time.mean
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: jobs.total.time
+        source: func:DoubleMultiply(jobs.total, jobs.total.time.mean)
+        type: double_counter
+        label: total jobs time
+        unit: ms
+        description: The time jobs spend from entering the build queue to completing building.

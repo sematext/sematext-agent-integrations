@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-server-unavailable
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=ServiceUnavailable
+
+    metric:
+      - name: http.response.code.server_unavailable
+        source: Count
+        type: counter
+        label: http response code server unavailable count
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/503 status code.

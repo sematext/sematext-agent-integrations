@@ -1,0 +1,23 @@
+type: jmx
+
+observation:
+  - name: jenkins-task-buildable
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Task,name=Buildable
+
+    metric:
+      - name: tasks.buildable
+        source: Count
+        type: counter
+        label: tasks buildable count
+
+      - name: tasks.buildable.time.mean
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: tasks.buildable.time
+        source: func:DoubleMultiply(tasks.buildable, tasks.buildable.time.mean)
+        type: double_counter
+        label: buildable tasks time
+        unit: ms

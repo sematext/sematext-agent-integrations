@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-no-content
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=NoContent
+
+    metric:
+      - name: http.response.code.no_content
+        source: Count
+        type: counter
+        label: http response code no content count
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/204 status code.

@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-executors-free
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Executor,name=Free
+
+    metric:
+      - name: executors.free
+        source: Value
+        type: long_gauge
+        label: free executors
+        description: The number of executors available to Jenkins that are not currently in use.

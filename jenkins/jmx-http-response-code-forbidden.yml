@@ -1,0 +1,13 @@
+type: jmx
+
+observation:
+  - name: jenkins-http-codes-forbidden
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Http,class=ResponseCodes,name=Forbidden
+
+    metric:
+      - name: http.response.code.forbidden
+        source: Count
+        type: counter
+        label: http response code forbidden count
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/403 status code.

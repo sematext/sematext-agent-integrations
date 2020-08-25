@@ -1,0 +1,25 @@
+type: jmx
+
+observation:
+  - name: jenkins-health-check
+    metricNamespace: jenkins
+    objectName: io.jenkins:type=Health-check
+
+    metric:
+      - name: health.checks
+        source: Count
+        type: counter
+        label: health check count
+        description: The number of health checks associated with the HealthCheckRegistry defined within the Metrics Plugin.
+
+      - name: health.checks.time.mean
+        source: Mean
+        type: double_gauge
+        send: false
+
+      - name: health.checks.time
+        source: func:DoubleMultiply(health.checks, health.checks.time.mean)
+        type: double_counter
+        label: health check time
+        unit: ms
+        description: The duration of all health check runs.
