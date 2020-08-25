@@ -10,4 +10,4 @@ observation:
         source: Count
         type: counter
         label: http response code forbidden count
-        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/403 status code
+        description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/403 status code.

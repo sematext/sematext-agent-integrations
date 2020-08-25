@@ -10,4 +10,4 @@ observation:
         source: Value
         type: double_gauge
         label: health check score
-        description: The ratio of health checks reporting success to the total number of health checks. Larger values indicate increasing health as measured by the health checks. (This is a value between 0 and 1 inclusive)
+        description: The ratio of health checks reporting success to the total number of health checks. Larger values indicate increasing health as measured by the health checks. (This is a value between 0 and 1 inclusive).

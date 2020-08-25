@@ -10,4 +10,4 @@ observation:
         source: Count
         type: long_gauge
         label: http active requests
-        description: The number of currently active requests against the Jenkins master Web UI
+        description: The number of currently active requests against the Jenkins master Web UI.
