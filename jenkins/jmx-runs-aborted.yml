@@ -9,4 +9,4 @@ observation:
       - name: runs.aborted
         source: Count
         type: counter
-        label: runs aborted count
+        label: runs aborted

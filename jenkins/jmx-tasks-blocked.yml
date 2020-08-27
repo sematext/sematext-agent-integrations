@@ -9,7 +9,7 @@ observation:
       - name: tasks.blocked
         source: Count
         type: counter
-        label: tasks blocked count
+        label: tasks blocked
 
       - name: tasks.blocked.time.mean
         source: Mean

@@ -9,4 +9,4 @@ observation:
       - name: runs.unstable
         source: Count
         type: counter
-        label: runs unstable count
+        label: runs unstable

@@ -9,4 +9,4 @@ observation:
       - name: tasks.scheduled
         source: Count
         type: counter
-        label: tasks scheduled count
+        label: tasks scheduled

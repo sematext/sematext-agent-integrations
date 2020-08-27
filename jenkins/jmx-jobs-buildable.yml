@@ -9,7 +9,7 @@ observation:
       - name: jobs.buildable
         source: Count
         type: counter
-        label: jobs buildable count
+        label: jobs buildable
         description: The count at which jobs in the build queue enter the buildable state.
 
       - name: jobs.buildable.time.mean

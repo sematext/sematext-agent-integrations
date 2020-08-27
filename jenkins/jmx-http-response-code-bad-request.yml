@@ -9,5 +9,5 @@ observation:
       - name: http.response.code.bad_request
         source: Count
         type: counter
-        label: http response code bad request count
+        label: http responses with code bad request
         description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/400 status code.

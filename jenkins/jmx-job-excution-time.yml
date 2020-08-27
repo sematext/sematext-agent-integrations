@@ -9,7 +9,7 @@ observation:
       - name: jobs
         source: Count
         type: counter
-        label: jobs count
+        label: jobs
 
       - name: jobs.execution.time.mean
         source: Mean

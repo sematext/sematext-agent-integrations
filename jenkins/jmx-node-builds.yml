@@ -9,7 +9,7 @@ observation:
       - name: nodes.builds
         source: Count
         type: counter
-        label: node builds count
+        label: node builds
         description: The number of build nodes available to Jenkins.
 
       - name: nodes.builds.time.mean

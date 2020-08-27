@@ -9,7 +9,7 @@ observation:
       - name: jobs.queuing
         source: Count
         type: counter
-        label: jobs queuing count
+        label: jobs queuing
         description: The count of jobs which are queued.
 
       - name: jobs.queuing.time.mean

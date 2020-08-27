@@ -9,4 +9,4 @@ observation:
       - name: runs.failure
         source: Count
         type: counter
-        label: runs failure count
+        label: runs failure

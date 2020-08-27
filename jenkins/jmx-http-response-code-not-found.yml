@@ -9,5 +9,5 @@ observation:
       - name: http.response.code.not_found
         source: Count
         type: counter
-        label: http response code not found count
+        label: http responses with code not found
         description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/404 status code.

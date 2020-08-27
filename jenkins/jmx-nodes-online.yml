@@ -9,5 +9,5 @@ observation:
       - name: nodes.online
         source: Value
         type: long_gauge
-        label: nodes online count
+        label: nodes online
         description: The number of build nodes available to Jenkins and currently on-line.

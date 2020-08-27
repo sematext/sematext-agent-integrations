@@ -9,5 +9,5 @@ observation:
       - name: queue.blocked
         source: Value
         type: long_gauge
-        label: queue blocked count
+        label: queue blocked
         description: The number of jobs that are in the Jenkins build queue and currently in the blocked state.

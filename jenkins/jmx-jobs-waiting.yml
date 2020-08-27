@@ -9,7 +9,7 @@ observation:
       - name: jobs.waiting
         source: Count
         type: counter
-        label: jobs waiting count
+        label: jobs waiting
         description: The count at which jobs enter the quiet period.
 
       - name: jobs.waiting.time.mean

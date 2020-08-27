@@ -9,7 +9,7 @@ observation:
       - name: tasks.buildable
         source: Count
         type: counter
-        label: tasks buildable count
+        label: tasks buildable
 
       - name: tasks.buildable.time.mean
         source: Mean

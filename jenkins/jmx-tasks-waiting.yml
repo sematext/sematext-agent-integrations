@@ -9,7 +9,7 @@ observation:
       - name: tasks.waiting
         source: Count
         type: counter
-        label: tasks waiting count
+        label: tasks waiting
 
       - name: tasks.waiting.time.mean
         source: Mean

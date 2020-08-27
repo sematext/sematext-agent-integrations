@@ -9,4 +9,4 @@ observation:
       - name: runs.not_built
         source: Count
         type: counter
-        label: runs not built count
+        label: runs not built

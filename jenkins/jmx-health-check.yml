@@ -9,7 +9,7 @@ observation:
       - name: health.checks
         source: Count
         type: counter
-        label: health check count
+        label: health checks
         description: The number of health checks associated with the HealthCheckRegistry defined within the Metrics Plugin.
 
       - name: health.checks.time.mean

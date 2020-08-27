@@ -9,7 +9,7 @@ observation:
       - name: http.requests
         source: Count
         type: counter
-        label: http requests count
+        label: http requests
         description: The count of Jenkins master Web UI requests.
 
       - name: http.requests.time.mean

@@ -9,7 +9,7 @@ observation:
       - name: tasks.execution
         source: Count
         type: counter
-        label: tasks execution count
+        label: tasks execution
 
       - name: tasks.execution.time.mean
         source: Mean

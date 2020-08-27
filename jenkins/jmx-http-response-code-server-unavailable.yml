@@ -9,5 +9,5 @@ observation:
       - name: http.response.code.server_unavailable
         source: Count
         type: counter
-        label: http response code server unavailable count
+        label: http responses with code server unavailable
         description: The count at which the Jenkins master Web UI is responding to requests with a HTTP/503 status code.
