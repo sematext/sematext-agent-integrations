@@ -82,6 +82,11 @@ observation:
         type: long_gauge
         label: Distributed Sends
         description: Number of connections sending data, that was inserted to Distributed tables, to remote servers. Both synchronous and asynchronous mode.
+      - name: distributed.insert.files
+        source: DistributedFilesToInsert
+        type: long_gauge
+        label: Distributed files to insert
+        description: Number of pending files to process for asynchronous insertion into Distributed tables. Number of files for every shard is summed.
       - name: zk.leader.election
         source: LeaderElection
         type: long_gauge
