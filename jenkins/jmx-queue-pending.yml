@@ -10,4 +10,4 @@ observation:
         source: Value
         type: long_gauge
         label: queue pending
-        description: The number of jobs that are in the Jenkins build queue and currently in the blocked state.
+        description: The number of jobs that are in the Jenkins build queue and currently in the pending state.
