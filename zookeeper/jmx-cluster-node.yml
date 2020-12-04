@@ -14,7 +14,7 @@ observation:
 
       - name: request.latency.avg
         source: AvgRequestLatency
-        type: long_gauge
+        type: gauge
         label: avg req latency
         description: Avg request latency
         unit: ms
