@@ -13,11 +13,39 @@ observation:
         description: jvm heap used memory
         unit: bytes
 
+      - name: heap.init
+        source: complex:HeapMemoryUsage.init
+        type: gauge
+        label: jvm heap init
+        description: jvm heap init memory
+        unit: bytes
+
+      - name: heap.committed
+        source: complex:HeapMemoryUsage.committed
+        type: gauge
+        label: jvm heap committed
+        description: jvm heap committed memory
+        unit: bytes
+
       - name: nonheap.used
         source: complex:NonHeapMemoryUsage.used
         type: gauge
         label: jvm non-heap used
         description: jvm non-heap used memory
+        unit: bytes
+
+      - name: nonheap.init
+        source: complex:NonHeapMemoryUsage.init
+        type: gauge
+        label: jvm non-heap init
+        description: jvm non-heap init memory
+        unit: bytes
+
+      - name: nonheap.committed
+        source: complex:NonHeapMemoryUsage.committed
+        type: gauge
+        label: jvm non-heap committed
+        description: jvm non-heap committed memory
         unit: bytes
 
 
