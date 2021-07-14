@@ -54,6 +54,28 @@ observation:
         description: fetch latency on primary shards
         unit: ms
 
+      - name: scroll.count.primaries
+        source: scroll_total
+        type: counter
+        agentAggregation: SUM
+        label: scroll count (prim)
+        description: scroll count on primary shards
+
+      - name: scroll.time.primaries
+        source: scroll_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: scroll latency (prim)
+        description: scroll latency on primary shards
+        unit: ms
+
+      - name: search.opencontexts.primaries
+        source: open_contexts
+        type: long_gauge
+        agentAggregation: MAX
+        label: search open contexts (prim)
+        description: open search contexts on primary shards
+
       # here we define avg latency metric which will be the base for percentiles calculation (note pctls="99,95,50" attribute).
       # Metric query.latency.primaries.avg will be calculated before agent aggregates all values for the same
       # index into single value (using AVG function). Resulting avg value will be used as an input into percentiles calculation.
@@ -129,6 +151,28 @@ observation:
         label: fetch latency (all)
         description: fetch latency on all (primary and replica) shards
         unit: ms
+
+      - name: scroll.count.total
+        source: scroll_total
+        type: counter
+        agentAggregation: SUM
+        label: scroll count (all)
+        description: scroll count on all (primary and replica) shards
+
+      - name: scroll.time.total
+        source: scroll_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: scroll latency (all)
+        description: scroll latency on all (primary and replica) shards
+        unit: ms
+
+      - name: search.opencontexts.total
+        source: open_contexts
+        type: long_gauge
+        agentAggregation: MAX
+        label: search open contexts (all)
+        description: open search contexts on all (primary and replica) shards
 
       - name: query.latency.total.avg
         source: func:DoubleDivide(query.latency.time.total,query.count.total)
