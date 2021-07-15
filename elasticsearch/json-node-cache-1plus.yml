@@ -94,6 +94,60 @@ observation:
         label: filter/query cache count
         description: Filter/query cache count of elements
 
+      - name: cache.filter.hits
+        source: hit_count
+        type: counter
+        label: filter/query cache hit count
+        description: Number of requests hitting the filter/query cache
+
+      - name: cache.filter.misses
+        source: miss_count
+        type: counter
+        label: filter/query cache miss count
+        description: Number of requests missing the filter/query cache
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: cacheStats_nodeCache_request
+    metricNamespace: es
+    path: $.nodes.${nodeId}.indices.request_cache
+
+    metric:
+      - name: cache.request.evicted
+        source: evictions
+        type: counter
+        label: request cache evictions
+        description: Request cache evictions
+
+      - name: cache.request.size
+        source: memory_size_in_bytes
+        type: long_gauge
+        label: request cache size
+        description: Request cache size
+        unit: bytes
+
+      - name: cache.request.hits
+        source: hit_count
+        type: counter
+        label: request cache hit count
+        description: Number of requests hitting the request cache
+
+      - name: cache.request.misses
+        source: miss_count
+        type: counter
+        label: request cache miss count
+        description: Number of requests missing the request cache
+
     tag:
       - name: es.node.id
         value: ${nodeId}
