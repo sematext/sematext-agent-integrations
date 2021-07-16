@@ -1,0 +1,130 @@
+type: json
+data:
+  # use the same URL as other index-related collector configs which enables caching of response data and
+  # reduced overhead SPM JSON-based monitor has on the system
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery?level=shards&format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  # async="true" - because this particular call can be very slow in some ES setups, no point in blocking everything with it
+  async: true
+  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
+  jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 2-*
+require:
+  - className: com.sematext.spm.client.es.IsDataNodeCheck
+    values: true
+
+observation:
+  - name: segmentStats_segments_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].segments
+
+    metric:
+      - name: segments.count.total
+        source: count
+        type: long_gauge
+        agentAggregation: SUM
+        label: segments count
+        description: number of segments
+
+      - name: segments.memory.total
+        source: memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: segments memory
+        description: total memory for segment-related data structures
+        unit: bytes
+
+      - name: segments.memory.terms
+        source: terms_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: terms memory
+        description: memory used by the terms dictionary
+        unit: bytes
+
+      - name: segments.memory.storedFields
+        source: stored_fields_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: stored fields memory
+        description: memory used by stored fields
+        unit: bytes
+
+      - name: segments.memory.termVectors
+        source: term_vectors_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: term vectors memory
+        description: memory used by term vectors
+        unit: bytes
+
+      - name: segments.memory.norms
+        source: norms_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: norms memory
+        description: memory used by (length) norms
+        unit: bytes
+
+      - name: segments.memory.points
+        source: points_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: points memory
+        description: memory used by point fields (includes numeric, date, geo)
+        unit: bytes
+
+      - name: segments.memory.docValues
+        source: doc_values_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: doc values memory
+        description: memory used by doc values
+        unit: bytes
+
+      - name: segments.memory.indexWriter
+        source: index_writer_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: indexing buffer memory
+        description: memory used by the IndexWriter
+        unit: bytes
+
+      - name: segments.memory.versionMap
+        source: version_map_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: version map memory
+        description: memory used by the version map
+        unit: bytes
+
+      - name: segments.memory.fixedBitSet
+        source: fixed_bit_set_memory_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: fixed bitset memory
+        description: memory used by the fixed bitset that speeds up nested queries/aggregations
+        unit: bytes
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
