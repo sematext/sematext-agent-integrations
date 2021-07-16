@@ -2,7 +2,7 @@ type: json
 data:
   # use the same URL as other index-related collector configs which enables caching of response data and
   # reduced overhead SPM JSON-based monitor has on the system
-  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery?level=shards&format=smile
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery,completion?level=shards&format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
@@ -277,6 +277,37 @@ observation:
         label: recovery throttle time
         description: time during which recovery was throttled (due to indices.recovery.max_bytes_per_sec limit)
         unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: indexStats_completion
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].completion
+
+    metric:
+      - name: index.completion.size
+        source: size_in_bytes
+        type: long_gauge
+        agentAggregation: SUM
+        label: completion memory
+        description: memory used by the Completion Suggester
+        unit: bytes
 
     tag:
       - name: es.cluster
