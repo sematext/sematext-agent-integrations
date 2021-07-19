@@ -7,26 +7,31 @@ data:
   smileFormat: true
 require:
   - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 1-*
+    values: 5-*
 
 observation:
-  - name: jvmGcStats_collectors
-    metricNamespace: jvm
-    path: $.nodes.${nodeId}.jvm.gc.collectors.${gcName}
+  - name: io_stats
+    metricNamespace: es
+    path: $.nodes.${nodeId}.script
 
     metric:
-      - name: gc.collection.count
-        source: collection_count
+      - name: script.compilations.total
+        source: compilations
         type: counter
-        label: gc collection count
-        description: count of GC collections
+        label: script compilations
+        description: script compilations (use params in scripts to reduce them)
 
-      - name: gc.collection.time
-        source: collection_time_in_millis
+      - name: script.cache.evictions
+        source: cache_evictions
         type: counter
-        label: gc collection time
-        description: duration of GC collections
-        unit: ms
+        label: script cache evictions
+        description: script cache evictions
+
+      - name: script.compilations.limitTriggered
+        source: compilation_limit_triggered
+        type: counter
+        label: script compilations limit triggered
+        description: script compilations circuit breaker triggered (see script.max_compilations_rate setting)
 
     tag:
       - name: es.node.id
@@ -34,9 +39,6 @@ observation:
 
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
-
-      - name: jvm.gc
-        value: ${gcName}
 
     accept:
       - name: nodeId
