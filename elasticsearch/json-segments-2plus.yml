@@ -2,7 +2,7 @@ type: json
 data:
   # use the same URL as other index-related collector configs which enables caching of response data and
   # reduced overhead SPM JSON-based monitor has on the system
-  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery?level=shards&format=smile
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery,completion,translog?level=shards&format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}

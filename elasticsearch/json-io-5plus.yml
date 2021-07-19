@@ -7,25 +7,25 @@ data:
   smileFormat: true
 require:
   - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 1-*
+    values: 5-*
 
 observation:
-  - name: jvmThreadPoolStats
-    metricNamespace: jvm
-    path: $.nodes.${nodeId}.jvm.threads
+  - name: io_stats
+    metricNamespace: es
+    path: $.nodes.${nodeId}.fs.io_stats.total
 
     metric:
-      - name: threads
-        source: count
-        type: gauge
-        label: thread count
-        description: current jvm thread count
+      - name: disk.io.operations.read
+        source: read_operations
+        type: counter
+        label: read ops
+        description: disk IO read operations
 
-      - name: threads.peak
-        source: peak_count
-        type: gauge
-        label: peak thread count
-        description: peak jvm thread count
+      - name: disk.io.operations.write
+        source: write_operations
+        type: counter
+        label: write ops
+        description: disk IO write operations
 
     tag:
       - name: es.node.id
