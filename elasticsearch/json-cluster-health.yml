@@ -54,6 +54,19 @@ observation:
         label: unassigned shards
         description: Number of currently unassigned shards
 
+      - name: cluster.health.pendingTasks.total
+        source: number_of_pending_tasks
+        type: long_gauge
+        label: pending tasks
+        description: Number of currently pending tasks in master's queue
+
+      - name: cluster.health.pendingTasks.maxQueueTime
+        source: task_max_waiting_in_queue_millis
+        type: long_gauge
+        label: pending tasks max waiting time
+        description: Maximum time for a task in master's queue
+        unit: ms
+
     tag:
       - name: es.cluster
         value: json:smile:/_cluster/health?format=smile $.cluster_name
