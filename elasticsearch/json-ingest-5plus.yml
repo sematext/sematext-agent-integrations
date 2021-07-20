@@ -10,32 +10,36 @@ require:
     values: 5-*
 
 observation:
-  - name: io_stats
+  - name: ingest_stats
     metricNamespace: es
-    path: $.nodes.${nodeId}.script
+    path: $.nodes.${nodeId}.ingest.pipelines.${pipeline}
 
     metric:
-      - name: script.compilations.total
-        source: compilations
+      - name: ingest.count.total
+        source: count
         type: counter
-        label: script compilations
-        description: script compilations (use params in scripts to reduce them)
+        label: ingest count
+        description: number calls to this pipeline
 
-      - name: script.cache.evictions
-        source: cache_evictions
+      - name: ingest.count.errors
+        source: failed
         type: counter
-        label: script cache evictions
-        description: script cache evictions
+        label: ingest failures
+        description: number failed calls to this pipeline
 
-      - name: script.compilations.limitTriggered
-        source: compilation_limit_triggered
+      - name: ingest.time
+        source: time_in_millis
         type: counter
-        label: script compilations limit triggered
-        description: script compilations circuit breaker triggered (see script.max_compilations_rate setting)
+        label: ingest time
+        description: time spent in this pipeline
+        unit: ms
 
     tag:
       - name: es.node.id
         value: ${nodeId}
+
+      - name: es.ingest.pipeline
+        value: ${pipeline}
 
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
@@ -44,3 +48,4 @@ observation:
       - name: nodeId
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
 
+        
