@@ -1,0 +1,65 @@
+type: json
+data:
+  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 6-*
+
+observation:
+  - name: adaptive_replica_selection
+    metricNamespace: es
+    path: $.nodes.${nodeId}.adaptive_selection.${remoteNodeId}
+
+    metric:
+      - name: adaptiveReplicaSelection.searches.outgoing
+        source: outgoing_searches
+        type: long_gauge
+        label: outgoing searches
+        description: outgoing searches
+
+      - name: adaptiveReplicaSelection.queue.size.avg
+        source: avg_queue_size
+        type: double_gauge
+        label: average queue size
+        description: average queue size
+
+      - name: adaptiveReplicaSelection.service.time.avg
+        source: avg_service_time_ns
+        type: long_gauge
+        label: average service time
+        description: average service time
+        unit: ns
+
+      - name: adaptiveReplicaSelection.response.time.avg
+        source: avg_response_time_ns
+        type: long_gauge
+        label: average response time
+        description: average response time
+        unit: ns
+
+      - name: adaptiveReplicaSelection.rank
+        source: rank
+        type: double_gauge
+        label: rank
+        description: rank
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.remote.node.id
+        value: ${remoteNodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.remote.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${remoteNodeId}.name
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
