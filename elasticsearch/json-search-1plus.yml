@@ -87,6 +87,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.index
         value: ${indexName}
 
@@ -148,6 +151,9 @@ observation:
 
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.index
         value: ${indexName}
@@ -217,6 +223,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.index
         value: ${indexName}
 
@@ -284,6 +293,9 @@ observation:
 
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.index
         value: ${indexName}

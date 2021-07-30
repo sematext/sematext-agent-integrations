@@ -42,6 +42,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
     accept:
       - name: nodeId
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
@@ -78,6 +81,9 @@ observation:
 
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
     accept:
       - name: nodeId
