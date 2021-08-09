@@ -38,7 +38,6 @@ observation:
       - name: circuitBreaker.inFlightRequests.tripped
         source: tripped
         type: counter
-        agentAggregation: SUM
         label: inFlightRequests tripped
         description: in-flight requests circuit breaker tripped
 
@@ -82,7 +81,6 @@ observation:
       - name: circuitBreaker.parent.tripped
         source: tripped
         type: counter
-        agentAggregation: SUM
         label: parent tripped
         description: parent circuit breaker tripped
 
@@ -126,7 +124,6 @@ observation:
       - name: circuitBreaker.fieldData.tripped
         source: tripped
         type: counter
-        agentAggregation: SUM
         label: fieldData tripped
         description: fieldData circuit breaker tripped
 
@@ -170,7 +167,6 @@ observation:
       - name: circuitBreaker.request.tripped
         source: tripped
         type: counter
-        agentAggregation: SUM
         label: request tripped
         description: request circuit breaker tripped
 
