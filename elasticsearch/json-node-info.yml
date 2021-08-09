@@ -15,7 +15,7 @@ observation:
     path: $.nodes.${nodeId}.os
 
     metric:
-      - name: os.cpus.allocated
+      - name: cpu.allocated.count
         source: allocated_processors
         type: long_gauge
         label: number of processors
