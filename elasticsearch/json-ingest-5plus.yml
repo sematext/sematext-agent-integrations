@@ -15,17 +15,17 @@ observation:
     path: $.nodes.${nodeId}.ingest.pipelines.${pipeline}
 
     metric:
-      - name: ingest.count.total
+      - name: ingest.calls.total
         source: count
         type: counter
-        label: ingest count
-        description: number calls to this pipeline
+        label: ingest calls
+        description: number of calls to this pipeline
 
-      - name: ingest.count.errors
+      - name: ingest.calls.errors
         source: failed
         type: counter
         label: ingest failures
-        description: number failed calls to this pipeline
+        description: number of failed calls to this pipeline
 
       - name: ingest.time
         source: time_in_millis
