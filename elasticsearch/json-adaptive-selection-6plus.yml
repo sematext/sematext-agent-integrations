@@ -19,33 +19,33 @@ observation:
         source: outgoing_searches
         type: long_gauge
         label: outgoing searches
-        description: outgoing searches
+        description: searches from the monitored node to the remote node
 
       - name: adaptiveReplicaSelection.queue.size.avg
         source: avg_queue_size
         type: double_gauge
         label: average queue size
-        description: average queue size
+        description: exponentially weighted moving average queue size for searches on the remote node
 
       - name: adaptiveReplicaSelection.service.time.avg
         source: avg_service_time_ns
         type: long_gauge
         label: average service time
-        description: average service time
+        description: exponentially weighted moving average task execution time on the remote node
         unit: ns
 
       - name: adaptiveReplicaSelection.response.time.avg
         source: avg_response_time_ns
         type: long_gauge
         label: average response time
-        description: average response time
+        description: exponentially weighted moving average response time on the remote node
         unit: ns
 
       - name: adaptiveReplicaSelection.rank
         source: rank
         type: double_gauge
         label: rank
-        description: rank
+        description: rank of the remote node used for replica selection
 
     tag:
       - name: es.node.id
