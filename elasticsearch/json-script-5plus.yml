@@ -10,7 +10,7 @@ require:
     values: 5-*
 
 observation:
-  - name: io_stats
+  - name: script_stats
     metricNamespace: es
     path: $.nodes.${nodeId}.script
 
