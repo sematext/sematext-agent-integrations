@@ -404,4 +404,3 @@ observation:
     accept:
       - name: nodeId
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
-
