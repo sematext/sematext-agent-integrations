@@ -76,7 +76,7 @@ observation:
         label: scroll count (prim)
         description: scroll count on primary shards
 
-      - name: scroll.time.primaries
+      - name: scroll.latency.time.primaries
         source: scroll_time_in_millis
         type: counter
         agentAggregation: SUM
@@ -189,7 +189,7 @@ observation:
         label: scroll count (all)
         description: scroll count on all (primary and replica) shards
 
-      - name: scroll.time.total
+      - name: scroll.latency.time.total
         source: scroll_time_in_millis
         type: counter
         agentAggregation: SUM
