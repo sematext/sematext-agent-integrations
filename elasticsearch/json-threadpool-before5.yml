@@ -72,6 +72,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: bulk
 
@@ -145,6 +148,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: flush
 
@@ -215,6 +221,9 @@ observation:
     tag:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.thread.pool
         value: generic
@@ -287,6 +296,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: get
 
@@ -357,6 +369,9 @@ observation:
     tag:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.thread.pool
         value: index
@@ -429,6 +444,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: management
 
@@ -499,6 +517,9 @@ observation:
     tag:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.thread.pool
         value: merge
@@ -571,6 +592,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: optimize
 
@@ -641,6 +665,9 @@ observation:
     tag:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.thread.pool
         value: percolate
@@ -713,6 +740,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: refresh
 
@@ -783,6 +813,9 @@ observation:
     tag:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.thread.pool
         value: search
@@ -855,6 +888,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: snapshot
 
@@ -926,6 +962,9 @@ observation:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
 
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
       - name: es.thread.pool
         value: suggest
 
@@ -996,6 +1035,9 @@ observation:
     tag:
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
 
       - name: es.thread.pool
         value: warmer
