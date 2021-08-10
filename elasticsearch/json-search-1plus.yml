@@ -87,7 +87,7 @@ observation:
       - name: search.opencontexts.primaries
         source: open_contexts
         type: long_gauge
-        agentAggregation: MAX
+        agentAggregation: SUM
         label: search open contexts (prim)
         description: open search contexts on primary shards
 
@@ -200,7 +200,7 @@ observation:
       - name: search.opencontexts.total
         source: open_contexts
         type: long_gauge
-        agentAggregation: MAX
+        agentAggregation: SUM
         label: search open contexts (all)
         description: open search contexts on all (primary and replica) shards
 
