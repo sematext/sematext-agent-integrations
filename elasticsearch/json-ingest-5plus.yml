@@ -7,29 +7,39 @@ data:
   smileFormat: true
 require:
   - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 1-*
+    values: 5-*
 
 observation:
-  - name: jvmOsStats
-    metricNamespace: jvm
-    path: $.nodes.${nodeId}.process
+  - name: ingest_stats
+    metricNamespace: es
+    path: $.nodes.${nodeId}.ingest.pipelines.${pipeline}
 
     metric:
-      - name: files.open
-        source: open_file_descriptors
-        type: gauge
-        label: open files
-        description: jvm currently open files
+      - name: ingest.calls.total
+        source: count
+        type: counter
+        label: ingest calls
+        description: number of calls to this pipeline
 
-      - name: files.max
-        source: max_file_descriptors
-        type: gauge
-        label: max open files
-        description: jvm max open files limit
+      - name: ingest.calls.errors
+        source: failed
+        type: counter
+        label: ingest failures
+        description: number of failed calls to this pipeline
+
+      - name: ingest.time
+        source: time_in_millis
+        type: counter
+        label: ingest time
+        description: time spent in this pipeline
+        unit: ms
 
     tag:
       - name: es.node.id
         value: ${nodeId}
+
+      - name: es.ingest.pipeline
+        value: ${pipeline}
 
       - name: es.node
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
@@ -41,3 +51,4 @@ observation:
       - name: nodeId
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
 
+        

@@ -1,6 +1,6 @@
 type: json
 data:
-  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process?format=smile
+  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}

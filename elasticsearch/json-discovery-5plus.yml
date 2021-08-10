@@ -7,25 +7,31 @@ data:
   smileFormat: true
 require:
   - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 1-*
+    values: 5-*
 
 observation:
-  - name: jvmOsStats
-    metricNamespace: jvm
-    path: $.nodes.${nodeId}.process
+  - name: published_cluster_states
+    metricNamespace: es
+    path: $.nodes.${nodeId}.discovery.published_cluster_states
 
     metric:
-      - name: files.open
-        source: open_file_descriptors
-        type: gauge
-        label: open files
-        description: jvm currently open files
+      - name: cluster.state.published.full
+        source: full_states
+        type: counter
+        label: full cluster state updates
+        description: full cluster state updates published
 
-      - name: files.max
-        source: max_file_descriptors
-        type: gauge
-        label: max open files
-        description: jvm max open files limit
+      - name: cluster.state.published.diff.incompatible
+        source: incompatible_diffs
+        type: counter
+        label: cluster state incompatible diff updates
+        description: cluster state incompatible diff updates published
+
+      - name: cluster.state.published.diff.compatible
+        source: compatible_diffs
+        type: counter
+        label: cluster state compatible diff updates
+        description: cluster state compatible diff updates published
 
     tag:
       - name: es.node.id

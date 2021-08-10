@@ -1,31 +1,25 @@
 type: json
 data:
-  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  url: /_nodes/_local/os?format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
 require:
   - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 1-*
+    values: 5-*
 
 observation:
-  - name: jvmOsStats
-    metricNamespace: jvm
-    path: $.nodes.${nodeId}.process
+  - name: node_os_stats
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os
 
     metric:
-      - name: files.open
-        source: open_file_descriptors
-        type: gauge
-        label: open files
-        description: jvm currently open files
-
-      - name: files.max
-        source: max_file_descriptors
-        type: gauge
-        label: max open files
-        description: jvm max open files limit
+      - name: cpu.allocated.count
+        source: allocated_processors
+        type: long_gauge
+        label: number of processors
+        description: number of processors allocated to the Elasticsearch process
 
     tag:
       - name: es.node.id

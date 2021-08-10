@@ -2,7 +2,7 @@ type: json
 data:
   # use the same URL as other index-related collector configs which enables caching of response data and
   # reduced overhead SPM JSON-based monitor has on the system
-  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get?level=shards&format=smile
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery,completion,translog?level=shards&format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
@@ -53,6 +53,43 @@ observation:
         label: fetch latency (prim)
         description: fetch latency on primary shards
         unit: ms
+
+      - name: suggest.count.primaries
+        source: suggest_total
+        type: counter
+        agentAggregation: SUM
+        label: suggest count (prim)
+        description: suggest count on primary shards
+
+      - name: suggest.latency.time.primaries
+        source: suggest_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: suggest latency (prim)
+        description: suggest latency on primary shards
+        unit: ms
+
+      - name: scroll.count.primaries
+        source: scroll_total
+        type: counter
+        agentAggregation: SUM
+        label: scroll count (prim)
+        description: scroll count on primary shards
+
+      - name: scroll.latency.time.primaries
+        source: scroll_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: scroll latency (prim)
+        description: scroll latency on primary shards
+        unit: ms
+
+      - name: search.opencontexts.primaries
+        source: open_contexts
+        type: long_gauge
+        agentAggregation: SUM
+        label: search open contexts (prim)
+        description: open search contexts on primary shards
 
       # here we define avg latency metric which will be the base for percentiles calculation (note pctls="99,95,50" attribute).
       # Metric query.latency.primaries.avg will be calculated before agent aggregates all values for the same
@@ -132,6 +169,43 @@ observation:
         label: fetch latency (all)
         description: fetch latency on all (primary and replica) shards
         unit: ms
+
+      - name: suggest.count.total
+        source: suggest_total
+        type: counter
+        agentAggregation: SUM
+        label: suggest count (all)
+        description: suggest count on all (primary and replica) shards
+
+      - name: suggest.latency.time.total
+        source: suggest_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: suggest latency (all)
+        description: suggest latency on all (primary and replica) shards
+        unit: ms
+
+      - name: scroll.count.total
+        source: scroll_total
+        type: counter
+        agentAggregation: SUM
+        label: scroll count (all)
+        description: scroll count on all (primary and replica) shards
+
+      - name: scroll.latency.time.total
+        source: scroll_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: scroll latency (all)
+        description: scroll latency on all (primary and replica) shards
+        unit: ms
+
+      - name: search.opencontexts.total
+        source: open_contexts
+        type: long_gauge
+        agentAggregation: SUM
+        label: search open contexts (all)
+        description: open search contexts on all (primary and replica) shards
 
       - name: query.latency.total.avg
         source: func:DoubleDivide(query.latency.time.total,query.count.total)
@@ -303,4 +377,5 @@ observation:
     accept:
       - name: nodeId
         value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
 

@@ -7,7 +7,7 @@ data:
   smileFormat: true
 require:
   - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 1-*
+    values: 1-2
 
 observation:
   - name: breaker_fielddata
