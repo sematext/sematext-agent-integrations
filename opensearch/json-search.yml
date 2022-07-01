@@ -1,0 +1,193 @@
+type: json
+data:
+  # use the same URL as other index-related collector configs which enables caching of response data and
+  # reduced overhead SPM JSON-based monitor has on the system
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery,completion,translog?level=shards&format=smile
+  server: ${ST_MONITOR_OPENSEARCH_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  # async="true" - because this particular call can be very slow in some setups, no point in blocking everything with it
+  async: true
+  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
+  jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+require:
+  - className: com.sematext.spm.client.es.IsDataNodeCheck
+    values: true
+
+observation:
+  - name: searchStats_search_total
+    metricNamespace: opensearch
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].search
+
+    metric:
+      - name: query.count.total
+        source: query_total
+        type: counter
+        agentAggregation: SUM
+        label: query count
+        description: query count on all (primary and replica) shards
+
+      - name: query.latency.time.total
+        source: query_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: query latency
+        description: query latency on all (primary and replica) shards
+        unit: ms
+
+      - name: fetch.count.total
+        source: fetch_total
+        type: counter
+        agentAggregation: SUM
+        label: fetch count
+        description: fetch count on all (primary and replica) shards
+
+      - name: fetch.latency.time.total
+        source: fetch_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: fetch latency
+        description: fetch latency on all (primary and replica) shards
+        unit: ms
+
+      - name: suggest.count.total
+        source: suggest_total
+        type: counter
+        agentAggregation: SUM
+        label: suggest count
+        description: suggest count on all (primary and replica) shards
+
+      - name: suggest.latency.time.total
+        source: suggest_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: suggest latency
+        description: suggest latency on all (primary and replica) shards
+        unit: ms
+
+      - name: scroll.count.total
+        source: scroll_total
+        type: counter
+        agentAggregation: SUM
+        label: scroll count
+        description: scroll count on all (primary and replica) shards
+
+      - name: scroll.latency.time.total
+        source: scroll_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: scroll latency
+        description: scroll latency on all (primary and replica) shards
+        unit: ms
+
+      - name: search.opencontexts.total
+        source: open_contexts
+        type: long_gauge
+        agentAggregation: SUM
+        label: search open contexts
+        description: open search contexts on all (primary and replica) shards
+
+      - name: query.latency.total.avg
+        source: func:DoubleDivide(query.latency.time.total,query.count.total)
+        type: gauge
+        agentAggregation: AVG
+        pctls: 99,95,50
+        label: avg. query latency
+        description: avg. query latency on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: opensearch.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: opensearch.node.id
+        value: ${nodeId}
+
+      - name: opensearch.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: opensearch.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: opensearch.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+  - name: searchStats_get_total
+    metricNamespace: opensearch
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].get
+
+    metric:
+      - name: request.rtg.total
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get count
+        description: real-time get count on all (primary and replica) shards
+
+      - name: request.rtg.time.total
+        source: time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get latency
+        description: real-time latency on all (primary and replica) shards
+        unit: ms
+
+      - name: request.rtg.exists.total
+        source: exists_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists count
+        description: real-time get exists count on all (primary and replica) shards
+
+      - name: request.rtg.exists.time.total
+        source: exists_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists latency
+        description: real-time get exists latency on all (primary and replica) shards
+        unit: ms
+
+      - name: request.rtg.missing.total
+        source: missing_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing count
+        description: real-time get missing count on all (primary and replica) shards
+
+      - name: request.rtg.missing.time.total
+        source: missing_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing latency
+        description: real-time get missing latency on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: opensearch.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: opensearch.node.id
+        value: ${nodeId}
+
+      - name: opensearch.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: opensearch.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: opensearch.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+

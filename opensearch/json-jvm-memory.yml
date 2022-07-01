@@ -1,0 +1,59 @@
+type: json
+data:
+  url: /_nodes/_local/stats/jvm?format=smile
+  server: ${ST_MONITOR_OPENSEARCH_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+observation:
+  - name: jvmMemoryStats_memory
+    metricNamespace: jvm
+    path: $.nodes.${nodeId}.jvm.mem
+
+    metric:
+      - name: heap.used
+        source: heap_used_in_bytes
+        type: gauge
+        label: heap_used
+        description: jvm heap used memory
+        unit: bytes
+
+      - name: heap.committed
+        source: heap_committed_in_bytes
+        type: gauge
+        label: heap.committed
+        description: jvm heap committed
+        unit: bytes
+
+      - name: nonheap.used
+        source: non_heap_used_in_bytes
+        type: gauge
+        label: non_heap_used
+        description: jvm non-heap used memory
+        unit: bytes
+
+      - name: nonheap.committed
+        source: non_heap_committed_in_bytes
+        type: gauge
+        label: non_heap_committed
+        description: jvm non-heap committed
+        unit: bytes
+
+    tag:
+      - name: opensearch.node.id
+        value: ${nodeId}
+
+      - name: opensearch.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: opensearch.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

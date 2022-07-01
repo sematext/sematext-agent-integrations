@@ -1,0 +1,49 @@
+type: json
+data:
+  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  server: ${ST_MONITOR_OPENSEARCH_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+observation:
+  - name: published_cluster_states
+    metricNamespace: opensearch
+    path: $.nodes.${nodeId}.discovery.published_cluster_states
+
+    metric:
+      - name: cluster.state.published.full
+        source: full_states
+        type: counter
+        label: full cluster state updates
+        description: full cluster state updates published
+
+      - name: cluster.state.published.diff.incompatible
+        source: incompatible_diffs
+        type: counter
+        label: cluster state incompatible diff updates
+        description: cluster state incompatible diff updates published
+
+      - name: cluster.state.published.diff.compatible
+        source: compatible_diffs
+        type: counter
+        label: cluster state compatible diff updates
+        description: cluster state compatible diff updates published
+
+    tag:
+      - name: opensearch.node.id
+        value: ${nodeId}
+
+      - name: opensearch.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: opensearch.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
