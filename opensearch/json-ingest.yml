@@ -1,0 +1,54 @@
+type: json
+data:
+  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  server: ${ST_MONITOR_OPENSEARCH_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_OPENSEARCH_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+observation:
+  - name: ingest_stats
+    metricNamespace: opensearch
+    path: $.nodes.${nodeId}.ingest.pipelines.${pipeline}
+
+    metric:
+      - name: ingest.calls.total
+        source: count
+        type: counter
+        label: ingest calls
+        description: number of calls to this pipeline
+
+      - name: ingest.calls.errors
+        source: failed
+        type: counter
+        label: ingest failures
+        description: number of failed calls to this pipeline
+
+      - name: ingest.time
+        source: time_in_millis
+        type: counter
+        label: ingest time
+        description: time spent in this pipeline
+        unit: ms
+
+    tag:
+      - name: opensearch.node.id
+        value: ${nodeId}
+
+      - name: opensearch.ingest.pipeline
+        value: ${pipeline}
+
+      - name: opensearch.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: opensearch.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+        
