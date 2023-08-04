@@ -12,38 +12,6 @@ data:
   jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
 
 observation:
-  - name: indexStats_docs_primary
-    metricNamespace: es
-    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].docs
-
-    # although these metrics are defined as gauges, which would imply correct aggregation function is AVG, in this case
-    # we want value of all shards of some index to be added to each other (while aggregating by the agent) - the reason is
-    # that we are looking to get total number of docs some index has on local node (we don't care about average number of
-    # docs per shard for some index on local node)
-
-    metric:
-      - name: index.docs.primaries
-        source: count
-        type: long_gauge
-        agentAggregation: SUM
-        label: docs count (prim)
-        description: docs count on primary shards
-
-      - name: index.docs.deleted.primaries
-        source: deleted
-        type: long_gauge
-        agentAggregation: SUM
-        label: docs deleted (prim)
-        description: docs deleted on primary shards
-
-    tag:
-      - name: es.node.id
-        value: ${nodeId}
-
-      - name: es.index
-        value: ${indexName}
-
-
   - name: indexStats_docs_total
     metricNamespace: es
     path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].docs
@@ -71,27 +39,6 @@ observation:
         value: ${indexName}
 
 
-  - name: indexStats_store_primary
-    metricNamespace: es
-    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].store
-
-    metric:
-      - name: index.files.size.primaries
-        source: size_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: size on disk (prim)
-        description: size on the disk of primary shards
-        unit: bytes
-
-    tag:
-      - name: es.node.id
-        value: ${nodeId}
-
-      - name: es.index
-        value: ${indexName}
-
-
   - name: indexStats_store_total
     metricNamespace: es
     path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].store
@@ -104,49 +51,6 @@ observation:
         label: size on disk (all)
         description: size on the disk of all (primary and replica) shards
         unit: bytes
-
-    tag:
-      - name: es.node.id
-        value: ${nodeId}
-
-      - name: es.index
-        value: ${indexName}
-
-
-  - name: indexStats_indexing_primary
-    metricNamespace: es
-    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].indexing
-
-    metric:
-      - name: indexing.docs.added.primaries
-        source: index_total
-        type: counter
-        agentAggregation: SUM
-        label: indexed docs (prim)
-        description: docs indexed on primary shards
-
-      - name: indexing.docs.deleted.primaries
-        source: delete_total
-        type: counter
-        agentAggregation: SUM
-        label: deleted docs (prim)
-        description: docs deleted on primary shards
-
-      - name: indexing.time.added.primaries
-        source: index_time_in_millis
-        type: counter
-        agentAggregation: SUM
-        label: indexing time (prim)
-        description: time spent indexing on primary shards
-        unit: ms
-
-      - name: indexing.time.deleted.primaries
-        source: delete_time_in_millis
-        type: counter
-        agentAggregation: SUM
-        label: deleting time (prim)
-        description: time spent deleting on primary shards
-        unit: ms
 
     tag:
       - name: es.node.id

@@ -1,13 +1,10 @@
 type: json
 data:
-  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  url: /_nodes/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
-require:
-  - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 5-*
 
 observation:
   - name: io_stats
@@ -30,14 +27,3 @@ observation:
     tag:
       - name: es.node.id
         value: ${nodeId}
-
-      - name: es.node
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
-
-    accept:
-      - name: nodeId
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
-

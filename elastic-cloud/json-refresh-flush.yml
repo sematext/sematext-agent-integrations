@@ -10,12 +10,6 @@ data:
   async: true
   # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
   jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
-require:
-  - className: com.sematext.spm.client.es.EsVersionCheck
-    values: 1-*
-require:
-  - className: com.sematext.spm.client.es.IsDataNodeCheck
-    values: true
 
 observation:
   - name: refreshFlushStats_refresh_primary
@@ -39,24 +33,11 @@ observation:
         unit: ms
 
     tag:
-      - name: es.cluster
-        value: json:smile:/_cluster/health?format=smile $.cluster_name
-
       - name: es.node.id
         value: ${nodeId}
 
-      - name: es.node
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
-
       - name: es.index
         value: ${indexName}
-
-    accept:
-      - name: nodeId
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
 
 
   - name: refreshFlushStats_refresh_total
@@ -80,24 +61,11 @@ observation:
         unit: ms
 
     tag:
-      - name: es.cluster
-        value: json:smile:/_cluster/health?format=smile $.cluster_name
-
       - name: es.node.id
         value: ${nodeId}
 
-      - name: es.node
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
-
       - name: es.index
         value: ${indexName}
-
-    accept:
-      - name: nodeId
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
 
 
   - name: refreshFlushStats_flush_primary
@@ -121,24 +89,11 @@ observation:
         unit: ms
 
     tag:
-      - name: es.cluster
-        value: json:smile:/_cluster/health?format=smile $.cluster_name
-
       - name: es.node.id
         value: ${nodeId}
 
-      - name: es.node
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
-
       - name: es.index
         value: ${indexName}
-
-    accept:
-      - name: nodeId
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
 
 
   - name: refreshFlushStats_flush_total
@@ -162,22 +117,9 @@ observation:
         unit: ms
 
     tag:
-      - name: es.cluster
-        value: json:smile:/_cluster/health?format=smile $.cluster_name
-
       - name: es.node.id
         value: ${nodeId}
 
-      - name: es.node
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
-
       - name: es.index
         value: ${indexName}
-
-    accept:
-      - name: nodeId
-        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
 
