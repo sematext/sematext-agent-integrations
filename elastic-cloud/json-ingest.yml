@@ -34,6 +34,13 @@ observation:
     tag:
       - name: es.node.id
         value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${remoteNodeId}.roles return:ConcatCollection()
+
 
       - name: es.ingest.pipeline
         value: ${pipeline}

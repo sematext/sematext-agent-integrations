@@ -51,5 +51,11 @@ observation:
       - name: es.remote.node.id
         value: ${remoteNodeId}
 
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
       - name: es.remote.node
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${remoteNodeId}.name

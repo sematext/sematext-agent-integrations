@@ -31,3 +31,10 @@ observation:
 
       - name: jvm.gc
         value: ${gcName}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+

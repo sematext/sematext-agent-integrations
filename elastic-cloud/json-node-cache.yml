@@ -28,6 +28,13 @@ observation:
     tag:
       - name: es.node.id
         value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: cacheStats_nodeCache_filter
@@ -51,6 +58,13 @@ observation:
     tag:
       - name: es.node.id
         value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: cacheStats_nodeCache_query
@@ -92,6 +106,13 @@ observation:
     tag:
       - name: es.node.id
         value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: cacheStats_nodeCache_request
@@ -127,6 +148,13 @@ observation:
     tag:
       - name: es.node.id
         value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: cacheStats_nodeCache_warmer
@@ -157,4 +185,11 @@ observation:
     tag:
       - name: es.node.id
         value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 

@@ -34,6 +34,13 @@ observation:
 
       - name: es.index
         value: ${indexName}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: indexStats_store_total
@@ -55,6 +62,13 @@ observation:
 
       - name: es.index
         value: ${indexName}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: indexStats_indexing_total
@@ -98,6 +112,13 @@ observation:
 
       - name: es.index
         value: ${indexName}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: indexStats_recovery
@@ -119,6 +140,13 @@ observation:
 
       - name: es.index
         value: ${indexName}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: indexStats_completion
@@ -139,6 +167,13 @@ observation:
 
       - name: es.index
         value: ${indexName}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
 
 
   - name: indexStats_translog
@@ -182,3 +217,10 @@ observation:
 
       - name: es.index
         value: ${indexName}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
