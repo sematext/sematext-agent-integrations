@@ -1,0 +1,55 @@
+type: json
+data:
+  url: /_nodes/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+
+observation:
+  - name: adaptive_replica_selection
+    metricNamespace: es
+    path: $.nodes.${nodeId}.adaptive_selection.${remoteNodeId}
+
+    metric:
+      - name: adaptiveReplicaSelection.searches.outgoing
+        source: outgoing_searches
+        type: long_gauge
+        label: outgoing searches
+        description: searches from the monitored node to the remote node
+
+      - name: adaptiveReplicaSelection.queue.size.avg
+        source: avg_queue_size
+        type: double_gauge
+        label: average queue size
+        description: exponentially weighted moving average queue size for searches on the remote node
+
+      - name: adaptiveReplicaSelection.service.time.avg
+        source: avg_service_time_ns
+        type: long_gauge
+        label: average service time
+        description: exponentially weighted moving average task execution time on the remote node
+        unit: ns
+
+      - name: adaptiveReplicaSelection.response.time.avg
+        source: avg_response_time_ns
+        type: long_gauge
+        label: average response time
+        description: exponentially weighted moving average response time on the remote node
+        unit: ns
+
+      - name: adaptiveReplicaSelection.rank
+        source: rank
+        type: double_gauge
+        label: rank
+        description: rank of the remote node used for replica selection
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.remote.node.id
+        value: ${remoteNodeId}
+
+      - name: es.remote.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${remoteNodeId}.name

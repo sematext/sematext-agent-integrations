@@ -1,0 +1,213 @@
+type: json
+data:
+  url: /_nodes/_local/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+observation:
+  - name: cacheStats_nodeCache_field
+    metricNamespace: es
+    path: $.nodes.${nodeId}.indices.fielddata
+
+    metric:
+      - name: cache.field.evicted
+        source: evictions
+        type: counter
+        label: field cache evictions
+        description: Field cache evictions
+
+      - name: cache.field.size
+        source: memory_size_in_bytes
+        type: long_gauge
+        label: field cache size
+        description: Field cache size
+        unit: bytes
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: cacheStats_nodeCache_filter
+    metricNamespace: es
+    path: $.nodes.${nodeId}.indices.filter_cache
+
+    metric:
+      - name: cache.filter.evicted
+        source: evictions
+        type: counter
+        label: filter cache evictions
+        description: Filter cache evictions
+
+      - name: cache.filter.size
+        source: memory_size_in_bytes
+        type: long_gauge
+        label: filter cache size
+        description: Filter cache size
+        unit: bytes
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: cacheStats_nodeCache_query
+    metricNamespace: es
+    path: $.nodes.${nodeId}.indices.query_cache
+
+    metric:
+      - name: cache.filter.evicted
+        source: evictions
+        type: counter
+        label: filter cache evictions
+        description: Filter cache evictions
+
+      - name: cache.filter.size
+        source: memory_size_in_bytes
+        type: long_gauge
+        label: filter cache size
+        description: Filter cache size
+        unit: bytes
+
+      - name: cache.filter.size.count
+        source: cache_count
+        type: counter
+        label: filter/query cache count
+        description: Filter/query cache count of elements
+
+      - name: cache.filter.hits
+        source: hit_count
+        type: counter
+        label: filter/query cache hit count
+        description: Number of requests hitting the filter/query cache
+
+      - name: cache.filter.misses
+        source: miss_count
+        type: counter
+        label: filter/query cache miss count
+        description: Number of requests missing the filter/query cache
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: cacheStats_nodeCache_request
+    metricNamespace: es
+    path: $.nodes.${nodeId}.indices.request_cache
+
+    metric:
+      - name: cache.request.evicted
+        source: evictions
+        type: counter
+        label: request cache evictions
+        description: Request cache evictions
+
+      - name: cache.request.size
+        source: memory_size_in_bytes
+        type: long_gauge
+        label: request cache size
+        description: Request cache size
+        unit: bytes
+
+      - name: cache.request.hits
+        source: hit_count
+        type: counter
+        label: request cache hit count
+        description: Number of requests hitting the request cache
+
+      - name: cache.request.misses
+        source: miss_count
+        type: counter
+        label: request cache miss count
+        description: Number of requests missing the request cache
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: cacheStats_nodeCache_warmer
+    metricNamespace: es
+    path: $.nodes.${nodeId}.indices.warmer
+
+    metric:
+      - name: cache.warmer.current
+        source: current
+        type: long_gauge
+        label: warmer current
+        description: Warmer current
+
+      - name: cache.warmer.total
+        source: total
+        type: counter
+        label: warmer total
+        description: Warmer total
+        unit: bytes
+
+      - name: cache.warmer.time
+        source: total_time_in_millis
+        type: counter
+        label: warmer total time
+        description: Warmer total time
+        unit: ms
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

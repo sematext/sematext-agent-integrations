@@ -1,0 +1,37 @@
+type: json
+data:
+  url: /_nodes/_local/os?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 5-*
+
+observation:
+  - name: node_os_stats
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os
+
+    metric:
+      - name: cpu.allocated.count
+        source: allocated_processors
+        type: long_gauge
+        label: number of processors
+        description: number of processors allocated to the Elasticsearch process
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

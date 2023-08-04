@@ -1,0 +1,88 @@
+type: json
+data:
+  url: /_cat/thread_pool?format=smile&h=node_id,host,ip,post,name,type,active,size,queue,queue_size,rejected,largest,completed,min,max,keep_alive
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 5-*
+
+observation:
+  - name: threadPoolStats
+    metricNamespace: es
+    path: $.[?(@.name=${threadPool} && @.node_id=${nodeId})]
+
+    metric:
+      - name: thread.pool.active
+        source: active
+        type: long_gauge
+        label: active threads
+        description: active threads
+
+      - name: thread.pool.size
+        source: size
+        type: long_gauge
+        label: thread pool size
+        description: thread pool size
+
+      - name: thread.pool.queue
+        source: queue
+        type: long_gauge
+        label: thread pool queue
+        description: thread pool queue
+
+      - name: thread.pool.queue.size
+        source: queue_size
+        type: long_gauge
+        label: thread pool queue size
+        description: thread pool queue size
+
+      - name: thread.pool.rejected
+        source: rejected
+        type: counter
+        label: rejected threads
+        description: rejected threads
+
+      - name: thread.pool.largest
+        source: largest
+        type: long_gauge
+        label: thread pool largest
+        description: thread pool largest
+
+      - name: thread.pool.completed
+        source: completed
+        type: counter
+        label: completed threads
+        description: complete threads
+
+      - name: thread.pool.min
+        source: min
+        type: long_gauge
+        label: thread pool min
+        description: thread pool min
+
+      - name: thread.pool.max
+        source: max
+        type: long_gauge
+        label: thread pool max
+        description: thread pool max
+
+    tag:
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.thread.pool
+        value: ${threadPool}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

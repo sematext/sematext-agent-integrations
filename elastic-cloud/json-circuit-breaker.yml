@@ -1,0 +1,151 @@
+type: json
+data:
+  url: /_nodes/stats/breaker?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+
+observation:
+  - name: breaker_in_flight_requests
+    metricNamespace: es
+    path: $.nodes.${nodeId}.breakers.in_flight_requests
+
+    metric:
+      - name: circuitBreaker.inFlightRequests.size.max
+        source: limit_size_in_bytes
+        type: long_gauge
+        label: inFlightRequests max size
+        description: max in-flight requests size
+        unit: bytes
+
+      - name: circuitBreaker.inFlightRequests.size.estimate
+        source: estimated_size_in_bytes
+        type: long_gauge
+        label: inFlightRequests estimated size
+        description: estimated in-flight requests size
+        unit: bytes
+
+      - name: circuitBreaker.inFlightRequests.size.overhead
+        source: overhead
+        type: double_gauge
+        label: inFlightRequests overhead
+        description: in-flight requests overhead
+
+      - name: circuitBreaker.inFlightRequests.tripped
+        source: tripped
+        type: counter
+        label: inFlightRequests tripped
+        description: in-flight requests circuit breaker tripped
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+
+  - name: breaker_parent
+    metricNamespace: es
+    path: $.nodes.${nodeId}.breakers.parent
+
+    metric:
+      - name: circuitBreaker.parent.size.max
+        source: limit_size_in_bytes
+        type: long_gauge
+        label: parent max size
+        description: max parent circuit breaker size
+        unit: bytes
+
+      - name: circuitBreaker.parent.size.estimate
+        source: estimated_size_in_bytes
+        type: long_gauge
+        label: parent estimated size
+        description: estimated parent circuit breaker size
+        unit: bytes
+
+      - name: circuitBreaker.parent.size.overhead
+        source: overhead
+        type: double_gauge
+        label: parent overhead
+        description: parent circuit breaker overhead
+
+      - name: circuitBreaker.parent.tripped
+        source: tripped
+        type: counter
+        label: parent tripped
+        description: parent circuit breaker tripped
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+
+  - name: breaker_fielddata
+    metricNamespace: es
+    path: $.nodes.${nodeId}.breakers.fielddata
+
+    metric:
+      - name: circuitBreaker.fieldData.size.max
+        source: limit_size_in_bytes
+        type: long_gauge
+        label: fieldData max size
+        description: max fieldData size
+        unit: bytes
+
+      - name: circuitBreaker.fieldData.size.estimate
+        source: estimated_size_in_bytes
+        type: long_gauge
+        label: fieldData estimated size
+        description: estimated fieldData size
+        unit: bytes
+
+      - name: circuitBreaker.fieldData.size.overhead
+        source: overhead
+        type: double_gauge
+        label: fieldData overhead
+        description: fieldData overhead
+
+      - name: circuitBreaker.fieldData.tripped
+        source: tripped
+        type: counter
+        label: fieldData tripped
+        description: fieldData circuit breaker tripped
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+
+  - name: breaker_request
+    metricNamespace: es
+    path: $.nodes.${nodeId}.breakers.request
+
+    metric:
+      - name: circuitBreaker.request.size.max
+        source: limit_size_in_bytes
+        type: long_gauge
+        label: request maximum size
+        description: max request size
+        unit: bytes
+
+      - name: circuitBreaker.request.size.estimate
+        source: estimated_size_in_bytes
+        type: long_gauge
+        label: request estimated size
+        description: estimated request size
+        unit: bytes
+
+      - name: circuitBreaker.request.size.overhead
+        source: overhead
+        type: double_gauge
+        label: request overhead
+        description: request overhead
+
+      - name: circuitBreaker.request.tripped
+        source: tripped
+        type: counter
+        label: request tripped
+        description: request circuit breaker tripped
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}

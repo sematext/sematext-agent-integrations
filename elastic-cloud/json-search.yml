@@ -1,0 +1,381 @@
+type: json
+data:
+  # use the same URL as other index-related collector configs which enables caching of response data and
+  # reduced overhead SPM JSON-based monitor has on the system
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery,completion,translog?level=shards&format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  # async="true" - because this particular call can be very slow in some ES setups, no point in blocking everything with it
+  async: true
+  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
+  jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+require:
+  - className: com.sematext.spm.client.es.IsDataNodeCheck
+    values: true
+
+observation:
+  - name: searchStats_search_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].search
+
+    metric:
+      - name: query.count.primaries
+        source: query_total
+        type: counter
+        agentAggregation: SUM
+        label: query count (prim)
+        description: query count on primary shards
+
+      - name: query.latency.time.primaries
+        source: query_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: query latency (prim)
+        description: query latency on primary shards
+        unit: ms
+
+      - name: fetch.count.primaries
+        source: fetch_total
+        type: counter
+        agentAggregation: SUM
+        label: fetch count (prim)
+        description: fetch count on primary shards
+
+      - name: fetch.latency.time.primaries
+        source: fetch_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: fetch latency (prim)
+        description: fetch latency on primary shards
+        unit: ms
+
+      - name: suggest.count.primaries
+        source: suggest_total
+        type: counter
+        agentAggregation: SUM
+        label: suggest count (prim)
+        description: suggest count on primary shards
+
+      - name: suggest.latency.time.primaries
+        source: suggest_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: suggest latency (prim)
+        description: suggest latency on primary shards
+        unit: ms
+
+      - name: scroll.count.primaries
+        source: scroll_total
+        type: counter
+        agentAggregation: SUM
+        label: scroll count (prim)
+        description: scroll count on primary shards
+
+      - name: scroll.latency.time.primaries
+        source: scroll_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: scroll latency (prim)
+        description: scroll latency on primary shards
+        unit: ms
+
+      - name: search.opencontexts.primaries
+        source: open_contexts
+        type: long_gauge
+        agentAggregation: SUM
+        label: search open contexts (prim)
+        description: open search contexts on primary shards
+
+      # here we define avg latency metric which will be the base for percentiles calculation (note pctls="99,95,50" attribute).
+      # Metric query.latency.primaries.avg will be calculated before agent aggregates all values for the same
+      # index into single value (using AVG function). Resulting avg value will be used as an input into percentiles calculation.
+      # Note that there are few problems with this approach:
+      # - value that will be input for percentiles is avg of avg values, which typically isn't very useful
+      # - percentiles will be calculated based on N such values (by default 6 of them during a single minute, since default
+      # collection interval is 10 sec)
+      # - "real" latency percentile calculation can only be done on raw query latency values, for each query we'd need to have
+      # its latency. This would result in huge number of input values, but calculation itself would be correct
+      # - calculation done in agent is calculated on 1 minute granularity and for each index separately. Since backend at
+      # the moment has no complex percentiles calculation support, using anything but 1 min granularity or viewing lateency
+      # pctls other than per specific host-node-index would show values that are even further from what real pctls were for
+      # specified period/filter selection
+
+      - name: query.latency.primaries.avg
+        source: func:DoubleDivide(query.latency.time.primaries,query.count.primaries)
+        type: gauge
+        agentAggregation: AVG
+        pctls: 99,95,50
+        label: avg. query latency (primaries)
+        description: avg. query latency on primary shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: searchStats_search_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].search
+
+    metric:
+      - name: query.count.total
+        source: query_total
+        type: counter
+        agentAggregation: SUM
+        label: query count (all)
+        description: query count on all (primary and replica) shards
+
+      - name: query.latency.time.total
+        source: query_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: query latency (all)
+        description: query latency on all (primary and replica) shards
+        unit: ms
+
+      - name: fetch.count.total
+        source: fetch_total
+        type: counter
+        agentAggregation: SUM
+        label: fetch count (all)
+        description: fetch count on all (primary and replica) shards
+
+      - name: fetch.latency.time.total
+        source: fetch_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: fetch latency (all)
+        description: fetch latency on all (primary and replica) shards
+        unit: ms
+
+      - name: suggest.count.total
+        source: suggest_total
+        type: counter
+        agentAggregation: SUM
+        label: suggest count (all)
+        description: suggest count on all (primary and replica) shards
+
+      - name: suggest.latency.time.total
+        source: suggest_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: suggest latency (all)
+        description: suggest latency on all (primary and replica) shards
+        unit: ms
+
+      - name: scroll.count.total
+        source: scroll_total
+        type: counter
+        agentAggregation: SUM
+        label: scroll count (all)
+        description: scroll count on all (primary and replica) shards
+
+      - name: scroll.latency.time.total
+        source: scroll_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: scroll latency (all)
+        description: scroll latency on all (primary and replica) shards
+        unit: ms
+
+      - name: search.opencontexts.total
+        source: open_contexts
+        type: long_gauge
+        agentAggregation: SUM
+        label: search open contexts (all)
+        description: open search contexts on all (primary and replica) shards
+
+      - name: query.latency.total.avg
+        source: func:DoubleDivide(query.latency.time.total,query.count.total)
+        type: gauge
+        agentAggregation: AVG
+        pctls: 99,95,50
+        label: avg. query latency (all)
+        description: avg. query latency on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: searchStats_get_primary
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].get
+
+    metric:
+      - name: request.rtg.primaries
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get count (prim)
+        description: real-time get count on primary shards
+
+      - name: request.rtg.time.primaries
+        source: time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get latency (prim)
+        description: real-time latency on primary shards
+        unit: ms
+
+      - name: request.rtg.exists.primaries
+        source: exists_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists count (prim)
+        description: real-time get exists count on primary shards
+
+      - name: request.rtg.exists.time.primaries
+        source: exists_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists latency (prim)
+        description: real-time get exists latency on primary shards
+        unit: ms
+
+      - name: request.rtg.missing.primaries
+        source: missing_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing count (prim)
+        description: real-time get missing count on primary shards
+
+      - name: request.rtg.missing.time.primaries
+        source: missing_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing latency (prim)
+        description: real-time get missing latency on primary shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+
+  - name: searchStats_get_total
+    metricNamespace: es
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].get
+
+    metric:
+      - name: request.rtg.total
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get count (all)
+        description: real-time get count on all (primary and replica) shards
+
+      - name: request.rtg.time.total
+        source: time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get latency (all)
+        description: real-time latency on all (primary and replica) shards
+        unit: ms
+
+      - name: request.rtg.exists.total
+        source: exists_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists count (all)
+        description: real-time get exists count on all (primary and replica) shards
+
+      - name: request.rtg.exists.time.total
+        source: exists_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get exists latency (all)
+        description: real-time get exists latency on all (primary and replica) shards
+        unit: ms
+
+      - name: request.rtg.missing.total
+        source: missing_total
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing count (all)
+        description: real-time get missing count on all (primary and replica) shards
+
+      - name: request.rtg.missing.time.total
+        source: missing_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: real-time get missing latency (all)
+        description: real-time get missing latency on all (primary and replica) shards
+        unit: ms
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: es.index
+        value: ${indexName}
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+

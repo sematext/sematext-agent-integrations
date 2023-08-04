@@ -1,0 +1,72 @@
+type: json
+data:
+  url: /_nodes/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+
+observation:
+  - name: connections_http
+    metricNamespace: es
+    path: $.nodes.${nodeId}.http
+
+    metric:
+      - name: connection.http.current.open
+        source: current_open
+        type: long_gauge
+        label: open HTTP conns
+        description: open HTTP conns (current_open)
+
+      - name: connection.http.total.opened
+        source: total_opened
+        type: long_gauge
+        label: total opened HTTP conns
+        description: total opened HTTP conns (total_opened)
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+
+  - name: connections_transport
+    metricNamespace: es
+    path: $.nodes.${nodeId}.transport
+
+    metric:
+      - name: connection.tcp.server.open
+        source: server_open
+        type: long_gauge
+        label: open TCP conns
+        description: open TCP conns (server_open)
+
+      - name: transport.rx.packets
+        source: rx_count
+        type: counter
+        label: network received packets
+        description: network received packets count (rx_count)
+
+      - name: transport.rx.bytes
+        source: rx_size_in_bytes
+        type: counter
+        label: network received size
+        description: network received size (rx_size)
+        unit: bytes
+
+      - name: transport.tx.packets
+        source: tx_count
+        type: counter
+        label: network transmitted packets
+        description: network transmitted packets count (tx_count)
+
+      - name: transport.tx.bytes
+        source: tx_size_in_bytes
+        type: counter
+        label: network transmitted size
+        description: network transmitted size (tx_size)
+        unit: bytes
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+

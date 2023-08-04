@@ -1,0 +1,204 @@
+type: json
+data:
+  # use the same URL as other index-related collector configs which enables caching of response data and
+  # reduced overhead SPM JSON-based monitor has on the system
+  # URL itself is used to provide data on which bean paths are then applied
+  url: /_stats/indexing,store,search,merge,refresh,flush,docs,get,segments,recovery,completion,translog?level=shards&format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  async: true
+  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
+  jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
+
+# only used if ES version is 1.0 or greater
+require:
+  - className: com.sematext.spm.client.es.EsVersionCheck
+    values: 1-*
+
+# this makes the config applicable only on ES data nodes - we don't want to load master and client nodes with
+# stats queries which will never return any metric that could be recorded
+require:
+  - className: com.sematext.spm.client.es.IsDataNodeCheck
+    values: true
+
+observation:
+  - name: mergeStats_primary
+    metricNamespace: es
+
+    # note the difference in path between mergeStats_primary and mergeStats_total beans: the former has additional
+    # && @.routing.primary=true clause which means that bean will look at only shards that have primary=true, while
+    # the _total bean will look at all shards, regardless of primary attribute value
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].merges
+
+    # one of attributes from the path ("shard") is missing from the list of tags on purpose - we don't want to send shard-level
+    # stats, we want these stats to be sent per-index. However, each ES node will have N shards of some index, meaning there
+    # will be multiple path matches for some node-index (depending on the number of shards of said index on local node). This
+    # means we have to somehow tell agent to "aggregate" those N values into single per-index value that will be sent for some
+    # metric. We do that by specifying agentAggregation="SUM" - agent will summarize values across all shards of some
+    # index located on local node and report that sum as value for the metric.
+    # We have to do all this because ES doesn't expose these stats on node-index level
+
+    metric:
+      - name: indexing.merges.primaries
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: merge count (prim)
+        description: merge count on primary shards
+
+      - name: indexing.merges.time.primaries
+        source: total_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: merge time (prim)
+        description: merge time on primary shards
+        unit: ms
+
+      - name: indexing.merges.docs.primaries
+        source: total_docs
+        type: counter
+        agentAggregation: SUM
+        label: merged docs count (prim)
+        description: merged docs count on primary shards
+
+      - name: indexing.merges.docs.size.primaries
+        source: total_size_in_bytes
+        type: counter
+        agentAggregation: SUM
+        label: merged docs size (prim)
+        description: merged docs size on primary shards
+        unit: bytes
+
+      - name: indexing.merges.throttled.time.primaries
+        source: total_throttled_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: throttled merge time (prim)
+        description: throttled time for merges (i.e. when merges fall behind) on primary shards
+        unit: ms
+
+      - name: indexing.merges.throttled.size.primaries
+        source: total_auto_throttle_in_bytes
+        type: counter
+        agentAggregation: SUM
+        label: throttled merge size (prim)
+        description: size of throttled merges on primary shards
+        unit: bytes
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: es.index
+        value: ${indexName}
+
+    # accept conditions are defined based on value of observation path tags (values extracted from placeholders defined
+    # in observation's "path" attribute). That means the "name" has to match name of one of path placeholders. Names of
+    # metrics and tags can't be used for accept or ignore evaluation since accept/ignore conditions are checked before any
+    # observation is done (at which point tag or metric values don't exist yet).
+    # in this case we filter-out all non-local nodes - ES responses often contain data for all cluster nodes, but each node
+    # will be running its own agent that gathers its stats, so there is no need to gather stats of other nodes (besides
+    # much bigger amount of data, more parsing... which makes things slower and use more CPU/Memory, there would also be
+    # problems related to duplication of metrics).
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+
+  - name: mergeStats_total
+    metricNamespace: es
+
+    # Attribute 'path' specifies set of objects which should be monitored. For each placeholder (defined with ${...}) any
+    # value will be accepted (while also storing the value of that placeholder). In the example below, if some setup has
+    # 3 indices (say 'A', 'B' and 'C), each with 2 shards, meaning a total of 6 shards, there will be a total of 6
+    # matching objects found by this path expression (regardless off on which nodes which shards are, since total number of
+    # shards is 6 anyway).
+    # For each of those 6 objects, placeholder values will be available for use in tag definitions (notice how value of
+    # "es.node.id" and "es.index" tags are specified - they will be resolved to exact values matching one of those 6 objects).
+    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].merges
+
+    metric:
+      - name: indexing.merges.total
+        source: total
+        type: counter
+        agentAggregation: SUM
+        label: merge count (all)
+        description: merge count on all (primary and replica) shards
+
+      - name: indexing.merges.time.total
+        source: total_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: merge time (all)
+        description: merge time on all (primary and replica) shards
+        unit: ms
+
+      - name: indexing.merges.docs.total
+        source: total_docs
+        type: counter
+        agentAggregation: SUM
+        label: merged docs count (all)
+        description: merged docs count on all (primary and replica) shards
+
+      - name: indexing.merges.docs.size.total
+        source: total_size_in_bytes
+        type: counter
+        agentAggregation: SUM
+        label: merged docs size (all)
+        description: merged docs size on all (primary and replica) shards
+        unit: bytes
+
+      - name: indexing.merges.throttled.time.total
+        source: total_throttled_time_in_millis
+        type: counter
+        agentAggregation: SUM
+        label: throttled merge time (all)
+        description: throttled time for merges (i.e. when merges fall behind) on all (primary and replica) shards
+        unit: ms
+
+      - name: indexing.merges.throttled.size.total
+        source: total_auto_throttle_in_bytes
+        type: counter
+        agentAggregation: SUM
+        label: throttled merge size (all)
+        description: size of throttled merges on all (primary and replica) shards
+        unit: bytes
+
+    tag:
+      - name: es.cluster
+        value: json:smile:/_cluster/health?format=smile $.cluster_name
+
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.node
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId}.roles return:ConcatCollection()
+
+      - name: es.index
+        value: ${indexName}
+
+    # filtering-out all non-local nodes. We allow only "nodeId" value that matches the result of specified json expression.
+    # The expression itself finds the only matching object and uses value from placeholder ${localNodeId} as result. If
+    # there were multiple matching objects in json received from this URL, json expression would fail (since result
+    # couldn't be uniquely extracted).
+    # Tag "es.node" uses similar expression, the only difference is ".name" part at the end. That expression will return
+    # result that is equal to "name" property of only resulting object (again, in case of multiple matches, it would fail)
+
+    accept:
+      - name: nodeId
+        value: json:smile:/_nodes/_local?format=smile $.nodes.${localNodeId} return:pathTags:localNodeId
+

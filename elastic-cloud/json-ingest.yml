@@ -1,0 +1,41 @@
+type: json
+data:
+  url: /_nodes/stats/indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+
+observation:
+  - name: ingest_stats
+    metricNamespace: es
+    path: $.nodes.${nodeId}.ingest.pipelines.${pipeline}
+
+    metric:
+      - name: ingest.calls.total
+        source: count
+        type: counter
+        label: ingest calls
+        description: number of calls to this pipeline
+
+      - name: ingest.calls.errors
+        source: failed
+        type: counter
+        label: ingest failures
+        description: number of failed calls to this pipeline
+
+      - name: ingest.time
+        source: time_in_millis
+        type: counter
+        label: ingest time
+        description: time spent in this pipeline
+        unit: ms
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+
+      - name: es.ingest.pipeline
+        value: ${pipeline}
+
+        

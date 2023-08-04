@@ -1,0 +1,69 @@
+type: json
+data:
+  url: /_cluster/health?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+
+observation:
+  - name: clusterHealth
+    metricNamespace: es
+    path: $.
+
+    metric:
+      - name: cluster.nodes
+        source: number_of_nodes
+        type: long_gauge
+        label: ES nodes
+        description: Number of nodes in the ES cluster
+
+      - name: cluster.nodes.data
+        source: number_of_data_nodes
+        type: long_gauge
+        label: ES data nodes
+        description: Number of data nodes in the ES cluster
+
+      - name: cluster.health.shards.active.primary
+        source: active_primary_shards
+        type: long_gauge
+        label: active primary shards
+        description: Number of active primary shards
+
+      - name: cluster.health.shards.active
+        source: active_shards
+        type: long_gauge
+        label: active shards
+        description: Number of active shards
+
+      - name: cluster.health.shards.relocating
+        source: relocating_shards
+        type: long_gauge
+        label: relocating shards
+        description: Number of currently relocating shards
+
+      - name: cluster.health.shards.initializing
+        source: initializing_shards
+        type: long_gauge
+        label: initializing shards
+        description: Number of currently initializing shards
+
+      - name: cluster.health.shards.unassigned
+        source: unassigned_shards
+        type: long_gauge
+        label: unassigned shards
+        description: Number of currently unassigned shards
+
+      - name: cluster.health.pendingTasks.total
+        source: number_of_pending_tasks
+        type: long_gauge
+        label: pending tasks
+        description: Number of currently pending tasks in master's queue
+
+      - name: cluster.health.pendingTasks.maxQueueTime
+        source: task_max_waiting_in_queue_millis
+        type: long_gauge
+        label: pending tasks max waiting time
+        description: Maximum time for a task in master's queue
+        unit: ms
+
