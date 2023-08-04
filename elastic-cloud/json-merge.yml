@@ -8,9 +8,6 @@ data:
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
-  async: true
-  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
-  jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
 
 observation:
   - name: mergeStats_total

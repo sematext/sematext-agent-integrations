@@ -7,39 +7,8 @@ data:
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
-  async: true
-  # custom jsonHandlerClass (provided by Sematext) is used to optimally parse this specific response json
-  jsonHandlerClass: com.sematext.spm.client.es.CustomEsShardStatsJsonHandler
 
 observation:
-  - name: refreshFlushStats_refresh_primary
-    metricNamespace: es
-    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].refresh
-
-    metric:
-      - name: indexing.refreshes.primaries
-        source: total
-        type: counter
-        agentAggregation: SUM
-        label: refresh count (prim)
-        description: refresh count on primary shards
-
-      - name: indexing.refreshes.time.primaries
-        source: total_time_in_millis
-        type: counter
-        agentAggregation: SUM
-        label: refresh time (prim)
-        description: refresh time on primary shards
-        unit: ms
-
-    tag:
-      - name: es.node.id
-        value: ${nodeId}
-
-      - name: es.index
-        value: ${indexName}
-
-
   - name: refreshFlushStats_refresh_total
     metricNamespace: es
     path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId})].refresh
@@ -58,34 +27,6 @@ observation:
         agentAggregation: SUM
         label: refresh time (all)
         description: refresh time on all (primary and replica) shards
-        unit: ms
-
-    tag:
-      - name: es.node.id
-        value: ${nodeId}
-
-      - name: es.index
-        value: ${indexName}
-
-
-  - name: refreshFlushStats_flush_primary
-    metricNamespace: es
-    path: $.indices.${indexName}.shards.${shard}[?(@.routing.node=${nodeId} && @.routing.primary=true)].flush
-
-    metric:
-      - name: indexing.flushes.primaries
-        source: total
-        type: counter
-        agentAggregation: SUM
-        label: flush count (prim)
-        description: flush count on primary shards
-
-      - name: indexing.flushes.time.primaries
-        source: total_time_in_millis
-        type: counter
-        agentAggregation: SUM
-        label: flush time (prim)
-        description: flush time on primary shards
         unit: ms
 
     tag:
