@@ -45,11 +45,11 @@ observation:
         label: load 5m
         description: average load for 5 minutes
 
-      - name: load.5m
-        source: 5m
+      - name: load.15m
+        source: 15m
         type: gauge
-        label: load 5m
-        description: average load for 5 minutes
+        label: load 15m
+        description: average load for 15 minutes
 
     tag:
       - name: es.node.id
