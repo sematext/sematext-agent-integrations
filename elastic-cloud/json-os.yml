@@ -1,28 +1,22 @@
 type: json
 data:
-  url: /_nodes/stats/breaker,indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  url: /_nodes/stats/breaker,indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection,os?format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
 
 observation:
-  - name: io_stats
+  - name: cpu_stats
     metricNamespace: es
-    path: $.nodes.${nodeId}.fs.io_stats.total
+    path: $.nodes.${nodeId}.os.cpu
 
     metric:
-      - name: disk.io.operations.read
-        source: read_operations
-        type: counter
-        label: read ops
-        description: disk IO read operations
-
-      - name: disk.io.operations.write
-        source: write_operations
-        type: counter
-        label: write ops
-        description: disk IO write operations
+      - name: cpu.used
+        source: percent
+        type: gauge
+        label: cpu percent
+        description: used CPU percent
 
     tag:
       - name: es.node.id
@@ -34,23 +28,28 @@ observation:
       - name: es.node.role
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
 
-
-  - name: disk_space
+  - name: load_stats
     metricNamespace: es
-    path: $.nodes.${nodeId}.fs.total
+    path: $.nodes.${nodeId}.os.cpu.load_average
 
     metric:
-      - name: disk.io.space.total
-        source: total_in_bytes
-        type: long_gauge
-        label: total disk space
-        description: total disk space
+      - name: load.1m
+        source: 1m
+        type: gauge
+        label: load 1m
+        description: average load for 1 minute
 
-      - name: disk.io.space.available
-        source: available_in_bytes
-        type: long_gauge
-        label: free disk space
-        description: free disk space
+      - name: load.5m
+        source: 5m
+        type: gauge
+        label: load 5m
+        description: average load for 5 minutes
+
+      - name: load.5m
+        source: 5m
+        type: gauge
+        label: load 5m
+        description: average load for 5 minutes
 
     tag:
       - name: es.node.id
@@ -61,4 +60,3 @@ observation:
 
       - name: es.node.role
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
-

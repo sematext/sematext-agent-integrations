@@ -38,6 +38,9 @@ observation:
       - name: es.node
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
 
+      - name: es.data_stream
+        value: json:smile:/_all?local=true&format=smile $.${indexName}.data_stream
+
       - name: es.node.role
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
 
@@ -62,6 +65,9 @@ observation:
 
       - name: es.index
         value: ${indexName}
+
+      - name: es.data_stream
+        value: json:smile:/_all?local=true&format=smile $.${indexName}.data_stream
         
       - name: es.node
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
@@ -112,6 +118,9 @@ observation:
 
       - name: es.index
         value: ${indexName}
+
+      - name: es.data_stream
+        value: json:smile:/_all?local=true&format=smile $.${indexName}.data_stream
         
       - name: es.node
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
@@ -140,6 +149,9 @@ observation:
 
       - name: es.index
         value: ${indexName}
+
+      - name: es.data_stream
+        value: json:smile:/_all?local=true&format=smile $.${indexName}.data_stream
         
       - name: es.node
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
@@ -167,6 +179,9 @@ observation:
 
       - name: es.index
         value: ${indexName}
+
+      - name: es.data_stream
+        value: json:smile:/_all?local=true&format=smile $.${indexName}.data_stream
         
       - name: es.node
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
@@ -217,6 +232,9 @@ observation:
 
       - name: es.index
         value: ${indexName}
+
+      - name: es.data_stream
+        value: json:smile:/_all?local=true&format=smile $.${indexName}.data_stream
         
       - name: es.node
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
