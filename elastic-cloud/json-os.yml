@@ -7,7 +7,7 @@ data:
   smileFormat: true
 
 observation:
-  - name: cpu_stats
+  - name: cpu
     metricNamespace: es
     path: $.nodes.${nodeId}.os.cpu
 
@@ -28,7 +28,7 @@ observation:
       - name: es.node.role
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
 
-  - name: load_stats
+  - name: load
     metricNamespace: es
     path: $.nodes.${nodeId}.os.cpu.load_average
 
@@ -50,6 +50,60 @@ observation:
         type: gauge
         label: load 15m
         description: average load for 15 minutes
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
+  - name: mem
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os.mem
+
+    metric:
+      - name: mem.total
+        source: total_in_bytes
+        type: long_gauge
+        label: total memory
+        description: total system memory
+
+      - name: mem.used
+        source: used_in_bytes
+        type: long_gauge
+        label: used memory
+        description: used system memory (includes caches and buffers)
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
+  - name: swap
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os.swap
+
+    metric:
+      - name: swap.total
+        source: total_in_bytes
+        type: long_gauge
+        label: total swap
+        description: total swap size
+
+      - name: swap.used
+        source: used_in_bytes
+        type: long_gauge
+        label: used swap
+        description: used swap size
 
     tag:
       - name: es.node.id
