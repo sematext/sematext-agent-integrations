@@ -5,6 +5,7 @@ data:
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
+  async: true
 
 observation:
   - name: io_stats

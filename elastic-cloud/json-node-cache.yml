@@ -5,6 +5,7 @@ data:
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
+  async: true
 
 observation:
   - name: cacheStats_nodeCache_field
@@ -12,12 +13,6 @@ observation:
     path: $.nodes.${nodeId}.indices.fielddata
 
     metric:
-      - name: cache.field.evicted
-        source: evictions
-        type: counter
-        label: field cache evictions
-        description: Field cache evictions
-
       - name: cache.field.size
         source: memory_size_in_bytes
         type: long_gauge
@@ -34,37 +29,6 @@ observation:
 
       - name: es.node.role
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
-
-
-
-  - name: cacheStats_nodeCache_filter
-    metricNamespace: es
-    path: $.nodes.${nodeId}.indices.filter_cache
-
-    metric:
-      - name: cache.filter.evicted
-        source: evictions
-        type: counter
-        label: filter cache evictions
-        description: Filter cache evictions
-
-      - name: cache.filter.size
-        source: memory_size_in_bytes
-        type: long_gauge
-        label: filter cache size
-        description: Filter cache size
-        unit: bytes
-
-    tag:
-      - name: es.node.id
-        value: ${nodeId}
-        
-      - name: es.node
-        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
-
 
 
   - name: cacheStats_nodeCache_query
@@ -86,7 +50,7 @@ observation:
         unit: bytes
 
       - name: cache.filter.size.count
-        source: cache_count
+        source: total_count
         type: counter
         label: filter/query cache count
         description: Filter/query cache count of elements
@@ -154,42 +118,4 @@ observation:
 
       - name: es.node.role
         value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
-
-
-
-  - name: cacheStats_nodeCache_warmer
-    metricNamespace: es
-    path: $.nodes.${nodeId}.indices.warmer
-
-    metric:
-      - name: cache.warmer.current
-        source: current
-        type: long_gauge
-        label: warmer current
-        description: Warmer current
-
-      - name: cache.warmer.total
-        source: total
-        type: counter
-        label: warmer total
-        description: Warmer total
-        unit: bytes
-
-      - name: cache.warmer.time
-        source: total_time_in_millis
-        type: counter
-        label: warmer total time
-        description: Warmer total time
-        unit: ms
-
-    tag:
-      - name: es.node.id
-        value: ${nodeId}
-        
-      - name: es.node
-        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
-
 

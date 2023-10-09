@@ -8,6 +8,7 @@ data:
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
+  async: true
 
 observation:
   - name: mergeStats_total
@@ -38,13 +39,6 @@ observation:
         description: merge time on all (primary and replica) shards
         unit: ms
 
-      - name: indexing.merges.docs.total
-        source: total_docs
-        type: counter
-        agentAggregation: SUM
-        label: merged docs count (all)
-        description: merged docs count on all (primary and replica) shards
-
       - name: indexing.merges.docs.size.total
         source: total_size_in_bytes
         type: counter
@@ -60,14 +54,6 @@ observation:
         label: throttled merge time (all)
         description: throttled time for merges (i.e. when merges fall behind) on all (primary and replica) shards
         unit: ms
-
-      - name: indexing.merges.throttled.size.total
-        source: total_auto_throttle_in_bytes
-        type: counter
-        agentAggregation: SUM
-        label: throttled merge size (all)
-        description: size of throttled merges on all (primary and replica) shards
-        unit: bytes
 
     tag:
       - name: es.node.id

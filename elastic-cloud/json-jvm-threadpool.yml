@@ -5,6 +5,7 @@ data:
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
+  async: true
 
 observation:
   - name: jvmThreadPoolStats
@@ -17,12 +18,6 @@ observation:
         type: gauge
         label: thread count
         description: current jvm thread count
-
-      - name: threads.peak
-        source: peak_count
-        type: gauge
-        label: peak thread count
-        description: peak jvm thread count
 
     tag:
       - name: es.node.id

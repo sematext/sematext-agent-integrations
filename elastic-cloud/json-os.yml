@@ -5,6 +5,7 @@ data:
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
+  async: true
 
 observation:
   - name: cpu
@@ -38,18 +39,6 @@ observation:
         type: gauge
         label: load 1m
         description: average load for 1 minute
-
-      - name: load.5m
-        source: 5m
-        type: gauge
-        label: load 5m
-        description: average load for 5 minutes
-
-      - name: load.15m
-        source: 15m
-        type: gauge
-        label: load 15m
-        description: average load for 15 minutes
 
     tag:
       - name: es.node.id
