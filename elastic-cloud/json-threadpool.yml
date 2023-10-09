@@ -1,15 +1,16 @@
 type: json
 data:
-  url: /_cat/thread_pool?format=smile&h=node_id,host,ip,post,name,type,active,size,queue,queue_size,rejected,largest,completed,min,max,keep_alive
+  url: /_nodes/stats/breaker,indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection,os?format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
+  async: true
 
 observation:
   - name: threadPoolStats
     metricNamespace: es
-    path: $.[?(@.name=${threadPool} && @.node_id=${nodeId})]
+    path: $.nodes.${nodeId}.thread_pool.${threadPool}
 
     metric:
       - name: thread.pool.active
@@ -19,7 +20,7 @@ observation:
         description: active threads
 
       - name: thread.pool.size
-        source: size
+        source: threads
         type: long_gauge
         label: thread pool size
         description: thread pool size
@@ -29,12 +30,6 @@ observation:
         type: long_gauge
         label: thread pool queue
         description: thread pool queue
-
-      - name: thread.pool.queue.size
-        source: queue_size
-        type: long_gauge
-        label: thread pool queue size
-        description: thread pool queue size
 
       - name: thread.pool.rejected
         source: rejected
@@ -53,18 +48,6 @@ observation:
         type: counter
         label: completed threads
         description: complete threads
-
-      - name: thread.pool.min
-        source: min
-        type: long_gauge
-        label: thread pool min
-        description: thread pool min
-
-      - name: thread.pool.max
-        source: max
-        type: long_gauge
-        label: thread pool max
-        description: thread pool max
 
     tag:
       - name: es.node.id

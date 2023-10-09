@@ -1,10 +1,11 @@
 type: json
 data:
-  url: /_nodes/stats/breaker,indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection?format=smile
+  url: /_nodes/stats/breaker,indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection,os?format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
+  async: true
 
 observation:
   - name: io_stats
@@ -23,6 +24,34 @@ observation:
         type: counter
         label: write ops
         description: disk IO write operations
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
+
+  - name: disk_space
+    metricNamespace: es
+    path: $.nodes.${nodeId}.fs.total
+
+    metric:
+      - name: disk.io.space.total
+        source: total_in_bytes
+        type: long_gauge
+        label: total disk space
+        description: total disk space
+
+      - name: disk.io.space.available
+        source: available_in_bytes
+        type: long_gauge
+        label: free disk space
+        description: free disk space
 
     tag:
       - name: es.node.id

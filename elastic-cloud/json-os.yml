@@ -1,0 +1,105 @@
+type: json
+data:
+  url: /_nodes/stats/breaker,indices,transport,http,thread_pool,jvm,process,fs,script,discovery,ingest,adaptive_selection,os?format=smile
+  server: ${ST_MONITOR_ES_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
+  smileFormat: true
+  async: true
+
+observation:
+  - name: cpu
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os.cpu
+
+    metric:
+      - name: cpu.used
+        source: percent
+        type: gauge
+        label: cpu percent
+        description: used CPU percent
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
+  - name: load
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os.cpu.load_average
+
+    metric:
+      - name: load.1m
+        source: 1m
+        type: gauge
+        label: load 1m
+        description: average load for 1 minute
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
+  - name: mem
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os.mem
+
+    metric:
+      - name: mem.total
+        source: total_in_bytes
+        type: long_gauge
+        label: total memory
+        description: total system memory
+
+      - name: mem.used
+        source: used_in_bytes
+        type: long_gauge
+        label: used memory
+        description: used system memory (includes caches and buffers)
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
+
+  - name: swap
+    metricNamespace: es
+    path: $.nodes.${nodeId}.os.swap
+
+    metric:
+      - name: swap.total
+        source: total_in_bytes
+        type: long_gauge
+        label: total swap
+        description: total swap size
+
+      - name: swap.used
+        source: used_in_bytes
+        type: long_gauge
+        label: used swap
+        description: used swap size
+
+    tag:
+      - name: es.node.id
+        value: ${nodeId}
+        
+      - name: es.node
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
+
+      - name: es.node.role
+        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()

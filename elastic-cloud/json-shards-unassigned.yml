@@ -1,11 +1,11 @@
 type: json
 data:
-  url: /_cluster/health?level=indices&format=smile
+  url: /_cluster/health?level=indices&local=true&format=smile
   server: ${ST_MONITOR_ES_NODE_HOSTPORT}
   basicHttpAuthUsername: ${ST_MONITOR_ES_NODE_BASICAUTH_USERNAME}
   basicHttpAuthPassword: ${ST_MONITOR_ES_NODE_BASICAUTH_PASSWORD}
   smileFormat: true
-  async: false
+  async: true
 
 observation:
   # unassigned shards are related to particular index (and cluster), they have no relation to any node
@@ -23,11 +23,3 @@ observation:
     tag:
       - name: es.index
         value: ${indexName}
-        
-      - name: es.node
-        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.name
-
-      - name: es.node.role
-        value: json:smile:/_cluster/state/nodes?local=true&format=smile $.nodes.${nodeId}.roles return:ConcatCollection()
-
-
