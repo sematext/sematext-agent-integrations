@@ -9,3 +9,13 @@ Learn more:
 * [Open Source Monitoring Tools for Monitoring Elasticsearch](https://sematext.com/blog/elasticsearch-open-source-monitoring-tools/)
 * [Monitoring Elasticsearch With Sematext](https://sematext.com/blog/monitoring-elasticsearch-with-sematext/)
 * [eBook: Elasticsearch Monitoring - The Complete Guide](https://sematext.com/resources/elasticsearch-monitoring-ebook/)
+
+Troubleshooting:
+
+On large clusters, you can fetch metrics less often and give the agent more heap by putting this in the properties file:
+```
+# defaults to 10s
+SPM_MONITOR_COLLECT_INTERVAL=60000
+# replace the existing JAVA_DEFAULTS value
+JAVA_DEFAULTS="-Xmx2g -Xms2g -XX:+ExitOnOutOfMemoryError -XX:+AlwaysPreTouch -XX:+UseG1GC -XX:GCTimeRatio=2 -Xss512k"
+```
