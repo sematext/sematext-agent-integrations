@@ -39,76 +39,12 @@ observation:
         description: total memory for segment-related data structures
         unit: bytes
 
-      - name: segments.memory.terms
-        source: terms_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: terms memory
-        description: memory used by the terms dictionary
-        unit: bytes
-
-      - name: segments.memory.storedFields
-        source: stored_fields_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: stored fields memory
-        description: memory used by stored fields
-        unit: bytes
-
-      - name: segments.memory.termVectors
-        source: term_vectors_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: term vectors memory
-        description: memory used by term vectors
-        unit: bytes
-
-      - name: segments.memory.norms
-        source: norms_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: norms memory
-        description: memory used by (length) norms
-        unit: bytes
-
-      - name: segments.memory.points
-        source: points_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: points memory
-        description: memory used by point fields (includes numeric, date, geo)
-        unit: bytes
-
-      - name: segments.memory.docValues
-        source: doc_values_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: doc values memory
-        description: memory used by doc values
-        unit: bytes
-
       - name: segments.memory.indexWriter
         source: index_writer_memory_in_bytes
         type: long_gauge
         agentAggregation: SUM
         label: indexing buffer memory
         description: memory used by the IndexWriter
-        unit: bytes
-
-      - name: segments.memory.versionMap
-        source: version_map_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: version map memory
-        description: memory used by the version map
-        unit: bytes
-
-      - name: segments.memory.fixedBitSet
-        source: fixed_bit_set_memory_in_bytes
-        type: long_gauge
-        agentAggregation: SUM
-        label: fixed bitset memory
-        description: memory used by the fixed bitset that speeds up nested queries/aggregations
         unit: bytes
 
     tag:

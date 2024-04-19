@@ -53,24 +53,12 @@ observation:
         label: open TCP conns
         description: open TCP conns (server_open)
 
-      - name: transport.rx.packets
-        source: rx_count
-        type: counter
-        label: network received packets
-        description: network received packets count (rx_count)
-
       - name: transport.rx.bytes
         source: rx_size_in_bytes
         type: counter
         label: network received size
         description: network received size (rx_size)
         unit: bytes
-
-      - name: transport.tx.packets
-        source: tx_count
-        type: counter
-        label: network transmitted packets
-        description: network transmitted packets count (tx_count)
 
       - name: transport.tx.bytes
         source: tx_size_in_bytes
