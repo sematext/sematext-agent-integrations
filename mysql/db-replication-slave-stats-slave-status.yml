@@ -7,7 +7,7 @@ data:
     - url: jdbc:mariadb://${ST_MONITOR_MYSQL_DB_HOST_PORT}
       clazz: org.mariadb.jdbc.Driver
   dbUser: ${ST_MONITOR_MYSQL_DB_USER}
-  dbPassword: ${ST_MONITOR_MYSQL_DB_PASSWORD}
+  dbPassword: "${ST_MONITOR_MYSQL_DB_PASSWORD}"
   dbAdditionalConnectionParams: ${ST_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS}
   #  dbVerticalModel="true" - because output of SHOW STATUS command gives each attribute in its own row
   # (1st column being attribute name, 2nd column being attribute value)
