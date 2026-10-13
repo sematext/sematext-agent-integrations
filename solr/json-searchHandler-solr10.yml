@@ -1,0 +1,120 @@
+type: json
+# Solr 10 removed the JMX metrics reporter; metrics come from /admin/metrics in Prometheus text format.
+# Every Solr 10 config uses the same url, so one response is fetched per interval and shared.
+data:
+  url: /solr/admin/metrics?wt=prometheus&name=solr_core_indexsearcher_cache_lookups,solr_core_indexsearcher_cache_size,solr_core_indexsearcher_cache_ops,solr_core_field_cache_entries,solr_core_field_cache_size_bytes,solr_core_indexsearcher_index_docs,solr_core_indexsearcher_index_num_docs,solr_core_segments,solr_core_indexsearcher_open_warmup_time_milliseconds,solr_core_index_size_megabytes,solr_core_indexwriter_merges,solr_core_indexwriter_merge_docs,solr_core_update_log_size_remaining_bytes,solr_core_update_log_replay_logs_remaining,solr_core_update_log_replay_ops,solr_core_update_log_old_updates_copied,solr_core_update_log_buffered_ops,solr_core_update_log_applied_buffered_ops,solr_core_update_log_state,solr_core_update_commit_ops,solr_core_update_maintenance_ops,solr_core_update_cumulative_ops,solr_core_update_errors,solr_core_update_auto_commits,solr_core_update_docs_pending_commit,solr_core_update_commit_stats,solr_core_requests,solr_core_requests_times_milliseconds,solr_core_requests_errors,solr_core_requests_timeout
+  server: ${ST_MONITOR_SOLR_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_SOLR_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_SOLR_NODE_BASICAUTH_PASSWORD}
+  jsonHandlerClass: com.sematext.spm.client.solr.SolrPrometheusJsonHandler
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 10-*
+  - className: com.sematext.spm.client.solr.SolrModeCheck
+    values: std
+
+observation:
+
+  - name: searchhandler1_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_requests_times_milliseconds_sum[?(@.core=${core} && @.category=QUERY && @.handler=${handler} && @.internal=${internal})]
+
+    metric:
+      - name: requests.time
+        source: value
+        type: counter
+        label: request time
+        description: request time
+        unit: ms
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: func:com.sematext.spm.client.solr.CalculateHandlerName(handler,internal)
+
+
+  # totalTime is requests.time from the observation above, for the same tags
+  - name: searchhandler2_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_requests_total[?(@.core=${core} && @.category=QUERY && @.handler=${handler} && @.internal=${internal})]
+
+    metric:
+      - name: requests
+        source: value
+        type: counter
+        label: req.count
+        description: request count
+        unit: req
+
+      - name: totalTime
+        source: outer:requests.time
+        type: long_gauge
+        send: false
+
+      - name: requests.latency.avg
+        source: func:DoubleDivide(totalTime,requests)
+        type: double_gauge
+        stateful: true
+        pctls: 99,95,50
+        label: avg. request latency
+        description: avg. request latency
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: func:com.sematext.spm.client.solr.CalculateHandlerName(handler,internal)
+
+
+  # errors are reported per source (client, server); untagged, so the two add up
+  - name: searchhandler3_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_requests_errors_total[?(@.core=${core} && @.category=QUERY && @.handler=${handler} && @.internal=${internal} && @.source=${errorSource})]
+
+    metric:
+      - name: requests.error.count
+        source: value
+        type: counter
+        label: request error count
+        description: request error count
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: func:com.sematext.spm.client.solr.CalculateHandlerName(handler,internal)
+
+
+  - name: searchhandler4_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_requests_timeout_total[?(@.core=${core} && @.category=QUERY && @.handler=${handler} && @.internal=${internal})]
+
+    metric:
+      - name: requests.timeout.count
+        source: value
+        type: counter
+        label: request timeout count
+        description: request timeout count
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+      - name: solr.search.handler
+        value: func:com.sematext.spm.client.solr.CalculateHandlerName(handler,internal)

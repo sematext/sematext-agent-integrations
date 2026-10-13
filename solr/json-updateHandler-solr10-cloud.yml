@@ -1,0 +1,354 @@
+type: json
+# Solr 10 removed the JMX metrics reporter; metrics come from /admin/metrics in Prometheus text format.
+# Every Solr 10 config uses the same url, so one response is fetched per interval and shared.
+data:
+  url: /solr/admin/metrics?wt=prometheus&name=solr_core_indexsearcher_cache_lookups,solr_core_indexsearcher_cache_size,solr_core_indexsearcher_cache_ops,solr_core_field_cache_entries,solr_core_field_cache_size_bytes,solr_core_indexsearcher_index_docs,solr_core_indexsearcher_index_num_docs,solr_core_segments,solr_core_indexsearcher_open_warmup_time_milliseconds,solr_core_index_size_megabytes,solr_core_indexwriter_merges,solr_core_indexwriter_merge_docs,solr_core_update_log_size_remaining_bytes,solr_core_update_log_replay_logs_remaining,solr_core_update_log_replay_ops,solr_core_update_log_old_updates_copied,solr_core_update_log_buffered_ops,solr_core_update_log_applied_buffered_ops,solr_core_update_log_state,solr_core_update_commit_ops,solr_core_update_maintenance_ops,solr_core_update_cumulative_ops,solr_core_update_errors,solr_core_update_auto_commits,solr_core_update_docs_pending_commit,solr_core_update_commit_stats,solr_core_requests,solr_core_requests_times_milliseconds,solr_core_requests_errors,solr_core_requests_timeout
+  server: ${ST_MONITOR_SOLR_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_SOLR_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_SOLR_NODE_BASICAUTH_PASSWORD}
+  jsonHandlerClass: com.sematext.spm.client.solr.SolrPrometheusJsonHandler
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 10-*
+  - className: com.sematext.spm.client.solr.SolrModeCheck
+    values: solrcloud
+
+observation:
+
+  - name: updatehandler_commits_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_commit_ops_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=commits)]
+
+    metric:
+      - name: indexing.commits
+        source: value
+        type: counter
+        label: commits
+        description: total count of commits (soft + hard, automatic + by request)
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_optimizes_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_commit_ops_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=optimize)]
+
+    metric:
+      - name: indexing.optimizes
+        source: value
+        type: counter
+        label: optimizes
+        description: count of optimizes
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_expungeDeletes_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_commit_ops_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=expunge_deletes)]
+
+    metric:
+      - name: indexing.deletes.expunge
+        source: value
+        type: counter
+        label: expunge deletes
+        description: count of expunge deletes
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_rollbacks_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_maintenance_ops_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=rollback)]
+
+    metric:
+      - name: indexing.rollbacks
+        source: value
+        type: counter
+        label: rollbacks
+        description: count of rollbacks
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_adds_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_cumulative_ops[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=adds)]
+
+    metric:
+      - name: indexing.docs.added
+        source: value
+        type: counter
+        label: index docs added
+        description: added docs
+        unit: docs
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_deletesById_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_cumulative_ops[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=deletes_by_id)]
+
+    metric:
+      - name: indexing.deletes.id
+        source: value
+        type: counter
+        label: deletes by id
+        description: deletes by id
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_deletesByQuery_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_cumulative_ops[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=deletes_by_query)]
+
+    metric:
+      - name: indexing.deletes.query
+        source: value
+        type: counter
+        label: deletes by query
+        description: deletes by query
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_errors_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_errors_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core})]
+
+    metric:
+      - name: indexing.errors
+        source: value
+        type: counter
+        label: update errors
+        description: count of update errors
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_autoCommits_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_auto_commits_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.type=auto_commits)]
+
+    metric:
+      - name: indexing.commits.auto
+        source: value
+        type: counter
+        label: autocommits
+        description: count of auto commits (soft + hard)
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_softAutoCommits_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_auto_commits_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.type=soft_auto_commits)]
+
+    metric:
+      - name: indexing.commits.soft
+        source: value
+        type: counter
+        label: soft autocommits
+        description: count of soft auto commits
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_docsPending_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_docs_pending_commit[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.ops=docs_pending)]
+
+    metric:
+      - name: indexing.docs.pending
+        source: value
+        type: long_gauge
+        label: index docs pending
+        description: count of pending docs
+        unit: docs
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler
+
+
+  - name: updatehandler_autoCommitMaxTime_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_update_commit_stats[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.type=auto_commit_max_time)]
+
+    metric:
+      - name: indexing.commits.auto.time.max
+        source: value
+        type: gauge
+        label: autocommit max time
+        description: autocommit max time
+        unit: ms
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.update.handler
+        value: updateHandler

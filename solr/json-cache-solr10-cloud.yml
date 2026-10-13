@@ -1,0 +1,200 @@
+type: json
+# Solr 10 removed the JMX metrics reporter; metrics come from /admin/metrics in Prometheus text format.
+# Every Solr 10 config uses the same url, so one response is fetched per interval and shared.
+data:
+  url: /solr/admin/metrics?wt=prometheus&name=solr_core_indexsearcher_cache_lookups,solr_core_indexsearcher_cache_size,solr_core_indexsearcher_cache_ops,solr_core_field_cache_entries,solr_core_field_cache_size_bytes,solr_core_indexsearcher_index_docs,solr_core_indexsearcher_index_num_docs,solr_core_segments,solr_core_indexsearcher_open_warmup_time_milliseconds,solr_core_index_size_megabytes,solr_core_indexwriter_merges,solr_core_indexwriter_merge_docs,solr_core_update_log_size_remaining_bytes,solr_core_update_log_replay_logs_remaining,solr_core_update_log_replay_ops,solr_core_update_log_old_updates_copied,solr_core_update_log_buffered_ops,solr_core_update_log_applied_buffered_ops,solr_core_update_log_state,solr_core_update_commit_ops,solr_core_update_maintenance_ops,solr_core_update_cumulative_ops,solr_core_update_errors,solr_core_update_auto_commits,solr_core_update_docs_pending_commit,solr_core_update_commit_stats,solr_core_requests,solr_core_requests_times_milliseconds,solr_core_requests_errors,solr_core_requests_timeout
+  server: ${ST_MONITOR_SOLR_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_SOLR_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_SOLR_NODE_BASICAUTH_PASSWORD}
+  jsonHandlerClass: com.sematext.spm.client.solr.SolrPrometheusJsonHandler
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 10-*
+  - className: com.sematext.spm.client.solr.SolrModeCheck
+    values: solrcloud
+
+observation:
+
+  - name: cache_hits_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_indexsearcher_cache_lookups_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.name=${cacheName} && @.result=hit)]
+
+    metric:
+      - name: cache.hits
+        source: value
+        type: counter
+        label: cache hits
+        description: hits count
+
+      - name: cache.lookups
+        source: value
+        type: counter
+        label: cache lookups
+        description: lookups count
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.cache
+        value: ${cacheName}
+
+
+  # lookups are hits + misses: both observations emit cache.lookups with the same tags, so they add up
+  - name: cache_misses_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_indexsearcher_cache_lookups_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.name=${cacheName} && @.result=miss)]
+
+    metric:
+      - name: cache.lookups
+        source: value
+        type: counter
+        label: cache lookups
+        description: lookups count
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.cache
+        value: ${cacheName}
+
+
+  - name: cache_size_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_indexsearcher_cache_size[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.name=${cacheName})]
+
+    metric:
+      - name: cache.size
+        source: value
+        type: long_gauge
+        label: cache size
+        description: cache size (count of elements)
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.cache
+        value: ${cacheName}
+
+
+  - name: cache_evictions_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_indexsearcher_cache_ops_total[?(@.collection=${collection} && @.shard=${shard} && @.core=${core} && @.name=${cacheName} && @.ops=evictions)]
+
+    metric:
+      - name: cache.evicted
+        source: value
+        type: counter
+        label: cache evictions
+        description: count of evictions
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.cache
+        value: ${cacheName}
+
+
+  # Solr also reports the field cache once without a core label; that series is ignored
+  - name: fieldcache_size_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_field_cache_entries[?(@.collection=${collection} && @.shard=${shard} && @.core=${core})]
+
+    metric:
+      - name: cache.size
+        source: value
+        type: long_gauge
+        label: cache size
+        description: cache size (count of elements)
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.cache
+        value: fieldCache
+
+    ignore:
+      - name: core
+        value: "null"
+
+
+  - name: fieldcache_bytes_solr10_cloud
+    metricNamespace: solr
+    path: $.solr_core_field_cache_size_bytes[?(@.collection=${collection} && @.shard=${shard} && @.core=${core})]
+
+    metric:
+      - name: cache.size.bytes
+        source: value
+        type: gauge
+        label: cache memory used
+        description: cache size in bytes
+        unit: bytes
+
+    tag:
+      - name: solr.collection
+        value: ${collection}
+
+      - name: solr.shard
+        value: ${shard}
+
+      - name: solr.replica
+        value: func:com.sematext.spm.client.solr.CalculateReplicaFromCore(collection,shard,core)
+
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.cache
+        value: fieldCache
+
+    ignore:
+      - name: core
+        value: "null"
