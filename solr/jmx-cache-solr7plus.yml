@@ -1,7 +1,7 @@
 type: jmx
 require:
   - className: com.sematext.spm.client.solr.SolrVersionCheck
-    values: 7-7.3 || 7.4.1-*
+    values: 7-7.3 || 7.4.1-9
     countNeededMatches: 1
 
 observation:
