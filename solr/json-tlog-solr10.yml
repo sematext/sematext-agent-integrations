@@ -1,0 +1,150 @@
+type: json
+# Solr 10 removed the JMX metrics reporter; metrics come from /admin/metrics in Prometheus text format.
+# Every Solr 10 config uses the same url, so one response is fetched per interval and shared.
+data:
+  url: /solr/admin/metrics?wt=prometheus&name=solr_core_indexsearcher_cache_lookups,solr_core_indexsearcher_cache_size,solr_core_indexsearcher_cache_ops,solr_core_field_cache_entries,solr_core_field_cache_size_bytes,solr_core_indexsearcher_index_docs,solr_core_indexsearcher_index_num_docs,solr_core_segments,solr_core_indexsearcher_open_warmup_time_milliseconds,solr_core_index_size_megabytes,solr_core_indexwriter_merges,solr_core_indexwriter_merge_docs,solr_core_update_log_size_remaining_bytes,solr_core_update_log_replay_logs_remaining,solr_core_update_log_replay_ops,solr_core_update_log_old_updates_copied,solr_core_update_log_buffered_ops,solr_core_update_log_applied_buffered_ops,solr_core_update_log_state,solr_core_update_commit_ops,solr_core_update_maintenance_ops,solr_core_update_cumulative_ops,solr_core_update_errors,solr_core_update_auto_commits,solr_core_update_docs_pending_commit,solr_core_update_commit_stats,solr_core_requests,solr_core_requests_times_milliseconds,solr_core_requests_errors,solr_core_requests_timeout
+  server: ${ST_MONITOR_SOLR_NODE_HOSTPORT}
+  basicHttpAuthUsername: ${ST_MONITOR_SOLR_NODE_BASICAUTH_USERNAME}
+  basicHttpAuthPassword: ${ST_MONITOR_SOLR_NODE_BASICAUTH_PASSWORD}
+  jsonHandlerClass: com.sematext.spm.client.solr.SolrPrometheusJsonHandler
+require:
+  - className: com.sematext.spm.client.solr.SolrVersionCheck
+    values: 10-*
+  - className: com.sematext.spm.client.solr.SolrModeCheck
+    values: std
+
+observation:
+
+  - name: tlog_remainingBytes_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_update_log_size_remaining_bytes[?(@.core=${core})]
+
+    metric:
+      - name: tlog.replay.size.remaining
+        source: value
+        type: long_gauge
+        label: tlog replay remaining bytes
+        description: remaining bytes to replay from the transaction log
+        unit: bytes
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+
+  - name: tlog_remainingLogs_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_update_log_replay_logs_remaining[?(@.core=${core})]
+
+    metric:
+      - name: tlog.replay.logs.remaining
+        source: value
+        type: gauge
+        label: tlog replay remaining logs
+        description: remaining transaction logs to replay
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+
+  - name: tlog_replay_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_update_log_replay_ops_total[?(@.core=${core})]
+
+    metric:
+      - name: tlog.replay.ops
+        source: value
+        type: counter
+        label: replayed operations
+        description: total replayed operations
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+
+  - name: tlog_copyOverOldUpdates_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_update_log_old_updates_copied_total[?(@.core=${core})]
+
+    metric:
+      - name: tlog.updates.copyOverOld
+        source: value
+        type: counter
+        label: copy over old updates
+        description: copy over old updates requests
+        unit: requests
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+
+  - name: tlog_buffered_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_update_log_buffered_ops[?(@.core=${core})]
+
+    metric:
+      - name: tlog.updates.buffered
+        source: value
+        type: long_gauge
+        label: buffered updates
+        description: buffered updates
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+
+  - name: tlog_applyingBuffered_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_update_log_applied_buffered_ops_total[?(@.core=${core})]
+
+    metric:
+      - name: tlog.updates.buffered.applying
+        source: value
+        type: counter
+        label: applying buffered updates
+        description: applying buffered updates
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}
+
+
+  - name: tlog_state_solr10_classic
+    metricNamespace: solr
+    path: $.solr_core_update_log_state[?(@.core=${core})]
+
+    metric:
+      - name: tlog.state
+        source: value
+        type: gauge
+        label: tlog state
+        description: REPLAYING(0), BUFFERING(1), APPLYING_BUFFERED(2), ACTIVE(3)
+
+    tag:
+      - name: solr.core
+        value: ${core}
+
+      - name: solr.collection
+        value: ${core}

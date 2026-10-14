@@ -1,7 +1,7 @@
 type: jmx
 require:
   - className: com.sematext.spm.client.solr.SolrVersionCheck
-    values: 7-*
+    values: 7-9
 
 observation:
   - name: updatehandler_commits_solr7_cloud
